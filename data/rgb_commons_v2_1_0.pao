@@ -1,0 +1,2 @@
+#lib rgb_fifo vhdl
+lib rgb_asfifo vhdl
