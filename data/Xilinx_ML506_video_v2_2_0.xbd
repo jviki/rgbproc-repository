@@ -79,20 +79,16 @@ END
 
 BEGIN IO_INTERFACE
   ATTRIBUTE INSTANCE = LEDs_8Bit
-  ATTRIBUTE IOTYPE = XIL_GPIO_V1
-  PARAMETER C_GPIO_WIDTH = 8, IO_IS = num_bits
-  PARAMETER C_IS_DUAL = 0, IO_IS = is_dual
-  PARAMETER C_IS_BIDIR = 1, IO_IS = is_bidir
-  PARAMETER C_ALL_INPUTS = 0, IO_IS = all_inputs
+  ATTRIBUTE IOTYPE = LED_ARRAY_V1
   
-  PORT LEDs_8Bit_GPIO_IO_0 = LEDs_8Bit_GPIO_IO_0, IO_IS = gpio_io[0]
-  PORT LEDs_8Bit_GPIO_IO_1 = LEDs_8Bit_GPIO_IO_1, IO_IS = gpio_io[1]
-  PORT LEDs_8Bit_GPIO_IO_2 = LEDs_8Bit_GPIO_IO_2, IO_IS = gpio_io[2]
-  PORT LEDs_8Bit_GPIO_IO_3 = LEDs_8Bit_GPIO_IO_3, IO_IS = gpio_io[3]
-  PORT LEDs_8Bit_GPIO_IO_4 = LEDs_8Bit_GPIO_IO_4, IO_IS = gpio_io[4]
-  PORT LEDs_8Bit_GPIO_IO_5 = LEDs_8Bit_GPIO_IO_5, IO_IS = gpio_io[5]
-  PORT LEDs_8Bit_GPIO_IO_6 = LEDs_8Bit_GPIO_IO_6, IO_IS = gpio_io[6]
-  PORT LEDs_8Bit_GPIO_IO_7 = LEDs_8Bit_GPIO_IO_7, IO_IS = gpio_io[7]
+  PORT LEDs_8Bit_GPIO_IO_0 = LEDs_8Bit_GPIO_IO_0, IO_IS = led_out[0]
+  PORT LEDs_8Bit_GPIO_IO_1 = LEDs_8Bit_GPIO_IO_1, IO_IS = led_out[1]
+  PORT LEDs_8Bit_GPIO_IO_2 = LEDs_8Bit_GPIO_IO_2, IO_IS = led_out[2]
+  PORT LEDs_8Bit_GPIO_IO_3 = LEDs_8Bit_GPIO_IO_3, IO_IS = led_out[3]
+  PORT LEDs_8Bit_GPIO_IO_4 = LEDs_8Bit_GPIO_IO_4, IO_IS = led_out[4]
+  PORT LEDs_8Bit_GPIO_IO_5 = LEDs_8Bit_GPIO_IO_5, IO_IS = led_out[5]
+  PORT LEDs_8Bit_GPIO_IO_6 = LEDs_8Bit_GPIO_IO_6, IO_IS = led_out[6]
+  PORT LEDs_8Bit_GPIO_IO_7 = LEDs_8Bit_GPIO_IO_7, IO_IS = led_out[7]
 END
 
 BEGIN IO_INTERFACE
