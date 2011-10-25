@@ -109,24 +109,6 @@ BEGIN IO_INTERFACE
   PORT Push_Buttons_5Bit_GPIO_IO4 = Push_Buttons_5Bit_GPIO_IO_4, IO_IS = gpio_io[4]
 END
 
-                                                                                
-BEGIN IO_INTERFACE
-  ATTRIBUTE INSTANCE = DIP_Switches_8Bit
-  ATTRIBUTE IOTYPE = XIL_GPIO_V1
-  PARAMETER C_GPIO_WIDTH = 8, IO_IS = num_bits
-  PARAMETER C_IS_DUAL = 0, IO_IS = is_dual
-  PARAMETER C_IS_BIDIR = 1, IO_IS = is_bidir
-  PARAMETER C_ALL_INPUTS = 1, IO_IS = all_inputs
-  PORT DIP_Switches_8Bit_GPIO_IO_0 = DIP_Switches_8Bit_GPIO_IO_0, IO_IS = gpio_io[0]
-  PORT DIP_Switches_8Bit_GPIO_IO_1 = DIP_Switches_8Bit_GPIO_IO_1, IO_IS = gpio_io[1]
-  PORT DIP_Switches_8Bit_GPIO_IO_2 = DIP_Switches_8Bit_GPIO_IO_2, IO_IS = gpio_io[2]
-  PORT DIP_Switches_8Bit_GPIO_IO_3 = DIP_Switches_8Bit_GPIO_IO_3, IO_IS = gpio_io[3]
-  PORT DIP_Switches_8Bit_GPIO_IO_4 = DIP_Switches_8Bit_GPIO_IO_4, IO_IS = gpio_io[4]
-  PORT DIP_Switches_8Bit_GPIO_IO_5 = DIP_Switches_8Bit_GPIO_IO_5, IO_IS = gpio_io[5]
-  PORT DIP_Switches_8Bit_GPIO_IO_6 = DIP_Switches_8Bit_GPIO_IO_6, IO_IS = gpio_io[6]
-  PORT DIP_Switches_8Bit_GPIO_IO_7 = DIP_Switches_8Bit_GPIO_IO_7, IO_IS = gpio_io[7]
-END
-
 # PS/2 Port 1 Mouse
 BEGIN IO_INTERFACE
   ATTRIBUTE IOTYPE = XIL_PS2_V1_invisible_in_lava_ff
@@ -741,16 +723,6 @@ BEGIN FPGA
   PORT Push_Buttons_5Bit_GPIO_IO3 = Push_Buttons_5Bit_GPIO_IO_3, UCF_NET_STRING = ("LOC = AK7", "IOSTANDARD=LVCMOS33", "PULLDOWN", "SLEW=SLOW", "DRIVE=2")
   PORT Push_Buttons_5Bit_GPIO_IO4 = Push_Buttons_5Bit_GPIO_IO_4, UCF_NET_STRING = ("LOC = U8", "IOSTANDARD=LVCMOS33", "PULLDOWN", "SLEW=SLOW", "DRIVE=2")
 
-# DIP
-  PORT DIP_Switches_8Bit_GPIO_IO_0 = DIP_Switches_8Bit_GPIO_IO_0, UCF_NET_STRING=("LOC=U25", "IOSTANDARD=LVCMOS18", "PULLDOWN", "SLEW=SLOW", "DRIVE=2")
-  PORT DIP_Switches_8Bit_GPIO_IO_1 = DIP_Switches_8Bit_GPIO_IO_1, UCF_NET_STRING=("LOC=AG27", "IOSTANDARD=LVCMOS18", "PULLDOWN", "SLEW=SLOW", "DRIVE=2")
-  PORT DIP_Switches_8Bit_GPIO_IO_2 = DIP_Switches_8Bit_GPIO_IO_2, UCF_NET_STRING=("LOC=AF25", "IOSTANDARD=LVCMOS18", "PULLDOWN", "SLEW=SLOW", "DRIVE=2")
-  PORT DIP_Switches_8Bit_GPIO_IO_3 = DIP_Switches_8Bit_GPIO_IO_3, UCF_NET_STRING=("LOC=AF26", "IOSTANDARD=LVCMOS18", "PULLDOWN", "SLEW=SLOW", "DRIVE=2")
-  PORT DIP_Switches_8Bit_GPIO_IO_4 = DIP_Switches_8Bit_GPIO_IO_4, UCF_NET_STRING=("LOC=AE27", "IOSTANDARD=LVCMOS18", "PULLDOWN", "SLEW=SLOW", "DRIVE=2")
-  PORT DIP_Switches_8Bit_GPIO_IO_5 = DIP_Switches_8Bit_GPIO_IO_5, UCF_NET_STRING=("LOC=AE26", "IOSTANDARD=LVCMOS18", "PULLDOWN", "SLEW=SLOW", "DRIVE=2")
-  PORT DIP_Switches_8Bit_GPIO_IO_6 = DIP_Switches_8Bit_GPIO_IO_6, UCF_NET_STRING=("LOC=AC25", "IOSTANDARD=LVCMOS18", "PULLDOWN", "SLEW=SLOW", "DRIVE=2")
-  PORT DIP_Switches_8Bit_GPIO_IO_7 = DIP_Switches_8Bit_GPIO_IO_7, UCF_NET_STRING=("LOC=AC24", "IOSTANDARD=LVCMOS18", "PULLDOWN", "SLEW=SLOW", "DRIVE=2")
-                                                                                                                                                             
 # PS/2 Port 1 Mouse
   PORT PS2_1_CLK_IN   = ps2_1_clk_in,   UCF_NET_STRING=("LOC=R27", "SLEW = SLOW", "DRIVE = 2", "IOSTANDARD=LVCMOS18") # CLK input
   PORT PS2_1_DATA_IN  = ps2_1_data_in,  UCF_NET_STRING=("LOC=U26", "SLEW = SLOW", "DRIVE = 2", "IOSTANDARD=LVCMOS18")
