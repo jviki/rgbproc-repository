@@ -355,45 +355,6 @@ BEGINE IO_INTERFACE
   #PORT DDR_Clkn_1 = ddr2_ddr_clkn_1, IO_IS = ddr2_clk_out_n[1]
 END
 
-
-                                                                                                                                                             
-# System Advanced Configuration Environment (CPU.U2)
-BEGIN IO_INTERFACE
-  ATTRIBUTE IOTYPE = XIL_SYSACE_V1
-  ATTRIBUTE INSTANCE    = SysACE_CompactFlash
-  PARAMETER C_MEM_WIDTH = 16, IO_IS=mem_data_bus_width
-  PARAMETER C_BASEADDR = 0x0, IO_IS=C_BASEADDR
-  PARAMETER C_HIGHADDR = 0x01FF, IO_IS=C_HIGHADDR
-  PORT SYSACE_CLK = sysace_clk,      IO_IS=clk_in
-  PORT MPA00   = sysace_mpa_0_,  IO_IS = address[0]
-  PORT MPA01   = sysace_mpa_1_,  IO_IS = address[1]
-  PORT MPA02   = sysace_mpa_2_,  IO_IS = address[2]
-  PORT MPA03   = sysace_mpa_3_,  IO_IS = address[3]
-  PORT MPA04   = sysace_mpa_4_,  IO_IS = address[4]
-  PORT MPA05   = sysace_mpa_5_,  IO_IS = address[5]
-  PORT MPA06   = sysace_mpa_6_,  IO_IS = address[6]
-  PORT MPD00   = sysace_mpd_0_,  IO_IS = data[0]
-  PORT MPD01   = sysace_mpd_1_,  IO_IS = data[1]
-  PORT MPD02   = sysace_mpd_2_,  IO_IS = data[2]
-  PORT MPD03   = sysace_mpd_3_,  IO_IS = data[3]
-  PORT MPD04   = sysace_mpd_4_,  IO_IS = data[4]
-  PORT MPD05   = sysace_mpd_5_,  IO_IS = data[5]
-  PORT MPD06   = sysace_mpd_6_,  IO_IS = data[6]
-  PORT MPD07   = sysace_mpd_7_,  IO_IS = data[7]
-  PORT MPD08   = sysace_mpd_8_,  IO_IS = data[8]
-  PORT MPD09   = sysace_mpd_9_,  IO_IS = data[9]
-  PORT MPD10   = sysace_mpd_10_, IO_IS = data[10]
-  PORT MPD11   = sysace_mpd_11_, IO_IS = data[11]
-  PORT MPD12   = sysace_mpd_12_, IO_IS = data[12]
-  PORT MPD13   = sysace_mpd_13_, IO_IS = data[13]
-  PORT MPD14   = sysace_mpd_14_, IO_IS = data[14]
-  PORT MPD15   = sysace_mpd_15_, IO_IS = data[15]
-  PORT MPCE    = sysace_mpce,    IO_IS=chip_enable
-  PORT MPOE    = sysace_mpoe,    IO_IS=output_enable
-  PORT MPWE    = sysace_mpwe,    IO_IS=write_enable
-  PORT MPIRQ   = sysace_mpirq,   IO_IS=intr_out
-END
-
 BEGIN FPGA
   ATTRIBUTE INSTANCE = fpga_0
   ATTRIBUTE FAMILY = virtex5
@@ -610,35 +571,6 @@ BEGIN FPGA
 #  PORT Hard_PHY_MDC    =MDC_0_s ,   UCF_NET_STRING=("LOC=H19", "IOSTANDARD = LVCMOS25")
 #  PORT Hard_PHY_MDIO   = MDIO_0_s,  UCF_NET_STRING=("LOC=H13", "IOSTANDARD = LVCMOS25")
 #  PORT Hard_PHY_MII_INT = PHY_MII_INT_s, UCF_NET_STRING=("LOC=H20", "IOSTANDARD = LVCMOS25",  "TIG")
-# System ACE    
-  PORT SYSACE_CLK      = sysace_clk,      UCF_NET_STRING=("LOC=AH17", "IOSTANDARD = LVCMOS33", "PERIOD = 30000 ps") # Input CLK
-  PORT SYSACE_MPA00  = sysace_mpa_0_,  UCF_NET_STRING=("LOC=G5", "IOSTANDARD = LVCMOS33")
-  PORT SYSACE_MPA01  = sysace_mpa_1_,  UCF_NET_STRING=("LOC=N7", "IOSTANDARD = LVCMOS33")
-  PORT SYSACE_MPA02  = sysace_mpa_2_,  UCF_NET_STRING=("LOC=N5", "IOSTANDARD = LVCMOS33")
-  PORT SYSACE_MPA03  = sysace_mpa_3_,  UCF_NET_STRING=("LOC=P5", "IOSTANDARD = LVCMOS33")
-  PORT SYSACE_MPA04  = sysace_mpa_4_,  UCF_NET_STRING=("LOC=R6", "IOSTANDARD = LVCMOS33")
-  PORT SYSACE_MPA05  = sysace_mpa_5_,  UCF_NET_STRING=("LOC=M6", "IOSTANDARD = LVCMOS33")
-  PORT SYSACE_MPA06  = sysace_mpa_6_,  UCF_NET_STRING=("LOC=L6", "IOSTANDARD = LVCMOS33")
-  PORT SYSACE_MPD00  = sysace_mpd_0_,  UCF_NET_STRING=("LOC=P9", "IOSTANDARD = LVCMOS33")
-  PORT SYSACE_MPD01  = sysace_mpd_1_,  UCF_NET_STRING=("LOC=T8", "IOSTANDARD = LVCMOS33")
-  PORT SYSACE_MPD02  = sysace_mpd_2_,  UCF_NET_STRING=("LOC=J7", "IOSTANDARD = LVCMOS33")
-  PORT SYSACE_MPD03  = sysace_mpd_3_,  UCF_NET_STRING=("LOC=H7", "IOSTANDARD = LVCMOS33")
-  PORT SYSACE_MPD04  = sysace_mpd_4_,  UCF_NET_STRING=("LOC=R7", "IOSTANDARD = LVCMOS33")
-  PORT SYSACE_MPD05  = sysace_mpd_5_,  UCF_NET_STRING=("LOC=U7", "IOSTANDARD = LVCMOS33")
-  PORT SYSACE_MPD06  = sysace_mpd_6_,  UCF_NET_STRING=("LOC=P7", "IOSTANDARD = LVCMOS33")
-  PORT SYSACE_MPD07  = sysace_mpd_7_,  UCF_NET_STRING=("LOC=P6", "IOSTANDARD = LVCMOS33")
-  PORT SYSACE_MPD08  = sysace_mpd_8_,  UCF_NET_STRING=("LOC=R8", "IOSTANDARD = LVCMOS33")
-  PORT SYSACE_MPD09  = sysace_mpd_9_,  UCF_NET_STRING=("LOC=L5", "IOSTANDARD = LVCMOS33")
-  PORT SYSACE_MPD10  = sysace_mpd_10_, UCF_NET_STRING=("LOC=L4", "IOSTANDARD = LVCMOS33")
-  PORT SYSACE_MPD11  = sysace_mpd_11_, UCF_NET_STRING=("LOC=K6", "IOSTANDARD = LVCMOS33")
-  PORT SYSACE_MPD12  = sysace_mpd_12_, UCF_NET_STRING=("LOC=J5", "IOSTANDARD = LVCMOS33")
-  PORT SYSACE_MPD13  = sysace_mpd_13_, UCF_NET_STRING=("LOC=T6", "IOSTANDARD = LVCMOS33")
-  PORT SYSACE_MPD14  = sysace_mpd_14_, UCF_NET_STRING=("LOC=K7", "IOSTANDARD = LVCMOS33")
-  PORT SYSACE_MPD15  = sysace_mpd_15_, UCF_NET_STRING=("LOC=J6", "IOSTANDARD = LVCMOS33")
-  PORT SYSACE_MPCE   = sysace_mpce,    UCF_NET_STRING=("LOC=M5", "IOSTANDARD = LVCMOS33")
-  PORT SYSACE_MPOE   = sysace_mpoe,    UCF_NET_STRING=("LOC=N8", "IOSTANDARD = LVCMOS33")
-  PORT SYSACE_MPWE   = sysace_mpwe,    UCF_NET_STRING=("LOC=R9", "IOSTANDARD = LVCMOS33")
-  PORT SYSACE_MPIRQ  = sysace_mpirq,   UCF_NET_STRING=("LOC=M7", "IOSTANDARD = LVCMOS33", "TIG")
 
   # 10/100 Ethernet MAC
   PORT PHY_RESET  = phy_rst_n,     UCF_NET_STRING=("LOC=J14", "IOSTANDARD = LVCMOS25", "TIG")
