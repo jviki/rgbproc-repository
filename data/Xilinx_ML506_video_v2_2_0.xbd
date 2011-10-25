@@ -109,17 +109,6 @@ BEGIN IO_INTERFACE
   PORT Push_Buttons_5Bit_GPIO_IO4 = Push_Buttons_5Bit_GPIO_IO_4, IO_IS = gpio_io[4]
 END
 
-#Inter Integrated Circuit (IIC) Bus
-BEGIN IO_INTERFACE
-  ATTRIBUTE IOTYPE = XIL_IIC_V1
-  ATTRIBUTE INSTANCE = IIC_EEPROM
-  PARAMETER C_IIC_FREQ    = 100000, IO_IS = clk_out_freq       # 100 KHz
-  PARAMETER C_TEN_BIT_ADR = 0,      IO_IS = slave_respond_mode # 7-bit addrs
-  PORT SCL = iic_scl, IO_IS = Serial_Clock
-  PORT SDA = iic_sda, IO_IS = Serial_Data
-END
-
-
 
 BEGIN IO_ADAPTER
   ATTRIBUTE CORENAME = util_ds_buf
@@ -523,12 +512,6 @@ BEGIN FPGA
   PORT Push_Buttons_5Bit_GPIO_IO2 = Push_Buttons_5Bit_GPIO_IO_2, UCF_NET_STRING = ("LOC = V8", "IOSTANDARD=LVCMOS33", "PULLDOWN", "SLEW=SLOW", "DRIVE=2")
   PORT Push_Buttons_5Bit_GPIO_IO3 = Push_Buttons_5Bit_GPIO_IO_3, UCF_NET_STRING = ("LOC = AK7", "IOSTANDARD=LVCMOS33", "PULLDOWN", "SLEW=SLOW", "DRIVE=2")
   PORT Push_Buttons_5Bit_GPIO_IO4 = Push_Buttons_5Bit_GPIO_IO_4, UCF_NET_STRING = ("LOC = U8", "IOSTANDARD=LVCMOS33", "PULLDOWN", "SLEW=SLOW", "DRIVE=2")
-
-# Inter Integrated Circuit (IIC) Bus
-  PORT IIC_CLK   = iic_scl, UCF_NET_STRING=("LOC=F9", "SLEW = SLOW", "DRIVE = 6", "IOSTANDARD=LVCMOS33")
-  PORT IIC_DATA  = iic_sda, UCF_NET_STRING=("LOC=F8", "SLEW = SLOW", "DRIVE = 6", "IOSTANDARD=LVCMOS33")
-
-  
 
   # DDR2
   PORT DDR2_ODT0    = ddr2_ddr_odt_0,     UCF_NET_STRING=("LOC=F31", "IOSTANDARD = SSTL18_II")
