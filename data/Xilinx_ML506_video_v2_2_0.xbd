@@ -109,17 +109,6 @@ BEGIN IO_INTERFACE
   PORT Push_Buttons_5Bit_GPIO_IO4 = Push_Buttons_5Bit_GPIO_IO_4, IO_IS = gpio_io[4]
 END
 
-# PS/2 Port 2 Keyboard
-BEGIN IO_INTERFACE
-  ATTRIBUTE IOTYPE = XIL_PS2_V1_invisible_in_lava_ff
-  ATTRIBUTE INSTANCE = PS2_Keyboard
-  PORT CLK_IN   = ps2_2_clk_in,   IO_IS=clk_in
-  PORT CLK_OUT  = ps2_2_clk_out,  IO_IS=clk_out
-  PORT DATA_IN  = ps2_2_data_in,  IO_IS=data_in
-  PORT DATA_OUT = ps2_2_data_out, IO_IS=data_out
-END
-
-
 #Inter Integrated Circuit (IIC) Bus
 BEGIN IO_INTERFACE
   ATTRIBUTE IOTYPE = XIL_IIC_V1
@@ -713,9 +702,6 @@ BEGIN FPGA
   PORT Push_Buttons_5Bit_GPIO_IO3 = Push_Buttons_5Bit_GPIO_IO_3, UCF_NET_STRING = ("LOC = AK7", "IOSTANDARD=LVCMOS33", "PULLDOWN", "SLEW=SLOW", "DRIVE=2")
   PORT Push_Buttons_5Bit_GPIO_IO4 = Push_Buttons_5Bit_GPIO_IO_4, UCF_NET_STRING = ("LOC = U8", "IOSTANDARD=LVCMOS33", "PULLDOWN", "SLEW=SLOW", "DRIVE=2")
 
-# PS/2 Port 2 Keyboard
-  PORT PS2_2_CLK_IN   = ps2_2_clk_in,   UCF_NET_STRING=("LOC=T26", "SLEW = SLOW", "DRIVE = 2", "IOSTANDARD=LVCMOS18") # CLK input
-  PORT PS2_2_DATA_IN  = ps2_2_data_in,  UCF_NET_STRING=("LOC=T25", "SLEW = SLOW", "DRIVE = 2", "IOSTANDARD=LVCMOS18")                                                                                                                                     
 # Inter Integrated Circuit (IIC) Bus
   PORT IIC_CLK   = iic_scl, UCF_NET_STRING=("LOC=F9", "SLEW = SLOW", "DRIVE = 6", "IOSTANDARD=LVCMOS33")
   PORT IIC_DATA  = iic_sda, UCF_NET_STRING=("LOC=F8", "SLEW = SLOW", "DRIVE = 6", "IOSTANDARD=LVCMOS33")
