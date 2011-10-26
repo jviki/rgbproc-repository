@@ -35,9 +35,23 @@ architecture coregen_asfifo_rgb26 of rgb_asfifo is
 	signal rgb_din  : std_logic_vector(25 downto 0);
 	signal rgb_dout : std_logic_vector(25 downto 0);
 
+	component asfifo_rgb26 IS
+	port (
+		rst    : in std_logic;
+		wr_clk : in std_logic;
+		rd_clk : in std_logic;
+		din    : in std_logic_vector(25 downto 0);
+		wr_en  : in std_logic;
+		rd_en  : in std_logic;
+		dout   : out std_logic_vector(25 downto 0);
+		full   : out std_logic;
+		empty  : out std_logic
+	);
+	end component;
+
 begin
 
-	impl : entity work.asfifo_rgb26
+	impl : asfifo_rgb26
 	port map (
 		RST    => ASYNC_RST,
 
