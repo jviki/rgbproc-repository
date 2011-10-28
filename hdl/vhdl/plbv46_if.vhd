@@ -114,6 +114,10 @@ architecture with_plb_slave of plbv46_if is
 		BASEADDR or USER_BASEADDR
 	);
 
+	constant ARD_NUM_CE     : INTEGER_ARRAY_TYPE := (
+		0, 0, 0
+	);
+
 	---
 	-- Bus2IP/IP2Bus signals
 	---
@@ -365,8 +369,8 @@ begin
 		C_INCLUDE_DPHASE_TIMER => C_INCLUDE_DPHASE_TIMER,
 		C_SIPIF_DWIDTH         => 32,
 		C_BUS2CORE_CLK_RATIO   => 1,
-		C_ARD_ADDR_RANGE_ARRAY => ARD_ADDR_RANGE
---		C_ARD_NUM_CE_ARRAY     => -- do not need this
+		C_ARD_ADDR_RANGE_ARRAY => ARD_ADDR_RANGE,
+		C_ARD_NUM_CE_ARRAY     => ARD_NUM_CE
 	)
 	port map (
 		SPLB_Clk       => SPLB_Clk,
