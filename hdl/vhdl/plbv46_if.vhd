@@ -193,7 +193,7 @@ begin
 		end if;
 	end process;
 
-	reg_negate_ce <= plb_internal_we when plb_cs(RNEG_CS_IDX) = '1' else '0';
+	reg_negate_ce <= not plb_internal_rnw when plb_internal_cs(RNEG_CS_IDX) = '1' else '0';
 	reg_negate_in <= plb_internal_din;
 
 
@@ -202,19 +202,19 @@ begin
 	-- Output address decoding
 	---
 
-	plb_internal_dout <= reg_negate  when plb_cs(RNEG_CS_IDX) = '1' else
+	plb_internal_dout <= reg_negate  when plb_internal_cs(RNEG_CS_IDX) = '1' else
 	                     reg_version when plb_internal_cs(RVER_CS_IDX) = '1' else
 		             fifo_cfg_dout;
 
-	plb_internal_wrack <= not plb_rnw when plb_cs(RNEG_CS_IDX) = '1' else
-	                      not plb_internal_rnw when plb_cs(RVER_CS_IDX) = '1' else
+	plb_internal_wrack <= not plb_rnw when plb_internal_cs(RNEG_CS_IDX) = '1' else
+	                      not plb_internal_rnw when plb_internal_cs(RVER_CS_IDX) = '1' else
 		              fifo_cfg_ack and not plb_internal_rnw;
 
-	plb_internal_rdack <= plb_rnw when plb_cs(RNEG_CS_IDX) = '1' else
-	                      plb_internal_rnw when plb_cs(RVER_CS_IDX) = '1' else
+	plb_internal_rdack <= plb_rnw when plb_internal_cs(RNEG_CS_IDX) = '1' else
+	                      plb_internal_rnw when plb_internal_cs(RVER_CS_IDX) = '1' else
 		              fifo_cfg_ack and plb_internal_rnw;
 
-	plb_internal_error <= fifo_cfg_error when plb_cs(USER_CS_IDX) = '1' else
+	plb_internal_error <= fifo_cfg_error when plb_internal_cs(USER_CS_IDX) = '1' else
 	                      '0';
 
 	
@@ -242,7 +242,7 @@ begin
 		if rising_edge(SPLB_Clk) then
 			if SPLB_Rst = '1' or reg_fifo_written_clr = '1' then
 				reg_fifo_written <= '0';
-			else reg_fifo_written_set = '1' then
+			elsif reg_fifo_written_set = '1' then
 				reg_fifo_written <= '1';
 			end if;
 		end if;
@@ -297,15 +297,15 @@ begin
 	generic map (
 		C_FAMILY           => "virtex5",
 		C_DATA_WIDTH       => fifo_in_din'length,
-		C_FIFO_DEPTH       => 8
+		C_FIFO_DEPTH       => 8,
 		C_HAS_ALMOST_EMPTY => 0,
 		C_HAS_ALMOST_FULL  => 0,
 		C_HAS_RD_ACK       => 0,
 		C_HAS_RD_COUNT     => 0,
-		C_HAS_ERR          => 0,
+		C_HAS_RD_ERR       => 0,
 		C_HAS_WR_ACK       => 0,
-		C_HAS_WE_COUNT     => 0,
-		C_HAS_WE_ERR       => 0,
+		C_HAS_WR_COUNT     => 0,
+		C_HAS_WR_ERR       => 0,
 		C_USE_BLOCKMEM     => USE_FIFO_BRAM
 	)
 	port map (
@@ -325,15 +325,15 @@ begin
 	generic map (
 		C_FAMILY           => "virtex5",
 		C_DATA_WIDTH       => fifo_out_din'length,
-		C_FIFO_DEPTH       => 8
+		C_FIFO_DEPTH       => 8,
 		C_HAS_ALMOST_EMPTY => 0,
 		C_HAS_ALMOST_FULL  => 0,
 		C_HAS_RD_ACK       => 0,
 		C_HAS_RD_COUNT     => 0,
-		C_HAS_ERR          => 0,
+		C_HAS_RD_ERR       => 0,
 		C_HAS_WR_ACK       => 0,
-		C_HAS_WE_COUNT     => 0,
-		C_HAS_WE_ERR       => 0,
+		C_HAS_WR_COUNT     => 0,
+		C_HAS_WR_ERR       => 0,
 		C_USE_BLOCKMEM     => USE_FIFO_BRAM
 	)
 	port map (
@@ -365,8 +365,8 @@ begin
 		C_INCLUDE_DPHASE_TIMER => C_INCLUDE_DPHASE_TIMER,
 		C_SIPIF_DWIDTH         => 32,
 		C_BUS2CORE_CLK_RATIO   => 1,
-		C_ARD_ADDR_RANGE_ARRAY => ARD_ADDR_RANGE,
-		C_ARD_NUM_CE_ARRAY     => 0 -- do not need this
+		C_ARD_ADDR_RANGE_ARRAY => ARD_ADDR_RANGE
+--		C_ARD_NUM_CE_ARRAY     => -- do not need this
 	)
 	port map (
 		SPLB_Clk       => SPLB_Clk,
@@ -422,7 +422,7 @@ begin
 		Bus2IP_BE      => plb_internal_be,
 		Bus2IP_CS      => plb_internal_cs,
 		Bus2IP_RdCE    => open,
-		Bus2IP_WrCE    => open
+		Bus2IP_WrCE    => open,
 
 		IP2Bus_Data    => plb_internal_dout,
 		IP2Bus_WrAck   => plb_internal_wrack,
