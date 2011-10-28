@@ -22,11 +22,7 @@ generic (
 	C_SPLB_DWIDTH                  : integer              := 128;
 	C_SPLB_NUM_MASTERS             : integer              := 8;
 	C_SPLB_MID_WIDTH               : integer              := 3;
-	C_SPLB_NATIVE_DWIDTH           : integer              := 32;
 	C_SPLB_P2P                     : integer              := 0;
-	C_SPLB_SUPPORT_BURSTS          : integer              := 0;
-	C_SPLB_SMALLEST_MASTER         : integer              := 32;
-	C_SPLB_CLK_PERIOD_PS           : integer              := 10000;
 	C_INCLUDE_DPHASE_TIMER         : integer              := 0;
 	C_FAMILY                       : string               := "virtex5"
 );
