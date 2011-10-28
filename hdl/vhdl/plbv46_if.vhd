@@ -117,17 +117,17 @@ architecture with_plb_slave of plbv46_if is
 	---
 	-- Bus2IP/IP2Bus signals
 	---
-	signal plb_clk   : std_logic;
-	signal plb_rst   : std_logic;
-	signal plb_addr  : std_logic_vector(0 to 31);
-	signal plb_din   : std_logic_vector(0 to 31);
-	signal plb_be    : std_logic_vector(0 to 3);
-	signal plb_dout  : std_logic_vector(0 to 31);
-	signal plb_rnw   : std_logic;
-	signal plb_error : std_logic;
-	signal plb_wrack : std_logic;
-	signal plb_rdack : std_logic;
-	signal plb_cs    : std_logic_vector(2 downto 0);
+	signal plb_internal_clk   : std_logic;
+	signal plb_internal_rst   : std_logic;
+	signal plb_internal_addr  : std_logic_vector(0 to 31);
+	signal plb_internal_din   : std_logic_vector(0 to 31);
+	signal plb_internal_be    : std_logic_vector(0 to 3);
+	signal plb_internal_dout  : std_logic_vector(0 to 31);
+	signal plb_internal_rnw   : std_logic;
+	signal plb_internal_error : std_logic;
+	signal plb_internal_wrack : std_logic;
+	signal plb_internal_rdack : std_logic;
+	signal plb_internal_cs    : std_logic_vector(2 downto 0);
 
 	---
 	-- Crossing CLK domain FIFO for requests
@@ -193,8 +193,8 @@ begin
 		end if;
 	end process;
 
-	reg_negate_ce <= plb_we when plb_cs(RNEG_CS_IDX) = '1' else '0';
-	reg_negate_in <= plb_din;
+	reg_negate_ce <= plb_internal_we when plb_cs(RNEG_CS_IDX) = '1' else '0';
+	reg_negate_in <= plb_internal_din;
 
 
 	-----------------------------------------------------------
@@ -202,20 +202,20 @@ begin
 	-- Output address decoding
 	---
 
-	plb_dout <= reg_negate  when plb_cs(RNEG_CS_IDX) = '1' else
-	            reg_version when plb_cs(RVER_CS_IDX) = '1' else
-		    fifo_cfg_dout;
+	plb_internal_dout <= reg_negate  when plb_cs(RNEG_CS_IDX) = '1' else
+	                     reg_version when plb_internal_cs(RVER_CS_IDX) = '1' else
+		             fifo_cfg_dout;
 
-	plb_wrack <= not plb_rnw when plb_cs(RNEG_CS_IDX) = '1' else
-	             not plb_rnw when plb_cs(RVER_CS_IDX) = '1' else
-		     fifo_cfg_ack and not plb_rnw;
+	plb_internal_wrack <= not plb_rnw when plb_cs(RNEG_CS_IDX) = '1' else
+	                      not plb_internal_rnw when plb_cs(RVER_CS_IDX) = '1' else
+		              fifo_cfg_ack and not plb_internal_rnw;
 
-	plb_rdack <= plb_rnw when plb_cs(RNEG_CS_IDX) = '1' else
-	             plb_rnw when plb_cs(RVER_CS_IDX) = '1' else
-		     fifo_cfg_ack and plb_rnw;
+	plb_internal_rdack <= plb_rnw when plb_cs(RNEG_CS_IDX) = '1' else
+	                      plb_internal_rnw when plb_cs(RVER_CS_IDX) = '1' else
+		              fifo_cfg_ack and plb_internal_rnw;
 
-	plb_error <= fifo_cfg_error when plb_cs(USER_CS_IDX) = '1' else
-	             '0';
+	plb_internal_error <= fifo_cfg_error when plb_cs(USER_CS_IDX) = '1' else
+	                      '0';
 
 	
 	-----------------------------------------------------------
@@ -224,12 +224,12 @@ begin
 	---
 
 	-- FIFO request
-	fifo_in_din(31 downto  0) <= plb_addr;
-	fifo_in_din(63 downto 32) <= plb_din;
-	fifo_in_din(67 downto 64) <= plb_be;
-	fifo_in_din(68)           <= plb_rnw;
+	fifo_in_din(31 downto  0) <= plb_internal_addr;
+	fifo_in_din(63 downto 32) <= plb_internal_din;
+	fifo_in_din(67 downto 64) <= plb_internal_be;
+	fifo_in_din(68)           <= plb_internal_rnw;
 
-	fifo_in_we <= plb_cs(USER_CS_IDX) and not reg_fifo_written;
+	fifo_in_we <= plb_internal_cs(USER_CS_IDX) and not reg_fifo_written;
 	-- TODO: handle fifo_in_full, but should never happen
 	--       no more then 1 transaction over PLB would be
 	--       possible, fifo can hold more then 1 transaction
@@ -309,7 +309,7 @@ begin
 		C_USE_BLOCKMEM     => USE_FIFO_BRAM
 	)
 	port map (
-		Wr_clk  => plb_clk,
+		Wr_clk  => plb_internal_clk,
 		Wr_en   => fifo_in_we,
 		Din     => fifo_in_din,
 		Full    => fifo_in_full,
@@ -342,7 +342,7 @@ begin
 		Din     => fifo_out_din,
 		Full    => fifo_out_full,
 
-		Rd_clk  => plb_clk,
+		Rd_clk  => plb_internal_clk,
 		Rd_en   => fifo_out_re,
 		Dout    => fifo_out_dout,
 		Empty   => fifo_out_empty
@@ -414,20 +414,20 @@ begin
 		Sl_MRdErr      => Sl_MRdErr,
 		Sl_MIRQ        => Sl_MIRQ,
 		
-		Bus2IP_Clk     => plb_clk,
-		Bus2IP_Reset   => plb_rst,
-		Bus2IP_Addr    => plb_addr,
-		Bus2IP_Data    => plb_din,
-		Bus2IP_RNW     => plb_rnw,
-		Bus2IP_BE      => plb_be,
-		Bus2IP_CS      => plb_cs,
+		Bus2IP_Clk     => plb_internal_clk,
+		Bus2IP_Reset   => plb_internal_rst,
+		Bus2IP_Addr    => plb_internal_addr,
+		Bus2IP_Data    => plb_internal_din,
+		Bus2IP_RNW     => plb_internal_rnw,
+		Bus2IP_BE      => plb_internal_be,
+		Bus2IP_CS      => plb_internal_cs,
 		Bus2IP_RdCE    => open,
 		Bus2IP_WrCE    => open
 
-		IP2Bus_Data    => plb_dout,
-		IP2Bus_WrAck   => plb_wrack,
-		IP2Bus_RdAck   => plb_rdack,
-		IP2Bus_Error   => plb_error
+		IP2Bus_Data    => plb_internal_dout,
+		IP2Bus_WrAck   => plb_internal_wrack,
+		IP2Bus_RdAck   => plb_internal_rdack,
+		IP2Bus_Error   => plb_internal_error
 	);
 
 
