@@ -15,6 +15,7 @@ use proc_common_v3_00_a.ipif_pkg.all;
 
 entity plbv46_if is
 generic (
+	IP_VERSION                     : std_logic_vector(31 downto 0);
 	USE_FIFO_BRAM                  : integer              := 1; -- 1 = BRAM, 0 = Dist Memory
 	C_BASEADDR                     : std_logic_vector     := X"FFFFFFFF";
 	C_HIGHADDR                     : std_logic_vector     := X"00000000";
@@ -89,10 +90,24 @@ architecture with_plb_slave of plbv46_if is
 	---
 	constant BASEADDR       : std_logic_vector := X"0000_0000" & C_BASEADDR;
 	-- supported only 0x100 address space (address is 8-bit)
-	constant USER_BASEADDR  : std_logic_vector := X"0000_0000_0000_0000";
+	constant RVER_BASEADDR  : std_logic_vector := X"0000_0000_0000_0000";
+	constant RVER_HIGHADDR  : std_logic_vector := X"0000_0000_0000_0003";
+	constant RNEG_BASEADDR  : std_logic_vector := X"0000_0000_0000_0004";
+	constant RNEG_HIGHADDR  : std_logic_vector := X"0000_0000_0000_0007";
+	constant USER_BASEADDR  : std_logic_vector := X"0000_0000_0000_0008";
 	constant USER_HIGHADDR  : std_logic_vector := X"0000_0000_0000_00FF";
 
+	constant RVER_CS_IDX    : integer := 0;
+	constant RNEG_CS_IDX    : integer := 1;
+	constant USER_CS_IDX    : integer := 2;
+
 	constant ARD_ADDR_RANGE : SLV64_ARRAY_TYPE := (
+		-- version address space
+		BASEADDR or RVER_BASEADDR,
+		BASEADDR or RVER_HIGHADDR,
+		-- negation address space
+		BASEADDR or RNEG_BASEADDR,
+		BASEADDR or RNEG_HIGHADDR,
 		-- CFG address space
 		BASEADDR or USER_BASEADDR,
 		HIGHADDR or USER_BASEADDR
@@ -111,7 +126,7 @@ architecture with_plb_slave of plbv46_if is
 	signal plb_error : std_logic;
 	signal plb_wrack : std_logic;
 	signal plb_rdack : std_logic;
-	signal plb_cs    : std_logic_vector(0 downto 0);
+	signal plb_cs    : std_logic_vector(2 downto 0);
 
 	---
 	-- Crossing CLK domain FIFO for requests
@@ -124,39 +139,133 @@ architecture with_plb_slave of plbv46_if is
 	signal fifo_in_dout   : std_logic_vector(68 downto 0);
 
 	---
+	-- Request was written to in FIFO
+	---
+	signal reg_fifo_written     : std_logic;
+	signal reg_fifo_written_set : std_logic;
+	signal reg_fifo_written_clr : std_logic;
+
+	---
 	-- Crossing CLK domain FIFO for responses
 	---
 	signal fifo_out_we    : std_logic;
 	signal fifo_out_full  : std_logic;
 	signal fifo_out_re    : std_logic;
 	signal fifo_out_empty : std_logic;
-	signal fifo_out_din   : std_logic_vector(34 downto 0);
-	signal fifo_out_dout  : std_logic_vector(34 downto 0);
+	signal fifo_out_din   : std_logic_vector(33 downto 0);
+	signal fifo_out_dout  : std_logic_vector(33 downto 0);
+	
+	---
+	-- Semantic for FIFO data signals in SPLB CLK domain
+	---
+	signal fifo_cfg_dout  : std_logic_vector(31 downto  0);
+	signal fifo_cfg_ack   : std_logic;
+	signal fifo_cfg_error : std_logic;
 
 	---
-	-- Register to hold RNW value (is it necessary?)
+	-- Testing registers
 	---
-	signal reg_rnw        : std_logic;
-	signal reg_rnw_in     : std_logic;
-	signal reg_rnw_ce     : std_logic;
+	signal reg_negate     : std_logic_vector(31 downto 0);
+	signal reg_negate_in  : std_logic_vector(31 downto 0);
+	signal reg_negate_ce  : std_logic;
+	signal reg_version    : std_logic_vector(31 downto 0);
 
 begin
 
 	---
-	-- PLBv46 to CFG, sending request over async fifo
+	-- IP Version pseudo register
 	---
+	reg_version <= IP_VERSION;
+
+
+	---
+	-- Negating register address space, SPLB_Clk domain
+	---
+	reg_negatep : process(SPLB_Clk, SPLB_Rst, reg_negate_ce, reg_negate_in)
+	begin
+		if rising_edge(SPLB_Clk) then
+			if SPLB_Rst = '1' then
+				reg_negate <= (others => '1');
+			elsif reg_negate_ce = '1' then
+				reg_negate <= not reg_negate_in;
+			end if;
+		end if;
+	end process;
+
+	reg_negate_ce <= plb_we when plb_cs(RNEG_CS_IDX) = '1' else '0';
+	reg_negate_in <= plb_din;
+
+
+	-----------------------------------------------------------
+	---
+	-- Output address decoding
+	---
+
+	plb_dout <= reg_negate  when plb_cs(RNEG_CS_IDX) = '1' else
+	            reg_version when plb_cs(RVER_CS_IDX) = '1' else
+		    fifo_cfg_dout;
+
+	plb_wrack <= not plb_rnw when plb_cs(RNEG_CS_IDX) = '1' else
+	             not plb_rnw when plb_cs(RVER_CS_IDX) = '1' else
+		     fifo_cfg_ack and not plb_rnw;
+
+	plb_rdack <= plb_rnw when plb_cs(RNEG_CS_IDX) = '1' else
+	             plb_rnw when plb_cs(RVER_CS_IDX) = '1' else
+		     fifo_cfg_ack and plb_rnw;
+
+	plb_error <= fifo_cfg_error when plb_cs(USER_CS_IDX) = '1' else
+	             '0';
+
+	
+	-----------------------------------------------------------
+	---
+	-- SPLB CLK domain
+	---
+
+	-- FIFO request
 	fifo_in_din(31 downto  0) <= plb_addr;
 	fifo_in_din(63 downto 32) <= plb_din;
 	fifo_in_din(67 downto 64) <= plb_be;
 	fifo_in_din(68)           <= plb_rnw;
 
-	fifo_in_we <= plb_cs;
+	fifo_in_we <= plb_cs(USER_CS_IDX) and not reg_fifo_written;
 	-- TODO: handle fifo_in_full, but should never happen
 	--       no more then 1 transaction over PLB would be
 	--       possible, fifo can hold more then 1 transaction
 
-	--
 
+	-- FIFO written register
+	reg_fifo_writtenp : process(SPLB_Clk, SPLB_Rst, reg_fifo_written_set,
+			            reg_fifo_written_clr)
+	begin
+		if rising_edge(SPLB_Clk) then
+			if SPLB_Rst = '1' or reg_fifo_written_clr = '1' then
+				reg_fifo_written <= '0';
+			else reg_fifo_written_set = '1' then
+				reg_fifo_written <= '1';
+			end if;
+		end if;
+	end process;
+
+	reg_fifo_written_set <= fifo_in_we;
+	reg_fifo_written_clr <= fifo_cfg_ack;
+
+
+	-- FIFO response
+	fifo_cfg_dout  <= fifo_out_dout(31 downto 0);
+	fifo_cfg_ack   <= fifo_out_dout(32);
+	fifo_cfg_error <= fifo_out_dout(33);
+
+	fifo_out_re <= not fifo_out_empty;
+
+
+	-----------------------------------------------------------
+
+	---
+	-- CFG_CLK domain
+	---
+
+	-- FIFO request
 	CFG_ADDR <= fifo_in_dout(31 downto  0);
 	CFG_DIN  <= fifo_in_dout(63 downto 32);
 	CFG_BE   <= fifo_in_dout(67 downto 64);
@@ -164,46 +273,19 @@ begin
 	CFG_RE   <= fifo_in_dout(68);
 
 	fifo_in_re <= not fifo_in_empty;
+
 	
-	reg_rnw_in <= fifo_in_dout(68);
-	reg_rnw_ce <= fifo_in_re;
-
-	---
-	-- CFG to PLBv46, receiving request over async fifo
-	---
+	-- FIFO response
 	fifo_out_din(31 downto 0) <= CFG_DOUT;
-	-- XXX: testing for reg_rnw is probably not necessary
-	fifo_out_din(32) <= '1' when reg_rnw = '0' else '0';
-	fifo_out_din(33) <= '1' when reg_rnw = '1' else '0';
-	fifo_out_din(34) <= '0';
+	fifo_out_din(32) <= CFG_ACK;
+	fifo_out_din(33) <= '0'; -- no error
 
-	fifo_in_we <= CFG_ACK;
+	fifo_out_we <= CFG_ACK;
 	-- TODO: handle fifo_out_full, read above same problem
 	--       with fifo_in_full
 
-	--
 
-	plb_dout <= fifo_out_dout(31 downto 0);
-	plb_wack <= fifo_out_dout(32);
-	plb_rack <= fifo_out_dout(33);
-	plb_error <= fifo_out_dout(34);
-
-	fifo_out_re <= not fifo_out_empty;
-
-
-	---
-	-- Holding RNW
-	---
-
-	reg_rnwp : process(CFG_CLK, reg_rnw_in, reg_rnw_ce)
-	begin
-		if rising_edge(CFG_CLK) then
-			if reg_rnw_ce = '1' then
-				reg_rnw <= reg_rnw_in;
-			end if;
-		end if;
-	end process;
-
+	-----------------------------------------------------------
 
 	---
 	-- Async FIFOs (crossing clk domains)
@@ -265,6 +347,8 @@ begin
 		Empty   => fifo_out_empty
 	);
 
+
+	-----------------------------------------------------------
 
 	---
 	-- PLBv46 Slave
