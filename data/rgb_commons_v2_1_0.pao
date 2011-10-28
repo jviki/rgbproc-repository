@@ -1,3 +1,5 @@
+lib plbv46_slave_single_v1_01_a all
+
 #lib rgb_commons_v1_00_a rgb_fifo.vhd vhdl
 lib rgb_commons_v1_00_a rgb_asfifo.vhd vhdl
 lib rgb_commons_v1_00_a plbv46_if.vhd  vhdl
