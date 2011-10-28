@@ -15,7 +15,8 @@ use proc_common_v3_00_a.ipif_pkg.all;
 
 entity plbv46_if is
 generic (
-	IP_VERSION                     : std_logic_vector(31 downto 0);
+	IP_ID                          : std_logic_vector(15 downto 0);
+	IP_VERSION                     : std_logic_vector(15 downto 0);
 	USE_FIFO_BRAM                  : integer              := 1; -- 1 = BRAM, 0 = Dist Memory
 	C_BASEADDR                     : std_logic_vector     := X"FFFFFFFF";
 	C_HIGHADDR                     : std_logic_vector     := X"00000000";
@@ -175,7 +176,7 @@ begin
 	---
 	-- IP Version pseudo register
 	---
-	reg_version <= IP_VERSION;
+	reg_version <= IP_ID & IP_VERSION;
 
 
 	---
