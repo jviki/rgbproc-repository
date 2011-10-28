@@ -111,7 +111,7 @@ architecture with_plb_slave of plbv46_if is
 		BASEADDR or RNEG_HIGHADDR,
 		-- CFG address space
 		BASEADDR or USER_BASEADDR,
-		HIGHADDR or USER_BASEADDR
+		BASEADDR or USER_BASEADDR
 	);
 
 	---
