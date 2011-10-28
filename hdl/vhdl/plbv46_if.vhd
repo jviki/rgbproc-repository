@@ -267,7 +267,7 @@ begin
 	---
 
 	-- FIFO request
-	CFG_ADDR <= fifo_in_dout(31 downto  0);
+	CFG_ADDR <= fifo_in_dout(7 downto  0); -- using only 8 bits
 	CFG_DIN  <= fifo_in_dout(63 downto 32);
 	CFG_BE   <= fifo_in_dout(67 downto 64);
 	CFG_WE   <= not fifo_in_dout(68);
