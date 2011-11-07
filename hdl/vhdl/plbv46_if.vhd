@@ -175,6 +175,8 @@ architecture with_plb_slave of plbv46_if is
 	signal reg_negate_ce  : std_logic;
 	signal reg_version    : std_logic_vector(31 downto 0);
 
+	signal waste          : std_logic_vector(23 downto 0);
+
 begin
 
 	---
@@ -272,6 +274,7 @@ begin
 
 	-- FIFO request
 	CFG_ADDR <= fifo_in_dout(7 downto  0); -- using only 8 bits
+	waste    <= fifo_in_dout(31 downto 8);
 	CFG_DIN  <= fifo_in_dout(63 downto 32);
 	CFG_BE   <= fifo_in_dout(67 downto 64);
 	CFG_WE   <= not fifo_in_dout(68);
@@ -301,7 +304,7 @@ begin
 	generic map (
 		C_FAMILY           => "virtex5",
 		C_DATA_WIDTH       => fifo_in_din'length,
-		C_FIFO_DEPTH       => 8,
+		C_FIFO_DEPTH       => 16,
 		C_HAS_ALMOST_EMPTY => 0,
 		C_HAS_ALMOST_FULL  => 0,
 		C_HAS_RD_ACK       => 0,
@@ -329,7 +332,7 @@ begin
 	generic map (
 		C_FAMILY           => "virtex5",
 		C_DATA_WIDTH       => fifo_out_din'length,
-		C_FIFO_DEPTH       => 8,
+		C_FIFO_DEPTH       => 16,
 		C_HAS_ALMOST_EMPTY => 0,
 		C_HAS_ALMOST_FULL  => 0,
 		C_HAS_RD_ACK       => 0,
