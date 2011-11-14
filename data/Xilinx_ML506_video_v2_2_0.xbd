@@ -77,6 +77,31 @@ BEGIN IO_INTERFACE
 	PORT BLUE_7   = vga_in_blue_7,  IO_IS = VGA_IN_BLUE[7]
 END
 
+# VGA/DVI output
+BEGIN IO_INTERFACE
+	ATTRIBUTE IOTYPE   = DVI_OUT_V1
+	ATTRIBUTE INSTANCE = DVI_OUT
+
+	PORT D_0     = dvi_d_0,     IO_IS = DVI_D0
+	PORT D_1     = dvi_d_1,     IO_IS = DVI_D1
+	PORT D_2     = dvi_d_2,     IO_IS = DVI_D2
+	PORT D_3     = dvi_d_3,     IO_IS = DVI_D3
+	PORT D_4     = dvi_d_4,     IO_IS = DVI_D4
+	PORT D_5     = dvi_d_5,     IO_IS = DVI_D5
+	PORT D_6     = dvi_d_6,     IO_IS = DVI_D6
+	PORT D_7     = dvi_d_7,     IO_IS = DVI_D7
+	PORT D_8     = dvi_d_8,     IO_IS = DVI_D8
+	PORT D_9     = dvi_d_9,     IO_IS = DVI_D9
+	PORT D_10    = dvi_d_10,    IO_IS = DVI_D10
+	PORT D_11    = dvi_d_11,    IO_IS = DVI_D11
+	PORT HSYNC   = dvi_hsync,   IO_IS = DVI_VSYNC
+	PORT VSYNC   = dvi_vsync,   IO_IS = DVI_VSYNC
+	PORT DE      = dvi_de,      IO_IS = DVI_DE
+	PORT RESET_B = dvi_reset_b, IO_IS = DVI_RESET_N
+	PORT XCLK_P  = dvi_xclk_p,  IO_IS = DVI_XCLK_P
+	PORT XCLK_N  = dvi_xclk_n,  IO_IS = DVI_XCLK_N
+END
+
 BEGIN IO_INTERFACE
   ATTRIBUTE INSTANCE = LEDs_8Bit
   ATTRIBUTE IOTYPE = LED_ARRAY_V1
@@ -382,6 +407,30 @@ BEGIN FPGA
   PORT BLUE_5   = vga_in_blue_5,  UCF_NET_STRING=("LOC=AB5",  "IOSTANDARD = LVCMOS33")
   PORT BLUE_6   = vga_in_blue_6,  UCF_NET_STRING=("LOC=AC7",  "IOSTANDARD = LVCMOS33")
   PORT BLUE_7   = vga_in_blue_7,  UCF_NET_STRING=("LOC=AD7",  "IOSTANDARD = LVCMOS33")
+
+  ### DVI output ###
+  # see: http://zhenyu-ye.net/links/reconfig/xilinxonlinux/ml506/tutorial/hellotft/main.html
+
+  PORT D_0     = dvi_d_0,     UCF_NET_STRING=("LOC=AB8",  "IOSTANDARD = LVDCI_33")
+  PORT D_1     = dvi_d_1,     UCF_NET_STRING=("LOC=AC8",  "IOSTANDARD = LVDCI_33")
+  PORT D_2     = dvi_d_2,     UCF_NET_STRING=("LOC=AN12", "IOSTANDARD = LVDCI_33")
+  PORT D_3     = dvi_d_3,     UCF_NET_STRING=("LOC=AP12", "IOSTANDARD = LVDCI_33")
+  PORT D_4     = dvi_d_4,     UCF_NET_STRING=("LOC=AA9",  "IOSTANDARD = LVDCI_33")
+  PORT D_5     = dvi_d_5,     UCF_NET_STRING=("LOC=AA8",  "IOSTANDARD = LVDCI_33")
+  PORT D_6     = dvi_d_6,     UCF_NET_STRING=("LOC=AM13", "IOSTANDARD = LVDCI_33")
+  PORT D_7     = dvi_d_7,     UCF_NET_STRING=("LOC=AN13", "IOSTANDARD = LVDCI_33")
+  PORT D_8     = dvi_d_8,     UCF_NET_STRING=("LOC=AA10", "IOSTANDARD = LVDCI_33")
+  PORT D_9     = dvi_d_9,     UCF_NET_STRING=("LOC=AB10", "IOSTANDARD = LVDCI_33")
+  PORT D_10    = dvi_d_10,    UCF_NET_STRING=("LOC=AP14", "IOSTANDARD = LVDCI_33")
+  PORT D_11    = dvi_d_11,    UCF_NET_STRING=("LOC=AN14", "IOSTANDARD = LVDCI_33")
+
+  PORT HSYNC   = dvi_hsync,   UCF_NET_STRING=("LOC=AM12", "IOSTANDARD = LVDCI_33")
+  PORT VSYNC   = dvi_vsync,   UCF_NET_STRING=("LOC=AM11", "IOSTANDARD = LVDCI_33")
+  PORT DE      = dvi_de,      UCF_NET_STRING=("LOC=AE8", "IOSTANDARD = LVDCI_33")
+  PORT RESET_B = dvi_reset_b, UCF_NET_STRING=("LOC=AK6", "IOSTANDARD = LVCMOS33")
+
+  PORT XCLK_P  = dvi_xclk_p,  UCF_NET_STRING=("LOC=AL11", "IOSTANDARD = LVCMOS33", "DRIVE = 24", "SLEW = FAST")
+  PORT XCLK_N  = dvi_xclk_n,  UCF_NET_STRING=("LOC=AL10", "IOSTANDARD = LVCMOS33", "DRIVE = 24", "SLEW = FAST")
 
   ### LEDS 8BIT ### 
   PORT LEDs_8Bit_GPIO_IO_0 = LEDs_8Bit_GPIO_IO_0, UCF_NET_STRING = ("LOC = AE24", "IOSTANDARD=LVCMOS18", "PULLDOWN", "SLEW=SLOW", "DRIVE=2" )
