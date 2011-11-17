@@ -35,6 +35,8 @@ architecture full of rgb2chrontel is
 
 	signal out_eol_valid : std_logic;
 	signal out_eof_valid : std_logic;
+	signal out_vld       : std_logic;
+	signal out_req       : std_logic;
 
 begin
 
@@ -59,6 +61,8 @@ begin
 		LAST   => out_eof_valid,
 		SYNC_N => OUT_VS
 	);
+
+	DE <= out_vld and out_req;
 
 end architecture;
 
