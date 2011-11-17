@@ -92,19 +92,19 @@ BEGIN IO_INTERFACE
 	ATTRIBUTE IOTYPE   = DVI_OUT_V1
 	ATTRIBUTE INSTANCE = DVI_OUT
 
-	PORT D_0     = dvi_d_0,     IO_IS = DVI_D0
-	PORT D_1     = dvi_d_1,     IO_IS = DVI_D1
-	PORT D_2     = dvi_d_2,     IO_IS = DVI_D2
-	PORT D_3     = dvi_d_3,     IO_IS = DVI_D3
-	PORT D_4     = dvi_d_4,     IO_IS = DVI_D4
-	PORT D_5     = dvi_d_5,     IO_IS = DVI_D5
-	PORT D_6     = dvi_d_6,     IO_IS = DVI_D6
-	PORT D_7     = dvi_d_7,     IO_IS = DVI_D7
-	PORT D_8     = dvi_d_8,     IO_IS = DVI_D8
-	PORT D_9     = dvi_d_9,     IO_IS = DVI_D9
-	PORT D_10    = dvi_d_10,    IO_IS = DVI_D10
-	PORT D_11    = dvi_d_11,    IO_IS = DVI_D11
-	PORT HSYNC   = dvi_hsync,   IO_IS = DVI_VSYNC
+	PORT D_0     = dvi_d_0,     IO_IS = DVI_D[0]
+	PORT D_1     = dvi_d_1,     IO_IS = DVI_D[1]
+	PORT D_2     = dvi_d_2,     IO_IS = DVI_D[2]
+	PORT D_3     = dvi_d_3,     IO_IS = DVI_D[3]
+	PORT D_4     = dvi_d_4,     IO_IS = DVI_D[4]
+	PORT D_5     = dvi_d_5,     IO_IS = DVI_D[5]
+	PORT D_6     = dvi_d_6,     IO_IS = DVI_D[6]
+	PORT D_7     = dvi_d_7,     IO_IS = DVI_D[7]
+	PORT D_8     = dvi_d_8,     IO_IS = DVI_D[8]
+	PORT D_9     = dvi_d_9,     IO_IS = DVI_D[9]
+	PORT D_10    = dvi_d_10,    IO_IS = DVI_D[10]
+	PORT D_11    = dvi_d_11,    IO_IS = DVI_D[11]
+	PORT HSYNC   = dvi_hsync,   IO_IS = DVI_HSYNC
 	PORT VSYNC   = dvi_vsync,   IO_IS = DVI_VSYNC
 	PORT DE      = dvi_de,      IO_IS = DVI_DE
 	PORT RESET_B = dvi_reset_b, IO_IS = DVI_RESET_N
