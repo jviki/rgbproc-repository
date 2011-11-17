@@ -31,3 +31,34 @@ port (
 );
 end entity;
 
+architecture full of rgb2chrontel is
+
+	signal out_eol_valid : std_logic;
+	signal out_eof_valid : std_logic;
+
+begin
+
+	hsync_gen_i : entity work.sync_gen
+	generic map (
+		SYNC_LEN => 64
+	)
+	port map (
+		CLK    => OUT_CLK,
+		RST    => OUT_RST,
+		LAST   => out_eol_valid,
+		SYNC_N => OUT_HS
+	);
+
+	vsync_gen_i : entity work.sync_gen
+	generic map (
+		SYNC_LEN => 480 -- XXX: is this right???
+	)
+	port map (
+		CLK    => OUT_CLK,
+		RST    => OUT_RST,
+		LAST   => out_eof_valid,
+		SYNC_N => OUT_VS
+	);
+
+end architecture;
+
