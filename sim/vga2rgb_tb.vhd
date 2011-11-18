@@ -22,19 +22,19 @@ architecture testbench of vga2rgb_tb is
 	constant RGB_FREQ   : real := 100.0;
 	constant RGB_PERIOD : time := BASE_MHZ / RGB_FREQ;
 
+	constant HBP        : integer := 48;
+	constant HFP        : integer := 16;
+	constant HPULSE     : integer := 96;
+
 	constant HPIXELS    : integer := 640; -- pixels per line
 	constant VLINES     : integer := 480; -- lines per frame
 
-	constant HPULSE     : time := 96 * VGA_PERIOD;
-	constant VPULSE     : time :=  2 * HPIXELS * VGA_PERIOD; --  2 lines
+	constant VBP        : integer := 33; -- 33 lines
+	constant VFP        : integer := 10; -- 10 lines
+	constant VPULSE     : integer :=  2; --  2 lines
 
-	constant HBP        : time := 48 * VGA_PERIOD;
-	constant HFP        : time := 16 * VGA_PERIOD;
-	constant VBP        : time := 33 * HPIXELS * VGA_PERIOD; -- 33 lines
-	constant VFP        : time := 10 * HPIXELS * VGA_PERIOD; -- 10 lines
-
-	constant HACTIVE    : time := HPIXELS * VGA_PERIOD;
-	constant VACTIVE    : time := HPIXELS * VLINES  * VGA_PERIOD;
+	constant HACTIVE    : integer := HPIXELS;
+	constant VACTIVE    : integer := VLINES;
 
 	---------------------------------------------
 
@@ -74,12 +74,11 @@ begin
 		RGB_R   => open,
 		RGB_G   => open,
 		RGB_B   => open,
-		RGB_HS  => open,
-		RGB_VS  => open,
+		RGB_EOL => open,
+		RGB_EOF => open,
 
 		RGB_VLD => rgb_vld,
-		RGB_REQ => rgb_req,
-		RGB_DROP => open
+		RGB_REQ => rgb_req
 	);
 
 	rgb_req <= rgb_vld;
@@ -105,58 +104,78 @@ begin
 
 	-----------------------------
 
-	vsync_gen_i : process
+	sync_gen_i : process
+		variable row : integer;
+
+	procedure one_hsync is
+		variable pix : integer;
+	begin
+		vga_hs <= '1';
+		for pix in 1 to HBP loop
+			wait until rising_edge(vga_clk);	
+		end loop;
+
+		vga_hactive <= '1';
+		for pix in 1 to HACTIVE loop
+			wait until rising_edge(vga_clk);	
+		end loop;
+
+		vga_hactive <= '0';
+		for pix in 1 to HFP loop
+			wait until rising_edge(vga_clk);	
+		end loop;
+
+		vga_hs <= '0';
+		for pix in 1 to HPULSE loop
+			wait until rising_edge(vga_clk);
+		end loop;
+
+		vga_hs <= '1';
+	end procedure;
 	begin
 		vga_vs      <= '1';
 		vga_vactive <= '0';
-
-		if vga_rst = '1' then
-			vga_vs      <= '1';
-			vga_vactive <= '0';
-			wait until vga_rst = '0';
-			wait for 6 * VGA_PERIOD; -- no data at the beginning
-		end if;
-
-		vga_vs <= '1';
-		wait for VBP;
-
-		vga_vactive <= '1';
-		wait for VACTIVE;
-
-		vga_vactive <= '0';
-		wait for VFP;
-
-		vga_vs <= '0';
-		wait for VPULSE;
-
-		vga_vs <= '1';
-	end process;
-
-	hsync_gen_i : process
-	begin
 		vga_hs      <= '1';
 		vga_hactive <= '0';
 
 		if vga_rst = '1' then
-			vga_hs      <= '1';
-			vga_hactive <= '0';
+			report "VSYNC Reset";
 			wait until vga_rst = '0';
-			wait for 6 * VGA_PERIOD; -- no data at the beginning
+			wait for 6 * VGA_PERIOD;
+			wait until rising_edge(vga_clk);
 		end if;
 
-		vga_hs <= '1';
-		wait for HBP;
+		report "VBP";
+		vga_vs <= '1';
+		for row in 1 to VBP loop
+			one_hsync;
+			report "VBP after " & integer'image(row);
+		end loop;
 
-		vga_hactive <= '1';
-		wait for HACTIVE;
+		report "VACTIVE";
+		vga_vactive <= '1';
+		for row in 1 to VACTIVE loop
+			one_hsync;
 
-		vga_hactive <= '0';
-		wait for HFP;
+			if row mod 48 = 0 then
+				report "VACTIVE after " & integer'image(row);
+			end if;
+		end loop;
 
-		vga_hs <= '0';
-		wait for HPULSE;
+		report "VFP";
+		vga_vactive <= '0';
+		for row in 1 to VFP loop
+			one_hsync;
+			report "VFP after " & integer'image(row);
+		end loop;
 
-		vga_hs <= '1';
+		report "VPULSE";
+		vga_vs <= '0';
+		for row in 1 to VPULSE loop
+			one_hsync;
+		end loop;
+
+		vga_vs <= '1';
 	end process;
 
 	-----------------------------
