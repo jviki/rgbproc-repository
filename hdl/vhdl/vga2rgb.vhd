@@ -42,6 +42,13 @@ architecture full of vga2rgb is
 	constant HPIXELS : integer := 800;
 	constant VLINES  : integer := 525;
 
+	constant HBP     : integer := 48;
+	constant HFP     : integer := 16;
+	constant VBP     : integer := 33;
+	constant VFP     : integer := 10;
+
+	constant HPULSE  : integer := 96;
+
 	type state_t is (s_drop, s_pass, s_hsync, s_vsync);
 	signal state  : state_t;
 	signal nstate : state_t;
