@@ -26,12 +26,11 @@ port (
 	RGB_R    : out std_logic_vector(7 downto 0);
 	RGB_G    : out std_logic_vector(7 downto 0);
 	RGB_B    : out std_logic_vector(7 downto 0);
-	RGB_HS   : out std_logic;
-	RGB_VS   : out std_logic;
+	RGB_EOL  : out std_logic;
+	RGB_EOF  : out std_logic;
 
 	RGB_VLD  : out std_logic;
-	RGB_REQ  : in  std_logic;
-	RGB_DROP : out std_logic
+	RGB_REQ  : in  std_logic
 );
 end entity;
 
