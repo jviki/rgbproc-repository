@@ -41,6 +41,8 @@ end entity;
 
 architecture full of active_detect is
 
+	constant END_OFF_AT : integer := LENGTH - END_OFF - 1;
+
 	---
 	-- Current position inside the SYNC_N phase.
 	-- Not all bits of the counter are used.
@@ -52,7 +54,7 @@ architecture full of active_detect is
 
 begin
 
-	assert BEG_OFF < END_OFF
+	assert BEG_OFF < END_OFF_AT
 		report "BEG_OFF "
 			& "(" & integer'image(BEG_OFF) & ")"
 			& " must be less then END_OFF "
@@ -87,10 +89,10 @@ begin
 	----------------------------------
 
 	ACTIVE <= SYNC_N when cnt_pos >= BEG_OFF
-	                  and cnt_pos  < END_OFF     else '0';
+	                  and cnt_pos <= END_OFF_AT else '0';
 
-	FIRST  <= SYNC_N when cnt_pos  = BEG_OFF     else '0';
-	LAST   <= SYNC_N when cnt_pos  = END_OFF - 1 else '0';
+	FIRST  <= SYNC_N when cnt_pos  = BEG_OFF    else '0';
+	LAST   <= SYNC_N when cnt_pos  = END_OFF_AT else '0';
 
 end architecture;
 
