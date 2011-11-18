@@ -114,8 +114,6 @@ begin
 		SYNC_N => hsync
 	);
 
-	OUT_HS <= hsync;
-
 	--------------------------
 
 	vsync_gen_i : entity work.sync_gen
@@ -128,8 +126,6 @@ begin
 		LAST   => out_eof_valid,
 		SYNC_N => vsync
 	);
-
-	OUT_VS <= vsync;
 
 	--------------------------
 
