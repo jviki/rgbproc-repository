@@ -42,7 +42,7 @@ architecture full of vga2rgb is
 	constant HPIXELS : integer := 800;
 	constant VLINES  : integer := 525;
 
-	type state_t is (s_idle, s_drop, s_pass, s_hsync, s_vsync);
+	type state_t is (s_drop, s_pass, s_hsync, s_vsync);
 	signal state  : state_t;
 	signal nstate : state_t;
 
@@ -133,21 +133,18 @@ begin
 	begin
 		if rising_edge(VGA_CLK) then
 			if self_vga_reset = '1' then
-				state <= s_idle;
+				state <= s_drop;
 			else
 				state <= nstate;
 			end if;
 		end if;
 	end process;
 
-	fsm_next : process(VGA_CLK, state)
+	fsm_next : process(VGA_CLK, state, VGA_VS, VGA_HS)
 	begin
 		nstate <= state;
 
 		case state is
-		when s_idle =>
-			nstate <= s_drop;
-
 		when s_drop =>
 			if VGA_VS = '0' then
 				nstate <= s_vsync;
@@ -159,9 +156,7 @@ begin
 			end if;
 
 		when s_pass =>
-			if fifo_full = '1' then
-				nstate <= s_drop;
-			elsif VGA_VS = '0' then
+			if VGA_VS = '0' then
 				nstate <= s_vsync;
 			elsif VGA_HS = '0' then
 				nstate <= s_hsync;
@@ -177,31 +172,13 @@ begin
 		end case;
 	end process;
 
-	fsm_output : process(VGA_CLK, state)
+	fsm_output : process(VGA_CLK, state, vga_hactive, vga_vactive)
 	begin
-		fifo_we    <= '0';
-		fifo_re    <= '0';
-		cnt_hp_ce  <= '0';
-		cnt_hp_clr <= '0';
+		vga_dena <= '0';
 
 		case state is
-		when s_drop =>
-			-- drop incomplete frame (can cause corruption in data)
-			fifo_re <= not fifo_empty;
-
 		when s_pass =>
-			if cnt_hp >= HBP and cnt_hp < HPIXELS - HFP then
-				fifo_we <= '1';
-			elsif VGA_HS = '0' then
-				fifo_we <= '1';
-			elsif VGA_VS = '0' then
-				fifo_we <= '1';
-			end if;
-
-			cnt_hp_ce <= '1';
-
-		when s_hsync =>
-			cnt_hp_clr <= '1';
+			vga_dena <= vga_hactive and vga_vactive;
 
 		when others =>
 		end case;
