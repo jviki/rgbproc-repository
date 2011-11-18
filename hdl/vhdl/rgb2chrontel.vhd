@@ -48,6 +48,7 @@ architecture full of rgb2chrontel is
 
 	signal out_data0     : std_logic_vector(11 downto 0);
 	signal out_data1     : std_logic_vector(11 downto 0);
+	signal out_data_en   : std_logic;
 
 	signal hsync         : std_logic;
 	signal vsync         : std_logic;
@@ -70,6 +71,26 @@ begin
 		BLUE  => out_b,
 		D0    => out_data0,
 		D1    => out_data1
+	);
+
+	ddr_i : entity work.data_out(ddr)
+	port map (
+		CLK   => OUT_CLK,
+		RST   => OUT_RST,
+
+		D0    => out_data0,
+		D1    => out_data1,
+		DE    => out_data_en,
+		HS    => hsync,
+		VS    => vsync,
+
+		OUT_XCLK_P  => OUT_XCLK_P,
+		OUT_XCLK_N  => OUT_XCLK_N,
+		OUT_RESET_N => OUT_RESET_N,
+		OUT_D       => OUT_D.
+		OUT_DE      => OUT_DE,
+		OUT_HS      => OUT_HS,
+		OUT_VS      => OUT_VS
 	);
 
 	--------------------------
@@ -113,8 +134,6 @@ begin
 		SYNC_N => hsync
 	);
 
-	OUT_HS <= hsync;
-
 	--------------------------
 
 	vsync_gen_i : entity work.sync_gen
@@ -127,8 +146,6 @@ begin
 		LAST   => out_eof_valid,
 		SYNC_N => vsync
 	);
-
-	OUT_VS <= vsync;
 
 	--------------------------
 
@@ -180,12 +197,12 @@ begin
 		fifo_re       <= '0';
 		out_eol_valid <= '0';
 		out_eof_valid <= '0';
-		OUT_DE        <= '0';
+		out_data_en   <= '0';
 
 		case state is
 		when s_pass =>
 			fifo_re       <= not fifo_empty;
-			OUT_DE        <= fifo_re;
+			out_data_en   <= fifo_re;
 			out_eol_valid <= fifo_re and out_eol;
 			out_eof_valid <= fifo_re and out_eof;
 
