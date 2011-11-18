@@ -48,6 +48,7 @@ architecture full of rgb2chrontel is
 
 	signal out_data0     : std_logic_vector(11 downto 0);
 	signal out_data1     : std_logic_vector(11 downto 0);
+	signal out_data_en   : std_logic;
 
 	signal hsync         : std_logic;
 	signal vsync         : std_logic;
@@ -180,12 +181,12 @@ begin
 		fifo_re       <= '0';
 		out_eol_valid <= '0';
 		out_eof_valid <= '0';
-		OUT_DE        <= '0';
+		out_data_en   <= '0';
 
 		case state is
 		when s_pass =>
 			fifo_re       <= not fifo_empty;
-			OUT_DE        <= fifo_re;
+			out_data_en   <= fifo_re;
 			out_eol_valid <= fifo_re and out_eol;
 			out_eof_valid <= fifo_re and out_eof;
 
