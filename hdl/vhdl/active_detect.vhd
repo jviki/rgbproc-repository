@@ -21,6 +21,8 @@ use proc_common_v3_00_a.proc_common_pkg.log2;
 -- FIRST _________________/ \_____________________________________
 --                                               _
 -- LAST  _______________________________________/ \_______________
+--
+-- Does not solve problem when the SYNC_N comes earlier (should not happen).
 ---
 entity active_detect is
 generic (
