@@ -46,6 +46,9 @@ architecture full of rgb2chrontel is
 	signal out_eol       : std_logic;
 	signal out_eof       : std_logic;
 
+	signal out_data0     : std_logic_vector(11 downto 0);
+	signal out_data1     : std_logic_vector(11 downto 0);
+
 	signal hsync         : std_logic;
 	signal vsync         : std_logic;
 
@@ -59,6 +62,15 @@ architecture full of rgb2chrontel is
 	signal nstate        : state_t;
 
 begin
+
+	idf0_i : entity work.idf_encoding(idf0)
+	port map (
+		RED   => out_r,
+		GREEN => out_g,
+		BLUE  => out_b,
+		D0    => out_data0,
+		D1    => out_data1
+	);
 
 	--------------------------
 
