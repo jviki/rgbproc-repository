@@ -73,6 +73,26 @@ begin
 		D1    => out_data1
 	);
 
+	ddr_i : entity work.data_out(ddr)
+	port map (
+		CLK   => OUT_CLK,
+		RST   => OUT_RST,
+
+		D0    => out_data0,
+		D1    => out_data1,
+		DE    => out_data_en,
+		HS    => hsync,
+		VS    => vsync,
+
+		OUT_XCLK_P  => OUT_XCLK_P,
+		OUT_XCLK_N  => OUT_XCLK_N,
+		OUT_RESET_N => OUT_RESET_N,
+		OUT_D       => OUT_D.
+		OUT_DE      => OUT_DE,
+		OUT_HS      => OUT_HS,
+		OUT_VS      => OUT_VS
+	);
+
 	--------------------------
 
 	asfifo_rgb : entity rgb_commons_v1_00_a.rgb_asfifo
