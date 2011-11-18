@@ -9,6 +9,9 @@ use ieee.std_logic_unsigned.all;
 library rgb_commons_v1_00_a;
 use rgb_commons_v1_00_a.rgb_asfifo;
 
+library proc_common_v3_00_a;
+use proc_common_v3_00_a.proc_common_pkg.log2;
+
 ---
 -- 
 ---
