@@ -61,13 +61,17 @@ architecture full of vga2rgb is
 	signal fifo_re     : std_logic;
 	signal fifo_empty  : std_logic;
 
-	signal cnt_hp     : std_logic_vector(log2(HPIXELS + 1) - 1 downto 0);
-	signal cnt_hp_ce  : std_logic;
-	signal cnt_hp_clr : std_logic;
+	signal cnt_vactive     : std_logic_vector(log2(VLINES) - 1 downto 0);
+	signal cnt_vactive_ce  : std_logic;
+	signal cnt_vactive_clr : std_logic;
 
-	signal cnt_vp     : std_logic_vector(log2(VLINES + 1) - 1 downto 0);
-	signal cnt_vp_ce  : std_logic;
-	signal cnt_vp_clr : std_logic;
+	signal vga_hactive : std_logic;
+	signal vga_vactive : std_logic;
+	signal vga_dena    : std_logic;
+
+	signal vga_eof     : std_logic;
+	signal vga_sol     : std_logic;
+	signal vga_eol     : std_logic;
 
 begin
 
@@ -94,30 +98,50 @@ begin
 		RGB_OUT_EMPTY => fifo_empty
 	);
 
+	fifo_we <= vga_dena and not fifo_full;
+	fifo_re <= RGB_REQ;
+	
+	RGB_VLD <= not fifo_empty;
+	
 	-------------------------------
-	
-	cnt_hpp : process(VGA_CLK, cnt_hp_ce, cnt_hp_clr)
+
+	hactive_detect_i : entity work.active_detect
+	generic map (
+		BEG_OFF => HBP,
+		END_OFF => HFP,
+		LENGTH  => HPIXELS - HPULSE
+	)
+	port map (
+		CLK    => VGA_CLK,
+		SYNC_N => VGA_HS,
+		ACTIVE => vga_hactive,
+		FIRST  => vga_sol,
+		LAST   => vga_eol
+	);
+
+	cnt_vactivep : process(VGA_CLK, cnt_vactive_ce, cnt_vactive_clr)
 	begin
 		if rising_edge(VGA_CLK) then
-			if cnt_hp_clr = '1' then
-				cnt_hp <= (others => '0');
-			elsif cnt_hp_ce = '1' then
-				cnt_hp <= cnt_hp + 1;
+			if cnt_vactive_clr = '1' then
+				cnt_vactive <= (others => '0');
+			elsif cnt_vactive_ce = '1' then
+				cnt_vactive <= cnt_vactive + 1;
 			end if;
 		end if;
 	end process;
-	
-	cnt_vpp : process(VGA_CLK, cnt_vp_ce, cnt_vp_clr)
-	begin
-		if rising_edge(VGA_CLK) then
-			if cnt_vp_clr = '1' then
-				cnt_vp <= (others => '0');
-			elsif cnt_vp_ce = '1' then
-				cnt_vp <= cnt_vp + 1;
-			end if;
-		end if;
-	end process;
-	
+
+	cnt_vactive_ce  <= vga_sol;
+	cnt_vactive_clr <= not VGA_VS;
+
+	-- This vactive signal is different (little bit late) from that from source (e.g. simulation).
+	-- It is up after a small delay of HBP, because of using vga_sol.
+	vga_vactive <= vga_sol           when cnt_vactive = VBP else
+	               not vga_sol       when cnt_vactive = VLINES - VFP - 2 else
+	               VGA_VS or vga_sol when cnt_vactive > VBP and cnt_vactive < VLINES - VFP - 1
+		       else '0';
+
+	vga_eof     <= vga_eol when cnt_vactive = VLINES - VFP - 2 else '0';
+
 	-------------------------------
 
 	self_vgarstp : process(VGA_CLK, self_vgarst)
