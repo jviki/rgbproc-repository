@@ -22,13 +22,16 @@ use proc_common_v3_00_a.proc_common_pkg.log2;
 ---
 entity sync_gen is
 generic (
-	SYNC_LEN : integer
+	SYNC_LEN : integer;
+	DEBUG    : boolean := false
 );
 port (
 	CLK    : in  std_logic;
 	RST    : in  std_logic;
 	LAST   : in  std_logic;
-	SYNC_N : out std_logic	
+	SYNC_N : out std_logic;
+
+	DBGOUT : out std_logic_vector(5 downto 0)
 );
 end entity;
 
@@ -72,6 +75,18 @@ begin
 	cnt_synclen_ce  <= '1' when cnt_synclen < SYNC_LEN else '0';
 
 	SYNC_N <= '0' when cnt_synclen < SYNC_LEN else '1';
+
+	--------------------------------------------------
+
+gen_debug: if DEBUG = true
+generate
+	DBGOUT(0) <= cnt_synclen_z;
+	DBGOUT(1) <= cnt_synclen_clr;
+	DBGOUT(2) <= cnt_synclen_ce;
+	DBGOUT(3) <= RST;
+	DBGOUT(4) <= LAST;
+	DBGOUT(5) <= SYNC_N;
+end generate;
 
 end architecture;
 
