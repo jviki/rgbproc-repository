@@ -10,6 +10,9 @@ library rgb_commons_v1_00_a;
 use rgb_commons_v1_00_a.rgb_asfifo;
 
 entity rgb2chrontel is
+generic (
+	DEBUG       : boolean := false
+);
 port (
 	RGB_CLK     : in  std_logic;
 	RGB_RST     : in  std_logic;
@@ -31,7 +34,9 @@ port (
 	OUT_RESET_N : out std_logic;
 	OUT_DE      : out std_logic;
 	OUT_HS      : out std_logic;
-	OUT_VS      : out std_logic
+	OUT_VS      : out std_logic;
+
+	DBGOUT      : out std_logic_vector(31 downto 0)
 );
 end entity;
 
@@ -61,6 +66,9 @@ architecture full of rgb2chrontel is
 	type state_t is (s_idle, s_pass, s_eol, s_eof);
 	signal state         : state_t;
 	signal nstate        : state_t;
+
+	signal hsync_dbgout  : std_logic_vector(5 downto 0);
+	signal vsync_dbgout  : std_logic_vector(5 downto 0);
 
 begin
 
@@ -125,26 +133,30 @@ begin
 
 	hsync_gen_i : entity work.sync_gen
 	generic map (
-		SYNC_LEN => 64
+		SYNC_LEN => 64,
+		DEBUG    => DEBUG
 	)
 	port map (
 		CLK    => OUT_CLK,
 		RST    => OUT_RST,
 		LAST   => out_eol_valid,
-		SYNC_N => hsync
+		SYNC_N => hsync,
+		DBGOUT => hsync_dbgout
 	);
 
 	--------------------------
 
 	vsync_gen_i : entity work.sync_gen
 	generic map (
-		SYNC_LEN => 480 -- XXX: is this right???
+		SYNC_LEN => 480, -- XXX: is this right???
+		DEBUG    => DEBUG
 	)
 	port map (
 		CLK    => OUT_CLK,
 		RST    => OUT_RST,
 		LAST   => out_eof_valid,
-		SYNC_N => vsync
+		SYNC_N => vsync,
+		DBGOUT => vsync_dbgout
 	);
 
 	--------------------------
@@ -209,6 +221,38 @@ begin
 		when others  =>
 		end case;
 	end process;
+
+	--------------------------
+
+gen_debug: if DEBUG = true
+generate
+
+	DBGOUT(0) <= OUT_CLK;
+	DBGOUT(1) <= OUT_RST;
+
+	DBGOUT( 7 downto 2) <= hsync_dbgout;
+	DBGOUT(13 downto 8) <= vsync_dbgout;
+
+	DBGOUT(14) <= fifo_re;
+	DBGOUT(15) <= fifo_empty;
+
+	DBGOUT(17 downto 16) <= "00" when state = s_idle else
+	                        "01" when state = s_pass else
+				"10" when state = s_eol  else
+				"11" when state = s_eof  else
+				"00";
+	DBGOUT(19 downto 18) <= "00" when nstate = s_idle else
+	                        "01" when nstate = s_pass else
+				"10" when nstate = s_eol  else
+				"11" when nstate = s_eof  else
+				"00";
+
+	DBGOUT(20) <= out_eol_valid;
+	DBGOUT(21) <= out_eof_valid;
+
+	DBGOUT(31 downto 22) <= (others => '1');
+
+end generate;
 
 end architecture;
 
