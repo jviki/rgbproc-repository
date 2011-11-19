@@ -16,6 +16,9 @@ use proc_common_v3_00_a.proc_common_pkg.log2;
 -- 
 ---
 entity vga2rgb is
+generic (
+	DEBUG    : boolean := false
+);
 port (
 	VGA_CLK  : in  std_logic;
 	VGA_R    : in  std_logic_vector(7 downto 0);
