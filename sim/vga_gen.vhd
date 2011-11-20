@@ -1,6 +1,11 @@
 -- vga_gen.vhd
 -- Jan Viktorin <xvikto03@stud.fit.vutbr.cz>
 
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_arith.all;
+use ieee.std_logic_unsigned.all;
+
 entity vga_gen is
 port (
 	R  : out std_logic_vector(7 downto 0);
