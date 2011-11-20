@@ -104,8 +104,8 @@ BEGIN IO_INTERFACE
 	PORT D_9     = dvi_d_9,     IO_IS = DVI_D[9]
 	PORT D_10    = dvi_d_10,    IO_IS = DVI_D[10]
 	PORT D_11    = dvi_d_11,    IO_IS = DVI_D[11]
-	PORT HSYNC   = dvi_hsync,   IO_IS = DVI_HSYNC
-	PORT VSYNC   = dvi_vsync,   IO_IS = DVI_VSYNC
+	PORT HS      = dvi_hsync,   IO_IS = DVI_HS   
+	PORT VS      = dvi_vsync,   IO_IS = DVI_VS   
 	PORT DE      = dvi_de,      IO_IS = DVI_DE
 	PORT RESET_B = dvi_reset_b, IO_IS = DVI_RESET_N
 	PORT XCLK_P  = dvi_xclk_p,  IO_IS = DVI_XCLK_P
