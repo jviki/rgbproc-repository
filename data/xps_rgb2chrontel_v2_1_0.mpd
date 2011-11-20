@@ -1,0 +1,37 @@
+BEGIN xps_rgb2chrontel
+
+OPTION IPTYPE = PERIPHERAL
+OPTION IMP_NETLIST = TRUE
+OPTION HDL = VHDL
+OPTION STYLE = MIX
+OPTION IP_GROUP = MICROBLAZE:PPC:USER
+OPTION DESC = Inputs VGA signal and transforms it to RGB bus
+
+IO_INTERFACE IO_IF = chrontel, IO_TYPE  = DVI_OUT_V1
+
+# rgb clock domain
+PORT RGB_CLK = "", DIR = I, SIGIS = CLK
+PORT RGB_RST = sys_periph_reset, DIR = I, SIGIS = RST
+
+PORT RGB_HS  = HS,  DIR = I
+PORT RGB_VS  = VS,  DIR = I
+PORT RGB_R   = R,   DIR = I, VEC = [7:0]
+PORT RGB_G   = G,   DIR = I, VEC = [7:0]
+PORT RGB_B   = B,   DIR = I, VEC = [7:0]
+PORT RGB_REQ = REQ, DIR = O
+PORT RGB_VLD = VLD, DIR = I
+
+# chrontel clock domain
+PORT OUT_CLK = "", DIR = I, SIGIS = CLK
+PORT OUT_RST = sys_periph_reset, DIR = I, SIGIS = RST
+
+PORT OUT_XCLK_P  = XCLK_P,  DIR = O, SIGIS = CLK, IO_IF = chrontel
+PORT OUT_XCLK_N  = XCLK_P,  DIR = O, SIGIS = CLK, IO_IF = chrontel
+PORT OUT_RESET_N = RESET_N, DIR = O, SIGIS = RST, IO_IF = chrontel
+
+PORT OUT_D  = D,  DIR = O, IO_IF = chrontel, VEC = [11:0]
+PORT OUT_DE = DE, DIR = 0, IO_IF = chrontel
+PORT OUT_HS = HS, DIR = O, IO_IF = chrontel
+PORT OUT_VS = VS, DIR = 0, IO_IF = chrontel
+
+END
