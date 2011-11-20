@@ -23,7 +23,7 @@ port (
 	OUT_XCLK_P  : out std_logic;
 	OUT_XCLK_N  : out std_logic;
 	OUT_RESET_N : out std_logic;
-	OUT_D       : in  std_logic_vector(11 downto 0);
+	OUT_D       : out std_logic_vector(11 downto 0);
 	OUT_DE      : out std_logic;
 	OUT_HS      : out std_logic;
 	OUT_VS      : out std_logic

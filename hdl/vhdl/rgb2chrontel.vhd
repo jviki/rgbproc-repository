@@ -95,7 +95,7 @@ begin
 		OUT_XCLK_P  => OUT_XCLK_P,
 		OUT_XCLK_N  => OUT_XCLK_N,
 		OUT_RESET_N => OUT_RESET_N,
-		OUT_D       => OUT_D.
+		OUT_D       => OUT_D,
 		OUT_DE      => OUT_DE,
 		OUT_HS      => OUT_HS,
 		OUT_VS      => OUT_VS
