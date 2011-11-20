@@ -13,6 +13,13 @@ BEGIN IO_INTERFACE
   PORT USER_SYS_CLK = CLK_100MHZ, IO_IS = ext_clk
 END
 
+BEGIN IO_INTERFACE
+  ATTRIBUTE INSTANCE = vga_clk,
+  ATTRIBUTE IOTYPE   = XIL_CLOCK_V1
+  PARAMETER CLK_FREQ = 25000000, IO_IS = clk_freq, RANGE = (25000000, 100000000)
+  PORT VGA_CLK = vga_dclk, IO_IS = ext_clk
+END
+
 # do not uncomment the following until we can programmably deliver UCF. V5 MPMC UCF is dependent on which clock you use.
 
 #uncomment the following if your board has a user clock not equal to 100MHz
@@ -84,7 +91,6 @@ BEGIN IO_INTERFACE
 	PORT B_5 = vga_in_blue_5,  IO_IS = VGA_B[5]
 	PORT B_6 = vga_in_blue_6,  IO_IS = VGA_B[6]
 	PORT B_7 = vga_in_blue_7,  IO_IS = VGA_B[7]
-	PORT DATA_CLK = vga_in_dclk,    IO_IS = VGA_IN_DATA_CLK
 END
 
 # VGA/DVI output
@@ -378,8 +384,10 @@ BEGIN FPGA
   ATTRIBUTE PACKAGE = ff1136
   ATTRIBUTE SPEED_GRADE = -1
   ATTRIBUTE JTAG_POSITION = 5
+
   PORT CLK_100MHZ = CLK_100MHZ, UCF_NET_STRING = ("LOC = AH15", "IOSTANDARD=LVCMOS33")
   PORT sys_rst_n = sys_rst_n, UCF_NET_STRING = ("LOC = E9", "IOSTANDARD=LVCMOS33", "PULLUP")
+  PORT VGA_CLK = vga_in_dclk, UCF_NET_STRING=("LOC=AH18", "IOSTANDARD = LVCMOS33")
 
   ### RS232 1 ###
   PORT RXD = uart1_sin, UCF_NET_STRING = ("LOC = AG15", "IOSTANDARD=LVCMOS33")
@@ -390,7 +398,6 @@ BEGIN FPGA
   PORT I2C_SDA = iic_sda, UCF_NET_STRING=("LOC=T29", "SLEW=SLOW", "DRIVE=6", "IOSTANDARD=LVCMOS18")
 
   ### VGA input ###
-  PORT DATA_CLK = vga_in_dclk,    UCF_NET_STRING=("LOC=AH18", "IOSTANDARD = LVCMOS33")
   PORT HSOUT    = vga_in_hsout,   UCF_NET_STRING=("LOC=AE7",  "IOSTANDARD = LVCMOS33")
   PORT VSOUT    = vga_in_vsout,   UCF_NET_STRING=("LOC=Y6",   "IOSTANDARD = LVCMOS33")
   PORT CLAMP    = vga_in_clamp,   UCF_NET_STRING=("LOC=AH7",  "IOSTANDARD = LVCMOS33")
