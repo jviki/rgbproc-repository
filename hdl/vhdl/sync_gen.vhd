@@ -55,6 +55,8 @@ architecture full of sync_gen is
 	signal cnt_synclen_clr : std_logic;
 	signal cnt_synclen_z   : std_logic;
 
+	signal out_sync_n      : std_logic;
+
 begin
 
 	cnt_synclenp : process(CLK, cnt_synclen_ce, cnt_synclen_clr)
@@ -74,7 +76,8 @@ begin
 	cnt_synclen_z   <= LAST;
 	cnt_synclen_ce  <= '1' when cnt_synclen < SYNC_LEN else '0';
 
-	SYNC_N <= '0' when cnt_synclen < SYNC_LEN else '1';
+	out_sync_n <= '0' when cnt_synclen < SYNC_LEN else '1';
+	SYNC_N     <= out_sync_n;
 
 	--------------------------------------------------
 
@@ -85,7 +88,7 @@ generate
 	DBGOUT(2) <= cnt_synclen_ce;
 	DBGOUT(3) <= RST;
 	DBGOUT(4) <= LAST;
-	DBGOUT(5) <= SYNC_N;
+	DBGOUT(5) <= out_sync_n;
 end generate;
 
 end architecture;
