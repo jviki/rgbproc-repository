@@ -54,37 +54,37 @@ END
 BEGIN IO_INTERFACE
 	ATTRIBUTE IOTYPE   = VGA_IN_V1
 	ATTRIBUTE INSTANCE = VGA_IN
+	PORT HS = vga_in_hsout,    IO_IS = VGA_HS
+	PORT VS = vga_in_vsout,    IO_IS = VGA_VS
+	PORT CLAMP = vga_in_clamp, IO_IS = VGA_CLAMP
+	PORT COAST = vga_in_coast, IO_IS = VGA_COAST
+	PORT ODD_EVEN_B = vga_in_odd_even_b, IO_IS = VGA_ODD_EVEN_B
+	PORT SOGOUT = vga_in_sogout,    IO_IS = VGA_SOGOUT
+	PORT R_0 = vga_in_red_0,   IO_IS = VGA_R[0]
+	PORT R_1 = vga_in_red_1,   IO_IS = VGA_R[1]
+	PORT R_2 = vga_in_red_2,   IO_IS = VGA_R[2]
+	PORT R_3 = vga_in_red_3,   IO_IS = VGA_R[3]
+	PORT R_4 = vga_in_red_4,   IO_IS = VGA_R[4]
+	PORT R_5 = vga_in_red_5,   IO_IS = VGA_R[5]
+	PORT R_6 = vga_in_red_6,   IO_IS = VGA_R[6]
+	PORT R_7 = vga_in_red_7,   IO_IS = VGA_R[7]
+	PORT G_0 = vga_in_green_0, IO_IS = VGA_G[0]
+	PORT G_1 = vga_in_green_1, IO_IS = VGA_G[1]
+	PORT G_2 = vga_in_green_2, IO_IS = VGA_G[2]
+	PORT G_3 = vga_in_green_3, IO_IS = VGA_G[3]
+	PORT G_4 = vga_in_green_4, IO_IS = VGA_G[4]
+	PORT G_5 = vga_in_green_5, IO_IS = VGA_G[5]
+	PORT G_6 = vga_in_green_6, IO_IS = VGA_G[6]
+	PORT G_7 = vga_in_green_7, IO_IS = VGA_G[7]
+	PORT B_0 = vga_in_blue_0,  IO_IS = VGA_B[0]
+	PORT B_1 = vga_in_blue_1,  IO_IS = VGA_B[1]
+	PORT B_2 = vga_in_blue_2,  IO_IS = VGA_B[2]
+	PORT B_3 = vga_in_blue_3,  IO_IS = VGA_B[3]
+	PORT B_4 = vga_in_blue_4,  IO_IS = VGA_B[4]
+	PORT B_5 = vga_in_blue_5,  IO_IS = VGA_B[5]
+	PORT B_6 = vga_in_blue_6,  IO_IS = VGA_B[6]
+	PORT B_7 = vga_in_blue_7,  IO_IS = VGA_B[7]
 	PORT DATA_CLK = vga_in_dclk,    IO_IS = VGA_IN_DATA_CLK
-	PORT HSOUT    = vga_in_hsout,   IO_IS = VGA_IN_HSOUT
-	PORT VSOUT    = vga_in_vsout,   IO_IS = VGA_IN_VSOUT
-	PORT CLAMP    = vga_in_clamp,   IO_IS = VGA_IN_CLAMP
-	PORT COAST    = vga_in_coast,   IO_IS = VGA_IN_COAST
-	PORT ODD_EVEN_B = vga_in_odd_even_b, IO_IS = VGA_IN_ODD_EVEN_B
-	PORT SOGOUT   = vga_in_sogout,  IO_IS = VGA_IN_SOGOUT
-	PORT RED_0    = vga_in_red_0,   IO_IS = VGA_IN_RED[0]
-	PORT RED_1    = vga_in_red_1,   IO_IS = VGA_IN_RED[1]
-	PORT RED_2    = vga_in_red_2,   IO_IS = VGA_IN_RED[2]
-	PORT RED_3    = vga_in_red_3,   IO_IS = VGA_IN_RED[3]
-	PORT RED_4    = vga_in_red_4,   IO_IS = VGA_IN_RED[4]
-	PORT RED_5    = vga_in_red_5,   IO_IS = VGA_IN_RED[5]
-	PORT RED_6    = vga_in_red_6,   IO_IS = VGA_IN_RED[6]
-	PORT RED_7    = vga_in_red_7,   IO_IS = VGA_IN_RED[7]
-	PORT GREEN_0  = vga_in_green_0, IO_IS = VGA_IN_GREEN[0]
-	PORT GREEN_1  = vga_in_green_1, IO_IS = VGA_IN_GREEN[1]
-	PORT GREEN_2  = vga_in_green_2, IO_IS = VGA_IN_GREEN[2]
-	PORT GREEN_3  = vga_in_green_3, IO_IS = VGA_IN_GREEN[3]
-	PORT GREEN_4  = vga_in_green_4, IO_IS = VGA_IN_GREEN[4]
-	PORT GREEN_5  = vga_in_green_5, IO_IS = VGA_IN_GREEN[5]
-	PORT GREEN_6  = vga_in_green_6, IO_IS = VGA_IN_GREEN[6]
-	PORT GREEN_7  = vga_in_green_7, IO_IS = VGA_IN_GREEN[7]
-	PORT BLUE_0   = vga_in_blue_0,  IO_IS = VGA_IN_BLUE[0]
-	PORT BLUE_1   = vga_in_blue_1,  IO_IS = VGA_IN_BLUE[1]
-	PORT BLUE_2   = vga_in_blue_2,  IO_IS = VGA_IN_BLUE[2]
-	PORT BLUE_3   = vga_in_blue_3,  IO_IS = VGA_IN_BLUE[3]
-	PORT BLUE_4   = vga_in_blue_4,  IO_IS = VGA_IN_BLUE[4]
-	PORT BLUE_5   = vga_in_blue_5,  IO_IS = VGA_IN_BLUE[5]
-	PORT BLUE_6   = vga_in_blue_6,  IO_IS = VGA_IN_BLUE[6]
-	PORT BLUE_7   = vga_in_blue_7,  IO_IS = VGA_IN_BLUE[7]
 END
 
 # VGA/DVI output
