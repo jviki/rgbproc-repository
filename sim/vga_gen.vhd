@@ -89,8 +89,6 @@ begin
 	-----------------------------
 
 	sync_gen_i : process
-		variable row : integer;
-
 		-- generates one row time
 		-- generates hactive and hpulse (vga_hs)
 		procedure one_hsync is
@@ -118,50 +116,81 @@ begin
 
 			vga_hs <= '1';
 		end procedure;
+
+		procedure gen_vbp is
+			variable row : integer;
+		begin
+			report "VBP";
+			vga_vs <= '1';
+			for row in 1 to VBP loop
+				one_hsync;
+				report "VBP after " & integer'image(row);
+			end loop;
+		end procedure;
+
+		procedure gen_vactive is
+			variable row : integer;
+		begin
+			report "VACTIVE";
+			vga_vactive <= '1';
+			for row in 1 to VACTIVE loop
+				one_hsync;
+
+				if row mod 48 = 0 then
+					report "VACTIVE after " & integer'image(row);
+				end if;
+			end loop;
+		end procedure;
+
+		procedure gen_vfp is
+			variable row : integer;
+		begin
+			report "VFP";
+			vga_vactive <= '0';
+			for row in 1 to VFP loop
+				one_hsync;
+				report "VFP after " & integer'image(row);
+			end loop;
+
+		end procedure;
+
+		procedure gen_vpulse is
+			variable row : integer;
+		begin
+			report "VPULSE";
+			vga_vs <= '0';
+			for row in 1 to VPULSE loop
+				one_hsync;
+			end loop;
+			vga_vs <= '1';
+		end procedure;
+
+		procedure one_frame is
+			variable row : integer;
+		begin
+			gen_vbp;
+			gen_vactive;
+			gen_vfp;
+			gen_vpulse;
+		end procedure;
+
+		variable i : integer;
 	begin
 		vga_vs      <= '1';
 		vga_vactive <= '0';
 		vga_hs      <= '1';
 		vga_hactive <= '0';
 
-		if vga_rst = '1' then
-			report "VSYNC Reset";
-			wait until vga_rst = '0';
-			wait for 6 * VGA_PERIOD;
-			wait until rising_edge(vga_clk);
-		end if;
+		report "VSYNC Reset";
+		wait until vga_rst = '0';
+		wait for 6 * VGA_PERIOD;
+		wait until rising_edge(vga_clk);
 
-		report "VBP";
-		vga_vs <= '1';
-		for row in 1 to VBP loop
-			one_hsync;
-			report "VBP after " & integer'image(row);
+
+		for i in 1 to 60 loop
+			one_frame;
 		end loop;
-
-		report "VACTIVE";
-		vga_vactive <= '1';
-		for row in 1 to VACTIVE loop
-			one_hsync;
-
-			if row mod 48 = 0 then
-				report "VACTIVE after " & integer'image(row);
-			end if;
-		end loop;
-
-		report "VFP";
-		vga_vactive <= '0';
-		for row in 1 to VFP loop
-			one_hsync;
-			report "VFP after " & integer'image(row);
-		end loop;
-
-		report "VPULSE";
-		vga_vs <= '0';
-		for row in 1 to VPULSE loop
-			one_hsync;
-		end loop;
-
-		vga_vs <= '1';
+		wait;
 	end process;
 
 	-----------------------------
