@@ -32,6 +32,8 @@ architecture testbench of vga2rgb_tb is
 
 	signal rgb_vld     : std_logic;
 	signal rgb_req     : std_logic;
+	signal rgb_eol     : std_logic;
+	signal rgb_eof     : std_logic;
 
 begin
 
@@ -49,8 +51,8 @@ begin
 		RGB_R   => open,
 		RGB_G   => open,
 		RGB_B   => open,
-		RGB_EOL => open,
-		RGB_EOF => open,
+		RGB_EOL => rgb_eol,
+		RGB_EOF => rgb_eof,
 
 		RGB_VLD => rgb_vld,
 		RGB_REQ => rgb_req
