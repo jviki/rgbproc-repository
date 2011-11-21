@@ -47,6 +47,15 @@ architecture testbench of rgb2chrontel_tb is
 
 	signal out_hs   : std_logic;
 	signal out_vs   : std_logic;
+
+	signal cnt_out_vs_ce  : std_logic := '0';
+	signal cnt_out_vs_clr : std_logic := '1';
+	signal cnt_out_vs     : integer   := 0;
+
+	signal cnt_out_hs_ce  : std_logic := '0';
+	signal cnt_out_hs_clr : std_logic := '1';
+	signal cnt_out_hs     : integer   := 0;
+
 begin
 
 	dut_i : entity work.rgb2chrontel
@@ -73,6 +82,52 @@ begin
 		OUT_HS      => out_hs,
 		OUT_VS      => out_vs
 	);
+
+	--------------------------------
+
+	cnt_out_hsp : process(out_xclk_n, cnt_out_hs_ce, cnt_out_hs_clr)
+	begin
+		if rising_edge(out_xclk_n) then
+			if cnt_out_hs_clr = '1' then
+				cnt_out_hs <= 0;
+			elsif cnt_out_hs_ce = '1' then
+				cnt_out_hs <= cnt_out_hs + 1;
+			end if;
+		end if;
+	end process;
+
+	-- not clear what this assertion should check
+	assert (cnt_out_hs = 0 and   cnt_out_hs_clr = '1')
+	    or (cnt_out_hs >= 64 and cnt_out_hs_clr = '1')
+	    or (cnt_out_hs <= 64 and cnt_out_hs_ce  = '1')
+		report "Invalid out_hs timing: " & integer'image(cnt_out_hs)
+		severity error;
+
+	cnt_out_hs_ce  <= not out_hs;
+	cnt_out_hs_clr <= out_hs;
+
+	---------------
+
+	cnt_out_vsp : process(out_xclk_n, cnt_out_vs_ce, cnt_out_vs_clr)
+	begin
+		if rising_edge(out_xclk_n) then
+			if cnt_out_vs_clr = '1' then
+				cnt_out_vs <= 0;
+			elsif cnt_out_vs_ce = '1' then
+				cnt_out_vs <= cnt_out_vs + 1;
+			end if;
+		end if;
+	end process;
+
+	-- not clear what this assertion should check
+	assert (cnt_out_vs = 0    and cnt_out_vs_clr = '1')
+	    or (cnt_out_vs >= 640 and cnt_out_vs_clr = '1')
+	    or (cnt_out_vs <= 640 and cnt_out_vs_ce  = '1')
+		report "Invalid out_vs timing: " & integer'image(cnt_out_vs)
+		severity error;
+
+	cnt_out_vs_ce  <= not out_vs;
+	cnt_out_vs_clr <= out_vs;
 
 	--------------------------------
 
