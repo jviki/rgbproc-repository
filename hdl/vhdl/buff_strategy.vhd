@@ -52,7 +52,6 @@ port (
 
 	OUT_RE    : in  std_logic;
 	OUT_EMPTY : out std_logic;
-	OUT_DRDY  : out std_logic;
 	OUT_PTR   : out std_logic_vector(log2(BUFF_CAP) - 1 downto 0);
 
 	---
@@ -115,7 +114,6 @@ begin
 		IN_DONE   => IN_DONE,
 		IN_RDY    => IN_RDY,
 		OUT_DONE  => OUT_DONE,
-		OUT_RDY   => OUT_RDY,
 		MEM_DONE  => MEM_DONE,
 		MEM_RDY   => MEM_RDY,
 

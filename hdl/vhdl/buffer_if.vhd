@@ -40,7 +40,6 @@ port map (
 	OUT_D     : out std_logic_vector(23 downto 0);
 	OUT_RE    : in  std_logic;
 	OUT_EMPTY : out std_logic;
-	OUT_DRDY  : out std_logic;
 	OUT_PTR   : out std_logic_vector(log2(BUFF_CAP) - 1 downto 0);
 
 	---
@@ -51,7 +50,6 @@ port map (
 	M0_WE     : in  std_logic;
 	M0_DI     : in  std_logic_vector(23 downto 0);
 	M0_RE     : in  std_logic;
-	M0_DRDY   : out std_logic;
 
 	---
 	-- Random Access port 1
@@ -61,7 +59,6 @@ port map (
 	M1_WE     : in  std_logic;
 	M1_DI     : in  std_logic_vector(23 downto 0);
 	M1_RE     : in  std_logic;
-	M1_DRDY   : out std_logic;
 
 	MEM_SIZE  : out std_logic_vector(log2(BUFF_CAP) - 1 downto 0)
 );
@@ -87,14 +84,12 @@ architecture fsm_wrapper of buffer_if is
 	signal m0_we       : std_logic;
 	signal m0_din      : std_logic_vector(23 downto 0);
 	signal m0_re       : std_logic;
-	signal m0_drdy     : std_logic;
 
 	signal m1_a        : std_logic_vector(log2(BUFF_CAP) - 1 downto 0);
 	signal m1_dout     : std_logic_vector(23 downto 0);
 	signal m1_we       : std_logic;
 	signal m1_din      : std_logic_vector(23 downto 0);
 	signal m1_re       : std_logic;
-	signal m1_drdy     : std_logic;
 
 begin
 
@@ -118,12 +113,9 @@ begin
 	IN_FULL   <= '1' when cnt_ptr = BUFF_CAP else RST;
 
 	OUT_EMPTY <= '1' when cnt_ptr = 0 else RST;
-	OUT_DRDY  <= m1_drdy;
 	OUT_D     <= m1_dout;
 
-	M0_DRDY   <= m0_drdy;
 	M0_DO     <= m0_dout;
-	M1_DRDY   <= m1_drdy;
 	M1_DO     <= m1_dout;
 
 	IN_PTR    <= cnt_ptr;
