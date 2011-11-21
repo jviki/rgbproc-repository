@@ -84,6 +84,11 @@ begin
 		OUT_VS      => out_vs
 	);
 
+	assert (out_de = '1' and out_hs = '1' and out_vs = '1')
+	    or out_de = '0'
+		report "Invalid value of DE signal (when considering HS and VS)"
+		severity error;
+
 	--------------------------------
 
 	cnt_out_hsp : process(out_xclk_n, cnt_out_hs_ce, cnt_out_hs_clr)
