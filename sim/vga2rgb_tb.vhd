@@ -64,6 +64,12 @@ begin
 
 	rgb_req <= rgb_vld;
 
+	assert (rising_edge(rgb_clk) 
+	   and ((rgb_req = '1' and rgb_vld = '1') or rgb_req = '0'))
+	    or not rising_edge(rgb_clk)
+		report "Requesting invalid data"
+		severity error;
+		
 	-----------------------------
 
 	cnt_rgb_reqp : process(rgb_clk, rgb_req, rgb_eol)
@@ -95,7 +101,7 @@ begin
 
 	-----------------------------
 
-	vga_gen_i : entity work.vga_gen(stripes)
+	vga_gen_i : entity work.vga_gen(simple)
 	port map (
 		R  => vga_r,
 		G  => vga_g,
