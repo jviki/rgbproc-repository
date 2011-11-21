@@ -42,6 +42,11 @@ architecture testbench of rgb2chrontel_tb is
 	signal rgb_vld  : std_logic;
 	signal rgb_req  : std_logic;
 
+	signal out_xclk_p : std_logic;
+	signal out_xclk_n : std_logic;
+
+	signal out_hs   : std_logic;
+	signal out_vs   : std_logic;
 begin
 
 	dut_i : entity work.rgb2chrontel
@@ -61,12 +66,12 @@ begin
 		OUT_RST => out_rst,
 
 		OUT_D       => open,
-		OUT_XCLK_P  => open,
-		OUT_XCLK_N  => open,
+		OUT_XCLK_P  => out_xclk_p,
+		OUT_XCLK_N  => out_xclk_n,
 		OUT_RESET_N => open,
 		OUT_DE      => open,
-		OUT_HS      => open,
-		OUT_VS      => open
+		OUT_HS      => out_hs,
+		OUT_VS      => out_vs
 	);
 
 	--------------------------------
