@@ -34,11 +34,11 @@ architecture full of vga_watch_cs is
 	signal cnt_hs_low_ce   : std_logic;
 	signal cnt_hs_low_clr  : std_logic;
 
-	signal cnt_vs_high     : std_logic_vector(16 downto 0);
+	signal cnt_vs_high     : std_logic_vector(15 downto 0);
 	signal cnt_vs_high_ce  : std_logic;
 	signal cnt_vs_high_clr : std_logic;
 
-	signal cnt_vs_low      : std_logic_vector(16 downto 0);
+	signal cnt_vs_low      : std_logic_vector(15 downto 0);
 	signal cnt_vs_low_ce   : std_logic;
 	signal cnt_vs_low_clr  : std_logic;
 
@@ -66,12 +66,12 @@ begin
 gen_cs_xvec: if CS_XVEC_ENABLE = true
 generate
 
-	CS_XVEC( 31 downto  0) <= cs_vec_simple;
+	CS_XVEC(31 downto  0) <= cs_vec_simple;
 
-	CS_XVEC( 47 downto 32) <= cnt_hs_high;
-	CS_XVEC( 63 downto 48) <= cnt_hs_low;
-	CS_XVEC( 95 downto 64) <= cnt_vs_high;
-	CS_XVEC(127 downto 96) <= cnt_vs_low;
+	CS_XVEC(47 downto 32) <= cnt_hs_high;
+	CS_XVEC(63 downto 48) <= cnt_hs_low;
+	CS_XVEC(79 downto 64) <= cnt_vs_high;
+	CS_XVEC(95 downto 80) <= cnt_vs_low;
 
 	----------------------------------
 
