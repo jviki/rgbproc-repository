@@ -20,7 +20,7 @@ port (
 
 	CS_CLK  : out std_logic;
 	CS_VEC  : out std_logic_vector(31 downto 0);
-	CS_XVEC : out std_logic_vector(31 + (4 * 16) downto 0)
+	CS_XVEC : out std_logic_vector(31 + 4 + (3 * 16) downto 0)
 );
 end entity;
 
@@ -38,7 +38,7 @@ architecture full of vga_watch_cs is
 	signal cnt_vs_high_ce  : std_logic;
 	signal cnt_vs_high_clr : std_logic;
 
-	signal cnt_vs_low      : std_logic_vector(15 downto 0);
+	signal cnt_vs_low      : std_logic_vector(3 downto 0);
 	signal cnt_vs_low_ce   : std_logic;
 	signal cnt_vs_low_clr  : std_logic;
 
@@ -71,7 +71,7 @@ generate
 	CS_XVEC(47 downto 32) <= cnt_hs_high;
 	CS_XVEC(63 downto 48) <= cnt_hs_low;
 	CS_XVEC(79 downto 64) <= cnt_vs_high;
-	CS_XVEC(95 downto 80) <= cnt_vs_low;
+	CS_XVEC(83 downto 80) <= cnt_vs_low;
 
 	----------------------------------
 
