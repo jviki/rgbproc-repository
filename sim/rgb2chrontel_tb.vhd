@@ -45,6 +45,7 @@ architecture testbench of rgb2chrontel_tb is
 	signal out_xclk_p : std_logic;
 	signal out_xclk_n : std_logic;
 
+	signal out_de   : std_logic;
 	signal out_hs   : std_logic;
 	signal out_vs   : std_logic;
 
@@ -78,7 +79,7 @@ begin
 		OUT_XCLK_P  => out_xclk_p,
 		OUT_XCLK_N  => out_xclk_n,
 		OUT_RESET_N => open,
-		OUT_DE      => open,
+		OUT_DE      => out_de,
 		OUT_HS      => out_hs,
 		OUT_VS      => out_vs
 	);
