@@ -32,6 +32,8 @@ end entity;
 
 architecture ddr of data_out is
 
+	signal clk_n : std_logic;
+
 begin
 
 	xclk_p_oddr_i : ODDR
@@ -70,15 +72,17 @@ begin
 		);
 	end generate;
 
-	out_regp : process(CLK)
+	out_regp : process(clk_n)
 	begin
-		if rising_edge(CLK) then
+		if rising_edge(clk_n) then
 			OUT_DE      <= DE;
-			OUT_RESET_N <= not RST;
 			OUT_HS      <= HS;
 			OUT_VS      <= VS;
 		end if;
 	end process;
+
+	clk_n       <= not CLK;
+	OUT_RESET_N <= not RST;
 
 end architecture;
 
