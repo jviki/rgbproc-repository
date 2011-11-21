@@ -42,27 +42,31 @@ architecture full of vga_watch_cs is
 	signal cnt_vs_low_ce   : std_logic;
 	signal cnt_vs_low_clr  : std_logic;
 
+	signal cs_vec_simple   : std_logic_vector(31 downto 0);
+
 begin
 
 	CS_CLK <= VGA_CLK;
 
-	CS_VEC(0) <= '1';
+	cs_vec_simple(0) <= '1';
 
-	CS_VEC(1) <= VGA_HS;
-	CS_VEC(2) <= VGA_VS;
+	cs_vec_simple(1) <= VGA_HS;
+	cs_vec_simple(2) <= VGA_VS;
 
-	CS_VEC(10 downto  3) <= VGA_R;
-	CS_VEC(18 downto 11) <= VGA_G;
-	CS_VEC(26 downto 19) <= VGA_B;
+	cs_vec_simple(10 downto  3) <= VGA_R;
+	cs_vec_simple(18 downto 11) <= VGA_G;
+	cs_vec_simple(26 downto 19) <= VGA_B;
 
-	CS_VEC(31 downto 27) <= (others => '1');
+	cs_vec_simple(31 downto 27) <= (others => '1');
+
+	CS_VEC <= cs_vec_simple;
 
 	----------------------------------
 
 gen_cs_xvec: if CS_XVEC_ENABLE = true
 generate
 
-	CS_XVEC( 31 downto  0) <= CS_VEC;
+	CS_XVEC( 31 downto  0) <= cs_vec_simple;
 
 	CS_XVEC( 47 downto 32) <= cnt_hs_high;
 	CS_XVEC( 63 downto 48) <= cnt_hs_low;
