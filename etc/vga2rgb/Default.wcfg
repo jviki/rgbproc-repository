@@ -18,10 +18,6 @@
       <obj_property name="ElementShortName">vga_clk</obj_property>
       <obj_property name="ObjectShortName">vga_clk</obj_property>
    </wvobject>
-   <wvobject fp_name="/vga2rgb_tb/vga_rst" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">vga_rst</obj_property>
-      <obj_property name="ObjectShortName">vga_rst</obj_property>
-   </wvobject>
    <wvobject fp_name="/vga2rgb_tb/rgb_clk" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">rgb_clk</obj_property>
       <obj_property name="ObjectShortName">rgb_clk</obj_property>
@@ -52,18 +48,6 @@
    <wvobject fp_name="/vga2rgb_tb/vga_vs" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">vga_vs</obj_property>
       <obj_property name="ObjectShortName">vga_vs</obj_property>
-   </wvobject>
-   <wvobject fp_name="/vga2rgb_tb/vga_hactive" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">vga_hactive</obj_property>
-      <obj_property name="ObjectShortName">vga_hactive</obj_property>
-   </wvobject>
-   <wvobject fp_name="/vga2rgb_tb/vga_vactive" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">vga_vactive</obj_property>
-      <obj_property name="ObjectShortName">vga_vactive</obj_property>
-   </wvobject>
-   <wvobject fp_name="/vga2rgb_tb/vga_dena" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">vga_dena</obj_property>
-      <obj_property name="ObjectShortName">vga_dena</obj_property>
    </wvobject>
    <wvobject fp_name="divider24" type="divider">
       <obj_property name="label">rgb output</obj_property>
@@ -113,6 +97,25 @@
    <wvobject fp_name="/vga2rgb_tb/dut_i/rgb_req" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">rgb_req</obj_property>
       <obj_property name="ObjectShortName">rgb_req</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider50" type="divider">
+      <obj_property name="label">data count validation</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">128 128 255</obj_property>
+      <obj_property name="TextColor">230 230 230</obj_property>
+   </wvobject>
+   <wvobject fp_name="/vga2rgb_tb/cnt_rgb_req" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">cnt_rgb_req</obj_property>
+      <obj_property name="ObjectShortName">cnt_rgb_req</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/vga2rgb_tb/cnt_rgb_req_ce" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">cnt_rgb_req_ce</obj_property>
+      <obj_property name="ObjectShortName">cnt_rgb_req_ce</obj_property>
+   </wvobject>
+   <wvobject fp_name="/vga2rgb_tb/cnt_rgb_req_clr" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">cnt_rgb_req_clr</obj_property>
+      <obj_property name="ObjectShortName">cnt_rgb_req_clr</obj_property>
    </wvobject>
    <wvobject fp_name="divider47" type="divider">
       <obj_property name="label">vactive</obj_property>
