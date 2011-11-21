@@ -186,6 +186,9 @@ begin
 		wait for 6 * VGA_PERIOD;
 		wait until rising_edge(vga_clk);
 
+		-- generate a malformed frame at the beginning
+		gen_vfp;
+		gen_vpulse;
 
 		for i in 1 to 60 loop
 			one_frame;
