@@ -103,6 +103,7 @@ begin
 	end process;
 
 	-- not clear what this assertion should check
+	-- 64 is the only value or the minimum?
 	assert (cnt_out_hs = 0 and   cnt_out_hs_clr = '1')
 	    or (cnt_out_hs >= 64 and cnt_out_hs_clr = '1')
 	    or (cnt_out_hs <= 64 and cnt_out_hs_ce  = '1')
@@ -126,6 +127,9 @@ begin
 	end process;
 
 	-- not clear what this assertion should check
+	-- 640 is the right value for VGA line?
+	-- or should it be 800?
+	-- is it the minimal value or the exact?
 	assert (cnt_out_vs = 0    and cnt_out_vs_clr = '1')
 	    or (cnt_out_vs >= 640 and cnt_out_vs_clr = '1')
 	    or (cnt_out_vs <= 640 and cnt_out_vs_ce  = '1')
