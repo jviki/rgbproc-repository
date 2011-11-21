@@ -91,31 +91,33 @@ begin
 	sync_gen_i : process
 		variable row : integer;
 
-	procedure one_hsync is
-		variable pix : integer;
-	begin
-		vga_hs <= '1';
-		for pix in 1 to HBP loop
-			wait until rising_edge(vga_clk);	
-		end loop;
+		-- generates one row time
+		-- generates hactive and hpulse (vga_hs)
+		procedure one_hsync is
+			variable pix : integer;
+		begin
+			vga_hs <= '1';
+			for pix in 1 to HBP loop
+				wait until rising_edge(vga_clk);	
+			end loop;
 
-		vga_hactive <= '1';
-		for pix in 1 to HACTIVE loop
-			wait until rising_edge(vga_clk);	
-		end loop;
+			vga_hactive <= '1';
+			for pix in 1 to HACTIVE loop
+				wait until rising_edge(vga_clk);	
+			end loop;
 
-		vga_hactive <= '0';
-		for pix in 1 to HFP loop
-			wait until rising_edge(vga_clk);	
-		end loop;
+			vga_hactive <= '0';
+			for pix in 1 to HFP loop
+				wait until rising_edge(vga_clk);	
+			end loop;
 
-		vga_hs <= '0';
-		for pix in 1 to HPULSE loop
-			wait until rising_edge(vga_clk);
-		end loop;
+			vga_hs <= '0';
+			for pix in 1 to HPULSE loop
+				wait until rising_edge(vga_clk);
+			end loop;
 
-		vga_hs <= '1';
-	end procedure;
+			vga_hs <= '1';
+		end procedure;
 	begin
 		vga_vs      <= '1';
 		vga_vactive <= '0';
