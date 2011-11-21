@@ -35,6 +35,10 @@ architecture testbench of vga2rgb_tb is
 	signal rgb_eol     : std_logic;
 	signal rgb_eof     : std_logic;
 
+	signal cnt_rgb_req     : integer   := 0;
+	signal cnt_rgb_req_ce  : std_logic := '0';
+	signal cnt_rgb_req_clr : std_logic := '1';
+
 begin
 
 	dut_i : entity work.vga2rgb
@@ -62,7 +66,36 @@ begin
 
 	-----------------------------
 
-	vga_gen_i : entity work.vga_gen
+	cnt_rgb_reqp : process(rgb_clk, rgb_req, rgb_eol)
+	begin
+		if rising_edge(rgb_clk) then
+			if cnt_rgb_req_clr = '1' then
+				cnt_rgb_req <= 0;
+			elsif cnt_rgb_req_ce = '1' then
+				cnt_rgb_req <= cnt_rgb_req + 1;
+			end if;
+		end if;
+	end process;
+
+	cnt_rgb_req_ce  <= rgb_req;
+	cnt_rgb_req_clr <= rgb_eol;
+
+	process(rgb_clk)
+	begin
+		if rising_edge(rgb_clk) then
+			if cnt_rgb_req_clr = '1' then
+				-- detecting invalid data count
+				assert cnt_rgb_req = 639 or cnt_rgb_req = 0
+					report "Invalid count of data has been received: "
+					     & integer'image(cnt_rgb_req'last_value) & ".." & integer'image(cnt_rgb_req)
+					severity error;
+			end if;
+		end if;
+	end process;
+
+	-----------------------------
+
+	vga_gen_i : entity work.vga_gen(stripes)
 	port map (
 		R  => vga_r,
 		G  => vga_g,
