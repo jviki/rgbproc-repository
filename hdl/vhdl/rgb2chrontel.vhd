@@ -148,7 +148,7 @@ begin
 
 	vsync_gen_i : entity work.sync_gen
 	generic map (
-		SYNC_LEN => 480, -- XXX: is this right???
+		SYNC_LEN => 640, -- XXX: is this right???
 		DEBUG    => DEBUG
 	)
 	port map (
