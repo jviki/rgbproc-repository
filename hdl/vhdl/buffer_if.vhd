@@ -247,6 +247,7 @@ begin
 		cnt_ptr_dir <= UP;
 		cnt_ptr_clr <= RST;
 		cnt_ptr_ce  <= '0';
+		reg_ptr_we  <= '0';
 
 		mem0_we <= '0';
 		mem0_re <= '0';
@@ -262,11 +263,11 @@ begin
 		when s_in  =>
 			cnt_ptr_dir <= UP;
 			cnt_ptr_ce  <= IN_WE;
+			reg_ptr_we  <= IN_DONE;
 
 			mem0_a    <= cnt_ptr;
 			mem0_din  <= IN_D;
 			mem0_we   <= IN_WE;
-			mem0_re   <= '0';
 
 			IN_RDY  <= '1';
 
