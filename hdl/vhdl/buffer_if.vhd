@@ -7,7 +7,7 @@ entity buffer_if is
 generic (
 	BUFF_CAP  : integer := 640 * 480 -- pixels
 );
-port map (
+port (
 	---
 	-- Global clock domain
 	---
