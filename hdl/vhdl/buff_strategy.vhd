@@ -123,7 +123,7 @@ begin
 		OUT_RE    => OUT_RE,
 		OUT_EMPTY => OUT_EMPTY,
 
-		M0_A      => M0_Q,
+		M0_A      => M0_A,
 		M0_DO     => m0_do,
 		M0_WE     => M0_WE,
 		M0_DI     => m0_di,
