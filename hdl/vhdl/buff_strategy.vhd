@@ -41,7 +41,6 @@ port (
 
 	IN_WE     : in  std_logic;
 	IN_FULL   : out std_logic;
-	IN_PTR    : out std_logic_vector(log2(BUFF_CAP) - 1 downto 0);
 
 	---
 	-- FIFO out
@@ -52,7 +51,6 @@ port (
 
 	OUT_RE    : in  std_logic;
 	OUT_EMPTY : out std_logic;
-	OUT_PTR   : out std_logic_vector(log2(BUFF_CAP) - 1 downto 0);
 
 	---
 	-- Random Access port 0
@@ -120,13 +118,11 @@ begin
 		IN_D      => in_d,
 		IN_WE     => IN_WE,
 		IN_FULL   => IN_FULL,
-		IN_PTR    => IN_PTR,
 
 		OUT_D     => out_d,
 		OUT_RE    => OUT_RE,
 		OUT_EMPTY => OUT_EMPTY,
 		OUT_DRDY  => OUT_DRDY,
-		OUT_PTR   => OUT_PTR,
 
 		M0_A      => M0_Q,
 		M0_DO     => m0_do,
