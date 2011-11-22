@@ -141,7 +141,7 @@ begin
 		end if;
 	end process;
 
-	fsm_next(CLK, state, IN_DONE, MEM_DONE, OUT_DONE)
+	fsm_next : process(CLK, state, IN_DONE, MEM_DONE, OUT_DONE)
 	begin
 		nstate <= state;
 
@@ -164,7 +164,7 @@ begin
 		end case;
 	end process;
 
-	fsm_output(CLK, state, RST, IN_WE, OUT_DONE)
+	fsm_output : process(CLK, state, RST, IN_WE, OUT_DONE)
 	begin
 		IN_RDY  <= '0';
 		OUT_RDY <= '0';
