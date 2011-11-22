@@ -149,20 +149,20 @@ begin
 	OUT_B <= out_d(23 downto 16);
 
 	m0_di( 7 downto  0) <= M0_RI;
-	m0_di(15 downto  0) <= M0_GI;
+	m0_di(15 downto  8) <= M0_GI;
 	m0_di(23 downto 16) <= M0_BI;
 
 	M0_RO <= m0_do( 7 downto  0);
 	M0_GO <= m0_do(15 downto  8);
-	M0_BO <= m0_do(31 downto 16);
+	M0_BO <= m0_do(23 downto 16);
 
 	m1_di( 7 downto  0) <= M1_RI;
-	m1_di(15 downto  0) <= M1_GI;
+	m1_di(15 downto  8) <= M1_GI;
 	m1_di(23 downto 16) <= M1_BI;
 
 	M1_RO <= m1_do( 7 downto  0);
 	M1_GO <= m1_do(15 downto  8);
-	M1_BO <= m1_do(31 downto 16);
+	M1_BO <= m1_do(23 downto 16);
 
 end architecture;
 
