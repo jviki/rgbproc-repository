@@ -72,19 +72,19 @@ port (
 	---
 	-- Random Access port 1
 	---
-	M0_A      : in  std_logic_vector(log2(BUFF_CAP) - 1 downto 0);
-	M0_RO     : out std_logic_vector(7 downto 0);
-	M0_GO     : out std_logic_vector(7 downto 0);
-	M0_BO     : out std_logic_vector(7 downto 0);
-	M0_WE     : in  std_logic;
+	M1_A      : in  std_logic_vector(log2(BUFF_CAP) - 1 downto 0);
+	M1_RO     : out std_logic_vector(7 downto 0);
+	M1_GO     : out std_logic_vector(7 downto 0);
+	M1_BO     : out std_logic_vector(7 downto 0);
+	M1_WE     : in  std_logic;
 
-	M0_RI     : in  std_logic_vector(7 downto 0);
-	M0_GI     : in  std_logic_vector(7 downto 0);
-	M0_BI     : in  std_logic_vector(7 downto 0);
-	M0_RE     : in  std_logic;
+	M1_RI     : in  std_logic_vector(7 downto 0);
+	M1_GI     : in  std_logic_vector(7 downto 0);
+	M1_BI     : in  std_logic_vector(7 downto 0);
+	M1_RE     : in  std_logic;
 
-	M0_DRDY   : out std_logic;
-	M0_SIZE   : out std_logic_vector(log2(BUFF_CAP) - 1 downto 0)
+	M1_DRDY   : out std_logic;
+	M1_SIZE   : out std_logic_vector(log2(BUFF_CAP) - 1 downto 0)
 );
 end entity;
 
