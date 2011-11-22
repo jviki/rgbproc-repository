@@ -85,17 +85,17 @@ architecture fsm_wrapper of buffer_if is
 	signal state       : state_t;
 	signal nstate      : state_t;
 
-	signal m0_a        : std_logic_vector(log2(BUFF_CAP) - 1 downto 0);
-	signal m0_dout     : std_logic_vector(23 downto 0);
-	signal m0_we       : std_logic;
-	signal m0_din      : std_logic_vector(23 downto 0);
-	signal m0_re       : std_logic;
+	signal mem0_a        : std_logic_vector(log2(BUFF_CAP) - 1 downto 0);
+	signal mem0_dout     : std_logic_vector(23 downto 0);
+	signal mem0_we       : std_logic;
+	signal mem0_din      : std_logic_vector(23 downto 0);
+	signal mem0_re       : std_logic;
 
-	signal m1_a        : std_logic_vector(log2(BUFF_CAP) - 1 downto 0);
-	signal m1_dout     : std_logic_vector(23 downto 0);
-	signal m1_we       : std_logic;
-	signal m1_din      : std_logic_vector(23 downto 0);
-	signal m1_re       : std_logic;
+	signal mem1_a        : std_logic_vector(log2(BUFF_CAP) - 1 downto 0);
+	signal mem1_dout     : std_logic_vector(23 downto 0);
+	signal mem1_we       : std_logic;
+	signal mem1_din      : std_logic_vector(23 downto 0);
+	signal mem1_re       : std_logic;
 
 begin
 
@@ -119,10 +119,10 @@ begin
 	IN_FULL   <= '1' when cnt_ptr = BUFF_CAP else RST;
 
 	OUT_EMPTY <= '1' when cnt_ptr = 0 else RST;
-	OUT_D     <= m1_dout;
+	OUT_D     <= mem1_dout;
 
-	M0_DO     <= m0_dout;
-	M1_DO     <= m1_dout;
+	M0_DO     <= mem0_dout;
+	M1_DO     <= mem1_dout;
 
 	IN_PTR    <= cnt_ptr;
 	OUT_PTR   <= cnt_ptr;
@@ -174,38 +174,38 @@ begin
 		cnt_ptr_clr <= RST;
 		cnt_ptr_ce  <= '0';
 
-		m0_we <= '0';
-		m0_re <= '0';
-		m0_a    <= (others => 'X');
-		m0_din  <= (others => 'X');
+		mem0_we <= '0';
+		mem0_re <= '0';
+		mem0_a    <= (others => 'X');
+		mem0_din  <= (others => 'X');
 
-		m1_we <= '0';
-		m1_re <= '0';
-		m1_a    <= (others => 'X');
-		m1_din  <= (others => 'X');
+		mem1_we <= '0';
+		mem1_re <= '0';
+		mem1_a    <= (others => 'X');
+		mem1_din  <= (others => 'X');
 
 		case state is
 		when s_in  =>
 			cnt_ptr_dir <= UP;
 			cnt_ptr_ce  <= IN_WE;
 
-			m0_a    <= cnt_ptr;
-			m0_din  <= IN_D;
-			m0_we   <= IN_WE;
-			m0_re   <= '0';
+			mem0_a    <= cnt_ptr;
+			mem0_din  <= IN_D;
+			mem0_we   <= IN_WE;
+			mem0_re   <= '0';
 
 			IN_RDY  <= '1';
 
 		when s_mem =>
-			m0_a    <= M0_A;
-			m0_din  <= M0_DI;
-			m0_we   <= M0_WE;
-			m0_re   <= M0_RE;
+			mem0_a    <= M0_A;
+			mem0_din  <= M0_DI;
+			mem0_we   <= M0_WE;
+			mem0_re   <= M0_RE;
 
-			m1_a    <= M1_A;
-			m1_din  <= M1_DI;
-			m1_we   <= M1_WE;
-			m1_re   <= M1_RE;
+			mem1_a    <= M1_A;
+			mem1_din  <= M1_DI;
+			mem1_we   <= M1_WE;
+			mem1_re   <= M1_RE;
 
 			MEM_RDY <= '1';
 
@@ -214,10 +214,10 @@ begin
 			cnt_ptr_ce  <= OUT_RE;
 			cnt_ptr_clr <= OUT_DONE or RST;
 
-			m1_a    <= cnt_ptr;
-			m1_din  <= (others => 'X');
-			m1_we   <= '0';
-			m1_re   <= OUT_RE;
+			mem1_a    <= cnt_ptr;
+			mem1_din  <= (others => 'X');
+			mem1_we   <= '0';
+			mem1_re   <= OUT_RE;
 
 			OUT_RDY <= '1';
 
