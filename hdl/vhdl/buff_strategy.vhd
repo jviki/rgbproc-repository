@@ -111,6 +111,7 @@ begin
 		IN_DONE   => IN_DONE,
 		IN_RDY    => IN_RDY,
 		OUT_DONE  => OUT_DONE,
+		OUT_RDY   => OUT_RDY,
 		MEM_DONE  => MEM_DONE,
 		MEM_RDY   => MEM_RDY,
 		MEM_SIZE  => MEM_SIZE,
