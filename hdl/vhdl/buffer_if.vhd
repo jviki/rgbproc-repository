@@ -8,6 +8,7 @@ use ieee.std_logic_unsigned.all;
 
 library proc_common_v3_00_a;
 use proc_common_v3_00_a.proc_common_pkg.log2;
+use proc_common_v3_00_a.srl_fifo;
 
 entity buffer_if is
 generic (
@@ -75,7 +76,7 @@ architecture fsm_wrapper of buffer_if is
 	constant UP        : std_logic := '1';
 	constant DOWN      : std_logic := '0';
 
-	type state_t is (s_in, s_mem, s_out);
+	type state_t is (s_in, s_mem, s_out0, s_out1, s_out);
 
 	signal cnt_ptr_clr : std_logic;
 	signal cnt_ptr_dir : std_logic;
@@ -84,6 +85,7 @@ architecture fsm_wrapper of buffer_if is
 
 	signal reg_ptr     : std_logic_vector(log2(BUFF_CAP) - 1 downto 0);
 	signal reg_ptr_we  : std_logic;
+
 	signal state       : state_t;
 	signal nstate      : state_t;
 
@@ -100,6 +102,12 @@ architecture fsm_wrapper of buffer_if is
 	signal mem1_din      : std_logic_vector(23 downto 0);
 	signal mem1_re       : std_logic;
 	signal mem1_drdy     : std_logic;
+
+	signal out_fifo_we   : std_logic;
+	signal out_fifo_full : std_logic;
+	signal out_fifo_re   : std_logic;
+	signal out_fifo_not_empty : std_logic;
+	signal out_fifo_rst  : std_logic;
 
 begin
 
@@ -130,9 +138,7 @@ begin
 	-------------------------------------
 
 	IN_FULL   <= '1' when cnt_ptr = BUFF_CAP else RST;
-
-	OUT_EMPTY <= '1' when cnt_ptr = 0 else RST;
-	OUT_D     <= mem1_dout;
+	OUT_EMPTY <= not out_fifo_not_empty;
 
 	M0_DO     <= mem0_dout;
 	M0_DRDY   <= mem0_drdy;
@@ -151,6 +157,24 @@ begin
 		end if;
 	end process;
 
+	-------------------------------------
+
+	srl_fifo_i : entity proc_common_v3_00_a.srl_fifo
+	generic map (
+		C_DATA_BITS => 24,
+		C_DEPTH     => 16
+	)
+	port map (
+		CLK         => CLK,
+		Reset       => out_fifo_rst,
+		FIFO_Write  => out_fifo_we,
+		Data_In     => mem1_dout,
+		FIFO_Read   => out_fifo_re,
+		Data_Out    => OUT_D,
+		FIFO_Full   => out_fifo_full,
+		Data_Exists => out_fifo_not_empty,
+		Addr => open
+	);
 
 	-------------------------------------
 	
@@ -224,6 +248,20 @@ begin
 
 		when s_mem =>
 			if MEM_DONE = '1' then
+				nstate <= s_out0;
+			end if;
+
+		when s_out0 =>
+			if OUT_DONE = '1' then
+				nstate <= s_in;
+			else
+				nstate <= s_out1;
+			end if;
+
+		when s_out1 =>
+			if OUT_DONE = '1' then
+				nstate <= s_in;
+			elsif out_fifo_not_empty = '1' then
 				nstate <= s_out;
 			end if;
 
@@ -248,6 +286,10 @@ begin
 		cnt_ptr_clr <= RST;
 		cnt_ptr_ce  <= '0';
 		reg_ptr_we  <= '0';
+
+		out_fifo_we  <= '0';
+		out_fifo_re  <= '0';
+		out_fifo_rst <= RST;
 
 		mem0_we <= '0';
 		mem0_re <= '0';
@@ -284,15 +326,52 @@ begin
 
 			MEM_RDY <= '1';
 
-		when s_out =>
-			cnt_ptr_dir <= DOWN;
-			cnt_ptr_ce  <= OUT_RE;
-			cnt_ptr_clr <= OUT_DONE or RST;
+		when s_out0 =>
+			if (reg_ptr - cnt_ptr) < reg_ptr then
+				cnt_ptr_ce  <= not out_fifo_full;
+			end if;
 
-			mem1_a    <= cnt_ptr;
+			cnt_ptr_dir <= DOWN;
+			cnt_ptr_clr <= OUT_DONE or RST;
+			out_fifo_rst <= OUT_DONE or RST;
+
+			mem1_a    <= reg_ptr - cnt_ptr;
 			mem1_din  <= (others => 'X');
 			mem1_we   <= '0';
-			mem1_re   <= OUT_RE;
+
+			OUT_RDY <= '0';
+
+		when s_out1 =>
+			if (reg_ptr - cnt_ptr) < reg_ptr then
+				cnt_ptr_ce  <= not out_fifo_full;
+				out_fifo_we  <= not out_fifo_full;
+			end if;
+
+			cnt_ptr_dir <= DOWN;
+			cnt_ptr_clr <= OUT_DONE or RST;
+			out_fifo_rst <= OUT_DONE or RST;
+
+			mem1_a    <= reg_ptr - cnt_ptr;
+			mem1_din  <= (others => 'X');
+			mem1_we   <= '0';
+
+			OUT_RDY <= '0';
+
+		when s_out =>
+			if (reg_ptr - cnt_ptr) < reg_ptr then
+				cnt_ptr_ce  <= not out_fifo_full;
+				out_fifo_we  <= not out_fifo_full;
+			end if;
+
+			cnt_ptr_dir <= DOWN;
+			cnt_ptr_clr <= OUT_DONE or RST;
+
+			out_fifo_re  <= OUT_RE;
+			out_fifo_rst <= OUT_DONE or RST;
+
+			mem1_a    <= reg_ptr - cnt_ptr;
+			mem1_din  <= (others => 'X');
+			mem1_we   <= '0';
 
 			OUT_RDY <= '1';
 
