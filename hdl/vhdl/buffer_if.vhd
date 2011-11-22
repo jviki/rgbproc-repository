@@ -111,6 +111,13 @@ architecture fsm_wrapper of buffer_if is
 
 begin
 
+	assert BUFF_CAP = 640 * 480
+		report "Current buffer_if implementation does not support memory size"
+		     & " other then 640 * 480"
+		severity error;
+
+	-------------------------------------
+
 	cnt_ptrp : process(CLK, cnt_ptr_clr, cnt_ptr_ce)
 	begin
 		if rising_edge(CLK) then
