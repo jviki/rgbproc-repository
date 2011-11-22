@@ -38,7 +38,6 @@ port (
 	IN_D      : in  std_logic_vector(23 downto 0);
 	IN_WE     : in  std_logic;
 	IN_FULL   : out std_logic;
-	IN_PTR    : out std_logic_vector(log2(BUFF_CAP) - 1 downto 0);
 
 	---
 	-- FIFO out
@@ -46,7 +45,6 @@ port (
 	OUT_D     : out std_logic_vector(23 downto 0);
 	OUT_RE    : in  std_logic;
 	OUT_EMPTY : out std_logic;
-	OUT_PTR   : out std_logic_vector(log2(BUFF_CAP) - 1 downto 0);
 
 	---
 	-- Random Access port 0
@@ -124,8 +122,6 @@ begin
 	M0_DO     <= mem0_dout;
 	M1_DO     <= mem1_dout;
 
-	IN_PTR    <= cnt_ptr;
-	OUT_PTR   <= cnt_ptr;
 	MEM_SIZE  <= cnt_ptr;
 	
 	-------------------------------------
