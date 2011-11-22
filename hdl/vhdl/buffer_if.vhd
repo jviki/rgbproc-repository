@@ -235,7 +235,10 @@ begin
 		end case;
 	end process;
 
-	fsm_output : process(CLK, state, RST, IN_WE, OUT_DONE)
+	fsm_output : process(CLK, state, RST, cnt_ptr, reg_ptr,
+	                     IN_D, IN_WE, OUT_RE, OUT_DONE,
+	                     M0_A, M0_DI, M0_WE, M0_RE,
+	                     M1_A, M1_DI, M1_WE, M1_RE)
 	begin
 		IN_RDY  <= '0';
 		OUT_RDY <= '0';
