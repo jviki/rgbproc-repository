@@ -31,6 +31,7 @@ port (
 
 	MEM_DONE  : in  std_logic;
 	MEM_RDY   : out std_logic;
+	MEM_SIZE  : out std_logic_vector(log2(BUFF_CAP) - 1 downto 0);
 
 	---
 	-- FIFO in
@@ -67,7 +68,6 @@ port (
 	M0_RE     : in  std_logic;
 
 	M0_DRDY   : out std_logic;
-	M0_SIZE   : out std_logic_vector(log2(BUFF_CAP) - 1 downto 0);
 
 	---
 	-- Random Access port 1
@@ -83,8 +83,7 @@ port (
 	M1_BI     : in  std_logic_vector(7 downto 0);
 	M1_RE     : in  std_logic;
 
-	M1_DRDY   : out std_logic;
-	M1_SIZE   : out std_logic_vector(log2(BUFF_CAP) - 1 downto 0)
+	M1_DRDY   : out std_logic
 );
 end entity;
 
@@ -114,6 +113,7 @@ begin
 		OUT_DONE  => OUT_DONE,
 		MEM_DONE  => MEM_DONE,
 		MEM_RDY   => MEM_RDY,
+		MEM_SIZE  => MEM_SIZE,
 
 		IN_D      => in_d,
 		IN_WE     => IN_WE,
