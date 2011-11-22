@@ -80,6 +80,8 @@ architecture fsm_wrapper of buffer_if is
 	signal cnt_ptr_ce  : std_logic;
 	signal cnt_ptr     : std_logic_vector(log2(BUFF_CAP) - 1 downto 0);
 
+	signal reg_ptr     : std_logic_vector(log2(BUFF_CAP) - 1 downto 0);
+	signal reg_ptr_we  : std_logic;
 	signal state       : state_t;
 	signal nstate      : state_t;
 
@@ -108,6 +110,15 @@ begin
 				else
 					cnt_ptr <= cnt_ptr - 1;
 				end if;
+			end if;
+		end if;
+	end process;
+
+	reg_ptrp : process(CLK, reg_ptr_we, cnt_ptr)
+	begin
+		if rising_edge(CLK) then
+			if reg_ptr_we = '1' then
+				reg_ptr <= cnt_ptr;
 			end if;
 		end if;
 	end process;
