@@ -151,6 +151,56 @@ begin
 		end if;
 	end process;
 
+
+	-------------------------------------
+	
+	red_bram_i : entity work.rgb_mem
+	port map (
+		clka   => CLK,
+		wea(0) => mem0_we,
+		addra  => mem0_a,
+		dina   => mem0_din(7 downto 0),
+		douta  => mem0_dout(7 downto 0),
+
+		clkb   => CLK,
+		web(0) => mem1_we,
+		addrb  => mem1_a,
+		dinb   => mem1_din(7 downto 0),
+		doutb  => mem1_dout(7 downto 0)
+	);
+
+	green_bram_i : entity work.rgb_mem
+	port map (
+		clka   => CLK,
+		wea(0) => mem0_we,
+		addra  => mem0_a,
+		dina   => mem0_din(15 downto 8),
+		douta  => mem0_dout(15 downto 8),
+
+		clkb   => CLK,
+		web(0) => mem1_we,
+		addrb  => mem1_a,
+		dinb   => mem1_din(15 downto 8),
+		doutb  => mem1_dout(15 downto 8)
+	);
+
+	blue_bram_i : entity work.rgb_mem
+	port map (
+		clka   => CLK,
+		wea(0) => mem0_we,
+		addra  => mem0_a,
+		dina   => mem0_din(23 downto 16),
+		douta  => mem0_dout(23 downto 16),
+
+		clkb   => CLK,
+		web(0) => mem1_we,
+		addrb  => mem1_a,
+		dinb   => mem1_din(23 downto 16),
+		doutb  => mem1_dout(23 downto 16)
+	);
+	
+	-------------------------------------
+
 	fsm_state : process(CLK, RST, nstate)
 	begin
 		if rising_edge(CLK) then
