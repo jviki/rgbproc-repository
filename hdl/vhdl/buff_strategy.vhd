@@ -122,7 +122,6 @@ begin
 		OUT_D     => out_d,
 		OUT_RE    => OUT_RE,
 		OUT_EMPTY => OUT_EMPTY,
-		OUT_DRDY  => OUT_DRDY,
 
 		M0_A      => M0_Q,
 		M0_DO     => m0_do,
