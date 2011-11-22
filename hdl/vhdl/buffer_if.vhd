@@ -54,6 +54,7 @@ port (
 	M0_WE     : in  std_logic;
 	M0_DI     : in  std_logic_vector(23 downto 0);
 	M0_RE     : in  std_logic;
+	M0_DRDY   : out std_logic;
 
 	---
 	-- Random Access port 1
@@ -63,6 +64,7 @@ port (
 	M1_WE     : in  std_logic;
 	M1_DI     : in  std_logic_vector(23 downto 0);
 	M1_RE     : in  std_logic;
+	M1_DRDY   : out std_logic;
 
 	MEM_SIZE  : out std_logic_vector(log2(BUFF_CAP) - 1 downto 0)
 );
@@ -90,12 +92,14 @@ architecture fsm_wrapper of buffer_if is
 	signal mem0_we       : std_logic;
 	signal mem0_din      : std_logic_vector(23 downto 0);
 	signal mem0_re       : std_logic;
+	signal mem0_drdy     : std_logic;
 
 	signal mem1_a        : std_logic_vector(log2(BUFF_CAP) - 1 downto 0);
 	signal mem1_dout     : std_logic_vector(23 downto 0);
 	signal mem1_we       : std_logic;
 	signal mem1_din      : std_logic_vector(23 downto 0);
 	signal mem1_re       : std_logic;
+	signal mem1_drdy     : std_logic;
 
 begin
 
@@ -131,11 +135,21 @@ begin
 	OUT_D     <= mem1_dout;
 
 	M0_DO     <= mem0_dout;
+	M0_DRDY   <= mem0_drdy;
 	M1_DO     <= mem1_dout;
+	M1_DRDY   <= mem1_drdy;
 
 	MEM_SIZE  <= cnt_ptr;
 	
 	-------------------------------------
+
+	mem_drdyp : process(CLK, mem0_re, mem1_re)
+	begin
+		if rising_edge(CLK) then
+			mem0_drdy <= mem0_re;
+			mem1_drdy <= mem1_re;
+		end if;
+	end process;
 
 	fsm_state : process(CLK, RST, nstate)
 	begin
