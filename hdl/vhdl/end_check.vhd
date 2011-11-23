@@ -28,6 +28,7 @@ architecture full of end_check is
 
 	signal expect_eol      : std_logic;
 	signal expect_eof      : std_logic;
+	signal expect_rst      : std_logic;
 
 	signal reg_invalid     : std_logic;
 	signal reg_invalid_ce  : std_logic;
@@ -58,11 +59,13 @@ begin
 	)
 	port map (
 		CLK     => CLK,
-		RST     => RST,
+		RST     => expect_rst,
 		PX_VLD  => PX_VLD,
 		OUT_EOL => expect_eol,
 		OUT_EOF => expect_eof
 	);
+
+	expect_rst <= RST or CLEAR;
 
 	---------------------------------
 
