@@ -194,7 +194,7 @@ begin
 	);
 
 	pixel_valid <= infifo_rdy and IN_WE;
-	frame_clear <= frame_invalid;
+	frame_clear <= frame_invalid or IN_DONE;
 	IN_AGAIN    <= frame_invalid;
 
 	-----------------------------

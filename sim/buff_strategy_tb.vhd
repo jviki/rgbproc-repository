@@ -60,7 +60,7 @@ architecture testbench of buff_strategy_tb is
 
 begin
 
-	dut_i : entity work.buff_strategy
+	dut_i : entity work.buff_strategy(single)
 	generic map (
 		WIDTH  => WIDTH,
 		HEIGHT => HEIGHT
