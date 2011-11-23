@@ -34,10 +34,16 @@ architecture full of end_gen is
 	signal cnt_lines_clr : std_logic;
 	signal cnt_lines     : std_logic_vector(log2(HEIGHT) downto 0);
 
+	signal gen_eol       : std_logic;
+	signal gen_eof       : std_logic;
+
 begin
 
-	OUT_EOL <= '1' when cnt_pixels = WIDTH  else '0';
-	OUT_EOF <= '1' when cnt_lines  = HEIGHT else '0';
+	OUT_EOL <= gen_eol;
+	OUT_EOF <= gen_eof;
+
+	gen_eol <= '1' when cnt_pixels = WIDTH - 1  else '0';
+	gen_eof <= gen_eol when cnt_lines  = HEIGHT - 1 else '0';
 
 	cnt_pixelsp : process(CLK, cnt_pixels_ce, cnt_pixels_clr, RST)
 	begin
@@ -51,7 +57,7 @@ begin
 	end process;
 
 	cnt_pixels_ce  <= PX_VLD;
-	cnt_pixels_clr <= PX_VLD when cnt_pixels = WIDTH else '0';
+	cnt_pixels_clr <= PX_VLD and gen_eol;
 
 	cnt_linesp : process(CLK, cnt_lines_ce, cnt_lines_clr, RST)
 	begin
@@ -64,8 +70,8 @@ begin
 		end if;
 	end process;
 
-	cnt_lines_ce  <= PX_VLD when cnt_pixels = WIDTH else '0';
-	cnt_lines_clr <= PX_VLD when cnt_pixels = WIDTH and cnt_lines = HEIGHT else '0';
+	cnt_lines_ce  <= PX_VLD and gen_eol;
+	cnt_lines_clr <= PX_VLD and gen_eof;
 
 end architecture;
 
