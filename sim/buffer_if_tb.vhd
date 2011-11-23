@@ -14,7 +14,9 @@ end entity;
 
 architecture testbench of buffer_if_tb is
 
-	constant BUFF_CAP : integer := 640 * 480;
+	constant WIDTH    : integer := 640;
+	constant HEIGHT   : integer := 480;
+	constant BUFF_CAP : integer := WIDTH * HEIGHT;
 	constant WADDR    : integer := log2(BUFF_CAP);
 
 	constant FREQ     : real := 100.0;
@@ -57,7 +59,8 @@ begin
 
 	dut_i : entity work.buffer_if
 	generic map (
-		BUFF_CAP => BUFF_CAP
+		WIDTH  => WIDTH,
+		HEIGHT => HEIGHT
 	)
 	port map (
 		CLK => clk,

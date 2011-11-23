@@ -12,7 +12,8 @@ use proc_common_v3_00_a.srl_fifo;
 
 entity buffer_if is
 generic (
-	BUFF_CAP  : integer := 640 * 480 -- pixels
+	WIDTH  : integer := 640; -- pixels
+	HEIGHT : integer := 480  -- lines
 );
 port (
 	---
@@ -50,7 +51,7 @@ port (
 	---
 	-- Random Access port 0
 	---
-	M0_A      : in  std_logic_vector(log2(BUFF_CAP) - 1 downto 0);
+	M0_A      : in  std_logic_vector(log2(WIDTH * HEIGHT) - 1 downto 0);
 	M0_DO     : out std_logic_vector(23 downto 0);
 	M0_WE     : in  std_logic;
 	M0_DI     : in  std_logic_vector(23 downto 0);
@@ -60,19 +61,20 @@ port (
 	---
 	-- Random Access port 1
 	---
-	M1_A      : in  std_logic_vector(log2(BUFF_CAP) - 1 downto 0);
+	M1_A      : in  std_logic_vector(log2(WIDTH * HEIGHT) - 1 downto 0);
 	M1_DO     : out std_logic_vector(23 downto 0);
 	M1_WE     : in  std_logic;
 	M1_DI     : in  std_logic_vector(23 downto 0);
 	M1_RE     : in  std_logic;
 	M1_DRDY   : out std_logic;
 
-	MEM_SIZE  : out std_logic_vector(log2(BUFF_CAP) - 1 downto 0)
+	MEM_SIZE  : out std_logic_vector(log2(WIDTH * HEIGHT) - 1 downto 0)
 );
 end entity;
 
 architecture fsm_wrapper of buffer_if is
 
+	constant BUFF_CAP  : integer   := WIDTH * HEIGHT;
 	constant UP        : std_logic := '1';
 	constant DOWN      : std_logic := '0';
 

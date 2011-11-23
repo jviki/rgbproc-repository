@@ -11,7 +11,8 @@ use proc_common_v3_00_a.proc_common_pkg.log2;
 
 entity buff_strategy is
 generic (
-	BUFF_CAP  : integer := 640 * 480 -- pixels
+	WIDTH  : integer := 640; -- pixels
+	HEIGHT : integer := 480  -- lines
 );
 port (
 	---
@@ -31,7 +32,7 @@ port (
 
 	MEM_DONE  : in  std_logic;
 	MEM_RDY   : out std_logic;
-	MEM_SIZE  : out std_logic_vector(log2(BUFF_CAP) - 1 downto 0);
+	MEM_SIZE  : out std_logic_vector(log2(WIDTH * HEIGHT) - 1 downto 0);
 
 	---
 	-- FIFO in
@@ -56,7 +57,7 @@ port (
 	---
 	-- Random Access port 0
 	---
-	M0_A      : in  std_logic_vector(log2(BUFF_CAP) - 1 downto 0);
+	M0_A      : in  std_logic_vector(log2(WIDTH * HEIGHT) - 1 downto 0);
 	M0_RO     : out std_logic_vector(7 downto 0);
 	M0_GO     : out std_logic_vector(7 downto 0);
 	M0_BO     : out std_logic_vector(7 downto 0);
@@ -72,7 +73,7 @@ port (
 	---
 	-- Random Access port 1
 	---
-	M1_A      : in  std_logic_vector(log2(BUFF_CAP) - 1 downto 0);
+	M1_A      : in  std_logic_vector(log2(WIDTH * HEIGHT) - 1 downto 0);
 	M1_RO     : out std_logic_vector(7 downto 0);
 	M1_GO     : out std_logic_vector(7 downto 0);
 	M1_BO     : out std_logic_vector(7 downto 0);
@@ -102,7 +103,8 @@ begin
 
 	buff0_i : entity work.buffer_if
 	generic map (
-		BUFF_CAP => BUFF_CAP
+		WIDTH  => WIDTH,
+		HEIGHT => HEIGHT
 	)
 	port map (
 		CLK       => CLK,
