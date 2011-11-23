@@ -39,6 +39,8 @@ architecture testbench of buffer_if_tb is
 	signal out_d    : std_logic_vector(23 downto 0);
 	signal out_re   : std_logic;
 	signal out_empty : std_logic;
+	signal out_eol  : std_logic;
+	signal out_eof  : std_logic;
 
 	signal m0_a     : std_logic_vector(WADDR - 1 downto 0);
 	signal m0_do    : std_logic_vector(23 downto 0);
@@ -80,8 +82,8 @@ begin
 		OUT_D    => out_d,
 		OUT_RE   => out_re,
 		OUT_EMPTY => out_empty,
-		OUT_EOF  => open,
-		OUT_EOL  => open,
+		OUT_EOF  => out_eof,
+		OUT_EOL  => out_eol,
 
 		M0_A     => m0_a,
 		M0_DO    => m0_do,
