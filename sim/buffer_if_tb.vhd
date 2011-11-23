@@ -122,10 +122,12 @@ begin
 		m1_di  <= (others => 'X');
 		m1_re  <= '0';
 
-		wait until rst = '0';
-		wait until rising_edge(clk);
+		if rst = '1' then
+			wait until rst = '0';
+			wait until rising_edge(clk);
+		end if;
 
-		for i in 1 to 16 loop
+		for i in 1 to WIDTH loop
 			assert in_rdy = '1'
 				report "IN interface is not ready"
 				severity error;
@@ -208,8 +210,6 @@ begin
 		assert in_rdy = '1'
 			report "IN interface is not ready"
 			severity error;
-
-		wait;
 	end process;
 
 	-------------------------
