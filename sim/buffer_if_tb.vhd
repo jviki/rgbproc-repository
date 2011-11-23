@@ -104,115 +104,78 @@ begin
 
 	-------------------------
 
-	test : process
+	data_in : process(CLK, RST, in_rdy)
+		variable i : integer;
 	begin
-		in_done  <= '0';
-		out_done <= '0';
-		mem_done <= '0';
+		if rising_edge(CLK) then
+			if i >= BUFF_CAP - 1 then
+				in_done <= '1';
+				in_we   <= '0';
+			end if;
+			
+			if RST = '1' or in_rdy = '0' then
+				i := 0;
+				in_done <= '0';
+				in_we   <= '0';
+			elsif in_rdy = '1' then
+				in_d( 7 downto  0) <= conv_std_logic_vector(i mod 256, 8);
+				in_d(15 downto  8) <= conv_std_logic_vector((i * 2) mod 256, 8);
+				in_d(23 downto 16) <= conv_std_logic_vector((i / 2) mod 256, 8);
 
-		in_d   <= (others => 'X');
-		in_we  <= '0';
-		out_re <= '0';
+				if i <= BUFF_CAP - 1 then
+					in_we <= not in_full;
+				else
+					in_we <= '0';
+				end if;
 
-		m0_a   <= (others => 'X');
-		m0_we  <= '0';
-		m0_di  <= (others => 'X');
-		m0_re  <= '0';
-
-		m1_a   <= (others => 'X');
-		m1_we  <= '0';
-		m1_di  <= (others => 'X');
-		m1_re  <= '0';
-
-		if rst = '1' then
-			wait until rst = '0';
-			wait until rising_edge(clk);
+				if in_full = '0' then
+					i := i + 1;
+				end if;
+			end if;
 		end if;
-
-		for i in 1 to WIDTH loop
-			assert in_rdy = '1'
-				report "IN interface is not ready"
-				severity error;
-
-			assert mem_rdy = '0'
-				report "MEM interface is ready, must not be"
-				severity error;
-
-			assert out_rdy = '0'
-				report "OUT interface is ready, must not be"
-				severity error;
-
-			in_d( 7 downto  0) <= conv_std_logic_vector(i mod 256, 8);
-			in_d(15 downto  8) <= conv_std_logic_vector((i * 2) mod 256, 8);
-			in_d(23 downto 16) <= conv_std_logic_vector((i / 2) mod 256, 8);
-			in_we <= not in_full;
-			wait until rising_edge(clk);
-		end loop;
-
-		assert in_full = '1'
-			report "IN interface is not full"
-			severity error;
-
-		in_we <= '0';
-		wait until rising_edge(clk);
-
-		in_done <= '1';
-		wait until rising_edge(clk);
-
-		for i in 1 to 16 loop
-			assert in_rdy = '0'
-				report "IN interface is ready, must not be"
-				severity error;
-
-			assert mem_rdy = '1'
-				report "MEM interface is not ready"
-				severity error;
-
-			assert out_rdy = '0'
-				report "OUT interface is ready, must not be"
-				severity error;
-
-			m0_a  <= conv_std_logic_vector(i, m0_a'length);
-			m0_re <= '1';
-
-			m1_a  <= conv_std_logic_vector(16 - i, m1_a'length);
-			m1_re <= '1';
-
-			wait until rising_edge(clk);
-		end loop;
-
-		m0_re <= '0';
-		m1_re <= '0';
-		mem_done <= '1';
-		wait until rising_edge(clk);
-		wait until out_rdy = '1';
-		wait until rising_edge(clk);
-
-		while out_empty = '0' loop
-			assert in_rdy = '0'
-				report "IN interface is ready, must not be"
-				severity error;
-
-			assert mem_rdy = '0'
-				report "MEM interface is ready, must not be"
-				severity error;
-
-			assert out_rdy = '1'
-				report "OUT interface is not ready"
-				severity error;
-
-			out_re <= not out_empty and out_rdy;
-			wait until rising_edge(clk);
-		end loop;
-
-		out_done <= '1';
-		out_re   <= '0';
-		wait until rising_edge(clk);
-
-		assert in_rdy = '1'
-			report "IN interface is not ready"
-			severity error;
 	end process;
+
+	data_out : process(CLK, RST, out_rdy)
+		variable i : integer;
+	begin
+		if rising_edge(CLK) then
+			if i = BUFF_CAP - 1 then
+				assert out_eof = '1'
+					report "Missing EOL"
+					severity error;
+			end if;
+
+			if out_empty = '1' then
+				out_done <= '1';
+				out_re   <= '0';
+			end if;
+
+			if RST = '1' or out_rdy = '0' then
+				out_done <= '0';
+				out_re   <= '0';
+				i := 0;
+			elsif out_rdy = '1' then
+				out_re <= not out_empty;
+
+				if out_empty = '0' then
+					i := i + 1;
+				end if;
+			end if;
+		end if;
+	end process;
+
+	mem_done <= '1';
+	m0_re    <= '0';
+	m0_we    <= '0';
+	m1_re    <= '0';
+	m1_we    <= '0';
+
+	assert (in_rdy = '1' and out_rdy = '0' and mem_rdy = '0')
+            or (in_rdy = '0' and out_rdy = '1' and mem_rdy = '0')
+	    or (in_rdy = '0' and out_rdy = '0' and mem_rdy = '1')
+	    or (in_rdy = '0' and out_rdy = '0' and mem_rdy = '0')
+	    	report "Invalid RDY signals combination"
+		severity error;
 
 	-------------------------
 
