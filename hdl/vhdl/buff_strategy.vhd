@@ -23,6 +23,9 @@ port (
 
 	---
 	-- Control
+	--
+	-- Only one of IN_RDY, OUT_RDY and MEM_RDY can be asserted at the same time.
+	-- *_DONE signalizes that the action in that mode was finished.
 	---
 	IN_DONE   : in  std_logic;
 	IN_RDY    : out std_logic;
@@ -37,6 +40,11 @@ port (
 
 	---
 	-- FIFO in
+	--
+	-- When IN_RDY is not asserted, IN_WE must be '0'.
+	-- FIFO-like input interface. IN_R, IN_G, IN_B and IN_EOF, IN_EOL
+	-- are data inputs that are written to the buffer on IN_WE.
+	-- Writing when IN_FULL is asserted leads to undefined behaviour.
 	---
 	IN_R      : in  std_logic_vector(7 downto 0);
 	IN_G      : in  std_logic_vector(7 downto 0);
@@ -49,6 +57,9 @@ port (
 
 	---
 	-- FIFO out
+	--
+	-- When OUT_RDY is not asserted OUT_RE must be '0'.
+	-- Reading when OUT_EMPTY is asserted leads to undefined behaviour.
 	---
 	OUT_R     : out std_logic_vector(7 downto 0);
 	OUT_G     : out std_logic_vector(7 downto 0);
@@ -61,6 +72,9 @@ port (
 
 	---
 	-- Random Access port 0
+	--
+	-- When MEM_RDY is not asserted M0_WE and M0_RE must be '0'.
+	-- M0_DRDY marks valid data on outputs M0_RO, M0_GO, M0_BO.
 	---
 	M0_A      : in  std_logic_vector(log2(WIDTH * HEIGHT) - 1 downto 0);
 	M0_RO     : out std_logic_vector(7 downto 0);
@@ -77,6 +91,9 @@ port (
 
 	---
 	-- Random Access port 1
+	--
+	-- When MEM_RDY is not asserted M1_WE and M1_RE must be '0'.
+	-- M1_DRDY marks valid data on outputs M1_RO, M1_GO, M1_BO.
 	---
 	M1_A      : in  std_logic_vector(log2(WIDTH * HEIGHT) - 1 downto 0);
 	M1_RO     : out std_logic_vector(7 downto 0);
