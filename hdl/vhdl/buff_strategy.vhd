@@ -26,10 +26,12 @@ port (
 	--
 	-- Only one of IN_RDY, OUT_RDY and MEM_RDY can be asserted at the same time.
 	-- *_DONE signalizes that the action in that mode was finished.
+	-- IN_AGAIN asserted means that the input data are ignored and a new data
+	-- are expected (fifo pointer is cleared to zero).
 	---
 	IN_DONE   : in  std_logic;
 	IN_RDY    : out std_logic;
-	IN_CLEAR  : in  std_logic;
+	IN_AGAIN  : out std_logic;
 	
 	OUT_DONE  : in  std_logic;
 	OUT_RDY   : out std_logic;
@@ -121,6 +123,12 @@ architecture single of buff_strategy is
 	signal m1_di : std_logic_vector(23 downto 0);
 	signal m1_do : std_logic_vector(23 downto 0);
 
+	signal infifo_rdy : std_logic;
+
+	signal frame_invalid : std_logic;
+	signal frame_clear   : std_logic;
+	signal pixel_valid   : std_logic;
+
 begin
 
 	buff0_i : entity work.buffer_if
@@ -133,8 +141,8 @@ begin
 		RST       => RST,
 
 		IN_DONE   => IN_DONE,
-		IN_RDY    => IN_RDY,
-		IN_CLEAR  => IN_CLEAR,
+		IN_RDY    => infifo_rdy,
+		IN_CLEAR  => frame_clear,
 		OUT_DONE  => OUT_DONE,
 		OUT_RDY   => OUT_RDY,
 		MEM_DONE  => MEM_DONE,
@@ -165,6 +173,29 @@ begin
 		M1_RE     => M1_RE,
 		M1_DRDY   => M1_DRDY
 	);
+	
+	IN_RDY <= infifo_rdy;
+
+	-----------------------------
+
+	end_check_i : entity work.end_check
+	generic map (
+		WIDTH  => WIDTH,
+		HEIGHT => HEIGHT
+	)
+	port map (
+		CLK => CLK,
+		RST => RST,
+		PX_VLD => pixel_valid,
+		IN_EOL => IN_EOL,
+		IN_EOF => IN_EOF,
+		CLEAR  => frame_clear,
+		INVALID => frame_invalid
+	);
+
+	pixel_valid <= infifo_rdy and IN_WE;
+	frame_clear <= frame_invalid;
+	IN_AGAIN    <= frame_invalid;
 
 	-----------------------------
 
