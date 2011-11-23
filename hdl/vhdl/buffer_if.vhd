@@ -349,7 +349,7 @@ begin
 			cnt_ptr_ce  <= IN_WE;
 			reg_ptr_we  <= IN_DONE;
 
-			cnt_ptr_clr <= IN_CLEAR and not IN_DONE;
+			cnt_ptr_clr <= RST or (IN_CLEAR and not IN_DONE);
 
 			mem0_a    <= cnt_ptr;
 			mem0_din  <= IN_D;
