@@ -20,7 +20,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="67" />
+   <WVObjectSize size="69" />
    <wvobject fp_name="/buffer_if_tb/clk" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -63,11 +63,6 @@
    <wvobject fp_name="/buffer_if_tb/in_full" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">in_full</obj_property>
       <obj_property name="ObjectShortName">in_full</obj_property>
-   </wvobject>
-   <wvobject fp_name="/buffer_if_tb/in_ptr" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">in_ptr[18:0]</obj_property>
-      <obj_property name="ObjectShortName">in_ptr[18:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="divider33" type="divider">
       <obj_property name="label">Memory</obj_property>
@@ -165,6 +160,14 @@
       <obj_property name="ObjectShortName">out_d[23:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
    </wvobject>
+   <wvobject fp_name="/buffer_if_tb/dut_i/out_eol" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">out_eol</obj_property>
+      <obj_property name="ObjectShortName">out_eol</obj_property>
+   </wvobject>
+   <wvobject fp_name="/buffer_if_tb/dut_i/out_eof" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">out_eof</obj_property>
+      <obj_property name="ObjectShortName">out_eof</obj_property>
+   </wvobject>
    <wvobject fp_name="/buffer_if_tb/out_re" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">out_re</obj_property>
       <obj_property name="ObjectShortName">out_re</obj_property>
@@ -173,9 +176,14 @@
       <obj_property name="ElementShortName">out_empty</obj_property>
       <obj_property name="ObjectShortName">out_empty</obj_property>
    </wvobject>
-   <wvobject fp_name="/buffer_if_tb/out_ptr" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">out_ptr[18:0]</obj_property>
-      <obj_property name="ObjectShortName">out_ptr[18:0]</obj_property>
+   <wvobject fp_name="/buffer_if_tb/dut_i/end_gen_i/cnt_lines" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">cnt_lines[9:0]</obj_property>
+      <obj_property name="ObjectShortName">cnt_lines[9:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/buffer_if_tb/dut_i/end_gen_i/cnt_pixels" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">cnt_pixels[10:0]</obj_property>
+      <obj_property name="ObjectShortName">cnt_pixels[10:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="divider65" type="divider">
