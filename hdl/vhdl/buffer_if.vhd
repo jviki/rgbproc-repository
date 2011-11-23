@@ -80,7 +80,7 @@ architecture fsm_wrapper of buffer_if is
 	constant UP        : std_logic := '1';
 	constant DOWN      : std_logic := '0';
 
-	type state_t is (s_in, s_mem, s_out0, s_out1, s_out);
+	type state_t is (s_in, s_mem, s_out0, s_out1, s_out, s_out_done);
 
 	signal cnt_ptr_clr : std_logic;
 	signal cnt_ptr_dir : std_logic;
@@ -161,7 +161,7 @@ begin
 	begin
 		if rising_edge(CLK) then
 			if reg_ptr_we = '1' then
-				reg_ptr <= cnt_ptr;
+				reg_ptr <= cnt_ptr + 1;
 			end if;
 		end if;
 	end process;
@@ -299,6 +299,13 @@ begin
 		when s_out =>
 			if OUT_DONE = '1' then
 				nstate <= s_in;
+			elsif (reg_ptr - cnt_ptr) + 1 = reg_ptr then
+				nstate <= s_out_done;
+			end if;
+
+		when s_out_done =>
+			if OUT_DONE = '1' then
+				nstate <= s_in;
 			end if;
 
 		end case;
@@ -362,6 +369,7 @@ begin
 		when s_out0 =>
 			if (reg_ptr - cnt_ptr) < reg_ptr then
 				cnt_ptr_ce  <= not out_fifo_full;
+				mem1_re     <= not out_fifo_full;
 			end if;
 
 			cnt_ptr_dir <= DOWN;
@@ -379,7 +387,8 @@ begin
 		when s_out1 =>
 			if (reg_ptr - cnt_ptr) < reg_ptr then
 				cnt_ptr_ce  <= not out_fifo_full;
-				out_fifo_we  <= not out_fifo_full;
+				out_fifo_we <= not out_fifo_full;
+				mem1_re     <= not out_fifo_full;
 			end if;
 
 			cnt_ptr_dir <= DOWN;
@@ -395,7 +404,8 @@ begin
 		when s_out =>
 			if (reg_ptr - cnt_ptr) < reg_ptr then
 				cnt_ptr_ce  <= not out_fifo_full;
-				out_fifo_we  <= not out_fifo_full;
+				out_fifo_we <= mem1_drdy;
+				mem1_re     <= not out_fifo_full;
 			end if;
 
 			cnt_ptr_dir <= DOWN;
@@ -407,6 +417,19 @@ begin
 			mem1_a    <= reg_ptr - cnt_ptr;
 			mem1_din  <= (others => 'X');
 			mem1_we   <= '0';
+
+			OUT_RDY <= '1';
+
+		when s_out_done =>
+			out_fifo_we  <= mem1_drdy;
+			out_fifo_re  <= OUT_RE;
+			out_fifo_rst <= OUT_DONE or RST;
+			cnt_ptr_ce   <= '0';
+
+			mem1_a   <= (others => 'X');
+			mem1_din <= (others => 'X');
+			mem1_re  <= '0';
+			mem1_we  <= '0';
 
 			OUT_RDY <= '1';
 
