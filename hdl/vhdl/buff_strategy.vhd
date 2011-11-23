@@ -26,6 +26,7 @@ port (
 	---
 	IN_DONE   : in  std_logic;
 	IN_RDY    : out std_logic;
+	IN_CLEAR  : in  std_logic;
 	
 	OUT_DONE  : in  std_logic;
 	OUT_RDY   : out std_logic;
@@ -114,6 +115,7 @@ begin
 
 		IN_DONE   => IN_DONE,
 		IN_RDY    => IN_RDY,
+		IN_CLEAR  => IN_CLEAR,
 		OUT_DONE  => OUT_DONE,
 		OUT_RDY   => OUT_RDY,
 		MEM_DONE  => MEM_DONE,

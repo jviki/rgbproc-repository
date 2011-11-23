@@ -27,6 +27,7 @@ port (
 	---
 	IN_DONE   : in  std_logic;
 	IN_RDY    : out std_logic;
+	IN_CLEAR  : in  std_logic;
 	
 	OUT_DONE  : in  std_logic;
 	OUT_RDY   : out std_logic;
@@ -313,6 +314,7 @@ begin
 
 	fsm_output : process(CLK, state, RST, cnt_ptr, reg_ptr,
 	                     IN_D, IN_WE, OUT_RE, OUT_DONE,
+			     IN_CLEAR, IN_DONE,
 	                     M0_A, M0_DI, M0_WE, M0_RE,
 	                     M1_A, M1_DI, M1_WE, M1_RE)
 	begin
@@ -346,6 +348,8 @@ begin
 			cnt_ptr_dir <= UP;
 			cnt_ptr_ce  <= IN_WE;
 			reg_ptr_we  <= IN_DONE;
+
+			cnt_ptr_clr <= IN_CLEAR and not IN_DONE;
 
 			mem0_a    <= cnt_ptr;
 			mem0_din  <= IN_D;
