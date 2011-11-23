@@ -12,7 +12,8 @@ use proc_common_v3_00_a.proc_common_pkg.log2;
 entity buff_strategy is
 generic (
 	WIDTH  : integer := 640; -- pixels
-	HEIGHT : integer := 480  -- lines
+	HEIGHT : integer := 480; -- lines
+	FRAME_CHECK : boolean := false
 );
 port (
 	---
@@ -178,6 +179,9 @@ begin
 
 	-----------------------------
 
+gen_frame_check: if FRAME_CHECK = true
+generate
+
 	end_check_i : entity work.end_check
 	generic map (
 		WIDTH  => WIDTH,
@@ -196,6 +200,16 @@ begin
 	pixel_valid <= infifo_rdy and IN_WE;
 	frame_clear <= frame_invalid or IN_DONE;
 	IN_AGAIN    <= frame_invalid;
+
+end generate;
+
+gen_no_frame_check: if FRAME_CHECK = false
+generate
+
+	IN_AGAIN    <= '0';
+	frame_clear <= '0';
+
+end generate;
 
 	-----------------------------
 
