@@ -9,6 +9,38 @@ use ieee.std_logic_unsigned.all;
 library proc_common_v3_00_a;
 use proc_common_v3_00_a.proc_common_pkg.log2;
 
+---
+-- Buffering strategy. Holds a number of buffers (depends on implementation).
+-- Provides 3 interfaces. Only or more of them can be active at the same time.
+-- 
+-- * FIFO In
+-- Provides FIFO-like interface for writing. Can write one pixel per CLK.
+-- The input unit writes using this interface data into the buffer when
+-- IN_RDY is asserted. After all data are written the unit asserts IN_DONE.
+-- Internal logic then deasserts IN_RDY signal until another buffer is
+-- available for writing.
+--
+-- If FRAME_CHECK is set the internal logic can check frames written through
+-- this interface (can check e.g. whether EOL/EOF signals are asserted at the
+-- right pixel). If invalid frame is detected it asserts (for one CLK) signal
+-- IN_AGAIN. The frame is not stored in the buffer and it is expected to write
+-- it again or to write another one.
+-- If IN_DONE is asserted at the same time as IN_AGAIN, the frame is accepted.
+-- In that case the signal IN_AGAIN can be used to take care of another frame
+-- to be correct.
+-- The signal IN_AGAIN is valid only when IN_RDY is asserted.
+--
+-- * FIFO out
+-- If a buffer is filled by FIFO In it can be read bu FIFO out interface.
+-- The interface provides the same amount data that were written and generates
+-- EOL and EOF signals for that.
+-- When the signal OUT_EMPTY is asserted the buffer is empty.
+--
+-- * MEMORY (Random Access)
+-- Provides random access to a buffer. A unit can read or write (modify) the buffer
+-- when MEM_RDY is asserted. After its work is done it notifies by MEM_DONE to
+-- move to another buffer.
+---
 entity buff_strategy is
 generic (
 	WIDTH  : integer := 640; -- pixels
