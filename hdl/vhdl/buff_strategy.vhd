@@ -41,6 +41,8 @@ port (
 	IN_R      : in  std_logic_vector(7 downto 0);
 	IN_G      : in  std_logic_vector(7 downto 0);
 	IN_B      : in  std_logic_vector(7 downto 0);
+	IN_EOL    : in  std_logic;
+	IN_EOF    : in  std_logic;
 
 	IN_WE     : in  std_logic;
 	IN_FULL   : out std_logic;
