@@ -45,6 +45,8 @@ port (
 	-- FIFO out
 	---
 	OUT_D     : out std_logic_vector(23 downto 0);
+	OUT_EOL   : out std_logic;
+	OUT_EOF   : out std_logic;
 	OUT_RE    : in  std_logic;
 	OUT_EMPTY : out std_logic;
 
@@ -111,6 +113,8 @@ architecture fsm_wrapper of buffer_if is
 	signal out_fifo_not_empty : std_logic;
 	signal out_fifo_rst  : std_logic;
 
+	signal out_px_valid  : std_logic;
+
 begin
 
 	assert BUFF_CAP = 640 * 480
@@ -119,6 +123,23 @@ begin
 		severity error;
 
 	-------------------------------------
+	
+	end_gen_i : entity work.end_gen
+	generic map (
+		WIDTH  => WIDTH,
+		HEIGHT => HEIGHT
+	)
+	port map (
+		CLK     => CLK,
+		RST     => RST,
+		PX_VLD  => out_px_valid,
+		OUT_EOL => OUT_EOL,
+		OUT_EOF => OUT_EOF
+	);
+
+	out_px_valid <= out_fifo_not_empty and out_fifo_re;
+	
+	-------------------------------------
 
 	cnt_ptrp : process(CLK, cnt_ptr_clr, cnt_ptr_ce)
 	begin
@@ -126,9 +147,9 @@ begin
 			if cnt_ptr_clr = '1' then
 				cnt_ptr <= (others => '0');
 			elsif cnt_ptr_ce = '1' then
-				if cnt_ptr_dir = UP then
+				if cnt_ptr_dir = UP and cnt_ptr < BUFF_CAP - 1 then
 					cnt_ptr <= cnt_ptr + 1;
-				else
+				elsif cnt_ptr_dir = DOWN and cnt_ptr /= 0 then
 					cnt_ptr <= cnt_ptr - 1;
 				end if;
 			end if;

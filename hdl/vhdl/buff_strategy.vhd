@@ -50,6 +50,8 @@ port (
 	OUT_R     : out std_logic_vector(7 downto 0);
 	OUT_G     : out std_logic_vector(7 downto 0);
 	OUT_B     : out std_logic_vector(7 downto 0);
+	OUT_EOL   : out std_logic;
+	OUT_EOF   : out std_logic;
 
 	OUT_RE    : in  std_logic;
 	OUT_EMPTY : out std_logic;
@@ -125,6 +127,8 @@ begin
 		OUT_D     => out_d,
 		OUT_RE    => OUT_RE,
 		OUT_EMPTY => OUT_EMPTY,
+		OUT_EOL   => OUT_EOL,
+		OUT_EOF   => OUT_EOF,
 
 		M0_A      => M0_A,
 		M0_DO     => m0_do,

@@ -80,6 +80,8 @@ begin
 		OUT_D    => out_d,
 		OUT_RE   => out_re,
 		OUT_EMPTY => out_empty,
+		OUT_EOF  => open,
+		OUT_EOL  => open,
 
 		M0_A     => m0_a,
 		M0_DO    => m0_do,
