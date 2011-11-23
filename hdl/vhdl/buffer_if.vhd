@@ -114,6 +114,7 @@ architecture fsm_wrapper of buffer_if is
 	signal out_fifo_rst  : std_logic;
 
 	signal out_px_valid  : std_logic;
+	signal end_gen_rst   : std_logic;
 
 begin
 
@@ -131,7 +132,7 @@ begin
 	)
 	port map (
 		CLK     => CLK,
-		RST     => RST,
+		RST     => end_gen_rst,
 		PX_VLD  => out_px_valid,
 		OUT_EOL => OUT_EOL,
 		OUT_EOF => OUT_EOF
@@ -331,6 +332,8 @@ begin
 		mem1_a    <= (others => 'X');
 		mem1_din  <= (others => 'X');
 
+		end_gen_rst  <= RST;
+
 		case state is
 		when s_in  =>
 			cnt_ptr_dir <= UP;
@@ -368,6 +371,8 @@ begin
 			mem1_a    <= reg_ptr - cnt_ptr;
 			mem1_din  <= (others => 'X');
 			mem1_we   <= '0';
+
+			end_gen_rst  <= '1';
 
 			OUT_RDY <= '0';
 
