@@ -121,7 +121,7 @@ begin
 	-------------------------
 
 	data_in : process(CLK, RST, in_rdy)
-		constant DATA_AMOUNT : integer := 50;
+		constant DATA_AMOUNT : integer := WIDTH + 6;
 
 		variable i : integer;
 	begin
