@@ -210,49 +210,61 @@ begin
 
 	-------------------------------------
 	
-	red_bram_i : entity work.rgb_mem
+	red_bram_i : entity work.buffer_mem
+	generic map (
+		CAPACITY => BUFF_CAP,
+		DWIDTH   => 8
+	)
 	port map (
-		clka   => CLK,
-		wea(0) => mem0_we,
-		addra  => mem0_a,
-		dina   => mem0_din(7 downto 0),
-		douta  => mem0_dout(7 downto 0),
+		CLKA   => CLK,
+		WEA    => mem0_we,
+		ADDRA  => mem0_a,
+		DINA   => mem0_din(7 downto 0),
+		DOUTA  => mem0_dout(7 downto 0),
 
-		clkb   => CLK,
-		web(0) => mem1_we,
-		addrb  => mem1_a,
-		dinb   => mem1_din(7 downto 0),
-		doutb  => mem1_dout(7 downto 0)
+		CLKB   => CLK,
+		WEB    => mem1_we,
+		ADDRB  => mem1_a,
+		DINB   => mem1_din(7 downto 0),
+		DOUTB  => mem1_dout(7 downto 0)
 	);
 
-	green_bram_i : entity work.rgb_mem
+	green_bram_i : entity work.buffer_mem
+	generic map (
+		CAPACITY => BUFF_CAP,
+		DWIDTH   => 8
+	)
 	port map (
-		clka   => CLK,
-		wea(0) => mem0_we,
-		addra  => mem0_a,
-		dina   => mem0_din(15 downto 8),
-		douta  => mem0_dout(15 downto 8),
+		CLKA   => CLK,
+		WEA    => mem0_we,
+		ADDRA  => mem0_a,
+		DINA   => mem0_din(15 downto 8),
+		DOUTA  => mem0_dout(15 downto 8),
 
-		clkb   => CLK,
-		web(0) => mem1_we,
-		addrb  => mem1_a,
-		dinb   => mem1_din(15 downto 8),
-		doutb  => mem1_dout(15 downto 8)
+		CLKB   => CLK,
+		WEB    => mem1_we,
+		ADDRB  => mem1_a,
+		DINB   => mem1_din(15 downto 8),
+		DOUTB  => mem1_dout(15 downto 8)
 	);
 
-	blue_bram_i : entity work.rgb_mem
+	blue_bram_i : entity work.buffer_mem
+	generic map (
+		CAPACITY => BUFF_CAP,
+		DWIDTH   => 8
+	)
 	port map (
-		clka   => CLK,
-		wea(0) => mem0_we,
-		addra  => mem0_a,
-		dina   => mem0_din(23 downto 16),
-		douta  => mem0_dout(23 downto 16),
+		CLKA   => CLK,
+		WEA    => mem0_we,
+		ADDRA  => mem0_a,
+		DINA   => mem0_din(23 downto 16),
+		DOUTA  => mem0_dout(23 downto 16),
 
-		clkb   => CLK,
-		web(0) => mem1_we,
-		addrb  => mem1_a,
-		dinb   => mem1_din(23 downto 16),
-		doutb  => mem1_dout(23 downto 16)
+		CLKB   => CLK,
+		WEB    => mem1_we,
+		ADDRB  => mem1_a,
+		DINB   => mem1_din(23 downto 16),
+		DOUTB  => mem1_dout(23 downto 16)
 	);
 	
 	-------------------------------------
