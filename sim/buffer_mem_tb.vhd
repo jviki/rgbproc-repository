@@ -56,17 +56,17 @@ begin
 		wait until rst = '0';
 		wait until rising_edge(clk);
 
-		m_addra <= "000" & X"0000";
+		m_addra <= conv_std_logic_vector(0, m_addra'length);
 		m_dina  <= X"FF";
 		m_wea   <= '1';
 		wait until rising_edge(clk);
 
-		m_addra <= "000" & X"0001";
+		m_addra <= conv_std_logic_vector(1, m_addra'length);
 		m_dina  <= X"EE";
 		m_wea   <= '1';
 		wait until rising_edge(clk);
 
-		m_addra <= "000" & X"0002";
+		m_addra <= conv_std_logic_vector(2, m_addra'length);
 		m_dina  <= X"DD";
 		m_wea   <= '1';
 		wait until rising_edge(clk);
