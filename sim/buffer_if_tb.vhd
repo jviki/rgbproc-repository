@@ -70,6 +70,7 @@ begin
 
 		IN_DONE  => in_done,
 		IN_RDY   => in_rdy,
+		IN_CLEAR => '0',
 		OUT_DONE => out_done,
 		OUT_RDY  => out_rdy,
 		MEM_DONE => mem_done,
