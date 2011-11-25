@@ -15,17 +15,23 @@ generic (
 	DWIDTH   : integer := 8
 );
 port (
+	ARST     : in  std_logic;
+
 	CLKA     : in  std_logic;
 	ADDRA    : in  std_logic_vector(log2(CAPACITY) - 1 downto 0);
 	DINA     : in  std_logic_vector(DWIDTH - 1 downto 0);
 	DOUTA    : out std_logic_vector(DWIDTH - 1 downto 0);
 	WEA      : in  std_logic;
+	REA      : in  std_logic;
+	DRDYA    : out std_logic;
 
 	CLKB     : in  std_logic;
 	ADDRB    : in  std_logic_vector(log2(CAPACITY) - 1 downto 0);
 	DINB     : in  std_logic_vector(DWIDTH - 1 downto 0);
 	DOUTB    : out std_logic_vector(DWIDTH - 1 downto 0);
-	WEB      : in  std_logic
+	WEB      : in  std_logic;
+	REB      : in  std_logic;
+	DRDYB    : out std_logic
 );
 end entity;
 

@@ -178,16 +178,6 @@ begin
 	M1_DRDY   <= mem1_drdy;
 
 	MEM_SIZE  <= cnt_ptr;
-	
-	-------------------------------------
-
-	mem_drdyp : process(CLK, mem0_re, mem1_re)
-	begin
-		if rising_edge(CLK) then
-			mem0_drdy <= mem0_re;
-			mem1_drdy <= mem1_re;
-		end if;
-	end process;
 
 	-------------------------------------
 
@@ -209,21 +199,27 @@ begin
 	);
 
 	-------------------------------------
-	
+
 	red_bram_i : entity work.buffer_mem
 	generic map (
 		CAPACITY => BUFF_CAP,
 		DWIDTH   => 8
 	)
 	port map (
+		ARST   => RST,
+
 		CLKA   => CLK,
 		WEA    => mem0_we,
+		REA    => mem0_re,
+		DRDYA  => mem0_drdy,
 		ADDRA  => mem0_a,
 		DINA   => mem0_din(7 downto 0),
 		DOUTA  => mem0_dout(7 downto 0),
 
 		CLKB   => CLK,
 		WEB    => mem1_we,
+		REB    => mem1_re,
+		DRDYB  => mem1_drdy,
 		ADDRB  => mem1_a,
 		DINB   => mem1_din(7 downto 0),
 		DOUTB  => mem1_dout(7 downto 0)
@@ -235,14 +231,20 @@ begin
 		DWIDTH   => 8
 	)
 	port map (
+		ARST   => RST,
+
 		CLKA   => CLK,
 		WEA    => mem0_we,
+		REA    => mem0_re,
+		DRDYA  => mem0_drdy,
 		ADDRA  => mem0_a,
 		DINA   => mem0_din(15 downto 8),
 		DOUTA  => mem0_dout(15 downto 8),
 
 		CLKB   => CLK,
 		WEB    => mem1_we,
+		REB    => mem1_re,
+		DRDYB  => mem1_drdy,
 		ADDRB  => mem1_a,
 		DINB   => mem1_din(15 downto 8),
 		DOUTB  => mem1_dout(15 downto 8)
@@ -254,14 +256,20 @@ begin
 		DWIDTH   => 8
 	)
 	port map (
+		ARST   => RST,
+
 		CLKA   => CLK,
 		WEA    => mem0_we,
+		REA    => mem0_re,
+		DRDYA  => mem0_drdy,
 		ADDRA  => mem0_a,
 		DINA   => mem0_din(23 downto 16),
 		DOUTA  => mem0_dout(23 downto 16),
 
 		CLKB   => CLK,
 		WEB    => mem1_we,
+		REB    => mem1_re,
+		DRDYB  => mem1_drdy,
 		ADDRB  => mem1_a,
 		DINB   => mem1_din(23 downto 16),
 		DOUTB  => mem1_dout(23 downto 16)
