@@ -1,0 +1,642 @@
+ATTRIBUTE VENDOR = Xilinx
+ATTRIBUTE NAME = Virtex 5 ML506 Evaluation Platform with video
+ATTRIBUTE REVISION = 1
+ATTRIBUTE SPEC_URL = www.xilinx.com
+ATTRIBUTE CONTACT_INFO_URL = http://www.xilinx.com/support/techsup/tappinfo.htm
+ATTRIBUTE DESC = Xilinx Virtex 5 ML506 Evaluation Platform with video support
+ATTRIBUTE LONG_DESC =  'The ML506 board is intended to showcase and demonstrate Virtex-5 technology.  The ML506 board utilizes Xilinx Virtex 5 XC5VSX50T-FFG1136 device. The board includes Tri-Mode Ethernet MAC/PHY, 256MB DDR2 SDRAM SODIMM memory, 1MB ZBT SRAM, 32MB of Commodity Flash, 8kb IIC EEPROM, CPU Debug and CPU Trace connectors, System ACE CF controller and 2 RS232 serial ports.'
+
+BEGIN IO_INTERFACE
+  ATTRIBUTE INSTANCE = clk_1
+  ATTRIBUTE IOTYPE = XIL_CLOCK_V1
+  PARAMETER CLK_FREQ = 100000000, IO_IS = clk_freq, RANGE = (100000000) # 100 Mhz
+  PORT USER_SYS_CLK = CLK_100MHZ, IO_IS = ext_clk
+END
+
+BEGIN IO_INTERFACE
+  ATTRIBUTE INSTANCE = vga_clk,
+  ATTRIBUTE IOTYPE   = XIL_CLOCK_V1
+  PARAMETER CLK_FREQ = 25000000, IO_IS = clk_freq, RANGE = (25000000, 100000000)
+  PORT VGA_CLK = vga_dclk, IO_IS = ext_clk
+END
+
+# do not uncomment the following until we can programmably deliver UCF. V5 MPMC UCF is dependent on which clock you use.
+
+#uncomment the following if your board has a user clock not equal to 100MHz
+#this will make the reference clock field in BSB editable
+
+#BEGIN IO_INTERFACE
+#  ATTRIBUTE IOTYPE = XIL_CLOCK_V1
+#   ATTRIBUTE INSTANCE =userclk
+#   PARAMETER CLK_FREQ =100000000, IO_IS=clk_freq
+#   PORT SYSCLK = CLK_SOCKET, IO_IS=ext_clk
+#END
+
+BEGIN IO_INTERFACE
+  ATTRIBUTE INSTANCE = rst_1
+  ATTRIBUTE IOTYPE = XIL_RESET_V1
+  PARAMETER RST_POLARITY = 0, IO_IS = polarity, VALUE_NOTE = Active LOW
+  PORT FPGA.RESET = sys_rst_n, IO_IS = ext_rst
+END
+
+# 1st RS232
+BEGIN IO_INTERFACE
+  ATTRIBUTE INSTANCE = RS232_Uart_1
+  ATTRIBUTE IOTYPE = XIL_UART_V1
+  PORT RX = uart1_sin, IO_IS = serial_in
+  PORT TX = uart1_sout, IO_IS = serial_out
+END
+
+# I2C Video Bus
+BEGIN IO_INTERFACE
+	ATTRIBUTE IOTYPE = XIL_IIC_V1
+	ATTRIBUTE INSTANCE = IIC_VIDEO
+	PARAMETER C_IIC_FREQ = 100000, IO_IS = clk_out_freq
+	PARAMETER C_TEN_BIT_ADR = 0,   IO_IS = slave_respond_mode
+	PORT SCL = iic_scl, IO_IS = Serial_Clock
+	PORT SDA = iic_sda, IO_IS = Serial_Data
+END
+
+# VGA input
+BEGIN IO_INTERFACE
+	ATTRIBUTE IOTYPE   = VGA_IN_V1
+	ATTRIBUTE INSTANCE = VGA_IN
+	PORT HS = vga_in_hsout,    IO_IS = VGA_HS
+	PORT VS = vga_in_vsout,    IO_IS = VGA_VS
+	PORT CLAMP = vga_in_clamp, IO_IS = VGA_CLAMP
+	PORT COAST = vga_in_coast, IO_IS = VGA_COAST
+	PORT ODD_EVEN_B = vga_in_odd_even_b, IO_IS = VGA_ODD_EVEN_B
+	PORT SOGOUT = vga_in_sogout,    IO_IS = VGA_SOGOUT
+	PORT R_0 = vga_in_red_0,   IO_IS = VGA_R[0]
+	PORT R_1 = vga_in_red_1,   IO_IS = VGA_R[1]
+	PORT R_2 = vga_in_red_2,   IO_IS = VGA_R[2]
+	PORT R_3 = vga_in_red_3,   IO_IS = VGA_R[3]
+	PORT R_4 = vga_in_red_4,   IO_IS = VGA_R[4]
+	PORT R_5 = vga_in_red_5,   IO_IS = VGA_R[5]
+	PORT R_6 = vga_in_red_6,   IO_IS = VGA_R[6]
+	PORT R_7 = vga_in_red_7,   IO_IS = VGA_R[7]
+	PORT G_0 = vga_in_green_0, IO_IS = VGA_G[0]
+	PORT G_1 = vga_in_green_1, IO_IS = VGA_G[1]
+	PORT G_2 = vga_in_green_2, IO_IS = VGA_G[2]
+	PORT G_3 = vga_in_green_3, IO_IS = VGA_G[3]
+	PORT G_4 = vga_in_green_4, IO_IS = VGA_G[4]
+	PORT G_5 = vga_in_green_5, IO_IS = VGA_G[5]
+	PORT G_6 = vga_in_green_6, IO_IS = VGA_G[6]
+	PORT G_7 = vga_in_green_7, IO_IS = VGA_G[7]
+	PORT B_0 = vga_in_blue_0,  IO_IS = VGA_B[0]
+	PORT B_1 = vga_in_blue_1,  IO_IS = VGA_B[1]
+	PORT B_2 = vga_in_blue_2,  IO_IS = VGA_B[2]
+	PORT B_3 = vga_in_blue_3,  IO_IS = VGA_B[3]
+	PORT B_4 = vga_in_blue_4,  IO_IS = VGA_B[4]
+	PORT B_5 = vga_in_blue_5,  IO_IS = VGA_B[5]
+	PORT B_6 = vga_in_blue_6,  IO_IS = VGA_B[6]
+	PORT B_7 = vga_in_blue_7,  IO_IS = VGA_B[7]
+END
+
+# VGA/DVI output
+BEGIN IO_INTERFACE
+	ATTRIBUTE IOTYPE   = DVI_OUT_V1
+	ATTRIBUTE INSTANCE = DVI_OUT
+
+	PORT D_0     = dvi_d_0,     IO_IS = DVI_D[0]
+	PORT D_1     = dvi_d_1,     IO_IS = DVI_D[1]
+	PORT D_2     = dvi_d_2,     IO_IS = DVI_D[2]
+	PORT D_3     = dvi_d_3,     IO_IS = DVI_D[3]
+	PORT D_4     = dvi_d_4,     IO_IS = DVI_D[4]
+	PORT D_5     = dvi_d_5,     IO_IS = DVI_D[5]
+	PORT D_6     = dvi_d_6,     IO_IS = DVI_D[6]
+	PORT D_7     = dvi_d_7,     IO_IS = DVI_D[7]
+	PORT D_8     = dvi_d_8,     IO_IS = DVI_D[8]
+	PORT D_9     = dvi_d_9,     IO_IS = DVI_D[9]
+	PORT D_10    = dvi_d_10,    IO_IS = DVI_D[10]
+	PORT D_11    = dvi_d_11,    IO_IS = DVI_D[11]
+	PORT HS      = dvi_hsync,   IO_IS = DVI_HS   
+	PORT VS      = dvi_vsync,   IO_IS = DVI_VS   
+	PORT DE      = dvi_de,      IO_IS = DVI_DE
+	PORT RESET_B = dvi_reset_b, IO_IS = DVI_RESET_N
+	PORT XCLK_P  = dvi_xclk_p,  IO_IS = DVI_XCLK_P
+	PORT XCLK_N  = dvi_xclk_n,  IO_IS = DVI_XCLK_N
+END
+
+#BEGIN IO_INTERFACE
+#  ATTRIBUTE INSTANCE = LEDs_8Bit
+#  ATTRIBUTE IOTYPE = LED_ARRAY_V1
+#  
+#  PORT LEDs_8Bit_GPIO_IO_0 = LEDs_8Bit_GPIO_IO_0, IO_IS = led_out[0]
+#  PORT LEDs_8Bit_GPIO_IO_1 = LEDs_8Bit_GPIO_IO_1, IO_IS = led_out[1]
+#  PORT LEDs_8Bit_GPIO_IO_2 = LEDs_8Bit_GPIO_IO_2, IO_IS = led_out[2]
+#  PORT LEDs_8Bit_GPIO_IO_3 = LEDs_8Bit_GPIO_IO_3, IO_IS = led_out[3]
+#  PORT LEDs_8Bit_GPIO_IO_4 = LEDs_8Bit_GPIO_IO_4, IO_IS = led_out[4]
+#  PORT LEDs_8Bit_GPIO_IO_5 = LEDs_8Bit_GPIO_IO_5, IO_IS = led_out[5]
+#  PORT LEDs_8Bit_GPIO_IO_6 = LEDs_8Bit_GPIO_IO_6, IO_IS = led_out[6]
+#  PORT LEDs_8Bit_GPIO_IO_7 = LEDs_8Bit_GPIO_IO_7, IO_IS = led_out[7]
+#END
+
+BEGIN IO_INTERFACE
+  ATTRIBUTE IOTYPE = XIL_ETHERNET_V1
+  ATTRIBUTE INSTANCE = Ethernet_MAC
+  ATTRIBUTE EXCLUSIVE =  Ethernet
+   PARAMETER C_DEV_BLK_ID = 0, IO_IS = C_DEV_BLK_ID
+   PARAMETER C_DEV_MIR_ENABLE = 0, IO_IS = C_DEV_MIR_ENABLE
+   PARAMETER C_IPIF_RDFIFO_DEPTH = 16384, IO_IS = C_IPIF_RDFIFO_DEPTH
+   PARAMETER C_IPIF_WRFIFO_DEPTH = 16384, IO_IS = C_IPIF_WRFIFO_DEPTH
+   PARAMETER C_RESET_PRESENT = 1, IO_IS = C_RESET_PRESENT
+   PARAMETER C_INCLUDE_DEV_PENCODER = 0, IO_IS = C_INCLUDE_DEV_PENCODER
+   PARAMETER C_MAC_FIFO_DEPTH = 16, IO_IS = C_MAC_FIFO_DEPTH
+  PORT RESET    = phy_rst_n, IO_IS=PHY_RESETn, INITIALVAL = VCC
+  PORT MDINT    = phy_mii_int_n, IO_IS=INTERRUPT, SIGIS=INTERRUPT, SENSITIVITY = LEVEL_LOW, INTERRUPT_PRIORITY=MEDIUM
+  PORT CRS      = phy_crs,       IO_IS=ETH_CRS
+  PORT COL      = phy_col,       IO_IS=ETH_COL
+  PORT TXD3     = phy_tx_data_3, IO_IS = ETH_TXD[3]
+  PORT TXD2     = phy_tx_data_2, IO_IS = ETH_TXD[2]
+  PORT TXD1     = phy_tx_data_1, IO_IS = ETH_TXD[1]
+  PORT TXD0     = phy_tx_data_0, IO_IS = ETH_TXD[0]
+  PORT TX_EN    = phy_tx_en,     IO_IS=ETH_TXEN
+  PORT TX_CLK   = phy_tx_clk,    IO_IS=ETH_TXC
+  PORT TX_ER    = phy_tx_er,     IO_IS=ETH_TXER
+  PORT RX_ER    = phy_rx_er,     IO_IS=ETH_RXER
+  PORT RX_CLK   = phy_rx_clk,    IO_IS=ETH_RXC
+  PORT RX_DV    = phy_dv,        IO_IS=ETH_RXDV
+  PORT RXD0     = phy_rx_data_0, IO_IS = ETH_RXD[0]
+  PORT RXD1     = phy_rx_data_1, IO_IS = ETH_RXD[1]
+  PORT RXD2     = phy_rx_data_2, IO_IS = ETH_RXD[2]
+  PORT RXD3     = phy_rx_data_3, IO_IS = ETH_RXD[3]
+  PORT PHY_MDC  = phy_mii_clk,   IO_IS=ETH_MDC
+  PORT PHY_MDIO = phy_mii_data,  IO_IS=ETH_MDIO
+END
+
+#
+## XPS_TEMAC_TEST
+#BEGIN IO_INTERFACE
+#  ATTRIBUTE IOTYPE = XIL_TEMAC_V1
+#  ATTRIBUTE INSTANCE = Hard_Ethernet_MAC
+#  ATTRIBUTE EXCLUSIVE =  Ethernet
+#  PARAMETER C_TEMAC_TYPE = 0, IO_IS=C_TEMAC_TYPE
+#  PARAMETER C_PHY_TYPE = 1, IO_IS=C_PHY_TYPE
+#  PARAMETER C_TEMAC1_ENABLED= 0, IO_IS=C_TEMAC1_ENABLED
+#  PARAMETER C_TEMAC0_PHYADDR = "0b00001", IO_IS=C_TEMAC0_PHYADDR
+#
+#  PARAMETER C_NUM_IDELAYCTRL = 2, IO_IS = C_NUM_IDELAYCTRL
+#  PARAMETER C_IDELAYCTRL_LOC =  IDELAYCTRL_X0Y3-IDELAYCTRL_X1Y4, IO_IS = C_IDELAYCTRL_LOC
+#
+#  PORT TemacPhy_RST_n = TemacPhy_RST_n_s, IO_IS = PhyResetN
+#  PORT GMII_TXD_0_0 = GMII_TXD_0_s_0, IO_IS = GMII_TXD_0[0]
+#  PORT GMII_TXD_0_1 = GMII_TXD_0_s_1, IO_IS = GMII_TXD_0[1]
+#  PORT GMII_TXD_0_2 = GMII_TXD_0_s_2, IO_IS = GMII_TXD_0[2]
+#  PORT GMII_TXD_0_3 = GMII_TXD_0_s_3, IO_IS = GMII_TXD_0[3]
+#  PORT GMII_TXD_0_4 = GMII_TXD_0_s_4, IO_IS = GMII_TXD_0[4]
+#  PORT GMII_TXD_0_5 = GMII_TXD_0_s_5, IO_IS = GMII_TXD_0[5]
+#  PORT GMII_TXD_0_6 = GMII_TXD_0_s_6, IO_IS = GMII_TXD_0[6]
+#  PORT GMII_TXD_0_7 = GMII_TXD_0_s_7, IO_IS = GMII_TXD_0[7]
+#  PORT GMII_TX_EN_0 = GMII_TX_EN_0_s,IO_IS = GMII_TX_EN_0
+#  PORT GMII_TX_ER_0 = GMII_TX_ER_0_s,IO_IS = GMII_TX_ER_0
+#  PORT GMII_TX_CLK_0 = GMII_TX_CLK_0_s,IO_IS = GMII_TX_CLK_0
+#  PORT GMII_RXD_0_0 = GMII_RXD_0_s_0,IO_IS = GMII_RXD_0[0]
+#  PORT GMII_RXD_0_1 = GMII_RXD_0_s_1,IO_IS = GMII_RXD_0[1]
+#  PORT GMII_RXD_0_2 = GMII_RXD_0_s_2,IO_IS = GMII_RXD_0[2]
+#  PORT GMII_RXD_0_3 = GMII_RXD_0_s_3,IO_IS = GMII_RXD_0[3]
+#  PORT GMII_RXD_0_4 = GMII_RXD_0_s_4,IO_IS = GMII_RXD_0[4]
+#  PORT GMII_RXD_0_5 = GMII_RXD_0_s_5,IO_IS = GMII_RXD_0[5]
+#  PORT GMII_RXD_0_6 = GMII_RXD_0_s_6,IO_IS = GMII_RXD_0[6]
+#  PORT GMII_RXD_0_7 = GMII_RXD_0_s_7,IO_IS = GMII_RXD_0[7]
+#  PORT GMII_RX_DV_0 = GMII_RX_DV_0_s,IO_IS = GMII_RX_DV_0
+#  PORT GMII_RX_ER_0 = GMII_RX_ER_0_s,IO_IS = GMII_RX_ER_0
+#  PORT GMII_RX_CLK_0 = GMII_RX_CLK_0_s,IO_IS = GMII_RX_CLK_0
+#  PORT MII_TX_CLK_0 = MII_TX_CLK_0_s, IO_IS=MII_TX_CLK_0
+#  #PORT GMII_COL_0 = GMII_COL_0_s, IO_IS=GMII_COL_0
+#  #PORT GMII_CRS_0 = GMII_CRS_0_s, IO_IS=GMII_CRS_0
+#  PORT MDC_0 = MDC_0_s,IO_IS = MDC_0
+#  PORT MDIO_0 = MDIO_0_s, IO_IS=MDIO_0,IO_IS = MDIO_0
+#  PORT PHY_MII_INT = PHY_MII_INT_s, IO_IS=INTERRUPT, SIGIS=INTERRUPT, SENSITIVITY = LEVEL_LOW, INTERRUPT_PRIORITY=MEDIUM
+#END
+
+BEGINE IO_INTERFACE
+  ATTRIBUTE IOTYPE = XIL_MEMORY_V1
+  ATTRIBUTE INSTANCE = DDR2_SDRAM
+  PARAMETER C_MEM_PARTNO="mt4htf3264h-53e", IO_IS=C_MEM_PARTNO
+  PARAMETER C_NUM_IDELAYCTRL = 3, IO_IS = C_NUM_IDELAYCTRL
+  PARAMETER C_IDELAYCTRL_LOC =  IDELAYCTRL_X0Y5-IDELAYCTRL_X0Y1-IDELAYCTRL_X0Y0, IO_IS = C_IDELAYCTRL_LOC 
+  #PARAMETER C_MEM_DQS_IO_COL = 0b00_0000_0000_0000_0000, IO_IS = C_MEM_DQS_IO_COL
+  #PARAMETER C_MEM_DQ_IO_MS = 0b00000000_01110101_00111101_00001111_00011110_00101110_11000011_11000001_10111100, IO_IS = C_MEM_DQ_IO_MS
+  PARAMETER C_BASEADDR = 0x00000000, IO_IS = C_BASEADDR
+  PARAMETER C_HIGHADDR = 0x0fffffff, IO_IS = C_HIGHADDR
+
+  PARAMETER C_DDR2_DQSN_ENABLE=1, IO_IS = C_DDR2_DQSN_ENABLE
+  PARAMETER C_MEM_CE_WIDTH=2, IO_IS=C_MEM_CE_WIDTH
+  PARAMETER C_MEM_CSN_WIDTH=2, IO_IS=C_MEM_CS_N_WIDTH
+  PARAMETER C_MEM_CLK_WIDTH=2, IO_IS=C_MEM_CLK_WIDTH
+  PARAMETER C_MEM_ODT_WIDTH = 2, IO_IS = C_MEM_ODT_WIDTH
+  PARAMETER C_MEM_ODT_TYPE = 1, IO_IS_C_MEM_ODT_TYPE
+
+  PARAMETER C_MEM_DATA_WIDTH = 64, IO_IS = C_MEM_DATA_WIDTH
+  PARAMETER C_MEM_ADDR_WIDTH = 13, IO_IS = C_MEM_ADDR_WIDTH
+  PARAMETER C_MEM_BANKADDR_WIDTH = 2, IO_IS = C_MEM_BANKADDR_WIDTH
+  PARAMETER C_MEM_DQS_WIDTH = 8, IO_IS = C_MEM_DQS_WIDTH
+  PARAMETER C_MEM_DM_WIDTH = 8, IO_IS = C_MEM_DM_WIDTH
+
+  #following are to be deleted
+  PARAMETER C_DDR_TRAS = 90000, IO_IS = C_DDR_TRAS
+  PARAMETER C_DDR_TRCD = 25000, IO_IS = C_DDR_TRCD
+  PARAMETER C_DDR_TMRD = 25000, IO_IS = C_DDR_TMRD
+  PARAMETER C_DDR_TWR = 15000,  IO_IS = C_DDR_TWR
+  PARAMETER C_DDR_TWTR = 1,     IO_IS = C_DDR_TWTR
+  PARAMETER C_DDR_TRC = 65000,  IO_IS = C_DDR_TRC
+  PARAMETER C_DDR_TRFC = 115000, IO_IS = C_DDR_TRFC
+  PARAMETER C_DDR_TRRD = 15000,  IO_IS = C_DDR_TRRD
+  PARAMETER C_DDR_TREFC = 70000000, IO_IS = C_DDR_TREFC
+  PARAMETER C_DDR_TREFI = 7800000, IO_IS = C_DDR_TREFI
+  PARAMETER C_DDR_TRP = 20000, IO_IS = C_DDR_TRP
+  PARAMETER C_DDR_TFAW = 50000, IO_IS = C_DDR_TFAW
+  PARAMETER C_DDR_CAS_LAT = 3, IO_IS = C_DDR_CAS_LAT
+  PARAMETER C_EXTRA_TSU = 0, IO_IS = C_EXTRA_TSU
+  PARAMETER C_SIM_INIT_TIME_PS = 200000000, IO_IS = C_SIM_INIT_TIME
+                                                                                
+  PORT DDR_ODT_0 = ddr2_ddr_odt_0, IO_IS = ddr2_odt[0]
+  PORT DDR_ODT_1 = ddr2_ddr_odt_1, IO_IS = ddr2_odt[1]
+  PORT DDR_Addr_0 = ddr2_ddr_addr_0, IO_IS = ddr2_address[0]
+  PORT DDR_Addr_1 = ddr2_ddr_addr_1, IO_IS = ddr2_address[1]
+  PORT DDR_Addr_2 = ddr2_ddr_addr_2, IO_IS = ddr2_address[2]
+  PORT DDR_Addr_3 = ddr2_ddr_addr_3, IO_IS = ddr2_address[3]
+  PORT DDR_Addr_4 = ddr2_ddr_addr_4, IO_IS = ddr2_address[4]
+  PORT DDR_Addr_5 = ddr2_ddr_addr_5, IO_IS = ddr2_address[5]
+  PORT DDR_Addr_6 = ddr2_ddr_addr_6, IO_IS = ddr2_address[6]
+  PORT DDR_Addr_7 = ddr2_ddr_addr_7, IO_IS = ddr2_address[7]
+  PORT DDR_Addr_8 = ddr2_ddr_addr_8, IO_IS = ddr2_address[8]
+  PORT DDR_Addr_9 = ddr2_ddr_addr_9, IO_IS = ddr2_address[9]
+  PORT DDR_Addr_10 = ddr2_ddr_addr_10, IO_IS = ddr2_address[10]
+  PORT DDR_Addr_11 = ddr2_ddr_addr_11, IO_IS = ddr2_address[11]
+  PORT DDR_Addr_12 = ddr2_ddr_addr_12, IO_IS = ddr2_address[12]
+  PORT DDR_BankAddr_0 = ddr2_ddr_bankaddr_0, IO_IS = ddr2_BankAddr[0]
+  PORT DDR_BankAddr_1 = ddr2_ddr_bankaddr_1, IO_IS = ddr2_BankAddr[1]
+  PORT DDR_CASn = ddr2_ddr_casn, IO_IS = ddr2_col_addr_select
+  PORT DDR_CKE_0 = ddr2_ddr_cke_0, IO_IS = ddr2_clk_enable[0]
+  PORT DDR_CKE_1 = ddr2_ddr_cke_1, IO_IS = ddr2_clk_enable[1]
+  PORT DDR_CSn_0 = ddr2_ddr_csn_0, IO_IS = ddr2_chip_select[0]
+  PORT DDR_CSn_1 = ddr2_ddr_csn_1, IO_IS = ddr2_chip_select[1]
+  PORT DDR_RASn = ddr2_ddr_rasn, IO_IS = ddr2_row_addr_select
+  PORT DDR_WEn = ddr2_ddr_wen, IO_IS = ddr2_write_enable
+  PORT DDR_CLK_0 = ddr2_clk_0, IO_IS = ddr2_clk[0]
+  PORT DDR_CLK_1 = ddr2_clk_1, IO_IS = ddr2_clk[1]
+  PORT DDR_CLK_n_0 = ddr2_clk_n_0, IO_IS = ddr2_clk_n[0]
+  PORT DDR_CLK_n_1 = ddr2_clk_n_1, IO_IS = ddr2_clk_n[1]
+  PORT DDR_DM_0 = ddr2_ddr_dm_0, IO_IS = ddr2_data_mask[0]
+  PORT DDR_DM_1 = ddr2_ddr_dm_1, IO_IS = ddr2_data_mask[1]
+  PORT DDR_DM_2 = ddr2_ddr_dm_2, IO_IS = ddr2_data_mask[2]
+  PORT DDR_DM_3 = ddr2_ddr_dm_3, IO_IS = ddr2_data_mask[3]
+  PORT DDR_DM_4 = ddr2_ddr_dm_4, IO_IS = ddr2_data_mask[4]
+  PORT DDR_DM_5 = ddr2_ddr_dm_5, IO_IS = ddr2_data_mask[5]
+  PORT DDR_DM_6 = ddr2_ddr_dm_6, IO_IS = ddr2_data_mask[6]
+  PORT DDR_DM_7 = ddr2_ddr_dm_7, IO_IS = ddr2_data_mask[7]
+  PORT DDR_DQS_0 = ddr2_ddr_dqs_0, IO_IS = ddr2_data_strobe[0]
+  PORT DDR_DQS_1 = ddr2_ddr_dqs_1, IO_IS = ddr2_data_strobe[1]
+  PORT DDR_DQS_2 = ddr2_ddr_dqs_2, IO_IS = ddr2_data_strobe[2]
+  PORT DDR_DQS_3 = ddr2_ddr_dqs_3, IO_IS = ddr2_data_strobe[3]
+  PORT DDR_DQS_4 = ddr2_ddr_dqs_4, IO_IS = ddr2_data_strobe[4]
+  PORT DDR_DQS_5 = ddr2_ddr_dqs_5, IO_IS = ddr2_data_strobe[5]
+  PORT DDR_DQS_6 = ddr2_ddr_dqs_6, IO_IS = ddr2_data_strobe[6]
+  PORT DDR_DQS_7 = ddr2_ddr_dqs_7, IO_IS = ddr2_data_strobe[7]
+  PORT DDR_DQSn_0 = ddr2_ddr_dqsn_0, IO_IS = ddr2_data_strobe_n[0]
+  PORT DDR_DQSn_1 = ddr2_ddr_dqsn_1, IO_IS = ddr2_data_strobe_n[1]
+  PORT DDR_DQSn_2 = ddr2_ddr_dqsn_2, IO_IS = ddr2_data_strobe_n[2]
+  PORT DDR_DQSn_3 = ddr2_ddr_dqsn_3, IO_IS = ddr2_data_strobe_n[3]
+  PORT DDR_DQSn_4 = ddr2_ddr_dqsn_4, IO_IS = ddr2_data_strobe_n[4]
+  PORT DDR_DQSn_5 = ddr2_ddr_dqsn_5, IO_IS = ddr2_data_strobe_n[5]
+  PORT DDR_DQSn_6 = ddr2_ddr_dqsn_6, IO_IS = ddr2_data_strobe_n[6]
+  PORT DDR_DQSn_7 = ddr2_ddr_dqsn_7, IO_IS = ddr2_data_strobe_n[7]
+  PORT DDR_DQ_0 =  ddr2_ddr_dq_0 ,   IO_IS = ddr2_data[0] 
+  PORT DDR_DQ_1 =  ddr2_ddr_dq_1 ,   IO_IS = ddr2_data[1] 
+  PORT DDR_DQ_2 =  ddr2_ddr_dq_2 ,   IO_IS = ddr2_data[2] 
+  PORT DDR_DQ_3 =  ddr2_ddr_dq_3 ,   IO_IS = ddr2_data[3] 
+  PORT DDR_DQ_4 =  ddr2_ddr_dq_4 ,   IO_IS = ddr2_data[4] 
+  PORT DDR_DQ_5 =  ddr2_ddr_dq_5 ,   IO_IS = ddr2_data[5] 
+  PORT DDR_DQ_6 =  ddr2_ddr_dq_6 ,   IO_IS = ddr2_data[6] 
+  PORT DDR_DQ_7 =  ddr2_ddr_dq_7 ,   IO_IS = ddr2_data[7] 
+  PORT DDR_DQ_8 =  ddr2_ddr_dq_8 ,   IO_IS = ddr2_data[8] 
+  PORT DDR_DQ_9 =  ddr2_ddr_dq_9 ,   IO_IS = ddr2_data[9] 
+  PORT DDR_DQ_10 = ddr2_ddr_dq_10,   IO_IS = ddr2_data[10]
+  PORT DDR_DQ_11 = ddr2_ddr_dq_11,   IO_IS = ddr2_data[11]
+  PORT DDR_DQ_12 = ddr2_ddr_dq_12,   IO_IS = ddr2_data[12]
+  PORT DDR_DQ_13 = ddr2_ddr_dq_13,   IO_IS = ddr2_data[13]
+  PORT DDR_DQ_14 = ddr2_ddr_dq_14,   IO_IS = ddr2_data[14]
+  PORT DDR_DQ_15 = ddr2_ddr_dq_15,   IO_IS = ddr2_data[15]
+  PORT DDR_DQ_16 = ddr2_ddr_dq_16,   IO_IS = ddr2_data[16]
+  PORT DDR_DQ_17 = ddr2_ddr_dq_17,   IO_IS = ddr2_data[17]
+  PORT DDR_DQ_18 = ddr2_ddr_dq_18,   IO_IS = ddr2_data[18]
+  PORT DDR_DQ_19 = ddr2_ddr_dq_19,   IO_IS = ddr2_data[19]
+  PORT DDR_DQ_20 = ddr2_ddr_dq_20,   IO_IS = ddr2_data[20]
+  PORT DDR_DQ_21 = ddr2_ddr_dq_21,   IO_IS = ddr2_data[21]
+  PORT DDR_DQ_22 = ddr2_ddr_dq_22,   IO_IS = ddr2_data[22]
+  PORT DDR_DQ_23 = ddr2_ddr_dq_23,   IO_IS = ddr2_data[23]
+  PORT DDR_DQ_24 = ddr2_ddr_dq_24,   IO_IS = ddr2_data[24]
+  PORT DDR_DQ_25 = ddr2_ddr_dq_25,   IO_IS = ddr2_data[25]
+  PORT DDR_DQ_26 = ddr2_ddr_dq_26,   IO_IS = ddr2_data[26]
+  PORT DDR_DQ_27 = ddr2_ddr_dq_27,   IO_IS = ddr2_data[27]
+  PORT DDR_DQ_28 = ddr2_ddr_dq_28,   IO_IS = ddr2_data[28]
+  PORT DDR_DQ_29 = ddr2_ddr_dq_29,   IO_IS = ddr2_data[29]
+  PORT DDR_DQ_30 = ddr2_ddr_dq_30,   IO_IS = ddr2_data[30]
+  PORT DDR_DQ_31 = ddr2_ddr_dq_31,   IO_IS = ddr2_data[31]
+  PORT DDR_DQ_32=  ddr2_ddr_dq_32,   IO_IS = ddr2_data[32]
+  PORT DDR_DQ_33=  ddr2_ddr_dq_33,   IO_IS = ddr2_data[33]
+  PORT DDR_DQ_34=  ddr2_ddr_dq_34,   IO_IS = ddr2_data[34]
+  PORT DDR_DQ_35=  ddr2_ddr_dq_35,   IO_IS = ddr2_data[35]
+  PORT DDR_DQ_36=  ddr2_ddr_dq_36,   IO_IS = ddr2_data[36]
+  PORT DDR_DQ_37=  ddr2_ddr_dq_37,   IO_IS = ddr2_data[37]
+  PORT DDR_DQ_38=  ddr2_ddr_dq_38,   IO_IS = ddr2_data[38]
+  PORT DDR_DQ_39=  ddr2_ddr_dq_39,   IO_IS = ddr2_data[39]
+  PORT DDR_DQ_40=  ddr2_ddr_dq_40,   IO_IS = ddr2_data[40]
+  PORT DDR_DQ_41=  ddr2_ddr_dq_41,   IO_IS = ddr2_data[41]
+  PORT DDR_DQ_42 = ddr2_ddr_dq_42,   IO_IS = ddr2_data[42]
+  PORT DDR_DQ_43 = ddr2_ddr_dq_43,   IO_IS = ddr2_data[43]
+  PORT DDR_DQ_44 = ddr2_ddr_dq_44,   IO_IS = ddr2_data[44]
+  PORT DDR_DQ_45 = ddr2_ddr_dq_45,   IO_IS = ddr2_data[45]
+  PORT DDR_DQ_46 = ddr2_ddr_dq_46,   IO_IS = ddr2_data[46]
+  PORT DDR_DQ_47 = ddr2_ddr_dq_47,   IO_IS = ddr2_data[47]
+  PORT DDR_DQ_48 = ddr2_ddr_dq_48,   IO_IS = ddr2_data[48]
+  PORT DDR_DQ_49 = ddr2_ddr_dq_49,   IO_IS = ddr2_data[49]
+  PORT DDR_DQ_50 = ddr2_ddr_dq_50,   IO_IS = ddr2_data[50]
+  PORT DDR_DQ_51 = ddr2_ddr_dq_51,   IO_IS = ddr2_data[51]
+  PORT DDR_DQ_52 = ddr2_ddr_dq_52,   IO_IS = ddr2_data[52]
+  PORT DDR_DQ_53 = ddr2_ddr_dq_53,   IO_IS = ddr2_data[53]
+  PORT DDR_DQ_54 = ddr2_ddr_dq_54,   IO_IS = ddr2_data[54]
+  PORT DDR_DQ_55 = ddr2_ddr_dq_55,   IO_IS = ddr2_data[55]
+  PORT DDR_DQ_56 = ddr2_ddr_dq_56,   IO_IS = ddr2_data[56]
+  PORT DDR_DQ_57 = ddr2_ddr_dq_57,   IO_IS = ddr2_data[57]
+  PORT DDR_DQ_58 = ddr2_ddr_dq_58,   IO_IS = ddr2_data[58]
+  PORT DDR_DQ_59 = ddr2_ddr_dq_59,   IO_IS = ddr2_data[59]
+  PORT DDR_DQ_60 = ddr2_ddr_dq_60,   IO_IS = ddr2_data[60]
+  PORT DDR_DQ_61 = ddr2_ddr_dq_61,   IO_IS = ddr2_data[61]
+  PORT DDR_DQ_62 = ddr2_ddr_dq_62,   IO_IS = ddr2_data[62]
+  PORT DDR_DQ_63 = ddr2_ddr_dq_63,   IO_IS = ddr2_data[63]
+
+  PORT DDR_Sleep = net_gnd, IO_IS = ddr2_sleep
+  PORT DDR_WakeUp = net_gnd, IO_IS = ddr2_wakeup
+  PORT DDR_Init_done = Init_done, IO_IS = ddr2_init_done
+  #PORT DDR_Clk_0 = ddr2_ddr_clk_0,  IO_IS = ddr2_clk_out[0]
+  #PORT DDR_Clk_1 = ddr2_ddr_clk_1,  IO_IS = ddr2_clk_out[1]
+  #PORT DDR_Clkn_0 = ddr2_ddr_clkn_0, IO_IS = ddr2_clk_out_n[0]
+  #PORT DDR_Clkn_1 = ddr2_ddr_clkn_1, IO_IS = ddr2_clk_out_n[1]
+END
+
+BEGIN FPGA
+  ATTRIBUTE INSTANCE = fpga_0
+  ATTRIBUTE FAMILY = virtex5
+  ATTRIBUTE DEVICE = xc5vsx50t
+  ATTRIBUTE PACKAGE = ff1136
+  ATTRIBUTE SPEED_GRADE = -1
+  ATTRIBUTE JTAG_POSITION = 5
+
+  PORT CLK_100MHZ = CLK_100MHZ, UCF_NET_STRING = ("LOC = AH15", "IOSTANDARD=LVCMOS33")
+  PORT sys_rst_n = sys_rst_n, UCF_NET_STRING = ("LOC = E9", "IOSTANDARD=LVCMOS33", "PULLUP")
+  PORT VGA_CLK = vga_in_dclk, UCF_NET_STRING=("LOC=AH18", "IOSTANDARD = LVCMOS33")
+
+  ### RS232 1 ###
+  PORT RXD = uart1_sin, UCF_NET_STRING = ("LOC = AG15", "IOSTANDARD=LVCMOS33")
+  PORT TXD = uart1_sout, UCF_NET_STRING = ("LOC = AG20", "IOSTANDARD=LVCMOS33")
+
+  ### I2C Video ###
+  PORT I2C_SCL = iic_scl, UCF_NET_STRING=("LOC=U27", "SLEW=SLOW", "DRIVE=6", "IOSTANDARD=LVCMOS18")
+  PORT I2C_SDA = iic_sda, UCF_NET_STRING=("LOC=T29", "SLEW=SLOW", "DRIVE=6", "IOSTANDARD=LVCMOS18")
+
+  ### VGA input ###
+  PORT HSOUT    = vga_in_hsout,   UCF_NET_STRING=("LOC=AE7",  "IOSTANDARD = LVCMOS33")
+  PORT VSOUT    = vga_in_vsout,   UCF_NET_STRING=("LOC=Y6",   "IOSTANDARD = LVCMOS33")
+  PORT CLAMP    = vga_in_clamp,   UCF_NET_STRING=("LOC=AH7",  "IOSTANDARD = LVCMOS33")
+  PORT COAST    = vga_in_coast,   UCF_NET_STRING=("LOC=AG7",  "IOSTANDARD = LVCMOS33")
+  PORT ODD_EVEN_B = vga_in_odd_even_b, UCF_NET_STRING=("LOC=W6", "IOSTANDARD = LVCMOS33")
+  PORT SOGOUT   = vga_in_sogout,  UCF_NET_STRING=("LOC=AF6",  "IOSTANDARD = LVCMOS33")
+  PORT RED_0    = vga_in_red_0,   UCF_NET_STRING=("LOC=AG5",  "IOSTANDARD = LVCMOS33")
+  PORT RED_1    = vga_in_red_1,   UCF_NET_STRING=("LOC=AF5",  "IOSTANDARD = LVCMOS33")
+  PORT RED_2    = vga_in_red_2,   UCF_NET_STRING=("LOC=W7",   "IOSTANDARD = LVCMOS33")
+  PORT RED_3    = vga_in_red_3,   UCF_NET_STRING=("LOC=V7",   "IOSTANDARD = LVCMOS33")
+  PORT RED_4    = vga_in_red_4,   UCF_NET_STRING=("LOC=AH5",  "IOSTANDARD = LVCMOS33")
+  PORT RED_5    = vga_in_red_5,   UCF_NET_STRING=("LOC=AG6",  "IOSTANDARD = LVCMOS33")
+  PORT RED_6    = vga_in_red_6,   UCF_NET_STRING=("LOC=Y11",  "IOSTANDARD = LVCMOS33")
+  PORT RED_7    = vga_in_red_7,   UCF_NET_STRING=("LOC=W11",  "IOSTANDARD = LVCMOS33")
+  PORT GREEN_0  = vga_in_green_0, UCF_NET_STRING=("LOC=Y8",   "IOSTANDARD = LVCMOS33")
+  PORT GREEN_1  = vga_in_green_1, UCF_NET_STRING=("LOC=Y9",   "IOSTANDARD = LVCMOS33")
+  PORT GREEN_2  = vga_in_green_2, UCF_NET_STRING=("LOC=AD4",  "IOSTANDARD = LVCMOS33")
+  PORT GREEN_3  = vga_in_green_3, UCF_NET_STRING=("LOC=AD5",  "IOSTANDARD = LVCMOS33")
+  PORT GREEN_4  = vga_in_green_4, UCF_NET_STRING=("LOC=AA6",  "IOSTANDARD = LVCMOS33")
+  PORT GREEN_5  = vga_in_green_5, UCF_NET_STRING=("LOC=Y7",   "IOSTANDARD = LVCMOS33")
+  PORT GREEN_6  = vga_in_green_6, UCF_NET_STRING=("LOC=AD6",  "IOSTANDARD = LVCMOS33")
+  PORT GREEN_7  = vga_in_green_7, UCF_NET_STRING=("LOC=AE6",  "IOSTANDARD = LVCMOS33")
+  PORT BLUE_0   = vga_in_blue_0,  UCF_NET_STRING=("LOC=AC4",  "IOSTANDARD = LVCMOS33")
+  PORT BLUE_1   = vga_in_blue_1,  UCF_NET_STRING=("LOC=AC5",  "IOSTANDARD = LVCMOS33")
+  PORT BLUE_2   = vga_in_blue_2,  UCF_NET_STRING=("LOC=AB6",  "IOSTANDARD = LVCMOS33")
+  PORT BLUE_3   = vga_in_blue_3,  UCF_NET_STRING=("LOC=AB7",  "IOSTANDARD = LVCMOS33")
+  PORT BLUE_4   = vga_in_blue_4,  UCF_NET_STRING=("LOC=AA5",  "IOSTANDARD = LVCMOS33")
+  PORT BLUE_5   = vga_in_blue_5,  UCF_NET_STRING=("LOC=AB5",  "IOSTANDARD = LVCMOS33")
+  PORT BLUE_6   = vga_in_blue_6,  UCF_NET_STRING=("LOC=AC7",  "IOSTANDARD = LVCMOS33")
+  PORT BLUE_7   = vga_in_blue_7,  UCF_NET_STRING=("LOC=AD7",  "IOSTANDARD = LVCMOS33")
+
+  ### DVI output ###
+  # see: http://zhenyu-ye.net/links/reconfig/xilinxonlinux/ml506/tutorial/hellotft/main.html
+
+  PORT D_0     = dvi_d_0,     UCF_NET_STRING=("LOC=AB8",  "IOSTANDARD = LVDCI_33")
+  PORT D_1     = dvi_d_1,     UCF_NET_STRING=("LOC=AC8",  "IOSTANDARD = LVDCI_33")
+  PORT D_2     = dvi_d_2,     UCF_NET_STRING=("LOC=AN12", "IOSTANDARD = LVDCI_33")
+  PORT D_3     = dvi_d_3,     UCF_NET_STRING=("LOC=AP12", "IOSTANDARD = LVDCI_33")
+  PORT D_4     = dvi_d_4,     UCF_NET_STRING=("LOC=AA9",  "IOSTANDARD = LVDCI_33")
+  PORT D_5     = dvi_d_5,     UCF_NET_STRING=("LOC=AA8",  "IOSTANDARD = LVDCI_33")
+  PORT D_6     = dvi_d_6,     UCF_NET_STRING=("LOC=AM13", "IOSTANDARD = LVDCI_33")
+  PORT D_7     = dvi_d_7,     UCF_NET_STRING=("LOC=AN13", "IOSTANDARD = LVDCI_33")
+  PORT D_8     = dvi_d_8,     UCF_NET_STRING=("LOC=AA10", "IOSTANDARD = LVDCI_33")
+  PORT D_9     = dvi_d_9,     UCF_NET_STRING=("LOC=AB10", "IOSTANDARD = LVDCI_33")
+  PORT D_10    = dvi_d_10,    UCF_NET_STRING=("LOC=AP14", "IOSTANDARD = LVDCI_33")
+  PORT D_11    = dvi_d_11,    UCF_NET_STRING=("LOC=AN14", "IOSTANDARD = LVDCI_33")
+
+  PORT HSYNC   = dvi_hsync,   UCF_NET_STRING=("LOC=AM12", "IOSTANDARD = LVDCI_33")
+  PORT VSYNC   = dvi_vsync,   UCF_NET_STRING=("LOC=AM11", "IOSTANDARD = LVDCI_33")
+  PORT DE      = dvi_de,      UCF_NET_STRING=("LOC=AE8", "IOSTANDARD = LVDCI_33")
+  PORT RESET_B = dvi_reset_b, UCF_NET_STRING=("LOC=AK6", "IOSTANDARD = LVCMOS33")
+
+  PORT XCLK_P  = dvi_xclk_p,  UCF_NET_STRING=("LOC=AL11", "IOSTANDARD = LVCMOS33", "DRIVE = 24", "SLEW = FAST")
+  PORT XCLK_N  = dvi_xclk_n,  UCF_NET_STRING=("LOC=AL10", "IOSTANDARD = LVCMOS33", "DRIVE = 24", "SLEW = FAST")
+
+  ### LEDS 8BIT ### 
+  PORT LEDs_8Bit_GPIO_IO_0 = LEDs_8Bit_GPIO_IO_0, UCF_NET_STRING = ("LOC = AE24", "IOSTANDARD=LVCMOS18", "PULLDOWN", "SLEW=SLOW", "DRIVE=2" )
+  PORT LEDs_8Bit_GPIO_IO_1 = LEDs_8Bit_GPIO_IO_1, UCF_NET_STRING = ("LOC = AD24", "IOSTANDARD=LVCMOS18", "PULLDOWN", "SLEW=SLOW", "DRIVE=2")
+  PORT LEDs_8Bit_GPIO_IO_2 = LEDs_8Bit_GPIO_IO_2, UCF_NET_STRING = ("LOC = AD25", "IOSTANDARD=LVCMOS18", "PULLDOWN", "SLEW=SLOW", "DRIVE=2")
+  PORT LEDs_8Bit_GPIO_IO_3 = LEDs_8Bit_GPIO_IO_3, UCF_NET_STRING = ("LOC = G16", "IOSTANDARD=LVCMOS25", "PULLDOWN", "SLEW=SLOW", "DRIVE=2")
+  PORT LEDs_8Bit_GPIO_IO_4 = LEDs_8Bit_GPIO_IO_4, UCF_NET_STRING = ("LOC = AD26", "IOSTANDARD=LVCMOS18","PULLDOWN", "SLEW=SLOW", "DRIVE=2")
+  PORT LEDs_8Bit_GPIO_IO_5 = LEDs_8Bit_GPIO_IO_5, UCF_NET_STRING = ("LOC = G15", "IOSTANDARD=LVCMOS25", "PULLDOWN", "SLEW=SLOW", "DRIVE=2")
+  PORT LEDs_8Bit_GPIO_IO_6 = LEDs_8Bit_GPIO_IO_6, UCF_NET_STRING = ("LOC = L18", "IOSTANDARD=LVCMOS25", "PULLDOWN", "SLEW=SLOW", "DRIVE=2")
+  PORT LEDs_8Bit_GPIO_IO_7 = LEDs_8Bit_GPIO_IO_7, UCF_NET_STRING = ("LOC = H18", "IOSTANDARD=LVCMOS25", "PULLDOWN", "SLEW=SLOW", "DRIVE=2")
+
+  # DDR2
+  PORT DDR2_ODT0    = ddr2_ddr_odt_0,     UCF_NET_STRING=("LOC=F31", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_ODT1    = ddr2_ddr_odt_1,     UCF_NET_STRING=("LOC=F30", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_ADDR12 = ddr2_ddr_addr_0, UCF_NET_STRING=("LOC=L30", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_ADDR11 = ddr2_ddr_addr_1 , UCF_NET_STRING=("LOC=M30", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_ADDR10 = ddr2_ddr_addr_2 , UCF_NET_STRING=("LOC=N29", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_ADDR9 = ddr2_ddr_addr_3 , UCF_NET_STRING=("LOC=P29", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_ADDR8 = ddr2_ddr_addr_4 , UCF_NET_STRING=("LOC=K31", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_ADDR7 = ddr2_ddr_addr_5 , UCF_NET_STRING=("LOC=L31", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_ADDR6 = ddr2_ddr_addr_6 , UCF_NET_STRING=("LOC=P31", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_ADDR5 = ddr2_ddr_addr_7 , UCF_NET_STRING=("LOC=P30", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_ADDR4 = ddr2_ddr_addr_8 , UCF_NET_STRING=("LOC=M31", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_ADDR3 = ddr2_ddr_addr_9 , UCF_NET_STRING=("LOC=R28", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_ADDR2 =ddr2_ddr_addr_10, UCF_NET_STRING=("LOC=J31", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_ADDR1 =ddr2_ddr_addr_11, UCF_NET_STRING=("LOC=R29", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_ADDR0 =ddr2_ddr_addr_12, UCF_NET_STRING=("LOC=T31", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_BANKADDR1 =ddr2_ddr_bankaddr_0, UCF_NET_STRING=("LOC=G31", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_BANKADDR0 =ddr2_ddr_bankaddr_1, UCF_NET_STRING=("LOC=J30", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_CASN =ddr2_ddr_casn, UCF_NET_STRING=("LOC=E31", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_CKE0 =ddr2_ddr_cke_0, UCF_NET_STRING=("LOC=T28", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_CKE1 =ddr2_ddr_cke_1, UCF_NET_STRING=("LOC=U30", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_CSN0 =ddr2_ddr_csn_0, UCF_NET_STRING=("LOC=L29", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_CSN1 =ddr2_ddr_csn_1, UCF_NET_STRING=("LOC=J29", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_RASN =ddr2_ddr_rasn, UCF_NET_STRING=("LOC=H30", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_WEN =ddr2_ddr_wen, UCF_NET_STRING=("LOC=K29", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_CLK0 = ddr2_clk_0, UCF_NET_STRING=("LOC=AK29", "IOSTANDARD = DIFF_SSTL18_II")
+  PORT DDR2_DDR_CLK1 = ddr2_clk_1, UCF_NET_STRING=("LOC=E28", "IOSTANDARD = DIFF_SSTL18_II")
+  PORT DDR2_DDR_CLKn0 = ddr2_clk_n_0, UCF_NET_STRING=("LOC=AJ29", "IOSTANDARD = DIFF_SSTL18_II")
+  PORT DDR2_DDR_CLKn1 = ddr2_clk_n_1, UCF_NET_STRING=("LOC=F28", "IOSTANDARD = DIFF_SSTL18_II")
+  PORT DDR2_DDR_DM7 =ddr2_ddr_dm_7, UCF_NET_STRING=("LOC=J25", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DM6 =ddr2_ddr_dm_6, UCF_NET_STRING=("LOC=F26", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DM5 =ddr2_ddr_dm_5, UCF_NET_STRING=("LOC=P24", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DM4 =ddr2_ddr_dm_4, UCF_NET_STRING=("LOC=V25", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DM3 =ddr2_ddr_dm_3, UCF_NET_STRING=("LOC=Y31", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DM2 =ddr2_ddr_dm_2, UCF_NET_STRING=("LOC=Y24", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DM1 =ddr2_ddr_dm_1, UCF_NET_STRING=("LOC=AE28", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DM0 =ddr2_ddr_dm_0, UCF_NET_STRING=("LOC=AJ31", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQS7 =ddr2_ddr_dqs_7, UCF_NET_STRING=("LOC=G27", "IOSTANDARD = DIFF_SSTL18_II")
+  PORT DDR2_DDR_DQS6 =ddr2_ddr_dqs_6, UCF_NET_STRING=("LOC=H28", "IOSTANDARD = DIFF_SSTL18_II")
+  PORT DDR2_DDR_DQS5 =ddr2_ddr_dqs_5, UCF_NET_STRING=("LOC=E26", "IOSTANDARD = DIFF_SSTL18_II")
+  PORT DDR2_DDR_DQS4 =ddr2_ddr_dqs_4, UCF_NET_STRING=("LOC=Y28", "IOSTANDARD = DIFF_SSTL18_II")
+  PORT DDR2_DDR_DQS3 =ddr2_ddr_dqs_3, UCF_NET_STRING=("LOC=AB31", "IOSTANDARD = DIFF_SSTL18_II")
+  PORT DDR2_DDR_DQS2 =ddr2_ddr_dqs_2, UCF_NET_STRING=("LOC=AK26", "IOSTANDARD = DIFF_SSTL18_II")
+  PORT DDR2_DDR_DQS1 =ddr2_ddr_dqs_1, UCF_NET_STRING=("LOC=AK28", "IOSTANDARD = DIFF_SSTL18_II")
+  PORT DDR2_DDR_DQS0 =ddr2_ddr_dqs_0, UCF_NET_STRING=("LOC=AA29", "IOSTANDARD = DIFF_SSTL18_II")
+  PORT DDR2_DDR_DQSn0 =ddr2_ddr_dqsn_0, UCF_NET_STRING=("LOC=AA30", "IOSTANDARD = DIFF_SSTL18_II")
+  PORT DDR2_DDR_DQSn1 =ddr2_ddr_dqsn_1, UCF_NET_STRING=("LOC=AK27", "IOSTANDARD = DIFF_SSTL18_II")
+  PORT DDR2_DDR_DQSn2 =ddr2_ddr_dqsn_2, UCF_NET_STRING=("LOC=AJ27", "IOSTANDARD = DIFF_SSTL18_II")
+  PORT DDR2_DDR_DQSn3 =ddr2_ddr_dqsn_3, UCF_NET_STRING=("LOC=AA31", "IOSTANDARD = DIFF_SSTL18_II")
+  PORT DDR2_DDR_DQSn4 =ddr2_ddr_dqsn_4, UCF_NET_STRING=("LOC=Y29", "IOSTANDARD = DIFF_SSTL18_II")
+  PORT DDR2_DDR_DQSn5 =ddr2_ddr_dqsn_5, UCF_NET_STRING=("LOC=E27", "IOSTANDARD = DIFF_SSTL18_II")
+  PORT DDR2_DDR_DQSn6 =ddr2_ddr_dqsn_6, UCF_NET_STRING=("LOC=G28", "IOSTANDARD = DIFF_SSTL18_II")
+  PORT DDR2_DDR_DQSn7 =ddr2_ddr_dqsn_7, UCF_NET_STRING=("LOC=H27", "IOSTANDARD = DIFF_SSTL18_II")
+  PORT DDR2_DDR_DQ0  =  ddr2_ddr_dq_0 ,   UCF_NET_STRING=("LOC=AF30", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ1  =  ddr2_ddr_dq_1 ,   UCF_NET_STRING=("LOC=AK31", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ2  =  ddr2_ddr_dq_2 ,   UCF_NET_STRING=("LOC=AF31", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ3  =  ddr2_ddr_dq_3 ,   UCF_NET_STRING=("LOC=AD30", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ4  =  ddr2_ddr_dq_4 ,   UCF_NET_STRING=("LOC=AJ30", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ5  =  ddr2_ddr_dq_5 ,   UCF_NET_STRING=("LOC=AF29", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ6  =  ddr2_ddr_dq_6 ,   UCF_NET_STRING=("LOC=AD29", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ7  =  ddr2_ddr_dq_7 ,   UCF_NET_STRING=("LOC=AE29", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ8  =  ddr2_ddr_dq_8 ,   UCF_NET_STRING=("LOC=AH27", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ9  =  ddr2_ddr_dq_9 ,   UCF_NET_STRING=("LOC=AF28", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ10 =  ddr2_ddr_dq_10,   UCF_NET_STRING=("LOC=AH28", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ11 =  ddr2_ddr_dq_11,   UCF_NET_STRING=("LOC=AA28", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ12 =  ddr2_ddr_dq_12,   UCF_NET_STRING=("LOC=AG25", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ13 =  ddr2_ddr_dq_13,   UCF_NET_STRING=("LOC=AJ26", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ14 =  ddr2_ddr_dq_14,   UCF_NET_STRING=("LOC=AG28", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ15 =  ddr2_ddr_dq_15,   UCF_NET_STRING=("LOC=AB28", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ16 =  ddr2_ddr_dq_16,   UCF_NET_STRING=("LOC=AC28", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ17 =  ddr2_ddr_dq_17,   UCF_NET_STRING=("LOC=AB25", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ18 =  ddr2_ddr_dq_18,   UCF_NET_STRING=("LOC=AC27", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ19 =  ddr2_ddr_dq_19,   UCF_NET_STRING=("LOC=AA26", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ20 =  ddr2_ddr_dq_20,   UCF_NET_STRING=("LOC=AB26", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ21 =  ddr2_ddr_dq_21,   UCF_NET_STRING=("LOC=AA24", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ22 =  ddr2_ddr_dq_22,   UCF_NET_STRING=("LOC=AB27", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ23 =  ddr2_ddr_dq_23,   UCF_NET_STRING=("LOC=AA25", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ24 =  ddr2_ddr_dq_24,   UCF_NET_STRING=("LOC=AC29", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ25 =  ddr2_ddr_dq_25,   UCF_NET_STRING=("LOC=AB30", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ26 =  ddr2_ddr_dq_26,   UCF_NET_STRING=("LOC=W31", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ27 =  ddr2_ddr_dq_27,   UCF_NET_STRING=("LOC=V30", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ28 =  ddr2_ddr_dq_28,   UCF_NET_STRING=("LOC=AC30", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ29 =  ddr2_ddr_dq_29,   UCF_NET_STRING=("LOC=W29", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ30 =  ddr2_ddr_dq_30,   UCF_NET_STRING=("LOC=V27", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ31 =  ddr2_ddr_dq_31,   UCF_NET_STRING=("LOC=W27", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ32 =  ddr2_ddr_dq_32,   UCF_NET_STRING=("LOC=V29", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ33 =  ddr2_ddr_dq_33,   UCF_NET_STRING=("LOC=Y27", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ34 =  ddr2_ddr_dq_34,   UCF_NET_STRING=("LOC=Y26", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ35 =  ddr2_ddr_dq_35,   UCF_NET_STRING=("LOC=W24", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ36 =  ddr2_ddr_dq_36,   UCF_NET_STRING=("LOC=V28", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ37 =  ddr2_ddr_dq_37,   UCF_NET_STRING=("LOC=W25", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ38 =  ddr2_ddr_dq_38,   UCF_NET_STRING=("LOC=W26", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ39 =  ddr2_ddr_dq_39,   UCF_NET_STRING=("LOC=V24", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ40 =  ddr2_ddr_dq_40,   UCF_NET_STRING=("LOC=R24", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ41 =  ddr2_ddr_dq_41,   UCF_NET_STRING=("LOC=P25", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ42 =  ddr2_ddr_dq_42,   UCF_NET_STRING=("LOC=N24", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ43 =  ddr2_ddr_dq_43,   UCF_NET_STRING=("LOC=P26", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ44 =  ddr2_ddr_dq_44,   UCF_NET_STRING=("LOC=T24", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ45 =  ddr2_ddr_dq_45,   UCF_NET_STRING=("LOC=N25", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ46 =  ddr2_ddr_dq_46,   UCF_NET_STRING=("LOC=P27", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ47 =  ddr2_ddr_dq_47,   UCF_NET_STRING=("LOC=N28", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ48 =  ddr2_ddr_dq_48,   UCF_NET_STRING=("LOC=M28", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ49 =  ddr2_ddr_dq_49,   UCF_NET_STRING=("LOC=L28", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ50 =  ddr2_ddr_dq_50,   UCF_NET_STRING=("LOC=F25", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ51 =  ddr2_ddr_dq_51,   UCF_NET_STRING=("LOC=H25", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ52 =  ddr2_ddr_dq_52,   UCF_NET_STRING=("LOC=K27", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ53 =  ddr2_ddr_dq_53,   UCF_NET_STRING=("LOC=K28", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ54=   ddr2_ddr_dq_54,   UCF_NET_STRING=("LOC=H24", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ55=   ddr2_ddr_dq_55,   UCF_NET_STRING=("LOC=G26", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ56=   ddr2_ddr_dq_56,   UCF_NET_STRING=("LOC=G25", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ57=   ddr2_ddr_dq_57,   UCF_NET_STRING=("LOC=M26", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ58=   ddr2_ddr_dq_58,   UCF_NET_STRING=("LOC=J24", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ59=   ddr2_ddr_dq_59,   UCF_NET_STRING=("LOC=L26", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ60=   ddr2_ddr_dq_60,   UCF_NET_STRING=("LOC=J27", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ61=   ddr2_ddr_dq_61,   UCF_NET_STRING=("LOC=M25", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ62=   ddr2_ddr_dq_62,   UCF_NET_STRING=("LOC=L25", "IOSTANDARD = SSTL18_II")
+  PORT DDR2_DDR_DQ63=   ddr2_ddr_dq_63,   UCF_NET_STRING=("LOC=L24", "IOSTANDARD = SSTL18_II")
+  #PORT DDR2_DDR_CLK0=  ddr2_ddr_clk_0,   UCF_NET_STRING=("LOC=AK29", "IOSTANDARD = SSTL18_I")
+  #PORT DDR2_DDR_CLK1=  ddr2_ddr_clk_1,   UCF_NET_STRING=("LOC=E28", "IOSTANDARD = SSTL18_I")
+  #PORT DDR2_DDR_CLKN0=  ddr2_ddr_clkn_0,   UCF_NET_STRING=("LOC=AJ29", "IOSTANDARD = SSTL18_I")
+  #PORT DDR2_DDR_CLKN1=  ddr2_ddr_clkn_1,   UCF_NET_STRING=("LOC=F28", "IOSTANDARD = SSTL18_I")
+
+##  TEMAC Ethernet MAC
+#  PORT Hard_PHY_RESET  = TemacPhy_RST_n_s,     UCF_NET_STRING=("LOC=J14", "IOSTANDARD = LVCMOS25", "TIG")
+#  PORT Hard_PHY_TXD0   = GMII_TXD_0_s_0, UCF_NET_STRING=("LOC=AF11", "IOSTANDARD =LVDCI_33 ")
+#  PORT Hard_PHY_TXD1   = GMII_TXD_0_s_1, UCF_NET_STRING=("LOC=AE11", "IOSTANDARD = LVDCI_33")
+#  PORT Hard_PHY_TXD2   = GMII_TXD_0_s_2, UCF_NET_STRING=("LOC=AH9", "IOSTANDARD = LVDCI_33")
+#  PORT Hard_PHY_TXD3   = GMII_TXD_0_s_3, UCF_NET_STRING=("LOC=AH10", "IOSTANDARD = LVDCI_33")
+#  PORT Hard_PHY_TXD4   = GMII_TXD_0_s_4, UCF_NET_STRING=("LOC=AG8", "IOSTANDARD = LVDCI_33")
+#  PORT Hard_PHY_TXD5   = GMII_TXD_0_s_5, UCF_NET_STRING=("LOC=AH8", "IOSTANDARD = LVDCI_33")
+#  PORT Hard_PHY_TXD6   = GMII_TXD_0_s_6, UCF_NET_STRING=("LOC=AG10", "IOSTANDARD = LVDCI_33")
+#  PORT Hard_PHY_TXD7   = GMII_TXD_0_s_7, UCF_NET_STRING=("LOC=AG11", "IOSTANDARD = LVDCI_33")
+#  PORT Hard_PHY_TX_EN  = GMII_TX_EN_0_s,     UCF_NET_STRING=("LOC=AJ10", "IOSTANDARD = LVDCI_33")
+#  PORT Hard_PHY_TX_CLK = GMII_TX_CLK_0_s,    UCF_NET_STRING=("LOC=J16", "IOSTANDARD = LVCMOS25")
+#  PORT Hard_PHY_TX_ER  = GMII_TX_ER_0_s,     UCF_NET_STRING=("LOC=AJ9", "IOSTANDARD =LVDCI_33")
+#  PORT Hard_PHY_RX_ER  = GMII_RX_ER_0_s,     UCF_NET_STRING=("LOC=E33", "IOSTANDARD = LVCMOS25")
+#  PORT Hard_PHY_RX_CLK = GMII_RX_CLK_0_s,UCF_NET_STRING=("LOC=H17", "IOSTANDARD = LVCMOS25")
+#  PORT Hard_PHY_RX_DV  = GMII_RX_DV_0_s, UCF_NET_STRING=("LOC=E32", "IOSTANDARD = LVCMOS25")
+#  PORT Hard_PHY_RXD0   = GMII_RXD_0_s_0, UCF_NET_STRING=("LOC=A33", "IOSTANDARD = LVCMOS25")
+#  PORT Hard_PHY_RXD1   = GMII_RXD_0_s_1, UCF_NET_STRING=("LOC=B33", "IOSTANDARD = LVCMOS25")
+#  PORT Hard_PHY_RXD2   = GMII_RXD_0_s_2, UCF_NET_STRING=("LOC=C33", "IOSTANDARD = LVCMOS25")
+#  PORT Hard_PHY_RXD3   = GMII_RXD_0_s_3, UCF_NET_STRING=("LOC=C32", "IOSTANDARD = LVCMOS25")
+#  PORT Hard_PHY_RXD4   = GMII_RXD_0_s_4, UCF_NET_STRING=("LOC=D32", "IOSTANDARD = LVCMOS25")
+#  PORT Hard_PHY_RXD5   = GMII_RXD_0_s_5, UCF_NET_STRING=("LOC=C34", "IOSTANDARD = LVCMOS25")
+#  PORT Hard_PHY_RXD6   = GMII_RXD_0_s_6, UCF_NET_STRING=("LOC=D34", "IOSTANDARD = LVCMOS25")
+#  PORT Hard_PHY_RXD7   = GMII_RXD_0_s_7, UCF_NET_STRING=("LOC=F33", "IOSTANDARD = LVCMOS25")
+#  PORT Hard_MII_TX_CLK_0 = MII_TX_CLK_0_s, UCF_NET_STRING=("LOC = K17", "IOSTANDARD = LVCMOS25")
+#  #PORT GMII_COL_0 = GMII_COL_0_s, UCF_NET_STRING=("LOC = ")
+#  #PORT GMII_CRS_0 = GMII_CRS_0_s, UCF_NET_STRING=("LOC = ")
+#  PORT Hard_PHY_MDC    =MDC_0_s ,   UCF_NET_STRING=("LOC=H19", "IOSTANDARD = LVCMOS25")
+#  PORT Hard_PHY_MDIO   = MDIO_0_s,  UCF_NET_STRING=("LOC=H13", "IOSTANDARD = LVCMOS25")
+#  PORT Hard_PHY_MII_INT = PHY_MII_INT_s, UCF_NET_STRING=("LOC=H20", "IOSTANDARD = LVCMOS25",  "TIG")
+
+  # 10/100 Ethernet MAC
+  PORT PHY_RESET  = phy_rst_n,     UCF_NET_STRING=("LOC=J14", "IOSTANDARD = LVCMOS25", "TIG")
+  PORT PHY_MDINT  = phy_mii_int_n, UCF_NET_STRING=("LOC=H20", "IOSTANDARD = LVCMOS25")
+  PORT PHY_CRS    = phy_crs,       UCF_NET_STRING=("LOC=E34", "IOSTANDARD = LVCMOS25")
+  PORT PHY_COL    = phy_col,       UCF_NET_STRING=("LOC=B32", "IOSTANDARD = LVCMOS25")
+  PORT PHY_TXD3   = phy_tx_data_3, UCF_NET_STRING=("LOC=AH10", "IOSTANDARD = LVDCI_33")
+  PORT PHY_TXD2   = phy_tx_data_2, UCF_NET_STRING=("LOC=AH9", "IOSTANDARD = LVDCI_33")
+  PORT PHY_TXD1   = phy_tx_data_1, UCF_NET_STRING=("LOC=AE11", "IOSTANDARD = LVDCI_33")
+  PORT PHY_TXD0   = phy_tx_data_0, UCF_NET_STRING=("LOC=AF11", "IOSTANDARD = LVDCI_33")
+  PORT PHY_TX_EN  = phy_tx_en,     UCF_NET_STRING=("LOC=AJ10", "IOSTANDARD = LVDCI_33")
+  PORT PHY_TX_CLK = phy_tx_clk,    UCF_NET_STRING=("LOC=K17", "IOSTANDARD = LVCMOS25")
+  PORT PHY_TX_ER  = phy_tx_er,     UCF_NET_STRING=("LOC=AJ9", "IOSTANDARD = LVDCI_33")
+  PORT PHY_RX_ER  = phy_rx_er,     UCF_NET_STRING=("LOC=E33", "IOSTANDARD = LVCMOS25")
+  PORT PHY_RX_CLK = phy_rx_clk,    UCF_NET_STRING=("LOC=H17", "IOSTANDARD = LVCMOS25")
+  PORT PHY_RX_DV  = phy_dv,        UCF_NET_STRING=("LOC=E32", "IOSTANDARD = LVCMOS25")
+  PORT PHY_RXD0   = phy_rx_data_0, UCF_NET_STRING=("LOC=A33", "IOSTANDARD = LVCMOS25")
+  PORT PHY_RXD1   = phy_rx_data_1, UCF_NET_STRING=("LOC=B33", "IOSTANDARD = LVCMOS25")
+  PORT PHY_RXD2   = phy_rx_data_2, UCF_NET_STRING=("LOC=C33", "IOSTANDARD = LVCMOS25")
+  PORT PHY_RXD3   = phy_rx_data_3, UCF_NET_STRING=("LOC=C32", "IOSTANDARD = LVCMOS25")
+  PORT PHY_MDC    = phy_mii_clk,   UCF_NET_STRING=("LOC=H19", "IOSTANDARD = LVCMOS25")
+  PORT PHY_MDIO   = phy_mii_data,  UCF_NET_STRING=("LOC=H13", "IOSTANDARD = LVCMOS25")
+
+END
+
