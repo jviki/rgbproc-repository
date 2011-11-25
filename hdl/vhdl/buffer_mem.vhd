@@ -65,71 +65,8 @@ begin
 		doutb  => DOUTB
 	);
 
-end architecture;
 
-architecture bram_model of buffer_mem is
 
-	type mem_t is array(0 to CAPACITY - 1) of std_logic_vector(DWIDTH - 1 downto 0);
-
-	signal mem       : mem_t;
-
-	signal mem_wea   : std_logic;
-	signal mem_addra : std_logic_vector(log2(CAPACITY) - 1 downto 0);
-	signal mem_dina  : std_logic_vector(7 downto 0);
-	signal mem_douta : std_logic_vector(7 downto 0);
-
-	signal mem_web   : std_logic;
-	signal mem_addrb : std_logic_vector(log2(CAPACITY) - 1 downto 0);
-	signal mem_dinb  : std_logic_vector(7 downto 0);
-	signal mem_doutb : std_logic_vector(7 downto 0);
-
-begin
-
-	mem_doutap : process(CLKA, mem_addra)
-	begin
-		if rising_edge(CLKA) then
-			mem_douta <= mem(conv_integer(mem_addra));
-		end if;
-	end process;
-	
-	mem_dinap : process(CLKA, mem_addra, mem_wea, mem_dina)
-	begin
-		if rising_edge(CLKA) then
-			if mem_wea = '1' then
-				mem(conv_integer(mem_addra)) <= mem_dina;
-			end if;
-		end if;
-	end process;
-
-	----------------------------------------
-
-	mem_doutbp : process(CLKB, mem_addrb)
-	begin
-		if rising_edge(CLKB) then
-			mem_doutb <= mem(conv_integer(mem_addrb));
-		end if;
-	end process;
-	
-	mem_dinbp : process(CLKB, mem_addrb, mem_web, mem_dinb)
-	begin
-		if rising_edge(CLKB) then
-			if mem_web = '1' then
-				mem(conv_integer(mem_addrb)) <= mem_dinb;
-			end if;
-		end if;
-	end process;
-
-	----------------------------------------
-
-	mem_wea   <= WEA;
-	mem_dina  <= DINA;
-	mem_addra <= ADDRA;
-	DOUTA     <= mem_douta;
-
-	mem_web   <= WEB;
-	mem_dinb  <= DINB;
-	mem_addrb <= ADDRB;
-	DOUTB     <= mem_doutb;
 
 end architecture;
 
