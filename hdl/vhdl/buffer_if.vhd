@@ -326,7 +326,7 @@ begin
 		when s_out =>
 			if OUT_DONE = '1' then
 				nstate <= s_in;
-			elsif (reg_ptr - cnt_ptr) + 1 = reg_ptr then
+			elsif (reg_ptr - cnt_ptr) = reg_ptr then
 				nstate <= s_out_done;
 			end if;
 
@@ -339,8 +339,9 @@ begin
 	end process;
 
 	fsm_output : process(CLK, state, RST, cnt_ptr, reg_ptr,
+	                     out_fifo_full, mem1_drdy,
 	                     IN_D, IN_WE, OUT_RE, OUT_DONE,
-			     IN_CLEAR, IN_DONE,
+	                     IN_CLEAR, IN_DONE,
 	                     M0_A, M0_DI, M0_WE, M0_RE,
 	                     M1_A, M1_DI, M1_WE, M1_RE)
 	begin
@@ -406,7 +407,7 @@ begin
 			cnt_ptr_clr <= OUT_DONE or RST;
 			out_fifo_rst <= OUT_DONE or RST;
 
-			mem1_a    <= reg_ptr - cnt_ptr;
+			mem1_a    <= reg_ptr - cnt_ptr - 1;
 			mem1_din  <= (others => 'X');
 			mem1_we   <= '0';
 
@@ -425,14 +426,14 @@ begin
 			cnt_ptr_clr <= OUT_DONE or RST;
 			out_fifo_rst <= OUT_DONE or RST;
 
-			mem1_a    <= reg_ptr - cnt_ptr;
+			mem1_a    <= reg_ptr - cnt_ptr - 1;
 			mem1_din  <= (others => 'X');
 			mem1_we   <= '0';
 
 			OUT_RDY <= '0';
 
 		when s_out =>
-			if (reg_ptr - cnt_ptr) < reg_ptr then
+			if (reg_ptr - cnt_ptr) <= reg_ptr then
 				cnt_ptr_ce  <= not out_fifo_full;
 				out_fifo_we <= mem1_drdy;
 				mem1_re     <= not out_fifo_full;
@@ -444,7 +445,7 @@ begin
 			out_fifo_re  <= OUT_RE;
 			out_fifo_rst <= OUT_DONE or RST;
 
-			mem1_a    <= reg_ptr - cnt_ptr;
+			mem1_a    <= reg_ptr - cnt_ptr - 1;
 			mem1_din  <= (others => 'X');
 			mem1_we   <= '0';
 
