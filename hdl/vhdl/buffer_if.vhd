@@ -206,7 +206,7 @@ begin
 				OUT_EMPTY <= '1';
 			elsif out_fifo_addr = "0001" and OUT_RE = '1' and cnt_ptr = 0 then
 				OUT_EMPTY <= '1';
-			elsif out_fifo_addr = "0000" then
+			elsif out_fifo_addr = "0000" and cnt_ptr = 0 then
 				OUT_EMPTY <= '1';
 			else
 				OUT_EMPTY <= '0';
