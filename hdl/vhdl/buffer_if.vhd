@@ -112,6 +112,7 @@ architecture fsm_wrapper of buffer_if is
 	signal out_fifo_full : std_logic;
 	signal out_fifo_re   : std_logic;
 	signal out_fifo_empty : std_logic;
+	signal out_fifo_addr : std_logic_vector(0 to 3);
 	signal out_fifo_rst  : std_logic;
 
 	signal out_px_valid  : std_logic;
@@ -169,8 +170,49 @@ begin
 
 	-------------------------------------
 
-	IN_FULL   <= '1' when cnt_ptr = BUFF_CAP else RST;
-	OUT_EMPTY <= not out_fifo_not_empty;
+	---
+	-- When cnt_ptr = BUFF_CAP - 1 the last position is available
+	-- to be written. But cnt_ptr will be never greater then this
+	-- value. So after IN_WE in this state the buffer is treated
+	-- as full until the counter counts down.
+	---
+	full_genp : process(CLK, RST, IN_WE, RST, cnt_ptr)
+	begin
+		if rising_edge(CLK) then
+			if RST = '1' then
+				IN_FULL   <= '1';
+			elsif IN_WE = '1' and cnt_ptr = BUFF_CAP - 1 then
+				IN_FULL   <= '1';
+			elsif cnt_ptr < BUFF_CAP - 1 then
+				IN_FULL   <= '0';
+			end if;
+		end if;
+	end process;
+
+	---
+	-- Similar problem to FULL. The counter never counts
+	-- below zero. But the out_fifo_empty can be used
+	-- carefully.
+	--
+	-- The out_fifo_empty signal goes active in the next CLK
+	-- when the last read has occoured (the next rising
+	-- edge of CLK will not detect it) so it is necessary
+	-- to activate it earlier for correct operation of other units.
+	---
+	empty_genp : process(CLK, OUT_RE, cnt_ptr, out_fifo_empty, out_fifo_addr)
+	begin
+		if rising_edge(CLK) then
+			if RST = '1' then
+				OUT_EMPTY <= '1';
+			elsif out_fifo_addr = "0001" and OUT_RE = '1' and cnt_ptr = 0 then
+				OUT_EMPTY <= '1';
+			elsif out_fifo_addr = "0000" then
+				OUT_EMPTY <= '1';
+			else
+				OUT_EMPTY <= '0';
+			end if;
+		end if;
+	end process;
 
 	M0_DO     <= mem0_dout;
 	M0_DRDY   <= mem0_drdy;
