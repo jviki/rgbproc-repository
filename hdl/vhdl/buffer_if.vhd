@@ -204,7 +204,7 @@ begin
 	generic map (
 		CAPACITY  => BUFF_CAP,
 		DWIDTH    => 8,
-		SWAP_LINE => BUFF_CAP / 10,
+		SWAP_LINE => BUFF_CAP / 4,
 		ID        => "red"
 	)
 	port map (
@@ -231,7 +231,7 @@ begin
 	generic map (
 		CAPACITY => BUFF_CAP,
 		DWIDTH   => 8,
-		SWAP_LINE => BUFF_CAP / 10,
+		SWAP_LINE => BUFF_CAP / 4,
 		ID        => "green"
 	)
 	port map (
@@ -258,7 +258,7 @@ begin
 	generic map (
 		CAPACITY => BUFF_CAP,
 		DWIDTH   => 8,
-		SWAP_LINE => BUFF_CAP / 10,
+		SWAP_LINE => BUFF_CAP / 4,
 		ID        => "blue"
 	)
 	port map (
