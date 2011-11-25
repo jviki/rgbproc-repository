@@ -202,8 +202,10 @@ begin
 
 	red_bram_i : entity work.buffer_mem
 	generic map (
-		CAPACITY => BUFF_CAP,
-		DWIDTH   => 8
+		CAPACITY  => BUFF_CAP,
+		DWIDTH    => 8,
+		SWAP_LINE => BUFF_CAP / 10,
+		ID        => "red"
 	)
 	port map (
 		ARST   => RST,
@@ -228,7 +230,9 @@ begin
 	green_bram_i : entity work.buffer_mem
 	generic map (
 		CAPACITY => BUFF_CAP,
-		DWIDTH   => 8
+		DWIDTH   => 8,
+		SWAP_LINE => BUFF_CAP / 10,
+		ID        => "green"
 	)
 	port map (
 		ARST   => RST,
@@ -253,7 +257,9 @@ begin
 	blue_bram_i : entity work.buffer_mem
 	generic map (
 		CAPACITY => BUFF_CAP,
-		DWIDTH   => 8
+		DWIDTH   => 8,
+		SWAP_LINE => BUFF_CAP / 10,
+		ID        => "blue"
 	)
 	port map (
 		ARST   => RST,
