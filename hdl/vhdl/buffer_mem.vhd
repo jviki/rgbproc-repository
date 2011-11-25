@@ -11,8 +11,10 @@ use proc_common_v3_00_a.proc_common_pkg.log2;
 
 entity buffer_mem is
 generic (
-	CAPACITY : integer;
-	DWIDTH   : integer := 8
+	CAPACITY  : integer;
+	DWIDTH    : integer := 8;
+	ID        : string  := "mem";
+	SWAP_LINE : integer := 1024
 );
 port (
 	ARST     : in  std_logic;
@@ -79,6 +81,36 @@ begin
 		end if;
 	end process;
 
+end architecture;
+
+architecture swapping_model of buffer_mem is
+begin
+
+	impl_i : entity work.mem_swapping
+	generic map (
+		MEM_CAP   => CAPACITY,
+		MEM_LINE  => SWAP_LINE,
+		DWIDTH    => DWIDTH,
+		PREFIX    => ID
+	)
+	port map (
+		CLK       => CLKA,
+		RST       => ARST,
+
+		MEM_A0    => ADDRA,
+		MEM_DIN0  => DINA,
+		MEM_DOUT0 => DOUTA,
+		MEM_WE0   => WEA,
+		MEM_RE0   => REA,
+		MEM_DRDY0 => DRDYA,
+
+		MEM_A1    => ADDRB,
+		MEM_DIN1  => DINB,
+		MEM_DOUT1 => DOUTB,
+		MEM_WE1   => WEB,
+		MEM_RE1   => REB,
+		MEM_DRDY1 => DRDYB
+	);
 
 end architecture;
 
