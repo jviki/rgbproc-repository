@@ -65,7 +65,19 @@ begin
 		doutb  => DOUTB
 	);
 
+	drdyap : process(CLKA, REA)
+	begin 
+		if rising_edge(CLKA) then
+			DRDYA <= REA;
+		end if;
+	end process;
 
+	drdybp : process(CLKB, REB)
+	begin 
+		if rising_edge(CLKB) then
+			DRDYB <= REB;
+		end if;
+	end process;
 
 
 end architecture;
