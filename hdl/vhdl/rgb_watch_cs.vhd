@@ -23,12 +23,33 @@ port (
 	RGB_REQ : in  std_logic;
 
 	CS_CLK  : out std_logic;
-	CS_VEC  : out std_logic_vector(31 downto 0)
+	CS_VEC  : out std_logic_vector(47 downto 0)
 );
 end entity;
 
 architecture full of rgb_watch_cs is
+
+ 	signal cnt_lines     : std_logic_vector(15 downto 0);
+ 	signal cnt_lines_clr : std_logic;
+ 	signal cnt_lines_ce  : std_logic;
+
 begin
+
+	cnt_linesp : process(RGB_CLK, cnt_lines_ce, cnt_lines_clr)
+	begin
+		if rising_edge(RGB_CLK) then
+			if cnt_lines_clr = '1' or RGB_RST = '1' then
+				cnt_lines <= (others => '0');
+			elsif cnt_lines_ce = '1' then
+				cnt_lines <= cnt_lines + 1;
+			end if;
+		end if;
+	end process;
+
+	cnt_lines_ce  <= RGB_VLD and RGB_REQ and RGB_EOL;
+	cnt_lines_clr <= RGB_VLD and RGB_REQ and RGB_EOF;
+
+	--------------------------------
 	
 	CS_CLK    <= RGB_CLK;
 
@@ -47,6 +68,8 @@ begin
 	CS_VEC(30 downto 23) <= RGB_B;
 
 	CS_VEC(31) <= '1';
+
+	CS_VEC(47 downto 32) <= cnt_lines;
 
 end architecture;
 
