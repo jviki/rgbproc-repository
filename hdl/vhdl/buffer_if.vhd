@@ -8,7 +8,7 @@ use ieee.std_logic_unsigned.all;
 
 library proc_common_v3_00_a;
 use proc_common_v3_00_a.proc_common_pkg.log2;
-use proc_common_v3_00_a.srl_fifo;
+use proc_common_v3_00_a.srl_fifo2;
 
 entity buffer_if is
 generic (
@@ -111,7 +111,7 @@ architecture fsm_wrapper of buffer_if is
 	signal out_fifo_we   : std_logic;
 	signal out_fifo_full : std_logic;
 	signal out_fifo_re   : std_logic;
-	signal out_fifo_not_empty : std_logic;
+	signal out_fifo_empty : std_logic;
 	signal out_fifo_rst  : std_logic;
 
 	signal out_px_valid  : std_logic;
@@ -139,7 +139,7 @@ begin
 		OUT_EOF => OUT_EOF
 	);
 
-	out_px_valid <= out_fifo_not_empty and out_fifo_re;
+	out_px_valid <= not out_fifo_empty and out_fifo_re;
 	
 	-------------------------------------
 
@@ -181,9 +181,9 @@ begin
 
 	-------------------------------------
 
-	srl_fifo_i : entity proc_common_v3_00_a.srl_fifo
+	srl_fifo_i : entity proc_common_v3_00_a.srl_fifo2
 	generic map (
-		C_DATA_BITS => 24,
+		C_DWIDTH    => 24,
 		C_DEPTH     => 16
 	)
 	port map (
@@ -194,8 +194,7 @@ begin
 		FIFO_Read   => out_fifo_re,
 		Data_Out    => OUT_D,
 		FIFO_Full   => out_fifo_full,
-		Data_Exists => out_fifo_not_empty,
-		Addr => open
+		FIFO_Empty  => out_fifo_empty,
 	);
 
 	-------------------------------------
@@ -319,7 +318,7 @@ begin
 		when s_out1 =>
 			if OUT_DONE = '1' then
 				nstate <= s_in;
-			elsif out_fifo_not_empty = '1' then
+			elsif out_fifo_empty = '0' then
 				nstate <= s_out;
 			end if;
 
