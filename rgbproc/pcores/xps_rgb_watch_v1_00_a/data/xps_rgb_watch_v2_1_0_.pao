@@ -1,0 +1,2 @@
+lib xps_rgb_watch_v1_00_a rgb_watch_cs.vhd  vhdl
+lib xps_rgb_watch_v1_00_a xps_rgb_watch.vhd  vhdl
