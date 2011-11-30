@@ -177,9 +177,9 @@ generate
 		
 		OUT_CLK    => OUT_CLK,
 		OUT_RST    => OUT_RST,
-		OUT_R      => OUT_R(i * 8 - 1 downto (i - 1) * 8),
-		OUT_G      => OUT_G(i * 8 - 1 downto (i - 1) * 8),
-		OUT_B      => OUT_B(i * 8 - 1 downto (i - 1) * 8),
+		OUT_R      => OUT_R((i + 1) * 8 - 1 downto i * 8),
+		OUT_G      => OUT_G((i + 1) * 8 - 1 downto i * 8),
+		OUT_B      => OUT_B((i + 1) * 8 - 1 downto i * 8),
 		OUT_ADDR   => OUT_ADDR,
 		OUT_FULL   => OUT_MASK(i),
 		MARK_EMPTY => OUT_MARK(i)
