@@ -91,7 +91,12 @@ begin
 
 	---------------------------
 
-	in_we <= not in_full;
+	gen_in_we : process(in_clk, in_full, IN_RST)
+	begin
+		if rising_edge(in_clk) then
+			in_we <= not in_full and not IN_RST;
+		end if;
+	end process;
 
 	out_addr   <= conv_std_logic_vector(0, out_addr'length);
 	mark_empty <= '0';
