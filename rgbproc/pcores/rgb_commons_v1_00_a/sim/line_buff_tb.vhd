@@ -99,6 +99,7 @@ begin
 	end process;
 
 	out_addr   <= conv_std_logic_vector(0, out_addr'length);
+	mark_full  <= '0';
 	mark_empty <= '0';
 
 	---------------------------
