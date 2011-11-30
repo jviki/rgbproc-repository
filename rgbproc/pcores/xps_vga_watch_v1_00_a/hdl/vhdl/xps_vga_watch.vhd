@@ -29,7 +29,7 @@ end entity;
 architecture wrapper of xps_vga_watch is
 begin
 
-	impl_i : entity worrk.vga_watch_cs
+	impl_i : entity work.vga_watch_cs
 	generic map (
 		CS_XVEC_ENABLE => CS_XVEC_ENABLE
 	)
