@@ -26,8 +26,8 @@ PORT VGA_SOGOUT = SOGOUT,         IO_IS = VGA_SOGOUT,     DIR = I, IO_IF = vga
 PORT RGB_CLK = "", DIR = I, SIGIS = CLK
 PORT RGB_RST = sys_periph_reset, DIR = I, SIGIS = RST
 
-PORT RGB_HS  = HS,  DIR = O
-PORT RGB_VS  = VS,  DIR = O
+PORT RGB_EOL = EOL, DIR = O
+PORT RGB_EOF = EOF, DIR = O
 PORT RGB_R   = R,   DIR = O, VEC = [7:0]
 PORT RGB_G   = G,   DIR = O, VEC = [7:0]
 PORT RGB_B   = B,   DIR = O, VEC = [7:0]
