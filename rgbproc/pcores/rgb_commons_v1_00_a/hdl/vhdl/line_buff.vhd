@@ -146,7 +146,7 @@ begin
 		end if;
 	end process;
 
-	reg_full_set <= IN_WE or MARK_FULL when cnt_in_addr = LINE_WIDTH else MARK_FULL;
+	reg_full_set  <= IN_WE or MARK_FULL when cnt_in_addr = LINE_WIDTH - 1 else MARK_FULL;
 	reg_full_clr <= slow_mark_empty;
 	IN_FULL      <= reg_full;
 
