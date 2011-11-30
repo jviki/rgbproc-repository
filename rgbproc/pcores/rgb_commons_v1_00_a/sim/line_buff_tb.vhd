@@ -45,7 +45,7 @@ architecture testbench of line_buff_tb is
 
 begin
 
-	dut_i : work.line_buff
+	dut_i : entity work.line_buff
 	generic map (
 		LINE_WIDTH   => LINE_WIDTH,
 		RATIO_OUT_IN => RATIO_OUT_IN
