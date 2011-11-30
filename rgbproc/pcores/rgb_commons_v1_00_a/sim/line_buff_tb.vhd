@@ -20,7 +20,7 @@ architecture testbench of line_buff_tb is
 	constant IN_FREQ    : real := 50.0;
 	constant IN_PERIOD  : time := 1 us / IN_FREQ;
 
-	constant OUT_FREQ   : real := IN_FREQ * RATIO_OUT_IN;
+	constant OUT_FREQ   : real := IN_FREQ * real(RATIO_OUT_IN);
 	constant OUT_PERIOD : time := 1 us / OUT_FREQ;
 
 	signal in_clk       : std_logic;
