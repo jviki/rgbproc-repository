@@ -6,6 +6,9 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
+library proc_common_v3_00_a;
+use proc_common_v3_00_a.proc_common_pkg.log2;
+
 ---
 -- Buffer of 4 RGB lines.
 -- See line_buff.
