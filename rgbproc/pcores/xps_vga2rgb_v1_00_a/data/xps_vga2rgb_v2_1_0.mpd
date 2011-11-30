@@ -17,6 +17,10 @@ PORT VGA_G  = G,  IO_IS = VGA_G, IO_IF = vga, DIR = I, VEC = [7:0]
 PORT VGA_B  = B,  IO_IS = VGA_B, IO_IF = vga, DIR = I, VEC = [7:0]
 PORT VGA_HS = HS, IO_IS = VGA_HSYNC, IO_IF = vga, DIR = I
 PORT VGA_VS = VS, IO_IS = VGA_VSYNC, IO_IF = vga, DIR = I
+PORT VGA_CLAMP = CLAMP,           IO_IS = VGA_CLAMP,      DIR = O, IO_IF = vga
+PORT VGA_COAST = COAST,           IO_IS = VGA_COAST,      DIR = O, IO_IF = vga
+PORT VGA_ODD_EVEN_B = ODD_EVEN_B, IO_IS = VGA_ODD_EVEN_B, DIR = I, IO_IF = vga
+PORT VGA_SOGOUT = SOGOUT,         IO_IS = VGA_SOGOUT,     DIR = I, IO_IF = vga
 
 # rgb clock domain
 PORT RGB_CLK = "", DIR = I, SIGIS = CLK

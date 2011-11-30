@@ -14,6 +14,10 @@ port (
 	VGA_B    : in  std_logic_vector(7 downto 0);
 	VGA_HS   : in  std_logic;
 	VGA_VS   : in  std_logic;
+	VGA_CLAMP      : out std_logic;
+	VGA_COAST      : out std_logic;
+	VGA_ODD_EVEN_B : in  std_logic;
+	VGA_SGOUT      : in  std_logic;
 
 	RGB_CLK  : in  std_logic;
 	RGB_RST  : in  std_logic;
@@ -30,6 +34,9 @@ end entity;
 
 architecture wrapper of xps_vga2rgb is
 begin
+
+	VGA_CLAMP <= '0';
+	VGA_COAST <= '0';
 
 	impl_i : entity work.vga2rgb
 	port map (
