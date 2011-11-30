@@ -56,7 +56,7 @@ begin
 
 		IN_R       => in_r,
 		IN_G       => in_g,
-		IN_B       => in_b
+		IN_B       => in_b,
 		IN_WE      => in_we,
 		IN_FULL    => in_full,
 		MARK_FULL  => mark_full,
