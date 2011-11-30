@@ -33,7 +33,7 @@ use proc_common_v3_00_a.proc_common_pkg.log2;
 ---
 entity line_buff is
 generic (
-	LINE_WIDTH   : integer := 640,
+	LINE_WIDTH   : integer := 640;
 	RATIO_OUT_IN : integer := 2 -- OUT_CLK is RATIO_OUT_IN times faster then IN_CLK
 );
 port (
@@ -124,7 +124,7 @@ begin
 		if rising_edge(IN_CLK) then
 			if IN_RST = '1' or cnt_in_addr_clr = '1' then
 				cnt_in_addr <= (others => '0');
-			elsif cnt_in_addr_ce = '1'
+			elsif cnt_in_addr_ce = '1' then
 				cnt_in_addr <= cnt_in_addr + 1;
 			end if;
 		end if;
