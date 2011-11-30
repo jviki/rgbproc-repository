@@ -30,8 +30,8 @@ PORT OUT_XCLK_N  = XCLK_P,  DIR = O, SIGIS = CLK, IO_IF = chrontel
 PORT OUT_RESET_N = RESET_N, DIR = O, SIGIS = RST, IO_IF = chrontel
 
 PORT OUT_D  = D,  DIR = O, IO_IF = chrontel, VEC = [11:0]
-PORT OUT_DE = DE, DIR = 0, IO_IF = chrontel
+PORT OUT_DE = DE, DIR = O, IO_IF = chrontel
 PORT OUT_HS = HS, DIR = O, IO_IF = chrontel
-PORT OUT_VS = VS, DIR = 0, IO_IF = chrontel
+PORT OUT_VS = VS, DIR = O, IO_IF = chrontel
 
 END
