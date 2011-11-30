@@ -81,10 +81,11 @@ begin
 				i := 0;
 			elsif in_we = '1' then
 				i := i + 1;
-				in_r <= conv_std_logic_vector(i, in_r'length);
-				in_g <= conv_std_logic_vector(i, in_g'length);
-				in_b <= conv_std_logic_vector(i, in_b'length);
 			end if;
+
+			in_r <= conv_std_logic_vector(i, in_r'length);
+			in_g <= conv_std_logic_vector(i, in_g'length);
+			in_b <= conv_std_logic_vector(i, in_b'length);
 		end if;
 	end process;
 
