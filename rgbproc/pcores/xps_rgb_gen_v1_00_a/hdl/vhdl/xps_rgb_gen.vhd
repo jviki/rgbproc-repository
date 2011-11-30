@@ -62,7 +62,7 @@ begin
 	---------------------------------
 
 	RGB_VLD <= '1';
-	RGB_EOL <= eol
+	RGB_EOL <= eol;
 	RGB_EOF <= eof;
 
 	RGB_R   <= cnt_color;
