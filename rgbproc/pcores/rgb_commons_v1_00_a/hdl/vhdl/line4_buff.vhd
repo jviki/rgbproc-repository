@@ -82,11 +82,10 @@ architecture composite_of_lines of line4_buff is
 
 begin
 
-	curr_full <= in_full(conv_integer(cnt_write_line));
-
-	last_curr_fullp : process(IN_CLK, curr_full)
+	curr_fullp : process(IN_CLK, in_full, cnt_write_line)
 	begin
 		if rising_edge(IN_CLK) then
+			curr_full      <= in_full(conv_integer(cnt_write_line));
 			last_curr_full <= curr_full;
 		end if;
 	end process;
