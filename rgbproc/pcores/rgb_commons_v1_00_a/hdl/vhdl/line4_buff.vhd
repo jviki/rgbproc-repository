@@ -39,7 +39,7 @@ port (
 	-- bit map to mark line to be empty
 	OUT_MARK  : in  std_logic_vector(3 downto 0);
 	-- data are valid at the next CLK after OUT_ADDR is set
-	OUT_ADDR  : in  std_logic
+	OUT_ADDR  : in  std_logic_vector(log2(LINE_WIDTH) - 1 downto 0)
 );
 end entity;
 
