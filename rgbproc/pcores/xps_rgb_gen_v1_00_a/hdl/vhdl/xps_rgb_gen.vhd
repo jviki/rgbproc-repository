@@ -46,7 +46,7 @@ begin
 	end process;
 
 	cnt_color_ce  <= eol;
-	cnt_color_clr <= eof;
+	cnt_color_clr <= eof or RGB_RST;
 
 	---------------------------------
 	
