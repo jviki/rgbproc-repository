@@ -33,19 +33,37 @@ port (
 end entity;
 
 architecture wrapper of xps_vga2rgb is
+
+	signal reg_latch : std_logic_vector(25 downto 0);
+
 begin
 
 	VGA_CLAMP <= '0';
 	VGA_COAST <= '0';
 
+	---
+	-- Register to break the critical path.
+	---
+	reg_latchp : process(VGA_CLK, VGA_R, VGA_G, VGA_B, VGA_HS, VGA_VS)
+	begin
+		if rising_edge(VGA_CLK) then
+			reg_latch(0) <= VGA_HS;
+			reg_latch(1) <= VGA_VS;
+
+			reg_latch( 9 downto  2) <= VGA_R;
+			reg_latch(17 downto 10) <= VGA_G;
+			reg_latch(25 downto 18) <= VGA_B;
+		end if;
+	end process;
+
 	impl_i : entity work.vga2rgb
 	port map (
 		VGA_CLK => VGA_CLK,
-		VGA_R   => VGA_R,
-		VGA_G   => VGA_G,
-		VGA_B   => VGA_B,
-		VGA_HS  => VGA_HS,
-		VGA_VS  => VGA_VS,
+		VGA_R   => reg_latch( 9 downto  2),
+		VGA_G   => reg_latch(17 downto 10),
+		VGA_B   => reg_latch(25 downto 18),
+		VGA_HS  => reg_latch(0),
+		VGA_VS  => reg_latch(1),
 
 		RGB_CLK => RGB_CLK,
 		RGB_RST => RGB_RST,
