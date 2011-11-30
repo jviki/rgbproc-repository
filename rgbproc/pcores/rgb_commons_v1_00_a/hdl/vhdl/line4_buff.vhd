@@ -101,7 +101,7 @@ begin
 	---
 	in_wep : process(IN_CLK, cnt_write_line, gen_in_req)
 	begin
-		for i in 1 to LINE_COUNT loop
+		for i in 0 to LINE_COUNT - 1 loop
 			if i = cnt_write_line then
 				in_we(i) <= gen_in_req;
 			else
@@ -115,7 +115,7 @@ begin
 	---
 	mark_fullp : process(IN_CLK, IN_EOL, gen_in_req)
 	begin
-		for i in 1 to LINE_COUNT loop
+		for i in 0 to LINE_COUNT - 1 loop
 			if i = cnt_write_line then
 				mark_full(i) <= IN_EOL and gen_in_req;
 			else
@@ -156,7 +156,7 @@ begin
 
 	-------------------------------------------------
 
-gen_line_buff_i : for i in 1 to LINE_COUNT
+gen_line_buff_i : for i in 0 to LINE_COUNT - 1
 generate
 	
 	line_buff_i : entity work.line_buff
