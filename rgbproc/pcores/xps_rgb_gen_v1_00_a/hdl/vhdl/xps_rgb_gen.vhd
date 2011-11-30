@@ -13,11 +13,11 @@ entity xps_rgb_gen is
 port (
 	RGB_CLK : in  std_logic;
 	RGB_RST : in  std_logic;
-	RGB_R   : in  std_logic_vector(7 downto 0);
-	RGB_G   : in  std_logic_vector(7 downto 0);
-	RGB_B   : in  std_logic_vector(7 downto 0);
-	RGB_EOL : in  std_logic;
-	RGB_EOF : in  std_logic;
+	RGB_R   : out std_logic_vector(7 downto 0);
+	RGB_G   : out std_logic_vector(7 downto 0);
+	RGB_B   : out std_logic_vector(7 downto 0);
+	RGB_EOL : out std_logic;
+	RGB_EOF : out std_logic;
 	RGB_VLD : out std_logic;
 	RGB_REQ : in  std_logic
 );
