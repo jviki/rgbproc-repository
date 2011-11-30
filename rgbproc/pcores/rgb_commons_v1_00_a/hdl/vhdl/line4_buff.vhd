@@ -15,7 +15,7 @@ use proc_common_v3_00_a.proc_common_pkg.log2;
 ---
 entity line4_buff is
 generic (
-	LINE_WIDTH   : integer := 640.
+	LINE_WIDTH   : integer := 640;
 	RATIO_OUT_IN : integer := 2
 );
 port (
