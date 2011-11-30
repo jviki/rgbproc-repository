@@ -14,7 +14,7 @@ end entity;
 
 architecture testbench of line_buff_tb is
 
-	constant LINE_WIDTH   : integer := 128;
+	constant LINE_WIDTH   : integer := 32;
 	constant RATIO_OUT_IN : integer := 2;
 
 	constant IN_FREQ    : real := 50.0;
