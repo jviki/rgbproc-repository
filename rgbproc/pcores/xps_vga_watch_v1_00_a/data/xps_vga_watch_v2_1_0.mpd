@@ -12,7 +12,7 @@ PARAMETER CS_XVEC_ENABLE = 0, DT = boolean
 IO_INTERFACE IO_IF = vga, IO_TYPE  = VGA_IN_V1
 
 # vga clock domain
-PORT VGA_CLK = vga_clk, DIR = I, SIGIS = CLK
+PORT VGA_CLK = vga_clk, DIR = I, SIGIS = CLK, IO_IS = VGA_CLK, IO_IF = vga
 
 PORT VGA_R  = R,  IO_IS = VGA_R, IO_IF = vga, DIR = I, VEC = [7:0]
 PORT VGA_G  = G,  IO_IS = VGA_G, IO_IF = vga, DIR = I, VEC = [7:0]
