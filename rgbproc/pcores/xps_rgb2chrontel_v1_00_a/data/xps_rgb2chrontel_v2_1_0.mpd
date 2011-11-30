@@ -5,7 +5,7 @@ OPTION IMP_NETLIST = TRUE
 OPTION HDL = VHDL
 OPTION STYLE = MIX
 OPTION IP_GROUP = MICROBLAZE:PPC:USER
-OPTION DESC = Inputs VGA signal and transforms it to RGB bus
+OPTION DESC = Outputs RGB bus data to chrontel chip
 
 IO_INTERFACE IO_IF = chrontel, IO_TYPE  = DVI_OUT_V1
 
