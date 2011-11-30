@@ -17,7 +17,7 @@ port (
 	VGA_CLAMP      : out std_logic;
 	VGA_COAST      : out std_logic;
 	VGA_ODD_EVEN_B : in  std_logic;
-	VGA_SGOUT      : in  std_logic;
+	VGA_SOGOUT     : in  std_logic;
 
 	RGB_CLK  : in  std_logic;
 	RGB_RST  : in  std_logic;
