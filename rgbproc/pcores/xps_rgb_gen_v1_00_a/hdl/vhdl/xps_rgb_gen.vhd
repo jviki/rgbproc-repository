@@ -1,4 +1,4 @@
--- xps_rgb_watch.vhd
+-- xps_rgb_gen.vhd
 -- Jan Viktorin <xvikto03@stud.fit.vutbr.cz>
 
 library ieee;
@@ -9,7 +9,7 @@ use ieee.std_logic_unsigned.all;
 library xps_buff_strategy_v1_00_a;
 use xps_buff_strategy_v1_00_a.end_gen;
 
-entity xps_rgb_watch is
+entity xps_rgb_gen is
 port (
 	RGB_CLK : in  std_logic;
 	RGB_RST : in  std_logic;
@@ -23,7 +23,7 @@ port (
 );
 end entity;
 
-architecture wrapper of xps_rgb_watch is
+architecture simple of xps_rgb_gen is
 
 	signal cnt_color_ce  : std_logic;
 	signal cnt_color_clr : std_logic;
