@@ -69,7 +69,7 @@ architecture composite_of_lines of line4_buff is
 
 	signal cnt_write_line_ce  : std_logic;
 	signal cnt_write_line_clr : std_logic;
-	signal cnt_write_line     : std_logic_vector(1 downto 0);
+	signal cnt_write_line     : std_logic_vector(1 downto 0) := (others => '0');
 
 	signal gen_in_req         : std_logic;
 
