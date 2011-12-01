@@ -77,16 +77,16 @@ architecture fsm of rgb_win3x3 is
 		---
 		if cnt_line = LINES_COUNT - 1 then
 			if (LINES_COUNT) - 1 mod 4 = 1 then
-				return mask(1) and mask(0) = '1';
+				return (mask(1) and mask(0)) = '1';
 
 			elsif (LINES_COUNT) - 1 mod 4 = 2 then
-				return mask(2) and mask(1) = '1';
+				return (mask(2) and mask(1)) = '1';
 
 			elsif (LINES_COUNT) - 1 mod 4 = 3 then
-				return mask(3) and mask(2) = '1';
+				return (mask(3) and mask(2)) = '1';
 
 			elsif (LINES_COUNT) - 1 mod 4 = 0 then
-				return mask(0) and mask(3) = '1';
+				return (mask(0) and mask(3)) = '1';
 			end if;
 		end if;
 
@@ -94,20 +94,20 @@ architecture fsm of rgb_win3x3 is
 		-- All other non-border lines
 		---
 		-- every first line
-		if cnt_line mod 4 = 1 then
-			return mask(2) and mask(1) and mask(0) = '1';
+		if conv_integer(cnt_line) mod 4 = 1 then
+			return (mask(2) and mask(1) and mask(0)) = '1';
 
 		-- every second line
-		elsif cnt_line mod 4 = 2 then
-			return mask(3) and mask(2) and mask(1) = '1';
+		elsif conv_integer(cnt_line) mod 4 = 2 then
+			return (mask(3) and mask(2) and mask(1)) = '1';
 
 		-- every third line
-		elsif cnt_line mod 4 = 3 then
-			return mask(3) and mask(2) and mask(0) = '1';
+		elsif conv_integer(cnt_line) mod 4 = 3 then
+			return (mask(3) and mask(2) and mask(0)) = '1';
 
 		-- every fourth line
-		else -- cnt_line mod 4 = 0
-			return mask(3) and mask(1) and mask(0) = '1';
+		else -- conv_integer(cnt_line) mod 4 = 0
+			return (mask(3) and mask(1) and mask(0)) = '1';
 
 		end if;
 
@@ -119,13 +119,13 @@ architecture fsm of rgb_win3x3 is
 	function line_by_modulo(signal cnt_line : cnt_line_t; a, b, c, d : row_map_t)
 		return row_map_t is
 	begin
-		if cnt_line mod 4 = 1 then
+		if conv_integer(cnt_line) mod 4 = 1 then
 			return a;
-		elsif cnt_line mod 4 = 2 then
+		elsif conv_integer(cnt_line) mod 4 = 2 then
 			return b;
-		elsif cnt_line mod 4 = 3 then
+		elsif conv_integer(cnt_line) mod 4 = 3 then
 			return c;
-		elsif cnt_line mod 4 = 0 then
+		else -- conv_integer(cnt_line) mod 4 = 0 then
 			return d;
 		end if;
 	end function;
