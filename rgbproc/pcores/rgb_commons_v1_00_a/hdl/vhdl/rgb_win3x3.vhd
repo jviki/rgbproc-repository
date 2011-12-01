@@ -24,17 +24,17 @@ port (
 	IN_MARK : out std_logic_vector(3 downto 0);
 	IN_ADDR : in  std_logic_vector(log2(LINE_WIDTH) - 1 downto 0);
 	
-	WIN_R   : out std_logic_vector(9 * 8 - 1 downto 0)
-	WIN_G   : out std_logic_vector(9 * 8 - 1 downto 0)
-	WIN_B   : out std_logic_vector(9 * 8 - 1 downto 0)
-	WIN_VLD : out std_logic
+	WIN_R   : out std_logic_vector(9 * 8 - 1 downto 0);
+	WIN_G   : out std_logic_vector(9 * 8 - 1 downto 0);
+	WIN_B   : out std_logic_vector(9 * 8 - 1 downto 0);
+	WIN_VLD : out std_logic;
 	WIN_REQ : in  std_logic
 );
 end entity;
 
 architecture fsm of rgb_win3x3 is
 
-	type cnt_line_t is std_logic_vector(log2(LINES_COUNT) - 1 downto 0);
+	subtype cnt_line_t is std_logic_vector(log2(LINES_COUNT) - 1 downto 0);
 	type row_map_t is (r_r_line0, r_line1, r_line2, r_line3, r_dup);
 
 	---
