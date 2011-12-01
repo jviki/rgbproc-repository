@@ -98,8 +98,51 @@ begin
 		end if;
 	end process;
 
-	out_addr <= conv_std_logic_vector(0, out_addr'length);
-	out_mark <= (others => '0');
+	---------------------------
+
+	read_data : process
+	begin
+		out_addr <= (others => '0');
+		out_mark <= (others => '0');
+
+		wait until out_mask(0) = '1';
+		wait until out_mask(1) = '1';
+		wait until rising_edge(out_clk);
+
+		for i in 0 to LINE_WIDTH - 1 loop
+			out_addr <= conv_std_logic_vector(i, out_addr'length);
+			wait until rising_edge(out_clk);
+		end loop;
+
+		-----------------------------
+
+		for j in 2 to 128 loop
+			wait until out_mask(j mod 4) = '1';
+
+			for i in 0 to LINE_WIDTH - 1 loop
+				out_addr <= conv_std_logic_vector(i, out_addr'length);
+				wait until rising_edge(out_clk);
+			end loop;
+
+			out_mark((j - 2) mod 4) <= '1';
+			wait until rising_edge(out_clk);
+			wait until rising_edge(out_clk);
+			wait until rising_edge(out_clk);
+			out_mark((j - 2) mod 4) <= '0';
+
+			if j mod 8 = 0 then
+				out_addr <= (others => 'X');
+
+				for k in 1 to LINE_WIDTH loop
+					wait until rising_edge(in_clk);
+				end loop;
+
+				wait until rising_edge(out_clk);
+			end if;
+		end loop;
+
+		wait;
+	end process;
 
 	---------------------------
 
