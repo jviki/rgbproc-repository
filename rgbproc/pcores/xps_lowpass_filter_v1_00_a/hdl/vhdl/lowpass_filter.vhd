@@ -76,7 +76,9 @@ architecture full of lowpass_filter is
 	
 	---------------------------------
 
-	type matrix_t : array(0 to 8) of integer;
+	constant MATRIX_LENGTH : integer := 9;
+
+	type matrix_t : array(0 to MATRIX_LENGTH - 1) of integer;
 
 	constant FILTER_MATRIX : matrix_t :=
 	(
@@ -87,13 +89,13 @@ architecture full of lowpass_filter is
 
 	---------------------------------
 	
-	constant ADDER_LEVELS_COUNT : integer := log2(9);
+	constant ADDER_LEVELS_COUNT : integer := log2(MATRIX_LENGTH);
 	
 	---------------------------------
 
-	signal div_r : std_logic_vector(9 * 8 - 1 downto 0);
-	signal div_g : std_logic_vector(9 * 8 - 1 downto 0);
-	signal div_b : std_logic_vector(9 * 8 - 1 downto 0);
+	signal div_r : std_logic_vector(MATRIX_LENGTH * 8 - 1 downto 0);
+	signal div_g : std_logic_vector(MATRIX_LENGTH * 8 - 1 downto 0);
+	signal div_b : std_logic_vector(MATRIX_LENGTH * 8 - 1 downto 0);
 
 	signal sum_r : std_logic_vector(7 downto 0);
 	signal sum_g : std_logic_vector(7 downto 0);
@@ -148,7 +150,7 @@ begin
 	---
 	-- Division
 	---
-gen_filter_division: for i in 0 to 8 
+gen_filter_division: for i in 0 to MATRIX_LENGTH - 1 
 generate
 
 	div_r((i + 1) * 8 - 1 downto i * 8) <= divide_by2(WIN_R((i + 1) * 8 - 1 downto i * 8), FILTER_MATRIX(i));
@@ -164,7 +166,7 @@ end generate;
 	---
 	adder_tree_r_i : entity adder_tree
 	generic map (
-		INPUT_COUNT => 9
+		INPUT_COUNT => MATRIX_LENGTH
 	)
 	port map (
 		CLK  => CLK,
@@ -175,7 +177,7 @@ end generate;
 
 	adder_tree_g_i : entity adder_tree
 	generic map (
-		INPUT_COUNT => 9
+		INPUT_COUNT => MATRIX_LENGTH
 	)
 	port map (
 		CLK  => CLK,
@@ -186,7 +188,7 @@ end generate;
 
 	adder_tree_b_i : entity adder_tree
 	generic map (
-		INPUT_COUNT => 9
+		INPUT_COUNT => MATRIX_LENGTH
 	)
 	port map (
 		CLK  => CLK,
