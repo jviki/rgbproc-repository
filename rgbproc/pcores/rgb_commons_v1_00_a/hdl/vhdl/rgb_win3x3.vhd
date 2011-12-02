@@ -196,10 +196,12 @@ architecture fsm of rgb_win3x3 is
 	---
 	-- Which bit in IN_MARK to set to clear that line buffer.
 	---
-	function line_to_mark(signal cnt_line : in cnt_line_t) return integer is
+	procedure mark_a_line(signal cnt_line : in cnt_line_t; signal mark : out std_logic_vector(3 downto 0)) is
 	begin
-		return conv_integer(cnt_line) mod 4;
-	end function;
+		if cnt_line /= 0 then
+			mark(conv_integer(cnt_line) mod 4) <= '1';
+		end if;
+	end procedure;
 
 	----------------------------
 
@@ -482,7 +484,7 @@ begin
 				row2_sel <= r_dup;
 
 				in_we        <= WIN_REQ;
-				IN_MARK(line_to_mark(cnt_line)) <= '1';
+				mark_a_line(cnt_line, IN_MARK);
 			else
 				row0_sel <= get_line_for(0, cnt_line);
 				row1_sel <= get_line_for(1, cnt_line);
@@ -496,8 +498,7 @@ begin
 		when s_first_line_end | s_any_line_end | s_last_line_end =>
 			cnt_addr_clr <= '1';
 			cnt_line_ce  <= WIN_REQ;
-			IN_MARK(line_to_mark(cnt_line)) <= '1';
-
+			mark_a_line(cnt_line, IN_MARK);
 
 		-- only waiting for filling next line
 		when s_any_line_wait | s_last_line_wait =>
