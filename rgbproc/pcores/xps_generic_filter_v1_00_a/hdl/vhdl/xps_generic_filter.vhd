@@ -1,4 +1,4 @@
--- xps_lowpass_filter.vhd
+-- xps_generic_filter.vhd
 -- Jan Viktorin <xvikto03@stud.fit.vutbr.cz>
 
 library ieee;
