@@ -399,7 +399,7 @@ begin
 		end case;
 	end process;
 
-	fsm_output : process(CLK, state)
+	fsm_output : process(CLK, state, cnt_line, cnt_addr, cnt_addr_overflow, WIN_REQ)
 	begin
 		IN_ADDR <= (others => '0');
 		IN_MARK <= (others => '0');
