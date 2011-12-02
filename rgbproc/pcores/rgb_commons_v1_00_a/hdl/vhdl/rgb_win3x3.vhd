@@ -35,7 +35,7 @@ end entity;
 architecture fsm of rgb_win3x3 is
 
 	subtype cnt_line_t is std_logic_vector(log2(LINES_COUNT) - 1 downto 0);
-	type row_map_t is (r_r_line0, r_line1, r_line2, r_line3, r_dup);
+	type row_map_t is (r_line0, r_line1, r_line2, r_line3, r_dup);
 
 	---
 	-- Tests whether the mask contains enough '1' bits for processing
@@ -142,7 +142,7 @@ architecture fsm of rgb_win3x3 is
 	-- Computation is based on the facts mentioned in doc for function
 	-- test_mask_for.
 	---
-	function get_line_for(r : integer, signal cnt_line : in cnt_line_t)
+	function get_line_for(r : integer; signal cnt_line : in cnt_line_t)
 		return row_map_t is
 	begin
 		assert r >= 0 and r <= 2
@@ -198,7 +198,7 @@ architecture fsm of rgb_win3x3 is
 	---
 	function line_to_mark(signal cnt_line : in cnt_line_t) return integer is
 	begin
-		return conv_integer(cnt_line mod 4);
+		return conv_integer(cnt_line) mod 4;
 	end function;
 
 	----------------------------
