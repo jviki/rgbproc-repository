@@ -48,29 +48,6 @@ end entity;
 ---
 -- Implementation uses division by a power of 2 and adder tree
 -- to sum the result.
---
--- The adder tree introduces a delay of several CLKs to the pipeline.
--- To solve the RGB handshaking there is a simple combinational logic
--- with input from shift register of valid flags (valid_vec).
---
---  WIN_D   -> | adder_tree | -> OUT_D
---  WIN_VLD -> | valid_vec  | -> OUT_VLD
---                        |
---                     CE |
---                        |
---  WIN_REQ <-- & --------+----<--- & -- neg -- OUT_VLD
---              |                   |
---            WIN_VLD             OUT_REQ
---
--- (1) When data from the adder tree are not valid (OLD_VLD is low)
---     the adder_tree pipeline accepts new data (even when they are invalid!)
---     until a valid sum is available. The valid_vec stores the validity
---     information.
--- (2) If a sum of valid data is available the adder is stopped until an OUT_REQ
---     comes.
--- (3) If OUT_REQ is asserted new data are put into the adder tree from WIN_*.
--- (4) WIN_REQ is generated when WIN_VLD is asserted and adder tree
---     is being shifted.
 ---
 architecture full of lowpass_filter is
 
@@ -124,9 +101,6 @@ architecture full of lowpass_filter is
 	signal sum_g : std_logic_vector(7 downto 0);
 	signal sum_b : std_logic_vector(7 downto 0);
 
-	signal valid_vec : std_logic_vector(ADDER_LEVELS_COUNT - 1 downto 0);
-	signal valid_out : std_logic;
-
 	signal sum_ce    : std_logic;
 
 begin
@@ -141,38 +115,21 @@ begin
 	bypass_shreg_in(15 downto  8) <= WIN_G(39 downto 32);
 	bypass_shreg_in(23 downto 16) <= WIN_B(39 downto 32);
 
-	---------------------------------
 
-	---
-	-- Shift register for validity flags.
-	-- Vector valid_vec(max) represents valid
-	-- flag of data coming from adder_tree.
-	---
-	valid_vecp : process(CLK, WIN_VLD, sum_ce)
-	begin
-		if rising_edge(CLK) then
-			if sum_ce = '1' then
-				for i in valid_vec'range loop
-					if i = 0 then
-						valid_vec(0) <= WIN_VLD;
-					else
-						valid_vec(i) <= valid_vec(i - 1);
-					end if;
-				end loop;
-			end if;
-		end if;
-	end process;
 
-	valid_out <= valid_vec(valid_vec'length - 1);
+	rgb_handshake_i : entity work.rgb_handshake
+	generic map (
+		LINE_DEPTH => ADDER_LEVELS_COUNT
+	)
+	port map (
+		CLK     => CLK,
+		IN_REQ  => IN_REQ,
+		IN_VLD  => IN_VLD,
+		OUT_REQ => OUT_REQ,
+		OUT_VLD => OUT_VLD,
 
-	---------------------------------
-	
-	---
-	-- RGB protocol handshake.
-	---
-	sum_ce  <= not valid_out or OUT_REQ;
-	WIN_REQ <= WIN_VLD and sum_ce;
-	OUT_VLD <= valid_out;
+		LINE_CE => sum_ce
+	);
 	
 	---------------------------------
 
