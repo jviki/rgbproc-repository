@@ -2,7 +2,10 @@ lib proc_common_v3_00_a         all
 lib plbv46_slave_single_v1_01_a all
 
 #lib rgb_commons_v1_00_a rgb_fifo.vhd vhdl
-lib rgb_commons_v1_00_a rgb_commons_pkg.vhd vhdl
+lib rgb_commons_v1_00_a line_buff_pkg.vhd vhdl
+lib rgb_commons_v1_00_a line4_buff.vhd vhdl
+lib rgb_commons_v1_00_a rgb_row3_pkg.vhd vhdl
+lib rgb_commons_v1_00_a rgb_win3x3.vhd vhdl
 lib rgb_commons_v1_00_a ip_reg.vhd vhdl
 lib rgb_commons_v1_00_a rgb_asfifo.vhd vhdl
 #lib rgb_commons_v1_00_a plbv46_if.vhd  vhdl
