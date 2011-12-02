@@ -262,9 +262,9 @@ architecture fsm of rgb_win3x3 is
 	----------------------------
 
 	type state_t is (s_idle,
-		s_first_line0, s_first_line1, s_first_line2, s_first_line, s_first_line_end,
-		s_any_line0,   s_any_line1,   s_any_line2,   s_any_line,   s_any_line_end,
-		s_last_line0,  s_last_line1,  s_last_line2,  s_last_line,  s_last_line_end,
+		s_first_line0, s_first_line1, s_first_line2, s_first_line, s_first_line_end, s_first_line_end0,
+		s_any_line0,   s_any_line1,   s_any_line2,   s_any_line,   s_any_line_end,   s_any_line_end0,
+		s_last_line0,  s_last_line1,  s_last_line2,  s_last_line,  s_last_line_end,  s_last_line_end0,
 		s_any_line_wait, s_last_line_wait);
 
 	signal state  : state_t;
@@ -364,6 +364,11 @@ begin
 
 		when s_first_line =>
 			if cnt_addr_overflow = '1' then
+				nstate <= s_first_line_end0;
+			end if;
+
+		when s_first_line_end0 =>
+			if WIN_REQ = '1' then
 				nstate <= s_first_line_end;
 			end if;
 
@@ -388,6 +393,11 @@ begin
 
 		when s_any_line =>
 			if cnt_addr_overflow = '1' then
+				nstate <= s_any_line_end0;
+			end if;
+
+		when s_any_line_end0 =>
+			if WIN_REQ = '1' then
 				nstate <= s_any_line_end;
 			end if;
 
@@ -419,6 +429,11 @@ begin
 
 		when s_last_line  =>
 			if cnt_addr_overflow = '1' then
+				nstate <= s_last_line_end0;
+			end if;
+
+		when s_last_line_end0 =>
+			if WIN_REQ = '1' then
 				nstate <= s_last_line_end;
 			end if;
 
@@ -493,6 +508,9 @@ begin
 				cnt_addr_ce <= WIN_REQ;
 				in_we       <= WIN_REQ;
 			end if;
+
+		when s_first_line_end0 | s_any_line_end0 | s_last_line_end0 =>
+			in_we <= WIN_REQ;
 
 		-- offering last window of the this line
 		when s_first_line_end | s_any_line_end | s_last_line_end =>
