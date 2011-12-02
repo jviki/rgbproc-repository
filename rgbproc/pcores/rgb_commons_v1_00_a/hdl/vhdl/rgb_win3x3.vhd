@@ -203,9 +203,19 @@ architecture fsm of rgb_win3x3 is
 
 	----------------------------
 
+	signal in_we       : std_logic;
+	signal in_we_delay : std_logic;
+
+	signal win_vld0      : std_logic;
+	signal win_vld_delay : std_logic;
+
 	signal row0_sel    : row_map_t;
 	signal row1_sel    : row_map_t;
 	signal row2_sel    : row_map_t;
+
+	signal row0_sel_delay : row_map_t;
+	signal row1_sel_delay : row_map_t;
+	signal row2_sel_delay : row_map_t;
 
 	signal row0_in_r   : std_logic_vector(7 downto 0);
 	signal row0_in_g   : std_logic_vector(7 downto 0);
@@ -242,8 +252,6 @@ architecture fsm of rgb_win3x3 is
 	signal row2_r      : std_logic_vector(23 downto 0);
 	signal row2_g      : std_logic_vector(23 downto 0);
 	signal row2_b      : std_logic_vector(23 downto 0);
-
-	signal in_we       : std_logic;
 
 	----------------------------
 
@@ -403,7 +411,7 @@ begin
 	begin
 		IN_ADDR <= (others => '0');
 		IN_MARK <= (others => '0');
-		WIN_VLD <= '0';
+		win_vld0<= '0';
 		in_we   <= '0';
 		cnt_addr_ce  <= '0';
 		cnt_addr_clr <= '0';
@@ -454,7 +462,7 @@ begin
 				row2_sel <= r_dup;
 
 				in_we        <= WIN_REQ;
-				WIN_VLD      <= '1';
+				win_vld0     <= '1';
 				IN_MARK(line_to_mark(cnt_line)) <= '1';
 			else
 				row0_sel <= get_line_for(0, cnt_line);
@@ -463,13 +471,13 @@ begin
 
 				cnt_addr_ce <= WIN_REQ;
 				in_we       <= WIN_REQ;
-				WIN_VLD     <= '1';
+				win_vld0    <= '1';
 			end if;
 
 		-- offering last window of the this line
 		when s_first_line_end | s_any_line_end | s_last_line_end =>
 			cnt_addr_clr <= '1';
-			WIN_VLD      <= '1';
+			win_vld0     <= '1';
 			cnt_line_ce  <= WIN_REQ;
 			IN_MARK(line_to_mark(cnt_line)) <= '1';
 
@@ -483,71 +491,71 @@ begin
 
 	----------------------------
 
-	row0_in_r <= IN_R( 7 downto  0) when row0_sel = r_line0 else
-	             IN_R(15 downto  8) when row0_sel = r_line1 else
-	             IN_R(23 downto 16) when row0_sel = r_line2 else
-	             IN_R(31 downto 24) when row0_sel = r_line3 else
-	             row0_last_r        when row0_sel = r_dup   else
+	row0_in_r <= IN_R( 7 downto  0) when row0_sel_delay = r_line0 else
+	             IN_R(15 downto  8) when row0_sel_delay = r_line1 else
+	             IN_R(23 downto 16) when row0_sel_delay = r_line2 else
+	             IN_R(31 downto 24) when row0_sel_delay = r_line3 else
+	             row0_last_r        when row0_sel_delay = r_dup   else
 		     (others => 'X');
 
-	row0_in_g <= IN_G( 7 downto  0) when row0_sel = r_line0 else
-	             IN_G(15 downto  8) when row0_sel = r_line1 else
-	             IN_G(23 downto 16) when row0_sel = r_line2 else
-	             IN_G(31 downto 24) when row0_sel = r_line3 else
-	             row0_last_g        when row0_sel = r_dup   else
+	row0_in_g <= IN_G( 7 downto  0) when row0_sel_delay = r_line0 else
+	             IN_G(15 downto  8) when row0_sel_delay = r_line1 else
+	             IN_G(23 downto 16) when row0_sel_delay = r_line2 else
+	             IN_G(31 downto 24) when row0_sel_delay = r_line3 else
+	             row0_last_g        when row0_sel_delay = r_dup   else
 		     (others => 'X');
 
-	row0_in_b <= IN_B( 7 downto  0) when row0_sel = r_line0 else
-	             IN_B(15 downto  8) when row0_sel = r_line1 else
-	             IN_B(23 downto 16) when row0_sel = r_line2 else
-	             IN_B(31 downto 24) when row0_sel = r_line3 else
-	             row0_last_b        when row0_sel = r_dup   else
-		     (others => 'X');
-
-	------------------
-
-	row1_in_r <= IN_R( 7 downto  0) when row1_sel = r_line0 else
-	             IN_R(15 downto  8) when row1_sel = r_line1 else
-	             IN_R(23 downto 16) when row1_sel = r_line2 else
-	             IN_R(31 downto 24) when row1_sel = r_line3 else
-	             row1_last_r        when row1_sel = r_dup   else
-		     (others => 'X');
-
-	row1_in_g <= IN_G( 7 downto  0) when row1_sel = r_line0 else
-	             IN_G(15 downto  8) when row1_sel = r_line1 else
-	             IN_G(23 downto 16) when row1_sel = r_line2 else
-	             IN_G(31 downto 24) when row1_sel = r_line3 else
-	             row1_last_g        when row1_sel = r_dup   else
-		     (others => 'X');
-
-	row1_in_b <= IN_B( 7 downto  0) when row1_sel = r_line0 else
-	             IN_B(15 downto  8) when row1_sel = r_line1 else
-	             IN_B(23 downto 16) when row1_sel = r_line2 else
-	             IN_B(31 downto 24) when row1_sel = r_line3 else
-	             row1_last_b        when row1_sel = r_dup   else
+	row0_in_b <= IN_B( 7 downto  0) when row0_sel_delay = r_line0 else
+	             IN_B(15 downto  8) when row0_sel_delay = r_line1 else
+	             IN_B(23 downto 16) when row0_sel_delay = r_line2 else
+	             IN_B(31 downto 24) when row0_sel_delay = r_line3 else
+	             row0_last_b        when row0_sel_delay = r_dup   else
 		     (others => 'X');
 
 	------------------
 
-	row2_in_r <= IN_R( 7 downto  0) when row2_sel = r_line0 else
-	             IN_R(15 downto  8) when row2_sel = r_line1 else
-	             IN_R(23 downto 16) when row2_sel = r_line2 else
-	             IN_R(31 downto 24) when row2_sel = r_line3 else
-	             row2_last_r        when row2_sel = r_dup   else
+	row1_in_r <= IN_R( 7 downto  0) when row1_sel_delay = r_line0 else
+	             IN_R(15 downto  8) when row1_sel_delay = r_line1 else
+	             IN_R(23 downto 16) when row1_sel_delay = r_line2 else
+	             IN_R(31 downto 24) when row1_sel_delay = r_line3 else
+	             row1_last_r        when row1_sel_delay = r_dup   else
 		     (others => 'X');
 
-	row2_in_g <= IN_G( 7 downto  0) when row2_sel = r_line0 else
-	             IN_G(15 downto  8) when row2_sel = r_line1 else
-	             IN_G(23 downto 16) when row2_sel = r_line2 else
-	             IN_G(31 downto 24) when row2_sel = r_line3 else
-	             row2_last_g        when row2_sel = r_dup   else
+	row1_in_g <= IN_G( 7 downto  0) when row1_sel_delay = r_line0 else
+	             IN_G(15 downto  8) when row1_sel_delay = r_line1 else
+	             IN_G(23 downto 16) when row1_sel_delay = r_line2 else
+	             IN_G(31 downto 24) when row1_sel_delay = r_line3 else
+	             row1_last_g        when row1_sel_delay = r_dup   else
 		     (others => 'X');
 
-	row2_in_b <= IN_B( 7 downto  0) when row2_sel = r_line0 else
-	             IN_B(15 downto  8) when row2_sel = r_line1 else
-	             IN_B(23 downto 16) when row2_sel = r_line2 else
-	             IN_B(31 downto 24) when row2_sel = r_line3 else
-	             row2_last_b        when row2_sel = r_dup   else
+	row1_in_b <= IN_B( 7 downto  0) when row1_sel_delay = r_line0 else
+	             IN_B(15 downto  8) when row1_sel_delay = r_line1 else
+	             IN_B(23 downto 16) when row1_sel_delay = r_line2 else
+	             IN_B(31 downto 24) when row1_sel_delay = r_line3 else
+	             row1_last_b        when row1_sel_delay = r_dup   else
+		     (others => 'X');
+
+	------------------
+
+	row2_in_r <= IN_R( 7 downto  0) when row2_sel_delay = r_line0 else
+	             IN_R(15 downto  8) when row2_sel_delay = r_line1 else
+	             IN_R(23 downto 16) when row2_sel_delay = r_line2 else
+	             IN_R(31 downto 24) when row2_sel_delay = r_line3 else
+	             row2_last_r        when row2_sel_delay = r_dup   else
+		     (others => 'X');
+
+	row2_in_g <= IN_G( 7 downto  0) when row2_sel_delay = r_line0 else
+	             IN_G(15 downto  8) when row2_sel_delay = r_line1 else
+	             IN_G(23 downto 16) when row2_sel_delay = r_line2 else
+	             IN_G(31 downto 24) when row2_sel_delay = r_line3 else
+	             row2_last_g        when row2_sel_delay = r_dup   else
+		     (others => 'X');
+
+	row2_in_b <= IN_B( 7 downto  0) when row2_sel_delay = r_line0 else
+	             IN_B(15 downto  8) when row2_sel_delay = r_line1 else
+	             IN_B(23 downto 16) when row2_sel_delay = r_line2 else
+	             IN_B(31 downto 24) when row2_sel_delay = r_line3 else
+	             row2_last_b        when row2_sel_delay = r_dup   else
 		     (others => 'X');
 
 	----------------------------
@@ -565,6 +573,22 @@ begin
 	WIN_B(71 downto 48) <= row2_b;
 
 	----------------------------
+	
+	in_we_delayp : process(CLK, in_we, row0_sel, row1_sel, row2_sel, win_vld0)
+	begin
+		if rising_edge(CLK) then
+			in_we_delay    <= in_we;
+			row0_sel_delay <= row0_sel;
+			row1_sel_delay <= row1_sel;
+			row2_sel_delay <= row2_sel;
+			win_vld_delay  <= win_vld0;
+		end if;
+	end process;
+--	in_we_delay <= in_we;
+
+	WIN_VLD <= win_vld_delay;
+	
+	----------------------------
 
 	row0_i : entity work.rgb_row3
 	port map (
@@ -573,7 +597,7 @@ begin
 		IN_R   => row0_in_r,
 		IN_G   => row0_in_g,
 		IN_B   => row0_in_b,
-		IN_WE  => in_we,
+		IN_WE  => in_we_delay,
 
 		LAST_R => row0_last_r,
 		LAST_G => row0_last_g,
@@ -591,7 +615,7 @@ begin
 		IN_R   => row1_in_r,
 		IN_G   => row1_in_g,
 		IN_B   => row1_in_b,
-		IN_WE  => in_we,
+		IN_WE  => in_we_delay,
 
 		LAST_R => row1_last_r,
 		LAST_G => row1_last_g,
@@ -609,7 +633,7 @@ begin
 		IN_R   => row2_in_r,
 		IN_G   => row2_in_g,
 		IN_B   => row2_in_b,
-		IN_WE  => in_we,
+		IN_WE  => in_we_delay,
 
 		LAST_R => row2_last_r,
 		LAST_G => row2_last_g,
