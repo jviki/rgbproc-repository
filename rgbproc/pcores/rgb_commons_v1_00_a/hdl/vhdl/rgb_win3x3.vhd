@@ -520,9 +520,14 @@ begin
 			in_we <= WIN_REQ;
 
 		-- offering last window of the this line
-		when s_first_line_end | s_any_line_end | s_last_line_end =>
+		when s_first_line_end | s_any_line_end =>
 			cnt_addr_clr <= '1';
 			cnt_line_ce  <= WIN_REQ;
+			mark_a_line(state, cnt_line, IN_MARK);
+
+		when s_last_line_end =>
+			cnt_addr_clr <= '1';
+			cnt_line_clr <= WIN_REQ;
 			mark_a_line(state, cnt_line, IN_MARK);
 
 		-- only waiting for filling next line
@@ -629,7 +634,7 @@ begin
 
 	cnt_win_vld_inc <= in_we_delay;
 	cnt_win_vld_dec <= WIN_REQ and win_valid;
-	cnt_win_vld_clr <= RST or cnt_line_ce;
+	cnt_win_vld_clr <= RST or cnt_line_ce or cnt_line_clr;
 
 	win_valid       <= '1' when cnt_win_vld = "11" else '0';
 	WIN_VLD         <= win_valid;
