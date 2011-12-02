@@ -206,8 +206,12 @@ architecture fsm of rgb_win3x3 is
 	signal in_we       : std_logic;
 	signal in_we_delay : std_logic;
 
-	signal win_vld0      : std_logic;
-	signal win_vld_delay : std_logic;
+	signal cnt_win_vld     : std_logic_vector(1 downto 0);
+	signal cnt_win_vld_inc : std_logic;
+	signal cnt_win_vld_dec : std_logic;
+	signal cnt_win_vld_clr : std_logic;
+
+	signal win_valid   : std_logic;
 
 	signal row0_sel    : row_map_t;
 	signal row1_sel    : row_map_t;
@@ -300,6 +304,23 @@ begin
 				end if;
 
 				cnt_addr <= cnt_addr + 1;
+			end if;
+		end if;
+	end process;
+
+	cnt_win_vldp : process(CLK, cnt_win_vld_inc, cnt_win_vld_dec, cnt_win_vld_clr)
+	begin
+		if rising_edge(CLK) then
+			if cnt_win_vld_clr = '1' then
+				cnt_win_vld <= (others => '0');
+			elsif cnt_win_vld_inc = '1' and cnt_win_vld_dec = '0' then
+				if cnt_win_vld /= (cnt_win_vld'range => '1') then
+					cnt_win_vld <= cnt_win_vld + 1;
+				end if;
+			elsif cnt_win_vld_inc = '0' and cnt_win_vld_dec = '1' then
+				if cnt_win_vld /= 0 then
+					cnt_win_vld <= cnt_win_vld - 1;
+				end if;
 			end if;
 		end if;
 	end process;
@@ -411,7 +432,6 @@ begin
 	begin
 		IN_ADDR <= (others => '0');
 		IN_MARK <= (others => '0');
-		win_vld0<= '0';
 		in_we   <= '0';
 		cnt_addr_ce  <= '0';
 		cnt_addr_clr <= '0';
@@ -462,7 +482,6 @@ begin
 				row2_sel <= r_dup;
 
 				in_we        <= WIN_REQ;
-				win_vld0     <= '1';
 				IN_MARK(line_to_mark(cnt_line)) <= '1';
 			else
 				row0_sel <= get_line_for(0, cnt_line);
@@ -471,13 +490,11 @@ begin
 
 				cnt_addr_ce <= WIN_REQ;
 				in_we       <= WIN_REQ;
-				win_vld0    <= '1';
 			end if;
 
 		-- offering last window of the this line
 		when s_first_line_end | s_any_line_end | s_last_line_end =>
 			cnt_addr_clr <= '1';
-			win_vld0     <= '1';
 			cnt_line_ce  <= WIN_REQ;
 			IN_MARK(line_to_mark(cnt_line)) <= '1';
 
@@ -574,19 +591,22 @@ begin
 
 	----------------------------
 	
-	in_we_delayp : process(CLK, in_we, row0_sel, row1_sel, row2_sel, win_vld0)
+	in_we_delayp : process(CLK, in_we, row0_sel, row1_sel, row2_sel)
 	begin
 		if rising_edge(CLK) then
 			in_we_delay    <= in_we;
 			row0_sel_delay <= row0_sel;
 			row1_sel_delay <= row1_sel;
 			row2_sel_delay <= row2_sel;
-			win_vld_delay  <= win_vld0;
 		end if;
 	end process;
---	in_we_delay <= in_we;
 
-	WIN_VLD <= win_vld_delay;
+	cnt_win_vld_inc <= in_we_delay;
+	cnt_win_vld_dec <= WIN_REQ and win_valid;
+	cnt_win_vld_clr <= RST or cnt_line_ce;
+
+	win_valid       <= '1' when cnt_win_vld = "11" else '0';
+	WIN_VLD         <= win_valid;
 	
 	----------------------------
 
