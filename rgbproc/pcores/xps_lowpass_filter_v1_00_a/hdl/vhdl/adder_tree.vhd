@@ -12,6 +12,7 @@ generic (
 );
 port (
 	CLK  : in  std_logic;
+	CE   : in  std_logic;
 	DIN  : in  std_logic_vector(INPUT_COUNT * 8 - 1 downto 0);
 	DOUT : out std_logic_vector(7 downto 0)	
 );
@@ -52,10 +53,12 @@ begin
 gen_register: if INPUT_COUNT = 1
 generate
 
-	add_op : process(CLK, DIN)
+	add_op : process(CLK, DIN, CE)
 	begin
 		if rising_edge(CLK) then
-			DOUT <= DIN;
+			if CE = '1' then
+				DOUT <= DIN;
+			end if;
 		end if;
 	end process;
 
@@ -66,10 +69,12 @@ end generate;
 gen_simple_add: if INPUT_COUNT = 2
 generate
 
-	add_op : process(CLK, DIN)
+	add_op : process(CLK, DIN, CE)
 	begin
 		if rising_edge(CLK) then
-			DOUT <= DIN(7 downto 0) + DIN(15 downto 8);
+			if CE = '1' then
+				DOUT <= DIN(7 downto 0) + DIN(15 downto 8);
+			end if;
 		end if;
 	end process;
 
@@ -85,6 +90,7 @@ generate
 	)
 	port map (
 		CLK  => CLK,
+		CE   => CE,
 		DIN  => left_din,
 		DOUT => left_dout
 	);
@@ -99,6 +105,7 @@ generate
 	)
 	port map (
 		CLK  => CLK,
+		CE   => CE,
 		DIN  => left_dout,
 		DOUT => right_dout
 	);
@@ -107,10 +114,12 @@ generate
 
 	--------------------
 
-	add_levels : process(CLK, left_dout, right_dout)
+	add_levels : process(CLK, left_dout, right_dout, CE)
 	begin
 		if rising_edge(CLK) then
-			DOUT <= left_dout + right_dout;
+			if CE = '1' then
+				DOUT <= left_dout + right_dout;
+			end if;
 		end if;
 	end process;
 
