@@ -76,16 +76,16 @@ architecture fsm of rgb_win3x3 is
 		-- Only last line
 		---
 		if cnt_line = LINES_COUNT - 1 then
-			if (LINES_COUNT) - 1 mod 4 = 1 then
+			if (LINES_COUNT - 1) mod 4 = 1 then
 				return (mask(1) and mask(0)) = '1';
 
-			elsif (LINES_COUNT) - 1 mod 4 = 2 then
+			elsif (LINES_COUNT - 1) mod 4 = 2 then
 				return (mask(2) and mask(1)) = '1';
 
-			elsif (LINES_COUNT) - 1 mod 4 = 3 then
+			elsif (LINES_COUNT - 1) mod 4 = 3 then
 				return (mask(3) and mask(2)) = '1';
 
-			elsif (LINES_COUNT) - 1 mod 4 = 0 then
+			elsif (LINES_COUNT - 1) mod 4 = 0 then
 				return (mask(0) and mask(3)) = '1';
 			end if;
 		end if;
