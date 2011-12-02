@@ -73,7 +73,9 @@ architecture full of lowpass_filter is
 	signal sum_b : std_logic_vector(7 downto 0);
 
 	signal valid_vec : std_logic_vector(ADDER_LEVELS_COUNT - 1 downto 0);
-	signal valid_px  : std_logic;
+	signal valid_out : std_logic;
+
+	signal sum_ce    : std_logic;
 
 begin
 	
@@ -88,19 +90,32 @@ begin
 	-- Vector valid_vec(max) represents valid
 	-- flag of data coming from adder_tree.
 	---
-	valid_vecp : process(CLK, valid_px)
+	valid_vecp : process(CLK, WIN_VLD, sum_ce)
 	begin
 		if rising_edge(CLK) then
-			for i in valid_vec'range loop
-				if i = 0 then
-					valid_vec(0) <= valid_px;
-				elsif i > 0 then
-					valid_vec(i) <= valid_vec(i - 1);
-				end if;
-			end loop;
+			if sum_ce = '1' then
+				for i in valid_vec'range loop
+					if i = 0 then
+						valid_vec(0) <= WIN_VLD;
+					elsif i > 0 then
+						valid_vec(i) <= valid_vec(i - 1);
+					end if;
+				end loop;
+			end if;
 		end if;
 	end process;
 
+	valid_out <= valid_vec(valid_vec'length - 1);
+
+	---------------------------------
+	
+	---
+	-- RGB protocol handshake.
+	---
+	sum_ce  <= not valid_out or OUT_REQ;
+	WIN_REQ <= WIN_VLD and sum_ce;
+	OUT_VLD <= valid_out;
+	
 	---------------------------------
 
 	---
@@ -126,6 +141,7 @@ end generate;
 	)
 	port map (
 		CLK  => CLK,
+		CE   => sum_ce,
 		DIN  => div_r,
 		DOUT => sum_r		
 	);
@@ -136,6 +152,7 @@ end generate;
 	)
 	port map (
 		CLK  => CLK,
+		CE   => sum_ce,
 		DIN  => div_g,
 		DOUT => sum_g		
 	);
@@ -146,6 +163,7 @@ end generate;
 	)
 	port map (
 		CLK  => CLK,
+		CE   => sum_ce,
 		DIN  => div_b,
 		DOUT => sum_b		
 	);
