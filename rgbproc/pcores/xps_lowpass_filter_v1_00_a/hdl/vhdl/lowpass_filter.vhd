@@ -115,7 +115,9 @@ begin
 	bypass_shreg_in(15 downto  8) <= WIN_G(39 downto 32);
 	bypass_shreg_in(23 downto 16) <= WIN_B(39 downto 32);
 
+	bypass_shreg_ce <= sum_ce;
 
+	---------------------------------
 
 	rgb_handshake_i : entity work.rgb_handshake
 	generic map (
