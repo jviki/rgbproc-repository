@@ -15,7 +15,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="71" />
+   <WVObjectSize size="67" />
    <wvobject fp_name="divider42" type="divider">
       <obj_property name="label">line4_buff</obj_property>
       <obj_property name="DisplayName">label</obj_property>
@@ -74,29 +74,69 @@
       <obj_property name="ElementShortName">last_curr_full</obj_property>
       <obj_property name="ObjectShortName">last_curr_full</obj_property>
    </wvobject>
-   <wvobject fp_name="/rgb_win3x3_tb/line_buff_i/in_full" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">in_full[3:0]</obj_property>
-      <obj_property name="ObjectShortName">in_full[3:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/rgb_win3x3_tb/line_buff_i/\gen_line_buff_i(0)\/line_buff_i/cnt_in_addr" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">cnt_in_addr[9:0]</obj_property>
-      <obj_property name="ObjectShortName">cnt_in_addr[9:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/rgb_win3x3_tb/line_buff_i/\gen_line_buff_i(1)\/line_buff_i/cnt_in_addr" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">cnt_in_addr[9:0]</obj_property>
-      <obj_property name="ObjectShortName">cnt_in_addr[9:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/rgb_win3x3_tb/line_buff_i/\gen_line_buff_i(2)\/line_buff_i/cnt_in_addr" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">cnt_in_addr[9:0]</obj_property>
-      <obj_property name="ObjectShortName">cnt_in_addr[9:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/rgb_win3x3_tb/line_buff_i/\gen_line_buff_i(3)\/line_buff_i/cnt_in_addr" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">cnt_in_addr[9:0]</obj_property>
-      <obj_property name="ObjectShortName">cnt_in_addr[9:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   <wvobject fp_name="group229" type="group">
+      <obj_property name="label">INTERNALS</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/rgb_win3x3_tb/line_buff_i/in_full" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">in_full[3:0]</obj_property>
+         <obj_property name="ObjectShortName">in_full[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_win3x3_tb/line_buff_i/\gen_line_buff_i(0)\/line_buff_i/cnt_in_addr" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">cnt_in_addr[9:0]</obj_property>
+         <obj_property name="ObjectShortName">cnt_in_addr[9:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_win3x3_tb/line_buff_i/\gen_line_buff_i(0)\/line_buff_i/reg_mark_empty" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">reg_mark_empty[2:0]</obj_property>
+         <obj_property name="ObjectShortName">reg_mark_empty[2:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_win3x3_tb/line_buff_i/\gen_line_buff_i(0)\/line_buff_i/slow_mark_empty" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">slow_mark_empty</obj_property>
+         <obj_property name="ObjectShortName">slow_mark_empty</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_win3x3_tb/line_buff_i/\gen_line_buff_i(1)\/line_buff_i/cnt_in_addr" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">cnt_in_addr[9:0]</obj_property>
+         <obj_property name="ObjectShortName">cnt_in_addr[9:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_win3x3_tb/line_buff_i/\gen_line_buff_i(1)\/line_buff_i/reg_mark_empty" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">reg_mark_empty[2:0]</obj_property>
+         <obj_property name="ObjectShortName">reg_mark_empty[2:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_win3x3_tb/line_buff_i/\gen_line_buff_i(1)\/line_buff_i/slow_mark_empty" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">slow_mark_empty</obj_property>
+         <obj_property name="ObjectShortName">slow_mark_empty</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_win3x3_tb/line_buff_i/\gen_line_buff_i(2)\/line_buff_i/cnt_in_addr" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">cnt_in_addr[9:0]</obj_property>
+         <obj_property name="ObjectShortName">cnt_in_addr[9:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_win3x3_tb/line_buff_i/\gen_line_buff_i(2)\/line_buff_i/reg_mark_empty" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">reg_mark_empty[2:0]</obj_property>
+         <obj_property name="ObjectShortName">reg_mark_empty[2:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_win3x3_tb/line_buff_i/\gen_line_buff_i(2)\/line_buff_i/slow_mark_empty" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">slow_mark_empty</obj_property>
+         <obj_property name="ObjectShortName">slow_mark_empty</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_win3x3_tb/line_buff_i/\gen_line_buff_i(3)\/line_buff_i/cnt_in_addr" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">cnt_in_addr[9:0]</obj_property>
+         <obj_property name="ObjectShortName">cnt_in_addr[9:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_win3x3_tb/line_buff_i/\gen_line_buff_i(3)\/line_buff_i/reg_mark_empty" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">reg_mark_empty[2:0]</obj_property>
+         <obj_property name="ObjectShortName">reg_mark_empty[2:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_win3x3_tb/line_buff_i/\gen_line_buff_i(3)\/line_buff_i/slow_mark_empty" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">slow_mark_empty</obj_property>
+         <obj_property name="ObjectShortName">slow_mark_empty</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_win3x3_tb/line_buff_i/in_clk" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">in_clk</obj_property>
+         <obj_property name="ObjectShortName">in_clk</obj_property>
+      </wvobject>
    </wvobject>
    <wvobject fp_name="/rgb_win3x3_tb/line_buff_i/out_clk" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">out_clk</obj_property>
