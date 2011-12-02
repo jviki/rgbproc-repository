@@ -34,12 +34,12 @@ generic (
 	LINE_DEPTH : integer		
 );
 port (
-	CLK     : in  std_logic
+	CLK     : in  std_logic;
 	
-	IN_REQ  : out std_logic
-	IN_VLD  : in  std_logic
-	OUT_REQ : in  std_logic
-	OUT_VLD : out std_logic
+	IN_REQ  : out std_logic;
+	IN_VLD  : in  std_logic;
+	OUT_REQ : in  std_logic;
+	OUT_VLD : out std_logic;
 
 	LINE_CE : out std_logic
 );
