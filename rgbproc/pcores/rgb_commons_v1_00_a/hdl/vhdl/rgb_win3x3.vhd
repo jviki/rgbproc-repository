@@ -566,7 +566,7 @@ begin
 
 	----------------------------
 
-	row0_i : work.rgb_row3
+	row0_i : entity work.rgb_row3
 	port map (
 		CLK    => CLK,
 		RST    => RST,
@@ -584,7 +584,7 @@ begin
 		OUT_B  => row0_b
 	);
 	
-	row1_i : work.rgb_row3
+	row1_i : entity work.rgb_row3
 	port map (
 		CLK    => CLK,
 		RST    => RST,
@@ -602,7 +602,7 @@ begin
 		OUT_B  => row1_b
 	);
 	
-	row2_i : work.rgb_row3
+	row2_i : entity work.rgb_row3
 	port map (
 		CLK    => CLK,
 		RST    => RST,
