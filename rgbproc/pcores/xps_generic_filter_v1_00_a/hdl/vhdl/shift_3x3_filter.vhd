@@ -1,4 +1,4 @@
--- lowpass_filter.vhd
+-- shift_3x3_filter.vhd
 -- Jan Viktorin <xvikto03@stud.fit.vutbr.cz>
 
 library ieee;
@@ -12,7 +12,7 @@ use rgb_commons_v1_00_a.rgb_reg;
 library proc_common_v3_00_a;
 use proc_common_v3_00_a.proc_common_pkg.log2;
 
-entity lowpass_filter is
+entity shift_3x3_filter is
 generic (
 	M0x0      : integer := 4;
 	M1x0      : integer := 3;
@@ -49,7 +49,7 @@ end entity;
 -- Implementation uses division by a power of 2 and adder tree
 -- to sum the result.
 ---
-architecture full of lowpass_filter is
+architecture full of shift_3x3_filter is
 
 	---
 	-- Performs division of signal by a power of 2.
