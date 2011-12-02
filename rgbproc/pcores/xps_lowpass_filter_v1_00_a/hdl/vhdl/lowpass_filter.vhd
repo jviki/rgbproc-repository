@@ -13,6 +13,17 @@ library proc_common_v3_00_a;
 use proc_common_v3_00_a.proc_common_pkg.log2;
 
 entity lowpass_filter is
+generic (
+	M0x0    : integer := 4,
+	M1x0    : integer := 3,
+	M2x0    : integer := 4,
+	M0x1    : integer := 3,
+	M1x1    : integer := 2,
+	M2x1    : integer := 3,
+	M0x2    : integer := 4,
+	M1x2    : integer := 3,
+	M2x2    : integer := 4
+);
 port (
 	CLK     : in  std_logic;
 	RST	: in  std_logic;
@@ -82,9 +93,9 @@ architecture full of lowpass_filter is
 
 	constant FILTER_MATRIX : matrix_t :=
 	(
-		4, 3, 4,
-		3, 2, 3,
-		4, 3, 4
+	 	M0x0, M1x0, M2x0,
+		M0x1, M1x1, M2x1,
+		M0x2, M1x2, M2x2
 	);
 
 	---------------------------------
