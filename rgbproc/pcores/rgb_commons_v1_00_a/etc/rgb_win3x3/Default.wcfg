@@ -15,7 +15,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="68" />
+   <WVObjectSize size="71" />
    <wvobject fp_name="divider42" type="divider">
       <obj_property name="label">line4_buff</obj_property>
       <obj_property name="DisplayName">label</obj_property>
@@ -65,6 +65,18 @@
       <obj_property name="ElementShortName">cnt_write_line[1:0]</obj_property>
       <obj_property name="ObjectShortName">cnt_write_line[1:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_win3x3_tb/line_buff_i/curr_full" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">curr_full</obj_property>
+      <obj_property name="ObjectShortName">curr_full</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_win3x3_tb/line_buff_i/last_curr_full" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">last_curr_full</obj_property>
+      <obj_property name="ObjectShortName">last_curr_full</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_win3x3_tb/line_buff_i/in_full" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">in_full[3:0]</obj_property>
+      <obj_property name="ObjectShortName">in_full[3:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/rgb_win3x3_tb/line_buff_i/\gen_line_buff_i(0)\/line_buff_i/cnt_in_addr" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">cnt_in_addr[9:0]</obj_property>
