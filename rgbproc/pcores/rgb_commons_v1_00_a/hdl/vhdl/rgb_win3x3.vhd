@@ -199,7 +199,7 @@ architecture fsm of rgb_win3x3 is
 	procedure mark_a_line(signal cnt_line : in cnt_line_t; signal mark : out std_logic_vector(3 downto 0)) is
 	begin
 		if cnt_line /= 0 then
-			mark(conv_integer(cnt_line) mod 4) <= '1';
+			mark((conv_integer(cnt_line) - 1) mod 4) <= '1';
 		end if;
 	end procedure;
 
