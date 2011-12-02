@@ -22,7 +22,7 @@ port (
 	IN_B    : in  std_logic_vector(4 * 8 - 1 downto 0);
 	IN_MASK : in  std_logic_vector(3 downto 0);
 	IN_MARK : out std_logic_vector(3 downto 0);
-	IN_ADDR : in  std_logic_vector(log2(LINE_WIDTH) - 1 downto 0);
+	IN_ADDR : out std_logic_vector(log2(LINE_WIDTH) - 1 downto 0);
 	
 	WIN_R   : out std_logic_vector(9 * 8 - 1 downto 0);
 	WIN_G   : out std_logic_vector(9 * 8 - 1 downto 0);
