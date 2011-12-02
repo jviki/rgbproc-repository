@@ -556,13 +556,13 @@ begin
 	WIN_G(23 downto  0) <= row0_g;
 	WIN_B(23 downto  0) <= row0_b;
 
-	WIN_R(47 downto 32) <= row1_r;
-	WIN_G(47 downto 32) <= row1_g;
-	WIN_B(47 downto 32) <= row1_b;
+	WIN_R(47 downto 24) <= row1_r;
+	WIN_G(47 downto 24) <= row1_g;
+	WIN_B(47 downto 24) <= row1_b;
 
-	WIN_R(71 downto 56) <= row2_r;
-	WIN_G(71 downto 56) <= row2_g;
-	WIN_B(71 downto 56) <= row2_b;
+	WIN_R(71 downto 48) <= row2_r;
+	WIN_G(71 downto 48) <= row2_g;
+	WIN_B(71 downto 48) <= row2_b;
 
 	----------------------------
 
