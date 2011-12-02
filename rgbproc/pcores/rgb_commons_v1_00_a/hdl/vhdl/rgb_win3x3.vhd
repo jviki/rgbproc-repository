@@ -50,7 +50,7 @@ architecture fsm of rgb_win3x3 is
 	---
 	-- Tests whether the mask contains enough '1' bits for processing
 	-- current line.
-	-- For the first line only bits 0 and 1 are necessary.
+	-- For the very first line only bits 0 and 1 are necessary.
 	-- For the last line at least two bits must be valid but they
 	-- number will be computed in the function.
 	-- For the other lines three bits must be valid at various
@@ -73,12 +73,12 @@ architecture fsm of rgb_win3x3 is
 	-- (4) Last line only uses two lines that were already loaded.
 	---
 	function test_mask_for(signal mask : in std_logic_vector(3 downto 0);
-	                       signal cnt_line : in cnt_line_t) return  boolean is
+	                       signal state : state_t; signal cnt_line : in cnt_line_t) return  boolean is
 	begin
 		---
 		-- Only first line
 		---
-		if cnt_line = 0 then
+		if state = s_idle then
 			return mask(1 downto 0) = "11";
 		end if;
 
@@ -206,9 +206,11 @@ architecture fsm of rgb_win3x3 is
 	---
 	-- Which bit in IN_MARK to set to clear that line buffer.
 	---
-	procedure mark_a_line(signal cnt_line : in cnt_line_t; signal mark : out std_logic_vector(3 downto 0)) is
+	procedure mark_a_line(signal state : state_t; signal cnt_line : in cnt_line_t; signal mark : out std_logic_vector(3 downto 0)) is
 	begin
-		if cnt_line /= 0 then
+		if state = s_first_line or state = s_first_line_end0 or state = s_first_line_end then
+			mark <= (others => '0');
+		else
 			mark((conv_integer(cnt_line) - 1) mod 4) <= '1';
 		end if;
 	end procedure;
@@ -355,7 +357,7 @@ begin
 
 		case state is
 		when s_idle =>
-			if test_mask_for(IN_MASK, cnt_line) then
+			if test_mask_for(IN_MASK, state, cnt_line) then
 				nstate <= s_first_line0;
 			end if;
 
@@ -384,7 +386,7 @@ begin
 		--------------------------------
 	
 		when s_any_line_wait =>
-			if test_mask_for(IN_MASK, cnt_line) then
+			if test_mask_for(IN_MASK, state, cnt_line) then
 				nstate <= s_any_line0;
 			end if;
 
@@ -420,7 +422,7 @@ begin
 			-- This testing is not necessary, because
 			-- the appropriate lines are already loaded.
 			-- (reusing last two lines)
-			if test_mask_for(IN_MASK, cnt_line) then
+			if test_mask_for(IN_MASK, state, cnt_line) then
 				nstate <= s_last_line0;
 			end if;
 
@@ -443,7 +445,7 @@ begin
 
 		when s_last_line_end =>
 			if WIN_REQ = '1' then
-				nstate <= s_idle;
+				nstate <= s_any_line_wait;
 			end if;
 
 		end case;
@@ -503,7 +505,7 @@ begin
 				row2_sel <= r_dup;
 
 				in_we        <= WIN_REQ;
-				mark_a_line(cnt_line, IN_MARK);
+				mark_a_line(state, cnt_line, IN_MARK);
 			else
 				row0_sel <= get_line_for(0, cnt_line);
 				row1_sel <= get_line_for(1, cnt_line);
@@ -520,7 +522,7 @@ begin
 		when s_first_line_end | s_any_line_end | s_last_line_end =>
 			cnt_addr_clr <= '1';
 			cnt_line_ce  <= WIN_REQ;
-			mark_a_line(cnt_line, IN_MARK);
+			mark_a_line(state, cnt_line, IN_MARK);
 
 		-- only waiting for filling next line
 		when s_any_line_wait | s_last_line_wait =>
