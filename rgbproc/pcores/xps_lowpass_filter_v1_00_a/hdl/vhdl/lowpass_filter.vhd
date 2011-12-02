@@ -137,7 +137,7 @@ begin
 				for i in valid_vec'range loop
 					if i = 0 then
 						valid_vec(0) <= WIN_VLD;
-					elsif i > 0 then
+					else
 						valid_vec(i) <= valid_vec(i - 1);
 					end if;
 				end loop;
