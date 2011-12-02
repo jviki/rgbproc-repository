@@ -84,15 +84,6 @@ architecture full of lowpass_filter is
 	
 	---------------------------------
 
-	type bypass_shreg_t is array (0 to MATRIX_LENGTH - 1) of std_logic_vector(23 downto 0);
-
-	signal bypass_shreg     : bypass_shreg_t;
-	signal bypass_shreg_ce  : std_logic;
-	signal bypass_shreg_in  : std_logic_vector(23 downto 0);
-	signal bypass_shreg_out : std_logic_vector(23 downto 0);
-
-	---------------------------------
-
 	signal div_r : std_logic_vector(MATRIX_LENGTH * 8 - 1 downto 0);
 	signal div_g : std_logic_vector(MATRIX_LENGTH * 8 - 1 downto 0);
 	signal div_b : std_logic_vector(MATRIX_LENGTH * 8 - 1 downto 0);
@@ -108,14 +99,6 @@ begin
 	OUT_R <= sum_r;
 	OUT_G <= sum_g;
 	OUT_B <= sum_b;
-
-	BYPASS <= bypass_shreg_out;
-
-	bypass_shreg_in( 7 downto  0) <= WIN_R(39 downto 32);
-	bypass_shreg_in(15 downto  8) <= WIN_G(39 downto 32);
-	bypass_shreg_in(23 downto 16) <= WIN_B(39 downto 32);
-
-	bypass_shreg_ce <= sum_ce;
 
 	---------------------------------
 
@@ -194,23 +177,20 @@ end generate;
 gen_bypass: if BYPASS_EN = true
 generate
 
-	bypass_shregp : process(CLK, bypass_shreg_ce, bypass_shreg_in)
-	begin
-		if rising_edge(CLK) then
-			if bypass_shreg_ce = '1' then
-				for i in bypass_shreg'range loop
-					if i = 0 then
-						bypass_shreg(0) <= bypass_shreg_in;
-					else
-						bypass_shreg(i) <= bypass_shreg(i - 1);
-					end if;
-				end loop;
-			end if;
-		end if;
-	end process;
+	bypass_i : entity work.bypass_shreg
+	generic map (
+		LINE_DEPTH => ADDER_LEVELS_COUNT
+	)
+	port map (
+		CLK => CLK,
+		CE  => sum_ce,
 
-	bypass_shreg_out <= bypass_shreg(bypass_shreg'length - 1);
-
+		DI( 7 downto  0) => WIN_R(39 downto 32);
+		DI(15 downto  8) => WIN_G(39 downto 32);
+		DI(23 downto 16) => WIN_B(39 downto 32);
+		DO  => BYPASS
+	);
+	
 end generate;
 
 end architecture;
