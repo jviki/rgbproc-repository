@@ -1,1 +1,9 @@
 *.log
+*.wdb
+*.ini
+*.gise
+*.o
+*.dbg
+*.xreport
+*.vdb
+*.didat
