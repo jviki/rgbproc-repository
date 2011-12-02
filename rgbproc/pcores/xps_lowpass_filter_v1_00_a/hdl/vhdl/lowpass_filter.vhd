@@ -31,6 +31,33 @@ port (
 );
 end entity;
 
+---
+-- Implementation uses division by a power of 2 and adder tree
+-- to sum the result.
+--
+-- The adder tree introduces a delay of several CLKs to the pipeline.
+-- To solve the RGB handshaking there is a simple combinational logic
+-- with input from shift register of valid flags (valid_vec).
+--
+--  WIN_D   -> | adder_tree | -> OUT_D
+--  WIN_VLD -> | valid_vec  | -> OUT_VLD
+--                        |
+--                     CE |
+--                        |
+--  WIN_REQ <-- & --------+----<--- & -- neg -- OUT_VLD
+--              |                   |
+--            WIN_VLD             OUT_REQ
+--
+-- (1) When data from the adder tree are not valid (OLD_VLD is low)
+--     the adder_tree pipeline accepts new data (even when they are invalid!)
+--     until a valid sum is available. The valid_vec stores the validity
+--     information.
+-- (2) If a sum of valid data is available the adder is stopped until an OUT_REQ
+--     comes.
+-- (3) If OUT_REQ is asserted new data are put into the adder tree from WIN_*.
+-- (4) WIN_REQ is generated when WIN_VLD is asserted and adder tree
+--     is being shifted.
+---
 architecture full of lowpass_filter is
 
 	---
