@@ -110,12 +110,11 @@ begin
 
 	---------------------------
 
-	gen_rgb_data : process(in_clk, in_req, in_vld)
+	gen_rgb_data : process
 		variable l : line;
 		variable c : std_logic_vector(7 downto 0) := (others => 'X');
 		variable v : integer;
 		variable i : integer;
-		variable first : boolean := false;
 
 		procedure read_next is
 		begin
@@ -129,32 +128,39 @@ begin
 			end if;
 		end procedure;
 	begin
-		if rising_edge(in_clk) then
-			if in_rst = '1' then
-				i := 0;
-				in_vld <= '0';
-				in_eol <= '0';
-			elsif in_req = '1' and in_vld = '1' then
-				read_next;
-				i := i + 1;
+		in_vld <= '0';
+		in_eol <= '0';
 
-				if i mod LINE_WIDTH = LINE_WIDTH - 1 then
-					in_eol <= '1';
-				end if;
-			else
-				in_eol <= '0';
+		wait until in_rst = '0';
+		wait until rising_edge(in_clk);
+
+		i := 0;
+
+		while not endfile(input_file) loop
+			read_next;
+
+			if (i + 1) mod LINE_WIDTH = 0 then
+				report "End of Line";
+				in_eol <= '1';
 			end if;
 
-			if endfile(input_file) then
-				in_vld <= '0';
-			elsif in_rst = '0' then
-				if not first then
-					read_next;
-					first := true;
-				end if;
-				in_vld <= '1';
-			end if;
-		end if;
+			in_vld <= '1';
+			wait until rising_edge(in_clk);
+
+			while in_req = '0' loop
+				wait until rising_edge(in_clk);
+			end loop;
+
+			in_vld <= '0';
+			in_eol <= '0';
+			i := i + 1;
+		end loop;
+
+		in_vld <= '0';
+		report "End of File";
+		wait until rising_edge(in_clk);
+
+		wait;
 	end process;
 
 	---------------------------
