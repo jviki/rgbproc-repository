@@ -516,6 +516,7 @@ begin
 			end if;
 
 		when s_first_line_end0 | s_any_line_end0 | s_last_line_end0 =>
+			mark_a_line(state, cnt_line, IN_MARK);
 			in_we <= WIN_REQ;
 
 		-- offering last window of the this line
