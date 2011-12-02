@@ -67,6 +67,8 @@ end entity;
 
 architecture bram of line_buff is
 
+	constant LAST_ADDR      : std_logic_vector := conv_std_logic_vector(LINE_WIDTH - 1, OUT_ADDR'length);
+
 	signal reg_full         : std_logic;
 	signal reg_full_set     : std_logic;
 	signal reg_full_clr     : std_logic;
@@ -81,6 +83,9 @@ architecture bram of line_buff is
 	signal cnt_in_addr_clr  : std_logic;
 	signal cnt_in_addr_ce   : std_logic;
 
+	signal port0_addr       : std_logic_vector(log2(LINE_WIDTH) - 1 downto 0);
+	signal port1_addr       : std_logic_vector(log2(LINE_WIDTH) - 1 downto 0);
+
 	---
 	-- Behavioral dual port BlockRAM
 	---
@@ -89,7 +94,7 @@ architecture bram of line_buff is
 
 begin
 
-	mem_port0 : process(IN_CLK, IN_WE, IN_R, IN_G, IN_B, cnt_in_addr)
+	mem_port0 : process(IN_CLK, IN_WE, IN_R, IN_G, IN_B, port0_addr)
 		variable data : std_logic_vector(23 downto 0);
 	begin
 		if rising_edge(IN_CLK) then
@@ -98,24 +103,31 @@ begin
 					data( 7 downto  0) := IN_R;
 					data(15 downto  8) := IN_G;
 					data(23 downto 16) := IN_B;
-					rgb_mem(conv_integer(cnt_in_addr)) := data;
+					rgb_mem(conv_integer(port0_addr)) := data;
 				end if;
 			end if;
 		end if;
 	end process;
 
-	mem_port1 : process(OUT_CLK, OUT_ADDR)
+	port0_addr <= cnt_in_addr when cnt_in_addr < LINE_WIDTH else LAST_ADDR;
+
+	----------------
+
+
+	mem_port1 : process(OUT_CLK, port1_addr)
 		variable data : std_logic_vector(23 downto 0);
 	begin
 		if rising_edge(OUT_CLK) then
 			if fast_out_full = '1' then
-				data := rgb_mem(conv_integer(OUT_ADDR));
+				data := rgb_mem(conv_integer(port1_addr));
 				OUT_R <= data( 7 downto  0);
 				OUT_G <= data(15 downto  8);
 				OUT_B <= data(23 downto 16);
 			end if;
 		end if;
 	end process;
+
+	port1_addr <= OUT_ADDR when OUT_ADDR < LINE_WIDTH else LAST_ADDR;
 
 	---------------------------------------------
 
