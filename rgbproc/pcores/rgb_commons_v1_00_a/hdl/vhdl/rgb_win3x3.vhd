@@ -38,6 +38,16 @@ architecture fsm of rgb_win3x3 is
 	type row_map_t is (r_line0, r_line1, r_line2, r_line3, r_dup);
 
 	---
+	-- State machine. Looks complex but it is very symmetric. Contains some states
+	-- that do the same and are divided to have more semantics and for debugging.
+	---
+	type state_t is (s_idle,
+		s_first_line0, s_first_line1, s_first_line2, s_first_line, s_first_line_end, s_first_line_end0,
+		s_any_line0,   s_any_line1,   s_any_line2,   s_any_line,   s_any_line_end,   s_any_line_end0,
+		s_last_line0,  s_last_line1,  s_last_line2,  s_last_line,  s_last_line_end,  s_last_line_end0,
+		s_any_line_wait, s_last_line_wait);
+
+	---
 	-- Tests whether the mask contains enough '1' bits for processing
 	-- current line.
 	-- For the first line only bits 0 and 1 are necessary.
@@ -260,12 +270,6 @@ architecture fsm of rgb_win3x3 is
 	signal row2_b      : std_logic_vector(23 downto 0);
 
 	----------------------------
-
-	type state_t is (s_idle,
-		s_first_line0, s_first_line1, s_first_line2, s_first_line, s_first_line_end, s_first_line_end0,
-		s_any_line0,   s_any_line1,   s_any_line2,   s_any_line,   s_any_line_end,   s_any_line_end0,
-		s_last_line0,  s_last_line1,  s_last_line2,  s_last_line,  s_last_line_end,  s_last_line_end0,
-		s_any_line_wait, s_last_line_wait);
 
 	signal state  : state_t;
 	signal nstate : state_t;
