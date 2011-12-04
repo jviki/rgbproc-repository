@@ -108,8 +108,8 @@ begin
 	)
 	port map (
 		CLK     => CLK,
-		IN_REQ  => IN_REQ,
-		IN_VLD  => IN_VLD,
+		IN_REQ  => WIN_REQ,
+		IN_VLD  => WIN_VLD,
 		OUT_REQ => OUT_REQ,
 		OUT_VLD => OUT_VLD,
 
