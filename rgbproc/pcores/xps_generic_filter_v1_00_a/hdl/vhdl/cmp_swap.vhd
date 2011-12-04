@@ -7,6 +7,9 @@ use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
 entity cmp_swap is
+generic (
+	SWAP_ON_A_GT_B : boolean := true
+);
 port (
 	CLK : in  std_logic;
 	CE  : in  std_logic;
@@ -19,6 +22,15 @@ end entity;
 
 architecture full of cmp_swap is
 
+	function bool2bit(b : boolean) return std_logic is
+	begin
+		if b then
+			return '1';
+		else
+			return '0';
+		end if;
+	end function;
+	constant EXPECTED_CMP_A_GT_B := bool2bit(SWAP_ON_A_GT_B);
 	signal cmp_a_gt_b : std_logic;
 
 	signal a_out      : std_logic_vector(7 downto 0);
@@ -28,10 +40,10 @@ begin
 
 	cmp_a_gt_b <= '1' when IN_A > IN_B else '0';
 
-	a_out <= I_A when cmp_a_gt_b = '1' else
+	a_out <= I_A when cmp_a_gt_b = EXPECTED_CMP_A_GT_B else
 	         I_B;
 
-	b_out <= I_A when cmp_a_gt_b = '0' else
+	b_out <= I_A when cmp_a_gt_b = not EXPECTED_CMP_A_GT_B else
 	         I_B;
 
 	process(CLK, CE)
