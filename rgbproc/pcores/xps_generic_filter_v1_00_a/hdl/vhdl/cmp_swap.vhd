@@ -30,9 +30,21 @@ architecture full of cmp_swap is
 			return '0';
 		end if;
 	end function;
+
+	---
+	-- Result expected from comparison that leads
+	-- to swap of the values.
+	---
 	constant EXPECTED_CMP_A_GT_B := bool2bit(SWAP_ON_A_GT_B);
+
+	---
+	-- Result of comparator a > b
+	---
 	signal cmp_a_gt_b : std_logic;
 
+	---
+	-- Outputs from the unit
+	---
 	signal a_out      : std_logic_vector(7 downto 0);
 	signal b_out      : std_logic_vector(7 downto 0);
 
