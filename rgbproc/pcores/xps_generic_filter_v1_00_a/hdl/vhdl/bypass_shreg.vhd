@@ -20,7 +20,7 @@ end entity;
 
 architecture by_array of bypass_shreg is
 
-	type shreg_t is array (0 to MATRIX_LENGTH - 1) of std_logic_vector(23 downto 0);
+	type shreg_t is array (0 to LINE_DEPTH - 1) of std_logic_vector(23 downto 0);
 
 	signal shreg     : shreg_t;
 	signal shreg_ce  : std_logic;
