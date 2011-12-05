@@ -48,11 +48,13 @@ end entity;
 ---
 architecture full of shift_3x3_filter is
 
+	subtype divided_t is std_logic_vector(7 downto 0);
+
 	---
 	-- Performs division of signal by a power of 2.
 	---
 	function divide_by2(signal c : in std_logic_vector(7 downto 0); m : integer)
-		return std_logic_vector(7 downto 0) is
+		return divided_t is
 	begin
 		assert m > 0 and m < 7
 			report "Invalid exponent of expression 2^m: " & integer'image(m)
