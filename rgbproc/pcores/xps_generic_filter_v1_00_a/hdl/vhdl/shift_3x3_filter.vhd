@@ -135,7 +135,7 @@ end generate;
 	---
 	-- Sum of the results
 	---
-	adder_tree_r_i : entity adder_tree
+	adder_tree_r_i : entity work.adder_tree
 	generic map (
 		INPUT_COUNT => MATRIX_LENGTH
 	)
@@ -146,7 +146,7 @@ end generate;
 		DOUT => sum_r		
 	);
 
-	adder_tree_g_i : entity adder_tree
+	adder_tree_g_i : entity work.adder_tree
 	generic map (
 		INPUT_COUNT => MATRIX_LENGTH
 	)
@@ -157,7 +157,7 @@ end generate;
 		DOUT => sum_g		
 	);
 
-	adder_tree_b_i : entity adder_tree
+	adder_tree_b_i : entity work.adder_tree
 	generic map (
 		INPUT_COUNT => MATRIX_LENGTH
 	)
