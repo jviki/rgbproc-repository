@@ -23,10 +23,10 @@ architecture full of adder_tree is
 	constant LEFT_COUNT  : integer := INPUT_COUNT / 2 + INPUT_COUNT mod 2;
 	constant RIGHT_COUNT : integer := INPUT_COUNT / 2;
 
-	constant LEFT_BEG    : integer := INPUT_COUNT - 1;
-	constant LEFT_END    : integer := INPUT_COUNT - LEFT_COUNT + 1;
+	constant LEFT_BEG    : integer := INPUT_COUNT;
+	constant LEFT_END    : integer := INPUT_COUNT - LEFT_COUNT;
 
-	constant RIGHT_BEG   : integer := LEFT_END - 1;
+	constant RIGHT_BEG   : integer := LEFT_END;
 	constant RIGHT_END   : integer := 0;
 
 	signal left_din   : std_logic_vector(LEFT_COUNT  * 8 - 1 downto 0);
@@ -40,12 +40,12 @@ begin
 		report "INPUT_COUNT must be greater then 0 to make sense"
 		severity failure;
 
-	assert RIGHT_BEG - RIGHT_END + 1 = RIGHT_COUNT
-		report "BUG: invalid RIGHT_* computation"
+	assert RIGHT_BEG - RIGHT_END = RIGHT_COUNT
+		report "BUG: invalid RIGHT_* computation for " & integer'image(INPUT_COUNT) & " inputs"
 		severity failure;
 
-	assert LEFT_BEG - LEFT_END + 1 = LEFT_COUNT
-		report "BUG: invalid LEFT_* computation"
+	assert LEFT_BEG - LEFT_END = LEFT_COUNT
+		report "BUG: invalid LEFT_* computation for " & integer'image(INPUT_COUNT) & " inputs"
 		severity failure;
 
 	---------------------------------------
@@ -106,7 +106,7 @@ generate
 	port map (
 		CLK  => CLK,
 		CE   => CE,
-		DIN  => left_dout,
+		DIN  => right_din,
 		DOUT => right_dout
 	);
 

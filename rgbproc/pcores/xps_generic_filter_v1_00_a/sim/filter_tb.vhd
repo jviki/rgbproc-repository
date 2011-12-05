@@ -45,10 +45,10 @@ architecture testbench of median_filter_tb is
 	);
 	end component;
 
---	for dut_i : filter_3x3
---		use entity work.shift_3x3_filter;
 	for dut_i : filter_3x3
-		use entity work.median_filter;
+		use entity work.shift_3x3_filter;
+--	for dut_i : filter_3x3
+--		use entity work.median_filter;
 
 	constant LINE_WIDTH   : integer := 640;
 	constant LINES_COUNT  : integer := 480;

@@ -6,9 +6,6 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
-library rgb_commons_v1_00_a;
-use rgb_commons_v1_00_a.rgb_reg;
-
 library proc_common_v3_00_a;
 use proc_common_v3_00_a.proc_common_pkg.log2;
 
@@ -51,11 +48,13 @@ end entity;
 ---
 architecture full of shift_3x3_filter is
 
+	subtype divided_t is std_logic_vector(7 downto 0);
+
 	---
 	-- Performs division of signal by a power of 2.
 	---
 	function divide_by2(signal c : in std_logic_vector(7 downto 0); m : integer)
-		return std_logic_vector(7 downto 0) is
+		return divided_t is
 	begin
 		assert m > 0 and m < 7
 			report "Invalid exponent of expression 2^m: " & integer'image(m)
@@ -69,7 +68,7 @@ architecture full of shift_3x3_filter is
 
 	constant MATRIX_LENGTH : integer := 9;
 
-	type matrix_t : array(0 to MATRIX_LENGTH - 1) of integer;
+	type matrix_t is array(0 to MATRIX_LENGTH - 1) of integer;
 
 	constant FILTER_MATRIX : matrix_t :=
 	(
@@ -136,7 +135,7 @@ end generate;
 	---
 	-- Sum of the results
 	---
-	adder_tree_r_i : entity adder_tree
+	adder_tree_r_i : entity work.adder_tree
 	generic map (
 		INPUT_COUNT => MATRIX_LENGTH
 	)
@@ -147,7 +146,7 @@ end generate;
 		DOUT => sum_r		
 	);
 
-	adder_tree_g_i : entity adder_tree
+	adder_tree_g_i : entity work.adder_tree
 	generic map (
 		INPUT_COUNT => MATRIX_LENGTH
 	)
@@ -158,7 +157,7 @@ end generate;
 		DOUT => sum_g		
 	);
 
-	adder_tree_b_i : entity adder_tree
+	adder_tree_b_i : entity work.adder_tree
 	generic map (
 		INPUT_COUNT => MATRIX_LENGTH
 	)
@@ -186,9 +185,9 @@ generate
 		CLK => CLK,
 		CE  => sum_ce,
 
-		DI( 7 downto  0) => WIN_R(39 downto 32);
-		DI(15 downto  8) => WIN_G(39 downto 32);
-		DI(23 downto 16) => WIN_B(39 downto 32);
+		DI( 7 downto  0) => WIN_R(39 downto 32),
+		DI(15 downto  8) => WIN_G(39 downto 32),
+		DI(23 downto 16) => WIN_B(39 downto 32),
 		DO  => BYPASS
 	);
 	
