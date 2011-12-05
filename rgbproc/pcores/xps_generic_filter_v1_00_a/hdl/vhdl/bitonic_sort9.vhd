@@ -219,7 +219,7 @@ generate
 	begin
 		if rising_edge(CLK) then
 			if CE = '1' then
-				DO(47 downto  8) <= DI(47 downto  8);
+				DO(31 downto  8) <= DI(31 downto  8);
 			end if;
 		end if;
 	end process;
