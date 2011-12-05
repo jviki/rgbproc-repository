@@ -68,7 +68,7 @@ architecture full of shift_3x3_filter is
 
 	constant MATRIX_LENGTH : integer := 9;
 
-	type matrix_t : array(0 to MATRIX_LENGTH - 1) of integer;
+	type matrix_t is array(0 to MATRIX_LENGTH - 1) of integer;
 
 	constant FILTER_MATRIX : matrix_t :=
 	(
