@@ -35,7 +35,7 @@ architecture full of cmp_swap is
 	-- Result expected from comparison that leads
 	-- to swap of the values.
 	---
-	constant EXPECTED_CMP_A_GT_B := bool2bit(SWAP_ON_A_GT_B);
+	constant EXPECTED_CMP_A_GT_B : std_logic := bool2bit(SWAP_ON_A_GT_B);
 
 	---
 	-- Result of comparator a > b
