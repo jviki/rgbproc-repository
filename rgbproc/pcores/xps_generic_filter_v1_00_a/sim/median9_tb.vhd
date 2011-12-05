@@ -83,6 +83,7 @@ begin
 	begin
 		data_ce <= '0';
 		wait until rst = '0';
+		wait until rising_edge(clk);
 
 		for i in 1 to COUNT loop
 			genvec(data_vec);
