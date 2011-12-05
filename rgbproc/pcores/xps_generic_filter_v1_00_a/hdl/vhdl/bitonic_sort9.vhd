@@ -374,20 +374,20 @@ generate
 	port map (
 		CLK => CLK,
 		CE  => CE,
-		I_A => DI(39 downto 32),
-		I_B => DI(55 downto 48),
-		O_A => DO(39 downto 32),
-		O_B => DO(55 downto 48)
+		I_A => DI(55 downto 48),
+		I_B => DI(39 downto 32),
+		O_A => DO(55 downto 48),
+		O_B => DO(39 downto 32)
 	);
 
 	swap_57_i : entity work.cmp_swap
 	port map (
 		CLK => CLK,
 		CE  => CE,
-		I_A => DI(47 downto 40),
-		I_B => DI(63 downto 56),
-		O_A => DO(47 downto 40),
-		O_B => DO(63 downto 56)
+		I_A => DI(63 downto 56),
+		I_B => DI(47 downto 40),
+		O_A => DO(63 downto 56),
+		O_B => DO(47 downto 40)
 	);
 
 	reg_8p : process(CLK, CE, DI)
@@ -432,10 +432,10 @@ generate
 	port map (
 		CLK => CLK,
 		CE  => CE,
-		I_A => DI(39 downto 32),
-		I_B => DI(47 downto 40),
-		O_A => DO(39 downto 32),
-		O_B => DO(47 downto 40)
+		I_A => DI(47 downto 40),
+		I_B => DI(39 downto 32),
+		O_A => DO(47 downto 40),
+		O_B => DO(39 downto 32)
 	);
 
 	swap_76_i : entity work.cmp_swap
