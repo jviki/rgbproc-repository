@@ -90,7 +90,7 @@ generate
 	)
 	port map (
 		CLK => CLK,
-		CE  => sum_ce,
+		CE  => filter_ce,
 
 		DI( 7 downto  0) => WIN_R(39 downto 32),
 		DI(15 downto  8) => WIN_G(39 downto 32),
