@@ -46,7 +46,9 @@ architecture testbench of median_filter_tb is
 	end component;
 
 	for dut_i : filter_3x3
-		use entity work.shift_3x3_filter;
+		use entity work.vertical_filter;
+--	for dut_i : filter_3x3
+--		use entity work.shift_3x3_filter;
 --	for dut_i : filter_3x3
 --		use entity work.median_filter;
 
