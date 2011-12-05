@@ -1,0 +1,12 @@
+*.dat
+*.exe
+*.log
+*.wbd
+*.xmsgs
+*.prj
+*.c
+*.html
+*.cmd
+lockfile
+_1
+*.projectmgr
