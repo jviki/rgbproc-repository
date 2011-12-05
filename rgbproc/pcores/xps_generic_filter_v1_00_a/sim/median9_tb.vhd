@@ -99,7 +99,7 @@ begin
 			if rst = '1' then
 				i := 0;
 			elsif data_ce = '1' then
-				if i < 5 then
+				if i < 8 then
 					i := i + 1;
 				else
 					assert median = 4
