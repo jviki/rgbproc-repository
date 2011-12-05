@@ -26,6 +26,8 @@ architecture sort9 of median9 is
 	);
 	end component;
 
+	signal sorted_data : std_logic_vector(9 * 8 - 1 downto 0);
+
 begin
 
 	sorter_i : sort9
@@ -33,8 +35,10 @@ begin
 		CLK => CLK,
 		CE  => CE,
 		DI  => DI,
-		DO(39 downto 32) => DO -- median		
+		DO  => sorted_data
 	);
+
+	DO <= sorted_data(39 downto 32); -- median		
 
 end architecture;
 
