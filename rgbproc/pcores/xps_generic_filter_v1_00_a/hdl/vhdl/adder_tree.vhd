@@ -106,7 +106,7 @@ generate
 	port map (
 		CLK  => CLK,
 		CE   => CE,
-		DIN  => left_dout,
+		DIN  => right_din,
 		DOUT => right_dout
 	);
 
