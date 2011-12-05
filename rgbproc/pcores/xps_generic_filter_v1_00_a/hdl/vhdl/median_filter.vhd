@@ -92,9 +92,9 @@ generate
 		CLK => CLK,
 		CE  => sum_ce,
 
-		DI( 7 downto  0) => WIN_R(39 downto 32);
-		DI(15 downto  8) => WIN_G(39 downto 32);
-		DI(23 downto 16) => WIN_B(39 downto 32);
+		DI( 7 downto  0) => WIN_R(39 downto 32),
+		DI(15 downto  8) => WIN_G(39 downto 32),
+		DI(23 downto 16) => WIN_B(39 downto 32),
 		DO  => BYPASS
 	);
 	
