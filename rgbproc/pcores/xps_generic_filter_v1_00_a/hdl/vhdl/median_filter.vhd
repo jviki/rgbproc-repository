@@ -52,7 +52,7 @@ begin
 		DO  => OUT_G		
 	);
 
-	rmedian9_b : entity work.median9
+	median9_b : entity work.median9
 	port map (
 		CLK => CLK,
 		CE  => filter_ce,
