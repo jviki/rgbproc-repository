@@ -50,7 +50,7 @@ architecture full of cmp_swap is
 
 begin
 
-	cmp_a_gt_b <= '1' when IN_A > IN_B else '0';
+	cmp_a_gt_b <= '1' when I_A > I_B else '0';
 
 	a_out <= I_A when cmp_a_gt_b = EXPECTED_CMP_A_GT_B else
 	         I_B;
