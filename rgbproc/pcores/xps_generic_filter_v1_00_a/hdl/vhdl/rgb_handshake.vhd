@@ -35,6 +35,7 @@ generic (
 );
 port (
 	CLK     : in  std_logic;
+	RST     : in  std_logic;
 	
 	IN_REQ  : out std_logic;
 	IN_VLD  : in  std_logic;
@@ -62,7 +63,9 @@ begin
 	valid_vecp : process(CLK, IN_VLD, ce)
 	begin
 		if rising_edge(CLK) then
-			if ce = '1' then
+			if RST = '1' then
+				valid_vec <= (others => '0');
+			elsif ce = '1' then
 				for i in valid_vec'range loop
 					if i = 0 then
 						valid_vec(0) <= IN_VLD;
