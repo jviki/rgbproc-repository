@@ -467,8 +467,8 @@ end architecture;
 ---
 architecture top_level of bitonic_sort9 is
 
-	type level_t is array(0 to 8) of std_logic_vector(7 downto 0);
-	signal level : level_t;
+	type level_data_t is array(0 to 8) of std_logic_vector(7 downto 0);
+	signal level_data : level_data_t;
 
 begin
 
@@ -478,8 +478,8 @@ begin
 
 	-----------------------------------------
 	
-	level(0) <= DI;
-	DO <= level(8);
+	level_data(0) <= DI;
+	DO <= level_data(8);
 	
 	-----------------------------------------
 
@@ -493,8 +493,8 @@ generate
 	port map (
 		CLK   => CLK,
 		CE    => CE,
-		DI    => level(i),
-		DO    => level(i + 1)
+		DI    => level_data(i),
+		DO    => level_data(i + 1)
 	);
 
 end generate;
