@@ -41,7 +41,7 @@ gen_level0: if LEVEL = 0
 generate
 
 	swap_10_i : entity work.cmp_swap
-	port (
+	port map (
 		CLK => CLK,
 		CE  => CE,
 		I_A => DI(15 downto 8),
@@ -51,7 +51,7 @@ generate
 	);
 
 	swap_23_i : entity work.cmp_swap
-	port (
+	port map (
 		CLK => CLK,
 		CE  => CE,
 		I_A => DI(23 downto 16),
@@ -61,7 +61,7 @@ generate
 	);
 
 	swap_45_i : entity work.cmp_swap
-	port (
+	port map (
 		CLK => CLK,
 		CE  => CE,
 		I_A => DI(39 downto 32),
@@ -80,7 +80,7 @@ generate
 	end process;
 
 	swap_87_i : entity work.cmp_swap
-	port (
+	port map (
 		CLK => CLK,
 		CE  => CE,
 		I_A => DI(71 downto 64),
@@ -99,7 +99,7 @@ gen_level1: if LEVEL = 1
 generate
 
 	swap_02_i : entity work.cmp_swap
-	port (
+	port map (
 		CLK => CLK,
 		CE  => CE,
 		I_A => DI( 7 downto  0),
@@ -109,7 +109,7 @@ generate
 	);
 
 	swap_13_i : entity work.cmp_swap
-	port (
+	port map (
 		CLK => CLK,
 		CE  => CE,
 		I_A => DI(15 downto  8),
@@ -129,7 +129,7 @@ generate
 	end process;
 
 	swap_86_i : entity work.cmp_swap
-	port (
+	port map (
 		CLK => CLK,
 		CE  => CE,
 		I_A => DI(71 downto 64),
@@ -148,7 +148,7 @@ gen_level2: if LEVEL = 2
 generate
 
 	swap_01_i : entity work.cmp_swap
-	port (
+	port map (
 		CLK => CLK,
 		CE  => CE,
 		I_A => DI( 7 downto  0),
@@ -158,7 +158,7 @@ generate
 	);
 
 	swap_23_i : entity work.cmp_swap
-	port (
+	port map (
 		CLK => CLK,
 		CE  => CE,
 		I_A => DI(23 downto 16),
@@ -168,7 +168,7 @@ generate
 	);
 
 	swap_84_i : entity work.cmp_swap
-	port (
+	port map (
 		CLK => CLK,
 		CE  => CE,
 		I_A => DI(71 downto 64),
@@ -187,7 +187,7 @@ generate
 	end process;
 
 	swap_76_i : entity work.cmp_swap
-	port (
+	port map (
 		CLK => CLK,
 		CE  => CE,
 		I_A => DI(63 downto 56),
@@ -206,7 +206,7 @@ gen_level3: if LEVEL = 3
 generate
 
 	swap_80_i : entity work.cmp_swap
-	port (
+	port map (
 		CLK => CLK,
 		CE  => CE,
 		I_A => DI(71 downto 64),
@@ -225,7 +225,7 @@ generate
 	end process;
 
 	swap_64_i : entity work.cmp_swap
-	port (
+	port map (
 		CLK => CLK,
 		CE  => CE,
 		I_A => DI(55 downto 48),
@@ -235,7 +235,7 @@ generate
 	);
 
 	swap_75_i : entity work.cmp_swap
-	port (
+	port map (
 		CLK => CLK,
 		CE  => CE,
 		I_A => DI(63 downto 56),
@@ -264,7 +264,7 @@ generate
 	end process;
 
 	swap_54_i : entity work.cmp_swap
-	port (
+	port map (
 		CLK => CLK,
 		CE  => CE,
 		I_A => DI(47 downto 40),
@@ -274,7 +274,7 @@ generate
 	);
 
 	swap_76_i : entity work.cmp_swap
-	port (
+	port map (
 		CLK => CLK,
 		CE  => CE,
 		I_A => DI(63 downto 56),
@@ -293,7 +293,7 @@ gen_level5: if LEVEL = 5
 generate
 
 	swap_40_i : entity work.cmp_swap
-	port (
+	port map (
 		CLK => CLK,
 		CE  => CE,
 		I_A => DI(39 downto 32),
@@ -303,7 +303,7 @@ generate
 	);
 
 	swap_51_i : entity work.cmp_swap
-	port (
+	port map (
 		CLK => CLK,
 		CE  => CE,
 		I_A => DI(47 downto 40),
@@ -313,7 +313,7 @@ generate
 	);
 
 	swap_62_i : entity work.cmp_swap
-	port (
+	port map (
 		CLK => CLK,
 		CE  => CE,
 		I_A => DI(55 downto 48),
@@ -323,7 +323,7 @@ generate
 	);
 
 	swap_73_i : entity work.cmp_swap
-	port (
+	port map (
 		CLK => CLK,
 		CE  => CE,
 		I_A => DI(63 downto 56),
@@ -351,7 +351,7 @@ gen_level6: if LEVEL = 6
 generate
 
 	swap_20_i : entity work.cmp_swap
-	port (
+	port map (
 		CLK => CLK,
 		CE  => CE,
 		I_A => DI(23 downto 16),
@@ -361,7 +361,7 @@ generate
 	);
 
 	swap_31_i : entity work.cmp_swap
-	port (
+	port map (
 		CLK => CLK,
 		CE  => CE,
 		I_A => DI(31 downto 24),
@@ -371,7 +371,7 @@ generate
 	);
 
 	swap_46_i : entity work.cmp_swap
-	port (
+	port map (
 		CLK => CLK,
 		CE  => CE,
 		I_A => DI(39 downto 32),
@@ -381,7 +381,7 @@ generate
 	);
 
 	swap_57_i : entity work.cmp_swap
-	port (
+	port map (
 		CLK => CLK,
 		CE  => CE,
 		I_A => DI(47 downto 40),
@@ -409,7 +409,7 @@ gen_level7: if LEVEL = 7
 generate
 
 	swap_10_i : entity work.cmp_swap
-	port (
+	port map (
 		CLK => CLK,
 		CE  => CE,
 		I_A => DI(15 downto  8),
@@ -419,7 +419,7 @@ generate
 	);
 
 	swap_32_i : entity work.cmp_swap
-	port (
+	port map (
 		CLK => CLK,
 		CE  => CE,
 		I_A => DI(31 downto 24),
@@ -429,7 +429,7 @@ generate
 	);
 
 	swap_54_i : entity work.cmp_swap
-	port (
+	port map (
 		CLK => CLK,
 		CE  => CE,
 		I_A => DI(39 downto 32),
@@ -439,7 +439,7 @@ generate
 	);
 
 	swap_76_i : entity work.cmp_swap
-	port (
+	port map (
 		CLK => CLK,
 		CE  => CE,
 		I_A => DI(63 downto 56),
