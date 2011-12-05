@@ -467,7 +467,7 @@ end architecture;
 ---
 architecture top_level of bitonic_sort9 is
 
-	type level_data_t is array(0 to 8) of std_logic_vector(7 downto 0);
+	type level_data_t is array(0 to 8) of std_logic_vector(71 downto 0);
 	signal level_data : level_data_t;
 
 begin
