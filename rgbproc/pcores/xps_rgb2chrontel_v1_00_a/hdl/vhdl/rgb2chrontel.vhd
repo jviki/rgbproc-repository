@@ -131,9 +131,9 @@ begin
 
 	--------------------------
 
-	hsync_gen_i : entity work.sync_gen
+	hpulse_gen_i : entity work.sync_gen
 	generic map (
-		SYNC_LEN => 64,
+		SYNC_LEN => 96,
 		DEBUG    => DEBUG
 	)
 	port map (
@@ -146,9 +146,9 @@ begin
 
 	--------------------------
 
-	vsync_gen_i : entity work.sync_gen
+	vpulse_gen_i : entity work.sync_gen
 	generic map (
-		SYNC_LEN => 640, -- XXX: is this right???
+		SYNC_LEN => 525 * 800,
 		DEBUG    => DEBUG
 	)
 	port map (
