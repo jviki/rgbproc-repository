@@ -7,6 +7,9 @@ OPTION STYLE = MIX
 OPTION IP_GROUP = MICROBLAZE:PPC:USER
 OPTION DESC = Outputs RGB bus data to chrontel chip
 
+PARAMETER DEBUG = 0, DT = integer, VALUES = (0 = disable, 1 = enable)
+PORT DBGOUT = "", VEC = [31:0], DIR = O, ISVALID = (DEBUG == 1)
+
 IO_INTERFACE IO_IF = chrontel, IO_TYPE  = DVI_OUT_V1
 
 # rgb clock domain
