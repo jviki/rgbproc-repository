@@ -9,6 +9,29 @@ use ieee.std_logic_unsigned.all;
 library rgb_commons_v1_00_a;
 use rgb_commons_v1_00_a.rgb_asfifo;
 
+---
+-- The unit converts RGB bus data to output suitable
+-- to be sent to CH7301C chip (and then to a screen).
+--
+-- Data on RGB bus must provide only valid frames
+-- of correct size. If a malformed frame is passed
+-- into this unit the behaviour is undefined.
+--
+-- When RGB_VLD is not asserted at the time when
+-- the unit wants to write data to the screen
+-- it starts to hold HS and VS pulses until
+-- valid data are ready. Then the screen refresh cycle
+-- starts again (to assure consistency) so the data are
+-- not used immediately.
+--
+-- RGB input bus must be reliable in the sense that
+-- if RGB_VLD is asserted once it must not be deasserted
+-- until RGB_REQ is generated from this unit and it
+-- must provide data until the end of frame.
+-- (In fact the implementation should use some kind of
+-- asynchronous FIFO so some buffering is provided
+-- inside as well.)
+---
 entity rgb2chrontel is
 generic (
 	DEBUG       : boolean := false
