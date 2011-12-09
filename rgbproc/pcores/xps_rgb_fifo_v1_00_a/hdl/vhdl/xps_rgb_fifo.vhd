@@ -14,17 +14,17 @@ port (
 	CLK     : in  std_logic;
 	RST     : in  std_logic;
 	
-	IN_R    : in  std_logic;
-	IN_G    : in  std_logic;
-	IN_B    : in  std_logic;
+	IN_R    : in  std_logic_vector(7 downto 0);
+	IN_G    : in  std_logic_vector(7 downto 0);
+	IN_B    : in  std_logic_vector(7 downto 0);
 	IN_EOL  : in  std_logic;
 	IN_EOF  : in  std_logic;
 	IN_VLD  : in  std_logic;
 	IN_REQ  : out std_logic;
 
-	OUT_R   : out std_logic;
-	OUT_G   : out std_logic;
-	OUT_B   : out std_logic;
+	OUT_R   : out std_logic_vector(7 downto 0);
+	OUT_G   : out std_logic_vector(7 downto 0);
+	OUT_B   : out std_logic_vector(7 downto 0);
 	OUT_EOL : out std_logic;
 	OUT_EOF : out std_logic;
 	OUT_VLD : out std_logic;
