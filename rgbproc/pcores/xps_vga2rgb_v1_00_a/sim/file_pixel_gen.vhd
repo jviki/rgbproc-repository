@@ -32,20 +32,26 @@ begin
 		variable vr : integer;
 		variable vg : integer;
 		variable vb : integer;
+
+		procedure read_pixel is
+		begin
+			readline(infile, l);
+			read(l, vr);
+			read(l, vg);
+			read(l, vb);
+
+			R <= conv_std_logic_vector(vr, 8);
+			G <= conv_std_logic_vector(vg, 8);
+			B <= conv_std_logic_vector(vb, 8);
+		end procedure;
 	begin
 		if rising_edge(CLK) then
 			if RST = '1' or endfile(infile) then
 				file_close(infile);
 				file_open(infile, "input_file.txt", READ_MODE);
+				read_pixel;
 			elsif PX_REQ = '1' then
-				readline(infile, l);
-				read(l, vr);
-				read(l, vg);
-				read(l, vb);
-
-				R <= conv_std_logic_vector(vr, 8);
-				G <= conv_std_logic_vector(vg, 8);
-				B <= conv_std_logic_vector(vb, 8);
+				read_pixel;
 			end if;
 		end if;
 	end process;
