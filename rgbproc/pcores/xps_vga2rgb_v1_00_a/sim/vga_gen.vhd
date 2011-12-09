@@ -44,6 +44,26 @@ architecture simple of vga_gen is
 
 	---------------------------------------------
 
+	component pixel_gen is
+	generic (
+		WIDTH  : integer;
+		HEIGHT : integer
+	);
+	port (
+		CLK    : in  std_logic;
+		RST    : in  std_logic;
+		R      : out std_logic_vector(7 downto 0);
+		G      : out std_logic_vector(7 downto 0);
+		B      : out std_logic_vector(7 downto 0);
+		PX_REQ : in  std_logic
+	);
+	end component;
+
+	for all : pixel_gen
+		use entity work.simple_pixel_gen(full);
+
+	---------------------------------------------
+
 	signal vga_clk     : std_logic;
 	signal vga_rst     : std_logic;
 
@@ -69,20 +89,19 @@ begin
 
 	-----------------------------
 
-	process(vga_clk, vga_rst, vga_dena, vga_r, vga_g, vga_b)
-	begin
-		if rising_edge(vga_clk) then
-			if vga_rst = '1' or vga_dena = '0' then
-				vga_r <= (others => '0');
-				vga_g <= (others => '0');
-				vga_b <= (others => '0');
-			elsif vga_dena = '1' then
-				vga_r <= vga_r + 1;
-				vga_g <= vga_g + 1;
-				vga_b <= vga_b + 1;
-			end if;
-		end if;
-	end process;
+	pixel_gen_i : pixel_gen
+	generic map (
+		WIDTH  => HPIXELS,
+		HEIGHT => VLINES
+	)
+	port map (
+		CLK    => vga_clk,
+		RST    => vga_rst,
+		R      => vga_r,
+		G      => vga_g,
+		B      => vga_b,
+		PX_REQ => vga_dena
+	);
 
 	vga_dena <= vga_hactive and vga_vactive;
 
