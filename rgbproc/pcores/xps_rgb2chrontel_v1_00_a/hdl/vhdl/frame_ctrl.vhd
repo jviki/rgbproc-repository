@@ -28,7 +28,7 @@ generic (
 	HF : integer := 16;
 	VP : integer := 2;
 	VB : integer := 31;
-	VD : integer := 640;
+	VD : integer := 480;
 	VF : integer := 12
 );
 port (
