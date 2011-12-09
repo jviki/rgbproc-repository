@@ -145,10 +145,6 @@ begin
 		procedure gen_vbp is
 			variable row : integer;
 		begin
-			new_frame <= '1';
-			wait until rising_edge(vga_clk);
-			new_frame <= '0';
-
 			report "VBP";
 			vga_vs <= '1';
 			for row in 1 to VBP loop
@@ -160,6 +156,8 @@ begin
 		procedure gen_vactive is
 			variable row : integer;
 		begin
+			new_frame <= '1', '0' after VGA_PERIOD;
+
 			report "VACTIVE";
 			vga_vactive <= '1';
 			for row in 1 to VACTIVE loop
