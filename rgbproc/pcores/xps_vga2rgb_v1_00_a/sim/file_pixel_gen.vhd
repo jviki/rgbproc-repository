@@ -6,6 +6,8 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
+use std.textio.all;
+
 entity file_pixel_gen is
 generic (
 	WIDTH  : integer;
@@ -41,9 +43,9 @@ begin
 				read(l, vg);
 				read(l, vb);
 
-				R <= vr;
-				G <= vg;
-				B <= vb;
+				R <= conv_std_logic_vector(vr, 8);
+				G <= conv_std_logic_vector(vg, 8);
+				B <= conv_std_logic_vector(vb, 8);
 			end if;
 		end if;
 	end process;
