@@ -59,8 +59,10 @@ architecture simple of vga_gen is
 	);
 	end component;
 
+--	for all : pixel_gen
+--		use entity work.simple_pixel_gen(full);
 	for all : pixel_gen
-		use entity work.simple_pixel_gen(full);
+		use entity work.file_pixel_gen(plain_numbers);
 
 	---------------------------------------------
 
@@ -77,6 +79,9 @@ architecture simple of vga_gen is
 	signal vga_hactive : std_logic;
 	signal vga_vactive : std_logic;
 	signal vga_dena    : std_logic;
+
+	signal new_frame   : std_logic;
+	signal vga_gen_rst : std_logic;
 
 begin
 
@@ -96,14 +101,15 @@ begin
 	)
 	port map (
 		CLK    => vga_clk,
-		RST    => vga_rst,
+		RST    => vga_gen_rst,
 		R      => vga_r,
 		G      => vga_g,
 		B      => vga_b,
 		PX_REQ => vga_dena
 	);
 
-	vga_dena <= vga_hactive and vga_vactive;
+	vga_dena    <= vga_hactive and vga_vactive;
+	vga_gen_rst <= vga_rst or new_frame;
 
 	-----------------------------
 
@@ -150,6 +156,8 @@ begin
 		procedure gen_vactive is
 			variable row : integer;
 		begin
+			new_frame <= '1', '0' after VGA_PERIOD;
+
 			report "VACTIVE";
 			vga_vactive <= '1';
 			for row in 1 to VACTIVE loop
@@ -199,6 +207,7 @@ begin
 		vga_vactive <= '0';
 		vga_hs      <= '1';
 		vga_hactive <= '0';
+		new_frame   <= '0';
 
 		report "VSYNC Reset";
 		wait until vga_rst = '0';
