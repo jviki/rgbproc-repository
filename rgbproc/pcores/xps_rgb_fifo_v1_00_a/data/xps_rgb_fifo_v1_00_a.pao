@@ -1,0 +1,2 @@
+lib xps_rgb_fifo_v1_00_a rgb_fifo.vhd  vhdl
+lib xps_rgb_fifo_v1_00_a xps_rgb_fifo.vhd  vhdl
