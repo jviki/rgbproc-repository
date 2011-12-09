@@ -81,6 +81,7 @@ architecture simple of vga_gen is
 	signal vga_dena    : std_logic;
 
 	signal new_frame   : std_logic;
+	signal vga_gen_rst : std_logic;
 
 begin
 
@@ -100,14 +101,15 @@ begin
 	)
 	port map (
 		CLK    => vga_clk,
-		RST    => vga_rst,
+		RST    => vga_gen_rst,
 		R      => vga_r,
 		G      => vga_g,
 		B      => vga_b,
 		PX_REQ => vga_dena
 	);
 
-	vga_dena <= (vga_hactive and vga_vactive) or new_frame;
+	vga_dena    <= vga_hactive and vga_vactive;
+	vga_gen_rst <= vga_rst or new_frame;
 
 	-----------------------------
 
