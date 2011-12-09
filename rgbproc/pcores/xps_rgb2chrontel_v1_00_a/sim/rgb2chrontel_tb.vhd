@@ -105,8 +105,8 @@ begin
 	-- not clear what this assertion should check
 	-- 64 is the only value or the minimum?
 	assert (cnt_out_hs = 0 and   cnt_out_hs_clr = '1')
-	    or (cnt_out_hs >= 64 and cnt_out_hs_clr = '1')
-	    or (cnt_out_hs <= 64 and cnt_out_hs_ce  = '1')
+	    or (cnt_out_hs >= 96 and cnt_out_hs_clr = '1')
+	    or (cnt_out_hs <= 96 and cnt_out_hs_ce  = '1')
 		report "Invalid out_hs timing: " & integer'image(cnt_out_hs)
 		severity error;
 
@@ -131,8 +131,8 @@ begin
 	-- or should it be 800?
 	-- is it the minimal value or the exact?
 	assert (cnt_out_vs = 0    and cnt_out_vs_clr = '1')
-	    or (cnt_out_vs >= 640 and cnt_out_vs_clr = '1')
-	    or (cnt_out_vs <= 640 and cnt_out_vs_ce  = '1')
+	    or (cnt_out_vs >= 2 * 800 and cnt_out_vs_clr = '1')
+	    or (cnt_out_vs <= 2 * 800 and cnt_out_vs_ce  = '1')
 		report "Invalid out_vs timing: " & integer'image(cnt_out_vs)
 		severity error;
 
