@@ -37,8 +37,8 @@ end entity;
 
 architecture full of rgb_fifo is
 
-	signal fifo_din   : std_logic_vector(23 downto 0);
-	signal fifo_dout  : std_logic_vector(23 downto 0);
+	signal fifo_din   : std_logic_vector(25 downto 0);
+	signal fifo_dout  : std_logic_vector(25 downto 0);
 	signal fifo_we    : std_logic;
 	signal fifo_re    : std_logic;
 	signal fifo_full  : std_logic;
@@ -74,9 +74,9 @@ begin
 		C_PRELOAD_REGS     => 1,
 		C_PRELOAD_LATENCY  => 0,
 		C_PORTS_DIFFER     => 0,
-		C_READ_DATA_WIDTH  => 25,
+		C_READ_DATA_WIDTH  => 26,
 		C_READ_DEPTH       => DEPTH,
-		C_WRITE_DATA_WIDTH => 25,
+		C_WRITE_DATA_WIDTH => 26,
 		C_WRITE_DEPTH      => DEPTH
 	)
 	port map (
