@@ -1,0 +1,25 @@
+BEGIN xps_generic_filter
+
+OPTION IPTYPE = PERIPHERAL
+OPTION IMP_NETLIST = TRUE
+OPTION HDL = VHDL
+OPTION STYLE = HDL
+OPTION IP_GROUP = MICROBLAZE:PPC:USER
+OPTION DESC = Performs RGB filtering
+
+PORT CLK = "", DIR = I, SIGIS = CLK
+PORT RST = sys_periph_reset, DIR = I, SIGIS = RST
+
+PORT WIN_R   = R,   DIR = I, VEC = [71:0]
+PORT WIN_G   = G,   DIR = I, VEC = [71:0]
+PORT WIN_B   = B,   DIR = I, VEC = [71:0]
+PORT WIN_REQ = REQ, DIR = O
+PORT WIN_VLD = VLD, DIR = I
+
+PORT OUT_R   = R,   DIR = O, VEC = [7:0]
+PORT OUT_G   = G,   DIR = O, VEC = [7:0]
+PORT OUT_B   = B,   DIR = O, VEC = [7:0]
+PORT OUT_REQ = REQ, DIR = I
+PORT OUT_VLD = VLD, DIR = O
+
+END
