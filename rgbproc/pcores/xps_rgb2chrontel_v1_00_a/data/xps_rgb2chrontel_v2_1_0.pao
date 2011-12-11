@@ -2,6 +2,6 @@ lib proc_common_v3_00_a all
 lib rgb_commons_v1_00_a rgb_asfifo vhdl
 lib xps_rgb2chrontel_v1_00_a data_out.vhd vhdl
 lib xps_rgb2chrontel_v1_00_a idf_encoding.vhd  vhdl
-lib xps_rgb2chrontel_v1_00_a sync_gen.vhd  vhdl
+lib xps_rgb2chrontel_v1_00_a frame_ctrl.vhd  vhdl
 lib xps_rgb2chrontel_v1_00_a rgb2chrontel.vhd  vhdl
 lib xps_rgb2chrontel_v1_00_a xps_rgb2chrontel.vhd  vhdl

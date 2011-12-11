@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/jviki/Projects/hw/khbo_edk_repo/rgbproc/pcores/rgb_commons_v1_00_a/etc/clk_is_up/clk_is_up_tb_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="clk_is_up_tb" />
+            <top_module name="proc_common_pkg" />
+            <top_module name="std_logic_1164" />
+            <top_module name="std_logic_arith" />
+            <top_module name="std_logic_unsigned" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="13" />
+   <wvobject fp_name="/clk_is_up_tb/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/clk_is_up_tb/rst" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/clk_is_up_tb/clkslow" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clkslow</obj_property>
+      <obj_property name="ObjectShortName">clkslow</obj_property>
+   </wvobject>
+   <wvobject fp_name="/clk_is_up_tb/dut_i/out_up" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">out_up</obj_property>
+      <obj_property name="ObjectShortName">out_up</obj_property>
+   </wvobject>
+   <wvobject fp_name="/clk_is_up_tb/freq" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">freq</obj_property>
+      <obj_property name="ObjectShortName">freq</obj_property>
+   </wvobject>
+   <wvobject fp_name="/clk_is_up_tb/period" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">period</obj_property>
+      <obj_property name="ObjectShortName">period</obj_property>
+   </wvobject>
+   <wvobject fp_name="/clk_is_up_tb/slow_freq" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">slow_freq</obj_property>
+      <obj_property name="ObjectShortName">slow_freq</obj_property>
+   </wvobject>
+   <wvobject fp_name="/clk_is_up_tb/slow_period" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">slow_period</obj_property>
+      <obj_property name="ObjectShortName">slow_period</obj_property>
+   </wvobject>
+   <wvobject fp_name="/clk_is_up_tb/dut_i/reg_change" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">reg_change</obj_property>
+      <obj_property name="ObjectShortName">reg_change</obj_property>
+   </wvobject>
+   <wvobject fp_name="/clk_is_up_tb/dut_i/reg_change_clr" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">reg_change_clr</obj_property>
+      <obj_property name="ObjectShortName">reg_change_clr</obj_property>
+   </wvobject>
+   <wvobject fp_name="/clk_is_up_tb/dut_i/reg_change_vec" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">reg_change_vec[2:0]</obj_property>
+      <obj_property name="ObjectShortName">reg_change_vec[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/clk_is_up_tb/dut_i/cnt_delay_ce" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">cnt_delay_ce</obj_property>
+      <obj_property name="ObjectShortName">cnt_delay_ce</obj_property>
+   </wvobject>
+   <wvobject fp_name="/clk_is_up_tb/dut_i/cnt_delay" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">cnt_delay[4:0]</obj_property>
+      <obj_property name="ObjectShortName">cnt_delay[4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+</wave_config>

@@ -9,6 +9,29 @@ use ieee.std_logic_unsigned.all;
 library rgb_commons_v1_00_a;
 use rgb_commons_v1_00_a.rgb_asfifo;
 
+---
+-- The unit converts RGB bus data to output suitable
+-- to be sent to CH7301C chip (and then to a screen).
+--
+-- Data on RGB bus must provide only valid frames
+-- of correct size. If a malformed frame is passed
+-- into this unit the behaviour is undefined.
+--
+-- When RGB_VLD is not asserted at the time when
+-- the unit wants to write data to the screen
+-- it starts to hold HS and VS pulses until
+-- valid data are ready. Then the screen refresh cycle
+-- starts again (to assure consistency) so the data are
+-- not used immediately.
+--
+-- RGB input bus must be reliable in the sense that
+-- if RGB_VLD is asserted once it must not be deasserted
+-- until RGB_REQ is generated from this unit and it
+-- must provide data until the end of frame.
+-- (In fact the implementation should use some kind of
+-- asynchronous FIFO so some buffering is provided
+-- inside as well.)
+---
 entity rgb2chrontel is
 generic (
 	DEBUG       : boolean := false
@@ -42,9 +65,6 @@ end entity;
 
 architecture full of rgb2chrontel is
 
-	signal out_eol_valid : std_logic;
-	signal out_eof_valid : std_logic;
-
 	signal out_r         : std_logic_vector(7 downto 0);
 	signal out_g         : std_logic_vector(7 downto 0);
 	signal out_b         : std_logic_vector(7 downto 0);
@@ -63,12 +83,14 @@ architecture full of rgb2chrontel is
 	signal fifo_re       : std_logic;
 	signal fifo_empty    : std_logic;
 
-	type state_t is (s_idle, s_pass, s_eol, s_eof);
+	signal ctrl_sleep    : std_logic;
+	signal ctrl_hs       : std_logic;
+	signal ctrl_vs       : std_logic;
+	signal ctrl_de       : std_logic;
+
+	type state_t is (s_idle, s_frame_data, s_fallback);
 	signal state         : state_t;
 	signal nstate        : state_t;
-
-	signal hsync_dbgout  : std_logic_vector(5 downto 0);
-	signal vsync_dbgout  : std_logic_vector(5 downto 0);
 
 begin
 
@@ -131,33 +153,18 @@ begin
 
 	--------------------------
 
-	hsync_gen_i : entity work.sync_gen
-	generic map (
-		SYNC_LEN => 64,
-		DEBUG    => DEBUG
-	)
+	frame_ctrl_i : entity work.frame_ctrl
 	port map (
-		CLK    => OUT_CLK,
-		RST    => OUT_RST,
-		LAST   => out_eol_valid,
-		SYNC_N => hsync,
-		DBGOUT => hsync_dbgout
+		CLK   => OUT_CLK,
+		RST   => OUT_RST,
+		SLEEP => ctrl_sleep,
+		HS    => ctrl_hs,
+		VS    => ctrl_vs,
+		DE    => ctrl_de
 	);
 
-	--------------------------
-
-	vsync_gen_i : entity work.sync_gen
-	generic map (
-		SYNC_LEN => 640, -- XXX: is this right???
-		DEBUG    => DEBUG
-	)
-	port map (
-		CLK    => OUT_CLK,
-		RST    => OUT_RST,
-		LAST   => out_eof_valid,
-		SYNC_N => vsync,
-		DBGOUT => vsync_dbgout
-	);
+	hsync <= not ctrl_hs;
+	vsync <= not ctrl_vs;
 
 	--------------------------
 
@@ -172,53 +179,51 @@ begin
 		end if;
 	end process;
 
-	fsm_next : process(OUT_CLK, state, fifo_empty, fifo_re,
-	                   out_eof, out_eol, hsync, vsync)
+	fsm_next : process(OUT_CLK, state, ctrl_de, fifo_empty, ctrl_vs)
 	begin
 		nstate <= state;
 
 		case state is
 		when s_idle =>
-			if fifo_empty = '0' then
-				nstate <= s_pass;
+			if ctrl_de = '1' and fifo_empty = '0' then
+				nstate <= s_frame_data;
+			elsif ctrl_de = '1' and fifo_empty = '1' then
+				nstate <= s_fallback;
 			end if;
 
-		when s_pass =>
-			if fifo_re = '1' and out_eof = '1' then
-				nstate <= s_eof;
-			elsif fifo_re = '1' and out_eol = '1' then
-				nstate <= s_eol;
-			end if;
-
-		when s_eol  =>
-			if hsync = '1' then
+		when s_frame_data =>
+			if ctrl_vs = '1' then
 				nstate <= s_idle;
 			end if;
-			
-		when s_eof  =>
-			if vsync = '1' then
+
+		when s_fallback =>
+			if fifo_empty = '0' then
 				nstate <= s_idle;
 			end if;
 
 		end case;
 	end process;
 
-	fsm_output : process(OUT_CLK, state, fifo_empty, fifo_re,
-	                     out_eol, out_eof)
+	fsm_output : process(OUT_CLK, state, ctrl_de, fifo_empty)
 	begin
-		fifo_re       <= '0';
-		out_eol_valid <= '0';
-		out_eof_valid <= '0';
-		out_data_en   <= '0';
+		fifo_re     <= '0';
+		ctrl_sleep  <= '0';
+		out_data_en <= '0';
 
 		case state is
-		when s_pass =>
-			fifo_re       <= not fifo_empty;
-			out_data_en   <= fifo_re;
-			out_eol_valid <= fifo_re and out_eol;
-			out_eof_valid <= fifo_re and out_eof;
+		when s_idle =>
+			fifo_re     <= ctrl_de and not fifo_empty;
+			out_data_en <= ctrl_de and not fifo_empty;
 
-		when others  =>
+		when s_frame_data =>
+			-- now the data stream should be reliable
+			-- until the end of frame
+			fifo_re     <= ctrl_de and not fifo_empty;
+			out_data_en <= ctrl_de and not fifo_empty;
+
+		when s_fallback =>
+			ctrl_sleep <= '1';
+
 		end case;
 	end process;
 
@@ -230,25 +235,23 @@ generate
 	DBGOUT(0) <= OUT_CLK;
 	DBGOUT(1) <= OUT_RST;
 
-	DBGOUT( 7 downto 2) <= hsync_dbgout;
-	DBGOUT(13 downto 8) <= vsync_dbgout;
+	DBGOUT( 7 downto 2) <= (others => '1');
+	DBGOUT(13 downto 8) <= (others => '1');
 
 	DBGOUT(14) <= fifo_re;
 	DBGOUT(15) <= fifo_empty;
 
-	DBGOUT(17 downto 16) <= "00" when state = s_idle else
-	                        "01" when state = s_pass else
-				"10" when state = s_eol  else
-				"11" when state = s_eof  else
-				"00";
-	DBGOUT(19 downto 18) <= "00" when nstate = s_idle else
-	                        "01" when nstate = s_pass else
-				"10" when nstate = s_eol  else
-				"11" when nstate = s_eof  else
-				"00";
+	DBGOUT(17 downto 16) <= "00" when state = s_idle       else
+	                        "01" when state = s_frame_data else
+				"10" when state = s_fallback   else
+				"11";
+	DBGOUT(19 downto 18) <= "00" when nstate = s_idle       else
+	                        "01" when nstate = s_frame_data else
+				"10" when nstate = s_fallback   else
+				"11";
 
-	DBGOUT(20) <= out_eol_valid;
-	DBGOUT(21) <= out_eof_valid;
+	DBGOUT(20) <= out_eol and fifo_re;
+	DBGOUT(21) <= out_eof and fifo_re;
 
 	DBGOUT(31 downto 22) <= (others => '1');
 

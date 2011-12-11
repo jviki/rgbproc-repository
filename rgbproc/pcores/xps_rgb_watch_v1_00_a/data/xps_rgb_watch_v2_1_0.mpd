@@ -1,0 +1,27 @@
+BEGIN xps_rgb_watch
+
+OPTION IPTYPE = PERIPHERAL
+OPTION IMP_NETLIST = TRUE
+OPTION HDL = VHDL
+OPTION STYLE = HDL
+OPTION IP_GROUP = MICROBLAZE:PPC:USER
+OPTION DESC = Watchs RGB bus
+
+BUS_INTERFACE BUS=in, BUS_STD=RGB, BUS_TYPE=MONITOR
+
+# rgb clock domain
+PORT RGB_CLK = "", DIR = I, SIGIS = CLK
+PORT RGB_RST = sys_periph_reset, DIR = I, SIGIS = RST
+
+PORT RGB_EOL = EOL, DIR = I, BUS = in
+PORT RGB_EOF = EOF, DIR = I, BUS = in
+PORT RGB_R   = R,   DIR = I, BUS = in, VEC = [7:0]
+PORT RGB_G   = G,   DIR = I, BUS = in, VEC = [7:0]
+PORT RGB_B   = B,   DIR = I, BUS = in, VEC = [7:0]
+PORT RGB_REQ = REQ, DIR = I, BUS = in
+PORT RGB_VLD = VLD, DIR = I, BUS = in
+
+PORT CS_CLK  = "", DIR = O, SIGIS = CLK
+PORT CS_VEC  = "", DIR = O, VEC = [47:0]
+
+END

@@ -13,12 +13,13 @@ BEGIN IO_INTERFACE
   PORT USER_SYS_CLK = CLK_100MHZ, IO_IS = ext_clk
 END
 
-BEGIN IO_INTERFACE
-  ATTRIBUTE INSTANCE = vga_clk,
-  ATTRIBUTE IOTYPE   = XIL_CLOCK_V1
-  PARAMETER CLK_FREQ = 25000000, IO_IS = clk_freq, RANGE = (25000000, 100000000)
-  PORT VGA_CLK = vga_dclk, IO_IS = ext_clk
-END
+# this not works as expected:
+#BEGIN IO_INTERFACE
+#  ATTRIBUTE INSTANCE = vga_clk,
+#  ATTRIBUTE IOTYPE   = XIL_CLOCK_V1
+#  PARAMETER CLK_FREQ = 25000000, IO_IS = clk_freq, RANGE = (25000000)
+#  PORT VGA_CLK = vga_in_dclk, IO_IS = ext_clk
+#END
 
 # do not uncomment the following until we can programmably deliver UCF. V5 MPMC UCF is dependent on which clock you use.
 
@@ -61,8 +62,9 @@ END
 BEGIN IO_INTERFACE
 	ATTRIBUTE IOTYPE   = VGA_IN_V1
 	ATTRIBUTE INSTANCE = VGA_IN
-	PORT HS = vga_in_hsout,    IO_IS = VGA_HS
-	PORT VS = vga_in_vsout,    IO_IS = VGA_VS
+	PORT CLK = vga_in_dclk,    IO_IS = VGA_CLK
+	PORT HS = vga_in_hsout,    IO_IS = VGA_HSYNC
+	PORT VS = vga_in_vsout,    IO_IS = VGA_VSYNC
 	PORT CLAMP = vga_in_clamp, IO_IS = VGA_CLAMP
 	PORT COAST = vga_in_coast, IO_IS = VGA_COAST
 	PORT ODD_EVEN_B = vga_in_odd_even_b, IO_IS = VGA_ODD_EVEN_B

@@ -5,7 +5,12 @@ OPTION IMP_NETLIST = TRUE
 OPTION HDL = VHDL
 OPTION STYLE = MIX
 OPTION IP_GROUP = MICROBLAZE:PPC:USER
-OPTION DESC = Inputs VGA signal and transforms it to RGB bus
+OPTION DESC = Outputs RGB bus data to chrontel chip
+
+BUS_INTERFACE BUS=in, BUS_STD=RGB, BUS_TYPE=TARGET
+
+PARAMETER DEBUG = 0, DT = integer, VALUES = (0 = disable, 1 = enable)
+PORT DBGOUT = "", VEC = [31:0], DIR = O, ISVALID = (DEBUG == 1)
 
 IO_INTERFACE IO_IF = chrontel, IO_TYPE  = DVI_OUT_V1
 
@@ -13,25 +18,25 @@ IO_INTERFACE IO_IF = chrontel, IO_TYPE  = DVI_OUT_V1
 PORT RGB_CLK = "", DIR = I, SIGIS = CLK
 PORT RGB_RST = sys_periph_reset, DIR = I, SIGIS = RST
 
-PORT RGB_HS  = HS,  DIR = I
-PORT RGB_VS  = VS,  DIR = I
-PORT RGB_R   = R,   DIR = I, VEC = [7:0]
-PORT RGB_G   = G,   DIR = I, VEC = [7:0]
-PORT RGB_B   = B,   DIR = I, VEC = [7:0]
-PORT RGB_REQ = REQ, DIR = O
-PORT RGB_VLD = VLD, DIR = I
+PORT RGB_EOL = EOL, DIR = I, BUS = in
+PORT RGB_EOF = EOF, DIR = I, BUS = in
+PORT RGB_R   = R,   DIR = I, BUS = in, VEC = [7:0]
+PORT RGB_G   = G,   DIR = I, BUS = in, VEC = [7:0]
+PORT RGB_B   = B,   DIR = I, BUS = in, VEC = [7:0]
+PORT RGB_REQ = REQ, DIR = O, BUS = in
+PORT RGB_VLD = VLD, DIR = I, BUS = in
 
 # chrontel clock domain
 PORT OUT_CLK = "", DIR = I, SIGIS = CLK
 PORT OUT_RST = sys_periph_reset, DIR = I, SIGIS = RST
 
-PORT OUT_XCLK_P  = XCLK_P,  DIR = O, SIGIS = CLK, IO_IF = chrontel
-PORT OUT_XCLK_N  = XCLK_P,  DIR = O, SIGIS = CLK, IO_IF = chrontel
-PORT OUT_RESET_N = RESET_N, DIR = O, SIGIS = RST, IO_IF = chrontel
+PORT OUT_XCLK_P  = XCLK_P,  DIR = O, SIGIS = CLK, IO_IF = chrontel, IO_IS = DVI_XCLK_P
+PORT OUT_XCLK_N  = XCLK_P,  DIR = O, SIGIS = CLK, IO_IF = chrontel, IO_IS = DVI_XCLK_N
+PORT OUT_RESET_N = RESET_N, DIR = O, SIGIS = RST, IO_IF = chrontel, IO_IS = DVI_RESET_N
 
-PORT OUT_D  = D,  DIR = O, IO_IF = chrontel, VEC = [11:0]
-PORT OUT_DE = DE, DIR = 0, IO_IF = chrontel
-PORT OUT_HS = HS, DIR = O, IO_IF = chrontel
-PORT OUT_VS = VS, DIR = 0, IO_IF = chrontel
+PORT OUT_D  = D,  DIR = O, IO_IF = chrontel, IO_IS = DVI_D, VEC = [11:0]
+PORT OUT_DE = DE, DIR = O, IO_IF = chrontel, IO_IS = DVI_DE
+PORT OUT_HS = HS, DIR = O, IO_IF = chrontel, IO_IS = DVI_HS
+PORT OUT_VS = VS, DIR = O, IO_IF = chrontel, IO_IS = DVI_VS
 
 END

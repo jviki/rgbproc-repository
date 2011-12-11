@@ -17,6 +17,8 @@ port (
 	VGA_B   : in  std_logic_vector(7 downto 0);
 	VGA_HS  : in  std_logic;
 	VGA_VS	: in  std_logic;
+	VGA_SOGOUT     : in std_logic;
+	VGA_ODD_EVEN_B : in std_logic;
 
 	CS_CLK  : out std_logic;
 	CS_VEC  : out std_logic_vector(31 downto 0);
@@ -48,7 +50,7 @@ begin
 
 	CS_CLK <= VGA_CLK;
 
-	cs_vec_simple(0) <= '1';
+	cs_vec_simple(0) <= VGA_ODD_EVEN_B;
 
 	cs_vec_simple(1) <= VGA_HS;
 	cs_vec_simple(2) <= VGA_VS;
