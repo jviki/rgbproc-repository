@@ -12,20 +12,20 @@ PARAMETER DEPTH = 640, DT = integer
 PORT CLK = "", DIR = I, SIGIS = CLK
 PORT RST = sys_periph_reset, DIR = I, SIGIS = RST
 
-PORT IN_EOL = EOL, DIR = I
-PORT IN_EOF = EOF, DIR = I
-PORT IN_R   = R,   DIR = I, VEC = [7:0]
-PORT IN_G   = G,   DIR = I, VEC = [7:0]
-PORT IN_B   = B,   DIR = I, VEC = [7:0]
-PORT IN_REQ = REQ, DIR = O
-PORT IN_VLD = VLD, DIR = I
+PORT IN_EOL = "", DIR = I
+PORT IN_EOF = "", DIR = I
+PORT IN_R   = "",   DIR = I, VEC = [7:0]
+PORT IN_G   = "",   DIR = I, VEC = [7:0]
+PORT IN_B   = "",   DIR = I, VEC = [7:0]
+PORT IN_REQ = "", DIR = O
+PORT IN_VLD = "", DIR = I
 
-PORT OUT_EOL = EOL, DIR = O
-PORT OUT_EOF = EOF, DIR = O
-PORT OUT_R   = R,   DIR = O, VEC = [7:0]
-PORT OUT_G   = G,   DIR = O, VEC = [7:0]
-PORT OUT_B   = B,   DIR = O, VEC = [7:0]
-PORT OUT_REQ = REQ, DIR = I
-PORT OUT_VLD = VLD, DIR = O
+PORT OUT_EOL = "", DIR = O
+PORT OUT_EOF = "", DIR = O
+PORT OUT_R   = "",   DIR = O, VEC = [7:0]
+PORT OUT_G   = "",   DIR = O, VEC = [7:0]
+PORT OUT_B   = "",   DIR = O, VEC = [7:0]
+PORT OUT_REQ = "", DIR = I
+PORT OUT_VLD = "", DIR = O
 
 END
