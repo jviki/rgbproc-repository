@@ -33,7 +33,7 @@ port (
 	OUT_HS      : out std_logic;
 	OUT_VS      : out std_logic;
 
-	DBGOUT      : out std_logic_vector(31 downto 0)
+	DBGOUT      : out std_logic_vector(39 downto 0)
 );
 end entity;
 

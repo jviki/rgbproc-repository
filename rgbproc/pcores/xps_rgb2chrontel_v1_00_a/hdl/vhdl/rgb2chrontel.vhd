@@ -59,7 +59,7 @@ port (
 	OUT_HS      : out std_logic;
 	OUT_VS      : out std_logic;
 
-	DBGOUT      : out std_logic_vector(31 downto 0)
+	DBGOUT      : out std_logic_vector(39 downto 0)
 );
 end entity;
 
@@ -232,28 +232,30 @@ begin
 gen_debug: if DEBUG = true
 generate
 
-	DBGOUT(0) <= OUT_CLK;
-	DBGOUT(1) <= OUT_RST;
+	DBGOUT(0) <= OUT_RST;
 
-	DBGOUT( 7 downto 2) <= (others => '1');
-	DBGOUT(13 downto 8) <= (others => '1');
+	DBGOUT(12 downto 1) <= out_data0;
 
-	DBGOUT(14) <= fifo_re;
-	DBGOUT(15) <= fifo_empty;
+	DBGOUT(13) <= fifo_re;
+	DBGOUT(14) <= fifo_empty;
 
-	DBGOUT(17 downto 16) <= "00" when state = s_idle       else
+	DBGOUT(16 downto 15) <= "00" when state = s_idle       else
 	                        "01" when state = s_frame_data else
 				"10" when state = s_fallback   else
 				"11";
-	DBGOUT(19 downto 18) <= "00" when nstate = s_idle       else
+	DBGOUT(18 downto 17) <= "00" when nstate = s_idle       else
 	                        "01" when nstate = s_frame_data else
 				"10" when nstate = s_fallback   else
 				"11";
 
-	DBGOUT(20) <= out_eol and fifo_re;
-	DBGOUT(21) <= out_eof and fifo_re;
+	DBGOUT(19) <= hsync;
+	DBGOUT(20) <= vsync;
 
-	DBGOUT(31 downto 22) <= (others => '1');
+	DBGOUT(32 downto 21) <= out_data1;
+	DBGOUT(33) <= out_data_en;
+	DBGOUT(34) <= ctrl_sleep;
+
+	DBGOUT(39 downto 35) <= (others => '1');
 
 end generate;
 
