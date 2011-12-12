@@ -6,8 +6,8 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
-library xps_buff_strategy_v1_00_a;
-use xps_buff_strategy_v1_00_a.end_gen;
+library rgb_commons_v1_00_a;
+use rgb_commons_v1_00_a.end_gen;
 
 entity xps_rgb_gen is
 port (
@@ -50,7 +50,7 @@ begin
 
 	---------------------------------
 	
-	end_gen_i : entity xps_buff_strategy_v1_00_a.end_gen
+	end_gen_i : entity rgb_commons_v1_00_a.end_gen
 	port map (
 		CLK     => RGB_CLK,
 		RST     => RGB_RST,
