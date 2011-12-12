@@ -58,8 +58,8 @@ begin
 	OUT_EOL <= IN_EOL;
 	OUT_EOF <= IN_EOF;
 
-	OUT_REQ	<= IN_REQ;
-	IN_VLD  <= OUT_VLD;
+	IN_REQ  <= OUT_REQ;
+	OUT_VLD <= IN_VLD;
 
 end architecture;
 
