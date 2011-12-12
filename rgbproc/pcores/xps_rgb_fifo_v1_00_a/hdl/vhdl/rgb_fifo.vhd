@@ -6,6 +6,9 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
+library unisim;
+use unisim.vcomponents.all;
+
 library proc_common_v3_00_a;
 use proc_common_v3_00_a.sync_fifo_fg;
 
