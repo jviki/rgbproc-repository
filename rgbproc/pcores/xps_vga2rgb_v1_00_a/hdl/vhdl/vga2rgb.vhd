@@ -104,7 +104,7 @@ begin
 	-------------------------------
 
 	internal_reset <= RGB_RST or vga_reset;
-	vga_reset      <= not(VGA_VS and VGA_HS);
+	vga_reset      <= not(VGA_VS or VGA_HS);
 
 	-------------------------------
 
