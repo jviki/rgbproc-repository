@@ -59,10 +59,10 @@ architecture simple of vga_gen is
 	);
 	end component;
 
---	for all : pixel_gen
---		use entity work.simple_pixel_gen(full);
 	for all : pixel_gen
-		use entity work.file_pixel_gen(plain_numbers);
+		use entity work.simple_pixel_gen(full);
+--	for all : pixel_gen
+--		use entity work.file_pixel_gen(plain_numbers);
 
 	---------------------------------------------
 
