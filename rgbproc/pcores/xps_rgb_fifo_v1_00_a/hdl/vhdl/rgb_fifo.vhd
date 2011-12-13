@@ -40,6 +40,19 @@ end entity;
 
 architecture full of rgb_fifo is
 
+	component fifo_50_640
+	port (
+		clk: in std_logic;
+		rst: in std_logic;
+		din: in std_logic_vector(25 downto 0);
+		wr_en: in std_logic;
+		rd_en: in std_logic;
+		dout: out std_logic_vector(25 downto 0);
+		full: out std_logic;
+		empty: out std_logic
+	);
+	end component;
+
 	signal fifo_din   : std_logic_vector(25 downto 0);
 	signal fifo_dout  : std_logic_vector(25 downto 0);
 	signal fifo_we    : std_logic;
@@ -68,6 +81,30 @@ begin
 	fifo_re <= OUT_REQ and not fifo_empty;
 
 	-------------------------------------
+
+	assert DEPTH = 32768
+		report "Currently only DEPTH = 32768 can be implemented"
+		severity failure;
+
+	-------------------------------------
+
+gen_on_32768: if DEPTH = 32768
+generate
+
+	fifo_i : fifo_50_640
+	port map (
+		CLK   => CLK,
+		RST   => RST,
+
+		DIN   => fifo_din,
+		WR_EN => fifo_we,
+		DOUT  => fifo_dout,
+		RD_EN => fifo_re,
+		FULL  => fifo_full,
+		EMPTY => fifo_empty
+	);
+
+end generate;
 
 ---
 -- Leads to very long synthesis and simulation...
