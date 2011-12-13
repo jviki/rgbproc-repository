@@ -69,6 +69,14 @@ begin
 
 	-------------------------------------
 
+---
+-- Leads to very long synthesis and simulation...
+-- It should work some way but I did not discovered
+-- how.
+---
+gen_never: if false
+generate
+
 	fifo_i : entity proc_common_v3_00_a.sync_fifo_fg
 	generic map (
 		C_FAMILY           => "virtex5",
@@ -92,6 +100,8 @@ begin
 		Full  => fifo_full,
 		Empty => fifo_empty
 	);
+
+end generate;
 
 end architecture;
 
