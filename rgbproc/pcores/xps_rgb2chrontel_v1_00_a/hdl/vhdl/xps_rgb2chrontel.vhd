@@ -7,6 +7,9 @@ use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
 entity xps_rgb2chrontel is
+generic (
+	DEBUG       : integer := 0
+);
 port (
 	RGB_CLK     : in  std_logic;
 	RGB_RST     : in  std_logic;
@@ -28,14 +31,22 @@ port (
 	OUT_RESET_N : out std_logic;
 	OUT_DE      : out std_logic;
 	OUT_HS      : out std_logic;
-	OUT_VS      : out std_logic
+	OUT_VS      : out std_logic;
+
+	DBGOUT      : out std_logic_vector(39 downto 0)
 );
 end entity;
 
 architecture wrapper of xps_rgb2chrontel is
+
+	constant DEBUG_ENABLE : boolean := DEBUG = 1;
+
 begin
 
 	inst_i : entity work.rgb2chrontel
+	generic map (
+		DEBUG   => DEBUG_ENABLE
+	)
 	port map (
 		RGB_CLK => RGB_CLK,
 		RGB_RST => RGB_RST,
@@ -57,7 +68,9 @@ begin
 		OUT_VS  => OUT_VS,
 		OUT_XCLK_P  => OUT_XCLK_P,
 		OUT_XCLK_N  => OUT_XCLK_N,
-		OUT_RESET_N => OUT_RESET_N
+		OUT_RESET_N => OUT_RESET_N,
+
+		DBGOUT  => DBGOUT
 	);
 
 end architecture;
