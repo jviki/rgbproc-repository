@@ -52,10 +52,6 @@ architecture full of vga2rgb is
 
 	constant HPULSE  : integer := 96;
 
-	type state_t is (s_drop, s_pass, s_hsync, s_vsync);
-	signal state  : state_t;
-	signal nstate : state_t;
-
 	signal self_vgarst    : std_logic_vector(5 downto 0);
 	signal self_vga_reset : std_logic;
 
@@ -155,6 +151,10 @@ begin
 
 	-------------------------------
 
+	vga_dena <= vga_hactive and vga_vactive;
+
+	-------------------------------
+
 	self_vgarstp : process(VGA_CLK, self_vgarst)
 	begin
 		if rising_edge(VGA_CLK) then
@@ -181,63 +181,6 @@ begin
 		NO_CLK    => VGA_CLK,
 		GEN_RST   => noclk_reset
 	);
-
-	-------------------------------
-
-	fsm_state : process(VGA_CLK, internal_reset, nstate)
-	begin
-		if rising_edge(VGA_CLK) then
-			if internal_reset = '1' then
-				state <= s_drop;
-			else
-				state <= nstate;
-			end if;
-		end if;
-	end process;
-
-	fsm_next : process(VGA_CLK, state, VGA_VS, VGA_HS)
-	begin
-		nstate <= state;
-
-		case state is
-		when s_drop =>
-			if VGA_VS = '0' then
-				nstate <= s_vsync;
-			end if;
-
-		when s_vsync =>
-			if VGA_VS = '1' then
-				nstate <= s_pass;
-			end if;
-
-		when s_pass =>
-			if VGA_VS = '0' then
-				nstate <= s_vsync;
-			elsif VGA_HS = '0' then
-				nstate <= s_hsync;
-			end if;
-
-		when s_hsync =>
-			if VGA_VS = '0' then
-				nstate <= s_vsync;
-			elsif VGA_HS = '1' then
-				nstate <= s_pass;
-			end if;
-
-		end case;
-	end process;
-
-	fsm_output : process(VGA_CLK, state, vga_hactive, vga_vactive)
-	begin
-		vga_dena <= '0';
-
-		case state is
-		when s_pass =>
-			vga_dena <= vga_hactive and vga_vactive;
-
-		when others =>
-		end case;
-	end process;
 
 end architecture;
 
