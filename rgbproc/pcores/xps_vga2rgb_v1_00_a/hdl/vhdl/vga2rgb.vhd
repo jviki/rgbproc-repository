@@ -59,6 +59,9 @@ architecture full of vga2rgb is
 	signal self_vgarst    : std_logic_vector(5 downto 0);
 	signal self_vga_reset : std_logic;
 
+	signal noclk_reset    : std_logic;
+	signal internal_reset : std_logic;
+
 	signal fifo_we     : std_logic;
 	signal fifo_full   : std_logic;
 	signal fifo_re     : std_logic;
@@ -77,6 +80,10 @@ architecture full of vga2rgb is
 	signal vga_eol     : std_logic;
 
 begin
+
+	internal_reset <= self_vga_reset or noclk_reset;
+
+	-------------------------------
 
 	asfifo_rgb : entity rgb_commons_v1_00_a.rgb_asfifo
 	port map (
@@ -116,6 +123,7 @@ begin
 	)
 	port map (
 		CLK    => VGA_CLK,
+		RST    => internal_reset,
 		SYNC_N => VGA_HS,
 		ACTIVE => vga_hactive,
 		FIRST  => vga_sol,
@@ -134,7 +142,7 @@ begin
 	end process;
 
 	cnt_vactive_ce  <= vga_sol;
-	cnt_vactive_clr <= not VGA_VS;
+	cnt_vactive_clr <= not VGA_VS or internal_reset;
 
 	-- This vactive signal is different (little bit late) from that from source (e.g. simulation).
 	-- It is up after a small delay of HBP, because of using vga_sol.
@@ -163,10 +171,23 @@ begin
 
 	-------------------------------
 
-	fsm_state : process(VGA_CLK, self_vga_reset, nstate)
+	noclk_reset_i : entity work.noclk_reset
+	generic map (
+		CLK_RATIO => 5
+	)
+	port map (
+		REF_CLK   => RGB_CLK,
+		REF_RST   => self_vga_reset,
+		NO_CLK    => VGA_CLK,
+		GEN_RST   => noclk_reset
+	);
+
+	-------------------------------
+
+	fsm_state : process(VGA_CLK, internal_reset, nstate)
 	begin
 		if rising_edge(VGA_CLK) then
-			if self_vga_reset = '1' then
+			if internal_reset = '1' then
 				state <= s_drop;
 			else
 				state <= nstate;
