@@ -136,7 +136,7 @@ begin
 	cnt_horiz_ce  <= '1';
 	cnt_horiz_clr <= internal_reset or not(VGA_HS);
 
-	cnt_vert_ce   <= '1' when cnt_horiz = HBP + HPIXELS + HFP - 1 else '0';
+	cnt_vert_ce   <= '1' when cnt_horiz = HBP + HDP + HFP - 1 else '0';
 	cnt_vert_clr  <= internal_reset or not(VGA_VS);
 
 	-------------------------------
