@@ -262,7 +262,8 @@ generate
 	DBGOUT(35) <= out_eol and fifo_re;
 	DBGOUT(36) <= out_eof and fifo_re;
 
-	DBGOUT(39 downto 37) <= (others => '1');
+	DBGOUT(37) <= ctrl_de;
+	DBGOUT(39 downto 38) <= (others => '1');
 
 end generate;
 
