@@ -37,6 +37,7 @@ port (
 
 	SLEEP   : in  std_logic;
 	DE      : out std_logic;
+	LAST    : out std_logic;
 	HS      : out std_logic;
 	VS      : out std_logic
 );
@@ -91,6 +92,7 @@ begin
 	HS    <= st_hp or cnt_horiz_of;
 	VS    <= st_vp or cnt_vert_of;
 	DE    <= st_hd and st_vd;
+	LAST  <= '1' when cnt_horiz = HP + HB + HD - 1 and cnt_vert = VP + VB + VD - 1 else '0';
 
 	-------------------------------------------
 	

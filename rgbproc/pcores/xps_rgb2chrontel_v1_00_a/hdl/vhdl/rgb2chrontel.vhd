@@ -87,6 +87,7 @@ architecture full of rgb2chrontel is
 	signal ctrl_hs       : std_logic;
 	signal ctrl_vs       : std_logic;
 	signal ctrl_de       : std_logic;
+	signal ctrl_last     : std_logic;
 
 	type state_t is (s_idle, s_frame_data, s_fallback);
 	signal state         : state_t;
@@ -160,7 +161,8 @@ begin
 		SLEEP => ctrl_sleep,
 		HS    => ctrl_hs,
 		VS    => ctrl_vs,
-		DE    => ctrl_de
+		DE    => ctrl_de,
+		LAST  => ctrl_last
 	);
 
 	hsync <= not ctrl_hs;
@@ -194,6 +196,8 @@ begin
 		when s_frame_data =>
 			if ctrl_vs = '1' then
 				nstate <= s_idle;
+			elsif fifo_re = '1' and out_eof = '1' and ctrl_last = '0' then
+				nstate <= s_fallback;
 			end if;
 
 		when s_fallback =>
@@ -255,7 +259,10 @@ generate
 	DBGOUT(33) <= out_data_en;
 	DBGOUT(34) <= ctrl_sleep;
 
-	DBGOUT(39 downto 35) <= (others => '1');
+	DBGOUT(35) <= out_eol and fifo_re;
+	DBGOUT(36) <= out_eof and fifo_re;
+
+	DBGOUT(39 downto 37) <= (others => '1');
 
 end generate;
 
