@@ -145,7 +145,7 @@ begin
 	begin
 		if rising_edge(rgb_clk) then
 			if rgb_rst = '1' then
-				rgb_counter_val <= (0 => '1', others => '0');
+				rgb_counter_val <= (others => '0');
 				rgb_r <= X"00";
 				rgb_g <= X"00";
 				rgb_b <= X"00";
