@@ -7,6 +7,9 @@ use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
 entity xps_vga2rgb is
+generic (
+	DEBUG    : integer := 0
+);
 port (
 	VGA_CLK  : in  std_logic;
 	VGA_R    : in  std_logic_vector(7 downto 0);
@@ -28,11 +31,15 @@ port (
 	RGB_EOF  : out std_logic;
 
 	RGB_VLD  : out std_logic;
-	RGB_REQ  : in  std_logic
+	RGB_REQ  : in  std_logic;
+
+	DBGOUT   : out std_logic_vector(95 downto 0)
 );
 end entity;
 
 architecture wrapper of xps_vga2rgb is
+
+	constant DEBUG_EN : boolean := DEBUG = 1;
 
 	signal reg_latch : std_logic_vector(25 downto 0);
 
@@ -57,6 +64,9 @@ begin
 	end process;
 
 	impl_i : entity work.vga2rgb
+	generic map (
+		DEBUG   => DEBUG_EN
+	)
 	port map (
 		VGA_CLK => VGA_CLK,
 		VGA_R   => reg_latch( 9 downto  2),
@@ -74,7 +84,9 @@ begin
 		RGB_EOF => RGB_EOF,
 
 		RGB_VLD => RGB_VLD,
-		RGB_REQ => RGB_REQ
+		RGB_REQ => RGB_REQ,
+
+		DBGOUT  => DBGOUT
 	);
 
 end architecture;

@@ -37,6 +37,7 @@ port (
 
 	SLEEP   : in  std_logic;
 	DE      : out std_logic;
+	LAST    : out std_logic;
 	HS      : out std_logic;
 	VS      : out std_logic
 );
@@ -91,11 +92,17 @@ begin
 	HS    <= st_hp or cnt_horiz_of;
 	VS    <= st_vp or cnt_vert_of;
 	DE    <= st_hd and st_vd;
+	LAST  <= '1' when cnt_horiz = HP + HB + HD - 1 and cnt_vert = VP + VB + VD - 1 else '0';
 
 	-------------------------------------------
 	
 	cnt_horiz_ce <= '1';
-	cnt_vert_ce  <= cnt_horiz_of;
+
+	---
+	-- It does not matter when to increment the vertical counter.
+	-- The commented code is more accurate but not necessary.
+	---
+	cnt_vert_ce  <= cnt_horiz_of; --'1' when cnt_horiz = HPIXELS - 1 else '0';
 
 	cnt_horiz_clr <= RST or SLEEP;
 	cnt_vert_clr  <= RST or SLEEP;

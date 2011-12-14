@@ -10,6 +10,9 @@ OPTION DESC = Inputs VGA signal and transforms it to RGB bus
 IO_INTERFACE IO_IF = vga, IO_TYPE  = VGA_IN_V1
 BUS_INTERFACE BUS=out, BUS_STD=RGB, BUS_TYPE=INITIATOR
 
+PARAMETER DEBUG = 0, DT = integer, VALUES = (0 = disable, 1 = enable)
+PORT DBGOUT = "", VEC = [95:0], DIR = O, ISVALID = (DEBUG == 1)
+
 # vga clock domain
 PORT VGA_CLK = vga_clk, DIR = I, SIGIS = CLK, IO_IS = VGA_CLK, IO_IF = vga
 

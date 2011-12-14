@@ -8,7 +8,8 @@ use ieee.std_logic_unsigned.all;
 
 entity xps_rgb_fifo is
 generic (
-	DEPTH : integer := 2 * 640 * 480
+	DEPTH : integer := 2 * 640 * 480;
+	DEBUG : integer := 0
 );
 port (
 	CLK     : in  std_logic;
@@ -28,16 +29,22 @@ port (
 	OUT_EOL : out std_logic;
 	OUT_EOF : out std_logic;
 	OUT_VLD : out std_logic;
-	OUT_REQ : in  std_logic
+	OUT_REQ : in  std_logic;
+
+	DBGOUT  : out std_logic_vector(63 downto 0)
 );
 end entity;
 
 architecture wrapper of xps_rgb_fifo is
+
+	constant DEBUG_EN : boolean := DEBUG = 1;
+
 begin
 
 	impl_i : entity work.rgb_fifo
 	generic map (
-		DEPTH => DEPTH
+		DEPTH => DEPTH,
+		DEBUG => DEBUG_EN
 	)
 	port map (
 		CLK     => CLK,
@@ -57,7 +64,9 @@ begin
 		OUT_EOL => OUT_EOL,
 		OUT_EOF => OUT_EOF,
 		OUT_VLD => OUT_VLD,
-		OUT_REQ => OUT_REQ
+		OUT_REQ => OUT_REQ,
+
+		DBGOUT  => DBGOUT
 	);
 
 end architecture;

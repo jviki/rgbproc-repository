@@ -11,10 +11,12 @@ use unisim.vcomponents.all;
 
 library proc_common_v3_00_a;
 use proc_common_v3_00_a.sync_fifo_fg;
+use proc_common_v3_00_a.proc_common_pkg.log2;
 
 entity rgb_fifo is
 generic (
-	DEPTH : integer := 2 * 640 * 480
+	DEPTH : integer := 2 * 640 * 480;
+	DEBUG : boolean := false
 );
 port (
 	CLK     : in  std_logic;
@@ -34,7 +36,9 @@ port (
 	OUT_EOL : out std_logic;
 	OUT_EOF : out std_logic;
 	OUT_VLD : out std_logic;
-	OUT_REQ : in  std_logic
+	OUT_REQ : in  std_logic;
+
+	DBGOUT  : out std_logic_vector(63 downto 0)
 );
 end entity;
 
@@ -59,6 +63,16 @@ architecture full of rgb_fifo is
 	signal fifo_re    : std_logic;
 	signal fifo_full  : std_logic;
 	signal fifo_empty : std_logic;
+
+	signal cnt_pixels     : std_logic_vector(31 downto 0);
+	signal cnt_pixels_clr : std_logic;
+	signal cnt_pixels_up  : std_logic;
+	signal cnt_pixels_down: std_logic;
+
+	signal cnt_lines      : std_logic_vector(15 downto 0);
+	signal cnt_lines_clr  : std_logic;
+	signal cnt_lines_up   : std_logic;
+	signal cnt_lines_down : std_logic;
 
 begin
 
@@ -137,6 +151,66 @@ generate
 		Full  => fifo_full,
 		Empty => fifo_empty
 	);
+
+end generate;
+
+	-------------------------------------
+
+gen_dbgout: if DEBUG = true
+generate
+
+	DBGOUT(0) <= cnt_lines_clr;
+	DBGOUT(1) <= cnt_lines_up;
+	DBGOUT(2) <= cnt_lines_down;
+	DBGOUT(18 downto  3) <= cnt_lines;
+
+	DBGOUT(19) <= cnt_pixels_clr;
+	DBGOUT(20) <= cnt_pixels_up;
+	DBGOUT(21) <= cnt_pixels_down;
+	DBGOUT(53 downto 22) <= cnt_pixels;
+
+	DBGOUT(54) <= fifo_empty;
+	DBGOUT(55) <= fifo_full;
+
+	DBGOUT(63 downto 56) <= (others => '0');
+
+	-------------------
+
+	cnt_linesp : process(CLK, cnt_lines_clr, cnt_lines_up, cnt_lines_down)
+	begin
+		if rising_edge(CLK) then
+			if cnt_lines_clr = '1' then
+				cnt_lines <= (others => '0');
+			elsif cnt_lines_up = '1' and cnt_lines_down = '0' then
+				cnt_lines <= cnt_lines + 1;
+			elsif cnt_lines_up = '0' and cnt_lines_down = '1' then
+				cnt_lines <= cnt_lines - 1;
+			end if;
+		end if;
+	end process;
+
+	cnt_pixelsp : process(CLK, cnt_pixels_clr, cnt_pixels_up, cnt_pixels_down)
+	begin
+		if rising_edge(CLK) then
+			if cnt_pixels_clr = '1' then
+				cnt_pixels <= (others => '0');
+			elsif cnt_pixels_up = '1' and cnt_pixels_down = '0' then
+				cnt_pixels <= cnt_pixels + 1;
+			elsif cnt_pixels_up = '0' and cnt_pixels_down = '1' then
+				cnt_pixels <= cnt_pixels - 1;
+			end if;
+		end if;
+	end process;
+
+	-------------------
+
+	cnt_lines_clr   <= RST;
+	cnt_lines_up    <= fifo_we and  IN_EOL;
+	cnt_lines_down  <= fifo_re and fifo_dout(24); -- OUT_EOL
+
+	cnt_pixels_clr  <= RST;
+	cnt_pixels_up   <= fifo_we;
+	cnt_pixels_down <= fifo_re;
 
 end generate;
 
