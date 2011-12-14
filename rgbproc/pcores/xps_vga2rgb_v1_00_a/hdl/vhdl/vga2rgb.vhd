@@ -36,7 +36,9 @@ port (
 	RGB_EOF  : out std_logic;
 
 	RGB_VLD  : out std_logic;
-	RGB_REQ  : in  std_logic
+	RGB_REQ  : in  std_logic;
+
+	DBGOUT   : out std_logic_vector(95 downto 0)
 );
 end entity;
 
@@ -155,6 +157,36 @@ begin
 
 	fifo_re <= RGB_REQ and not fifo_empty;
 	RGB_VLD <= not fifo_empty;
+
+	-------------------------------
+
+gen_dbgout: if DEBUG = true
+generate
+
+	DBGOUT(0)  <= internal_reset;
+	DBGOUT(1)  <= vga_reset;
+	DBGOUT(2)  <= st_hd;
+	DBGOUT(3)  <= st_vd;
+	DBGOUT(4)  <= fifo_we;
+	DBGOUT(5)  <= fifo_re;
+	DBGOUT(6)  <= fifo_full;
+	DBGOUT(7)  <= fifo_empty;
+
+	DBGOUT(8)  <= RGB_REQ;
+	DBGOUT(9)  <= not fifo_empty; -- RGB_VLD
+	DBGOUT(10) <= vga_eol;
+	DBGOUT(11) <= vga_eof;
+
+	DBGOUT(12) <= cnt_horiz_ce;
+	DBGOUT(13) <= cnt_horiz_clr;
+	DBGOUT(45 downto 14) <= conv_std_logic_vector(conv_integer(cnt_horiz), 32);
+	DBGOUT(46) <= cnt_vert_ce;
+	DBGOUT(47) <= cnt_vert_clr;
+	DBGOUT(79 downto 48) <= conv_std_logic_vector(conv_integer(cnt_vert), 32);
+
+	DBGOUT(95 downto 80) <= (others => '0');
+
+end generate;
 
 end architecture;
 
