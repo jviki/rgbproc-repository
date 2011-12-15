@@ -33,6 +33,9 @@ generic (
 	M2x2         : integer := 4
 );
 port (
+	CLK     : in  std_logic;
+	RST	: in  std_logic;
+
 	IN_CLK  : in  std_logic;
 	IN_RST	: in  std_logic;
 
@@ -60,6 +63,11 @@ architecture wrapper of xps_generic_filter is
 
 	constant BYPASS_EN : boolean BYPASS = 1;
 
+	signal clk0      : std_logic;
+	signal clk1      : std_logic;
+	signal rst0      : std_logic;
+	signal rst1      : std_logic;
+
 	signal line_r    : std_logic_vector(7 downto 0);
 	signal line_g    : std_logic_vector(7 downto 0);
 	signal line_b    : std_logic_vector(7 downto 0);
@@ -75,14 +83,22 @@ architecture wrapper of xps_generic_filter is
 
 begin
 
+	clk0 <= CLK when RATIO_OUT_IN = 1 else IN_CLK;
+	clk1 <= CLK when RATIO_OUT_IN > 1 else OUT_CLK;
+
+	rst0 <= RST when RATIO_OUT_IN = 1 else IN_RST;
+	rst1 <= RST when RATIO_OUT_IN > 1 else OUT_RST;
+
+	----------------------------------
+
 	line4_buff_i : entity rgb_commons_v1_00_a.line4_buff
 	generic map (
 		LINE_WIDTH   => FRAME_WIDTH,
 		RATIO_OUT_IN =>	RATIO_OUT_IN
 	)
 	port map (
-		IN_CLK   => IN_CLK,
-		IN_RST   => IN_RST,
+		IN_CLK   => clk0,
+		IN_RST   => rst0,
 		IN_R     => IN_R,
 		IN_G     => IN_G,
 		IN_B     => IN_B,
@@ -91,8 +107,8 @@ begin
 		IN_VLD   => IN_VLD,
 		IN_REQ   => IN_REQ,
 
-		OUT_CLK  => OUT_CLK,
-		OUT_RST  => OUT_RST,
+		OUT_CLK  => clk1,
+		OUT_RST  => rst1,
 		OUT_R    => line_r,
 		OUT_G    => line_g,
 		OUT_B    => line_b,
@@ -107,8 +123,8 @@ begin
 		LINES_COUNT => FRAME_HEIGHT
 	)
 	port map (
-		CLK     => OUT_CLK,
-		RST     => OUT_RST,
+		CLK     => clk1,
+		RST     => rst1,
 
 		IN_R     => line_r,
 		IN_G     => line_g,
@@ -139,8 +155,8 @@ begin
 		M2x2      => M2x2
 	)
 	port map (
-		CLK     => OUT_CLK,
-		RST     => OUT_RST,
+		CLK     => clk1,
+		RST     => rst1,
 
 		WIN_R   => win_r,
 		WIN_G   => win_g,
