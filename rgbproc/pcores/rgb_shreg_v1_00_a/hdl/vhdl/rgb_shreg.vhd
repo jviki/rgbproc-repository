@@ -12,6 +12,7 @@ generic (
 )
 port (
 	CLK     : in  std_logic;
+	RST     : in  std_logic;
 	CE      : in  std_logic;
 
 	IN_R    : in  std_logic_vector(7 downto 0);
@@ -46,7 +47,11 @@ begin
 	rgb_shregp : process(CLK, RST, CE)
 	begin
 		if rising_edge(CLK) then
-			if CE = 1' then
+			if RST = '1' then
+				reg_de <= (others => '0');
+				reg_hs <= (others => '0');
+				reg_vs <= (others => '0');
+			elsif CE = 1' then
 				reg_r(0)  <= IN_R;
 				reg_g(0)  <= IN_G;
 				reg_b(0)  <= IN_B;
