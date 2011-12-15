@@ -90,11 +90,25 @@ architecture wrapper of xps_generic_filter is
 
 begin
 
-	clk0 <= CLK when RATIO_OUT_IN = 1 else IN_CLK;
-	clk1 <= CLK when RATIO_OUT_IN > 1 else OUT_CLK;
+gen_shared_clk: if RATIO_OUT_IN = 1
+generate
 
-	rst0 <= RST when RATIO_OUT_IN = 1 else IN_RST;
-	rst1 <= RST when RATIO_OUT_IN > 1 else OUT_RST;
+	clk0 <= CLK;
+	clk1 <= CLK;
+	rst0 <= RST;
+	rst1 <= RST;
+
+end generate;
+
+gen_multiple_clk: if RATIO_OUT_IN > 1
+generate
+
+	clk0 <= IN_CLK;
+	rst0 <= IN_RST;
+	clk1 <= OUT_CLK;
+	rst1 <= OUT_RST;
+
+end generate;
 
 	----------------------------------
 
