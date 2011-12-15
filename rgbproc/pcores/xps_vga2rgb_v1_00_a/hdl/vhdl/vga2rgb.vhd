@@ -36,54 +36,53 @@ port (
 	RGB_EOF  : out std_logic;
 
 	RGB_VLD  : out std_logic;
-	RGB_REQ  : in  std_logic
+	RGB_REQ  : in  std_logic;
+
+	DBGOUT   : out std_logic_vector(95 downto 0)
 );
 end entity;
 
 architecture full of vga2rgb is
 
-	constant HPIXELS : integer := 800;
-	constant VLINES  : integer := 525;
-
 	constant HBP     : integer := 48;
+	constant HDP     : integer := 640;
 	constant HFP     : integer := 16;
 	constant VBP     : integer := 33;
+	constant VDP     : integer := 480;
 	constant VFP     : integer := 10;
 
 	constant HPULSE  : integer := 96;
+	constant VPULSE  : integer := 2;
 
-	signal self_vgarst    : std_logic_vector(5 downto 0);
-	signal self_vga_reset : std_logic;
+	constant HPIXELS : integer := HPULSE + HBP + HDP + HFP;
+	constant VLINES  : integer := VPULSE + VBP + VDP + VFP;
 
-	signal noclk_reset    : std_logic;
 	signal internal_reset : std_logic;
 
-	signal fifo_we     : std_logic;
-	signal fifo_full   : std_logic;
-	signal fifo_re     : std_logic;
-	signal fifo_empty  : std_logic;
+	signal fifo_we       : std_logic;
+	signal fifo_full     : std_logic;
+	signal fifo_re       : std_logic;
+	signal fifo_empty    : std_logic;
 
-	signal cnt_vactive     : std_logic_vector(log2(VLINES) - 1 downto 0);
-	signal cnt_vactive_ce  : std_logic;
-	signal cnt_vactive_clr : std_logic;
+	signal vga_eol       : std_logic;
+	signal vga_eof       : std_logic;
+	signal vga_reset     : std_logic;
 
-	signal vga_hactive : std_logic;
-	signal vga_vactive : std_logic;
-	signal vga_dena    : std_logic;
+	signal cnt_horiz     : std_logic_vector(log2(HPIXELS) - 1 downto 0);
+	signal cnt_horiz_ce  : std_logic;
+	signal cnt_horiz_clr : std_logic;
+	signal cnt_vert      : std_logic_vector(log2(VLINES) - 1 downto 0);
+	signal cnt_vert_ce   : std_logic;
+	signal cnt_vert_clr  : std_logic;
 
-	signal vga_eof     : std_logic;
-	signal vga_sol     : std_logic;
-	signal vga_eol     : std_logic;
+	signal st_hd         : std_logic;
+	signal st_vd         : std_logic;
 
 begin
 
-	internal_reset <= self_vga_reset or noclk_reset;
-
-	-------------------------------
-
 	asfifo_rgb : entity rgb_commons_v1_00_a.rgb_asfifo
 	port map (
-		ASYNC_RST     => self_vga_reset,
+		ASYNC_RST     => RGB_RST,
 
 		RGB_IN_CLK    => VGA_CLK,
 		RGB_IN_R      => VGA_R,
@@ -104,83 +103,90 @@ begin
 		RGB_OUT_EMPTY => fifo_empty
 	);
 
-	fifo_we <= vga_dena and not fifo_full;
-	fifo_re <= RGB_REQ;
-	
-	RGB_VLD <= not fifo_empty;
-	
 	-------------------------------
 
-	hactive_detect_i : entity work.active_detect
-	generic map (
-		BEG_OFF => HBP,
-		END_OFF => HFP,
-		LENGTH  => HPIXELS - HPULSE
-	)
-	port map (
-		CLK    => VGA_CLK,
-		RST    => internal_reset,
-		SYNC_N => VGA_HS,
-		ACTIVE => vga_hactive,
-		FIRST  => vga_sol,
-		LAST   => vga_eol
-	);
+	internal_reset <= RGB_RST or vga_reset;
+	vga_reset      <= not(VGA_VS or VGA_HS);
 
-	cnt_vactivep : process(VGA_CLK, cnt_vactive_ce, cnt_vactive_clr)
+	-------------------------------
+
+	cnt_horizp : process(VGA_CLK, cnt_horiz_ce, cnt_horiz_clr)
 	begin
 		if rising_edge(VGA_CLK) then
-			if cnt_vactive_clr = '1' then
-				cnt_vactive <= (others => '0');
-			elsif cnt_vactive_ce = '1' then
-				cnt_vactive <= cnt_vactive + 1;
+			if cnt_horiz_clr = '1' then
+				cnt_horiz    <= (others => '0');
+			elsif cnt_horiz_ce = '1' then
+				cnt_horiz    <= cnt_horiz + 1;
 			end if;
 		end if;
 	end process;
 
-	cnt_vactive_ce  <= vga_sol;
-	cnt_vactive_clr <= not VGA_VS or internal_reset;
 
-	-- This vactive signal is different (little bit late) from that from source (e.g. simulation).
-	-- It is up after a small delay of HBP, because of using vga_sol.
-	vga_vactive <= vga_sol           when cnt_vactive = VBP else
-	               not vga_sol       when cnt_vactive = VLINES - VFP - 2 else
-	               VGA_VS or vga_sol when cnt_vactive > VBP and cnt_vactive < VLINES - VFP - 1
-		       else '0';
-
-	vga_eof     <= vga_eol when cnt_vactive = VLINES - VFP - 2 else '0';
-
-	-------------------------------
-
-	vga_dena <= vga_hactive and vga_vactive;
-
-	-------------------------------
-
-	self_vgarstp : process(VGA_CLK, self_vgarst)
+	cn_vertp : process(VGA_CLK, cnt_vert_ce, cnt_vert_clr)
 	begin
 		if rising_edge(VGA_CLK) then
-			self_vgarst(0) <= not RGB_RST;
-			self_vgarst(1) <= self_vgarst(0);
-			self_vgarst(2) <= self_vgarst(1);
-			self_vgarst(3) <= self_vgarst(2);
-			self_vgarst(4) <= self_vgarst(3);
-			self_vgarst(5) <= self_vgarst(4);
+			if cnt_vert_clr = '1' then
+				cnt_vert <= (others => '0');
+			elsif cnt_vert_ce = '1' then
+				cnt_vert <= cnt_vert + 1;
+			end if;
 		end if;
 	end process;
 
-	self_vga_reset <= '0' when self_vgarst = (5 downto 0 => '1') else '1';
+	-------------------------------
+
+	cnt_horiz_ce  <= '1';
+	cnt_horiz_clr <= internal_reset or not(VGA_HS);
+
+	cnt_vert_ce   <= '1' when cnt_horiz = HBP + HDP + HFP - 1 else '0';
+	cnt_vert_clr  <= internal_reset or not(VGA_VS);
 
 	-------------------------------
 
-	noclk_reset_i : entity work.noclk_reset
-	generic map (
-		CLK_RATIO => 5
-	)
-	port map (
-		REF_CLK   => RGB_CLK,
-		REF_RST   => self_vga_reset,
-		NO_CLK    => VGA_CLK,
-		GEN_RST   => noclk_reset
-	);
+	st_hd <= '1' when cnt_horiz >= HBP and cnt_horiz < (HBP + HDP) else '0';
+	st_vd <= '1' when cnt_vert  >= VBP and cnt_vert  < (VBP + VDP) else '0';
+
+	vga_eol <= '1'     when cnt_horiz = HBP + HDP - 1 else '0';
+	vga_eof <= vga_eol when cnt_vert  = VBP + VDP - 1 else '0';
+
+	-------------------------------
+
+	fifo_we <= (st_hd and st_vd) and not fifo_full;
+
+	-------------------------------
+
+	fifo_re <= RGB_REQ and not fifo_empty;
+	RGB_VLD <= not fifo_empty;
+
+	-------------------------------
+
+gen_dbgout: if DEBUG = true
+generate
+
+	DBGOUT(0)  <= internal_reset;
+	DBGOUT(1)  <= vga_reset;
+	DBGOUT(2)  <= st_hd;
+	DBGOUT(3)  <= st_vd;
+	DBGOUT(4)  <= fifo_we;
+	DBGOUT(5)  <= fifo_re;
+	DBGOUT(6)  <= fifo_full;
+	DBGOUT(7)  <= fifo_empty;
+
+	DBGOUT(8)  <= RGB_REQ;
+	DBGOUT(9)  <= not fifo_empty; -- RGB_VLD
+	DBGOUT(10) <= vga_eol;
+	DBGOUT(11) <= vga_eof;
+
+	DBGOUT(12) <= cnt_horiz_ce;
+	DBGOUT(13) <= cnt_horiz_clr;
+	DBGOUT(45 downto 14) <= conv_std_logic_vector(conv_integer(cnt_horiz), 32);
+	DBGOUT(46) <= cnt_vert_ce;
+	DBGOUT(47) <= cnt_vert_clr;
+	DBGOUT(79 downto 48) <= conv_std_logic_vector(conv_integer(cnt_vert), 32);
+
+	DBGOUT(95 downto 80) <= (others => '0');
+
+end generate;
 
 end architecture;
 

@@ -1,0 +1,56 @@
+BEGIN xps_generic_filter
+
+OPTION IPTYPE = PERIPHERAL
+OPTION IMP_NETLIST = TRUE
+OPTION HDL = VHDL
+OPTION STYLE = HDL
+OPTION IP_GROUP = MICROBLAZE:PPC:USER
+OPTION DESC = Performs RGB filtering
+
+PARAMETER BYPASS = 0, DT = integer, VALUES = (0 = disable, 1 = enable)
+PARAMETER FRAME_WIDTH = 640, DT = integer, ASSIGNMENT = CONSTANT
+PARAMETER FRAME_HEIGHT = 480, DT = integer, ASSIGNMENT = CONSTANT
+PARAMETER RATIO_OUT_IN = 1, DT = integer, VALUES = (1 = 1:1, 2 = 2:1, 3 = 3:1, 4 = 4:1)
+PARAMETER FILTER = 0, DT = integer, VALUES = (0 = median filter, 1 = low-pass filter)
+PARAMETER M0x0 = 4, DT = integer, RANGE = (0:255), ISVALID = (FILTER == 1)
+PARAMETER M1x0 = 3, DT = integer, RANGE = (0:255), ISVALID = (FILTER == 1)
+PARAMETER M2x0 = 4, DT = integer, RANGE = (0:255), ISVALID = (FILTER == 1)
+PARAMETER M0x1 = 3, DT = integer, RANGE = (0:255), ISVALID = (FILTER == 1)
+PARAMETER M1x1 = 2, DT = integer, RANGE = (0:255), ISVALID = (FILTER == 1)
+PARAMETER M2x1 = 3, DT = integer, RANGE = (0:255), ISVALID = (FILTER == 1)
+PARAMETER M0x2 = 4, DT = integer, RANGE = (0:255), ISVALID = (FILTER == 1)
+PARAMETER M1x2 = 3, DT = integer, RANGE = (0:255), ISVALID = (FILTER == 1)
+PARAMETER M2x2 = 4, DT = integer, RANGE = (0:255), ISVALID = (FILTER == 1)
+PARAMETER DEBUG = 0, DT = integer, VALUES = (0 = disable, 1 = enable)
+
+BUS_INTERFACE BUS=in, BUS_STD=RGB, BUS_TYPE=TARGET
+BUS_INTERFACE BUS=out, BUS_STD=RGB, BUS_TYPE=INITIATOR
+
+PORT CLK = "", DIR = I, SIGIS = CLK, ISVALID = (RATIO_OUT_IN == 1)
+PORT RST = sys_periph_reset, DIR = I, SIGIS = RST, ISVALID = (RATIO_OUT_IN == 1)
+
+PORT IN_CLK = "", DIR = I, SIGIS = CLK, ISVALID = (RATIO_OUT_IN > 1)
+PORT IN_RST = sys_periph_reset, DIR = I, SIGIS = RST, ISVALID = (RATIO_OUT_IN > 1)
+
+PORT IN_R   = R,   DIR = I, BUS = in, VEC = [7:0]
+PORT IN_G   = G,   DIR = I, BUS = in, VEC = [7:0]
+PORT IN_B   = B,   DIR = I, BUS = in, VEC = [7:0]
+PORT IN_EOL = EOL, DIR = I, BUS = in
+PORT IN_EOF = EOF, DIR = I, BUS = in
+PORT IN_REQ = REQ, DIR = O, BUS = in
+PORT IN_VLD = VLD, DIR = I, BUS = in
+
+PORT OUT_CLK = "", DIR = I, SIGIS = CLK, ISVALID = (RATIO_OUT_IN > 1)
+PORT OUT_RST = sys_periph_reset, DIR = I, SIGIS = RST, ISVALID = (RATIO_OUT_IN > 1)
+
+PORT OUT_R   = R,   DIR = O, BUS = out, VEC = [7:0]
+PORT OUT_G   = G,   DIR = O, BUS = out, VEC = [7:0]
+PORT OUT_B   = B,   DIR = O, BUS = out, VEC = [7:0]
+PORT OUT_EOL = EOL, DIR = O, BUS = out
+PORT OUT_EOF = EOF, DIR = O, BUS = out
+PORT OUT_REQ = REQ, DIR = I, BUS = out
+PORT OUT_VLD = VLD, DIR = O, BUS = out
+
+PORT DBGOUT = "", DIR = O, VEC = [63:0], ISVALID = (DEBUG == 1)
+
+END

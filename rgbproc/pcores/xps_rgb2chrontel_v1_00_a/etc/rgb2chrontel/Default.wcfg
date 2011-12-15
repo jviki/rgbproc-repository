@@ -18,7 +18,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="70" />
+   <WVObjectSize size="77" />
    <wvobject fp_name="/rgb2chrontel_tb/rgb_clk" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">rgb_clk</obj_property>
       <obj_property name="ObjectShortName">rgb_clk</obj_property>
@@ -321,10 +321,39 @@
       <obj_property name="ElementShortName">st_vf</obj_property>
       <obj_property name="ObjectShortName">st_vf</obj_property>
    </wvobject>
+   <wvobject fp_name="/rgb2chrontel_tb/dut_i/out_r" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">out_r[7:0]</obj_property>
+      <obj_property name="ObjectShortName">out_r[7:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb2chrontel_tb/dut_i/out_eof" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">out_eof</obj_property>
+      <obj_property name="ObjectShortName">out_eof</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb2chrontel_tb/dut_i/frame_ctrl_i/last" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">last</obj_property>
+      <obj_property name="ObjectShortName">last</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb2chrontel_tb/dut_i/frame_ctrl_i/cnt_vert_ce" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">cnt_vert_ce</obj_property>
+      <obj_property name="ObjectShortName">cnt_vert_ce</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb2chrontel_tb/dut_i/frame_ctrl_i/cnt_vert_of" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">cnt_vert_of</obj_property>
+      <obj_property name="ObjectShortName">cnt_vert_of</obj_property>
+   </wvobject>
    <wvobject fp_name="/rgb2chrontel_tb/dut_i/frame_ctrl_i/cnt_vert" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">cnt_vert[9:0]</obj_property>
       <obj_property name="ObjectShortName">cnt_vert[9:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb2chrontel_tb/dut_i/frame_ctrl_i/cnt_horiz_ce" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">cnt_horiz_ce</obj_property>
+      <obj_property name="ObjectShortName">cnt_horiz_ce</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb2chrontel_tb/dut_i/frame_ctrl_i/cnt_horiz_of" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">cnt_horiz_of</obj_property>
+      <obj_property name="ObjectShortName">cnt_horiz_of</obj_property>
    </wvobject>
    <wvobject fp_name="/rgb2chrontel_tb/dut_i/frame_ctrl_i/cnt_horiz" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">cnt_horiz[9:0]</obj_property>
