@@ -1,0 +1,42 @@
+BEGIN rgb_line_buff
+
+OPTION IPTYPE = PERIPHERAL
+OPTION IMP_NETLIST = TRUE
+OPTION HDL = VHDL
+OPTION STYLE = HDL
+OPTION IP_GROUP = MICROBLAZE:PPC:USER
+OPTION DESC = Line buffer for RGB with few fields accessible
+
+BUS_INTERFACE BUS=in, BUS_STD=RGB, BUS_TYPE=TARGET
+BUS_INTERFACE BUS=out, BUS_STD=RGB, BUS_TYPE=INITIATOR
+BUS_INTERFACE BUS=fields, BUS_STD=RGB_FIELDS, BUS_TYPE=INITIATOR
+
+PARAMETER WIDTH  = 640, DT = integer
+PARAMETER FIELDS = 3, DT = integer
+
+PORT CLK = "", DIR = I, SIGIS = CLK
+PORT RST = sys_periph_reset, DIR = I, SIGIS = RST
+PORT CE  = "", DIR = I
+
+PORT IN_R   = R,   DIR = I, BUS = in, VEC = [7:0]
+PORT IN_G   = G,   DIR = I, BUS = in, VEC = [7:0]
+PORT IN_B   = B,   DIR = I, BUS = in, VEC = [7:0]
+PORT IN_DE  = DE,  DIR = I, BUS = in
+PORT IN_HS  = HS,  DIR = I, BUS = in
+PORT IN_VS  = VS,  DIR = I, BUS = in
+
+PORT FIELD_R  = R,   DIR = O, BUS = fields, VEC = [FIELDS*8-1:0]
+PORT FIELD_G  = G,   DIR = O, BUS = fields, VEC = [FIELDS*8-1:0]
+PORT FIELD_B  = B,   DIR = O, BUS = fields, VEC = [FIELDS*8-1:0]
+PORT FIELD_DE = DE,  DIR = O, BUS = fields
+PORT FIELD_HS = HS,  DIR = O, BUS = fields
+PORT FIELD_VS = VS,  DIR = O, BUS = fields
+
+PORT OUT_R   = R,   DIR = O, BUS = out, VEC = [7:0]
+PORT OUT_G   = G,   DIR = O, BUS = out, VEC = [7:0]
+PORT OUT_B   = B,   DIR = O, BUS = out, VEC = [7:0]
+PORT OUT_DE  = DE,  DIR = O, BUS = out
+PORT OUT_HS  = HS,  DIR = O, BUS = out
+PORT OUT_VS  = VS,  DIR = O, BUS = out
+
+END
