@@ -10,23 +10,26 @@ OPTION DESC = Performs RGB filtering
 PARAMETER BYPASS = 0, DT = integer, VALUES = (0 = disable, 1 = enable)
 PARAMETER FRAME_WIDTH = 640, DT = integer, ASSIGNMENT = CONSTANT
 PARAMETER FRAME_HEIGHT = 480, DT = integer, ASSIGNMENT = CONSTANT
-PARAMETER RATIO_OUT_IN = 1, DT = integer, VALUES = (1, 2, 3, 4)
-PARAMETER FILTER = 0, DT = integer
-PARAMETER M0x0 = 4, DT = integer, RANGE = (0:255)
-PARAMETER M1x0 = 3, DT = integer, RANGE = (0:255)
-PARAMETER M2x0 = 4, DT = integer, RANGE = (0:255)
-PARAMETER M0x1 = 3, DT = integer, RANGE = (0:255)
-PARAMETER M1x1 = 2, DT = integer, RANGE = (0:255)
-PARAMETER M2x1 = 3, DT = integer, RANGE = (0:255)
-PARAMETER M0x2 = 4, DT = integer, RANGE = (0:255)
-PARAMETER M1x2 = 3, DT = integer, RANGE = (0:255)
-PARAMETER M2x2 = 4, DT = integer, RANGE = (0:255)
+PARAMETER RATIO_OUT_IN = 1, DT = integer, VALUES = (1 = 1:1, 2 = 2:1, 3 = 3:1, 4 = 4:1)
+PARAMETER FILTER = 0, DT = integer, VALUES = (0 = median filter, 1 = low-pass filter)
+PARAMETER M0x0 = 4, DT = integer, RANGE = (0:255), ISVALID = (FILTER == 1)
+PARAMETER M1x0 = 3, DT = integer, RANGE = (0:255), ISVALID = (FILTER == 1)
+PARAMETER M2x0 = 4, DT = integer, RANGE = (0:255), ISVALID = (FILTER == 1)
+PARAMETER M0x1 = 3, DT = integer, RANGE = (0:255), ISVALID = (FILTER == 1)
+PARAMETER M1x1 = 2, DT = integer, RANGE = (0:255), ISVALID = (FILTER == 1)
+PARAMETER M2x1 = 3, DT = integer, RANGE = (0:255), ISVALID = (FILTER == 1)
+PARAMETER M0x2 = 4, DT = integer, RANGE = (0:255), ISVALID = (FILTER == 1)
+PARAMETER M1x2 = 3, DT = integer, RANGE = (0:255), ISVALID = (FILTER == 1)
+PARAMETER M2x2 = 4, DT = integer, RANGE = (0:255), ISVALID = (FILTER == 1)
 
 BUS_INTERFACE BUS=in, BUS_STD=RGB, BUS_TYPE=INITIATOR
 BUS_INTERFACE BUS=out, BUS_STD=RGB, BUS_TYPE=TARGET
 
-PORT IN_CLK = "", DIR = I, SIGIS = CLK
-PORT IN_RST = sys_periph_reset, DIR = I, SIGIS = RST
+PORT CLK = "", DIR = I, SIGIS = CLK, ISVALID = (RATIO_OUT_IN == 1)
+PORT RST = sys_periph_reset, DIR = I, SIGIS = RST, ISVALID = (RATIO_OUT_IN == 1)
+
+PORT IN_CLK = "", DIR = I, SIGIS = CLK, ISVALID = (RATIO_OUT_IN > 1)
+PORT IN_RST = sys_periph_reset, DIR = I, SIGIS = RST, ISVALID = (RATIO_OUT_IN > 1)
 
 PORT IN_R   = R,   DIR = I, BUS = in, VEC = [7:0]
 PORT IN_G   = G,   DIR = I, BUS = in, VEC = [7:0]
@@ -36,8 +39,8 @@ PORT IN_EOF = EOF, DIR = I, BUS = in
 PORT IN_REQ = REQ, DIR = O, BUS = in
 PORT IN_VLD = VLD, DIR = I, BUS = in
 
-PORT OUT_CLK = "", DIR = I, SIGIS = CLK
-PORT OUT_RST = sys_periph_reset, DIR = I, SIGIS = RST
+PORT OUT_CLK = "", DIR = I, SIGIS = CLK, ISVALID = (RATIO_OUT_IN > 1)
+PORT OUT_RST = sys_periph_reset, DIR = I, SIGIS = RST, ISVALID = (RATIO_OUT_IN > 1)
 
 PORT OUT_R   = R,   DIR = O, BUS = out, VEC = [7:0]
 PORT OUT_G   = G,   DIR = O, BUS = out, VEC = [7:0]
