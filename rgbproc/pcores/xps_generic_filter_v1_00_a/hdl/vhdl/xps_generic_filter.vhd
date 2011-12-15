@@ -40,9 +40,9 @@ port (
 	IN_CLK  : in  std_logic;
 	IN_RST	: in  std_logic;
 
-	IN_R    : in  std_logic_vector(9 * 8 - 1 downto 0);
-	IN_G    : in  std_logic_vector(9 * 8 - 1 downto 0);
-	IN_B    : in  std_logic_vector(9 * 8 - 1 downto 0);
+	IN_R    : in  std_logic_vector(7 downto 0);
+	IN_G    : in  std_logic_vector(7 downto 0);
+	IN_B    : in  std_logic_vector(7 downto 0);
 	IN_EOL  : in  std_logic;
 	IN_EOF  : in  std_logic;
 	IN_VLD  : in  std_logic;
@@ -64,16 +64,16 @@ end entity;
 
 architecture wrapper of xps_generic_filter is
 
-	constant BYPASS_EN : boolean BYPASS = 1;
+	constant BYPASS_EN : boolean := BYPASS = 1;
 
 	signal clk0      : std_logic;
 	signal clk1      : std_logic;
 	signal rst0      : std_logic;
 	signal rst1      : std_logic;
 
-	signal line_r    : std_logic_vector(7 downto 0);
-	signal line_g    : std_logic_vector(7 downto 0);
-	signal line_b    : std_logic_vector(7 downto 0);
+	signal line_r    : std_logic_vector(4 * 8 - 1 downto 0);
+	signal line_g    : std_logic_vector(4 * 8 - 1 downto 0);
+	signal line_b    : std_logic_vector(4 * 8 - 1 downto 0);
 	signal line_mask : std_logic_vector(3 downto 0);
 	signal line_mark : std_logic_vector(3 downto 0);
 	signal line_addr : std_logic_vector(log2(FRAME_WIDTH) - 1 downto 0);
@@ -180,7 +180,7 @@ begin
 		OUT_REQ => out_reqx,
 
 		R_BYPASS    => open,
-		R_BYPASS_IN => (others => 'X'),
+		R_BYPASS_IN => 'X',
 		R_BYPASS_WE => '0'
 	);
 
@@ -200,7 +200,7 @@ begin
 	----------------------------------
 
 	out_pxvld <= out_reqx and out_vldx;
-	OUT_REQ   <= out_reqx;
+	out_reqx  <= OUT_REQ;
 	OUT_VLD   <= out_vldx;
 
 end architecture;
