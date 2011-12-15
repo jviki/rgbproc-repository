@@ -31,7 +31,8 @@ generic (
 	M2x1         : integer := 3;
 	M0x2         : integer := 4;
 	M1x2         : integer := 3;
-	M2x2         : integer := 4
+	M2x2         : integer := 4;
+	DEBUG        : integer := 0
 );
 port (
 	CLK     : in  std_logic;
@@ -57,7 +58,9 @@ port (
 	OUT_EOL : out std_logic;
 	OUT_EOF : out std_logic;
 	OUT_VLD : out std_logic;
-	OUT_REQ : in  std_logic
+	OUT_REQ : in  std_logic;
+
+	DBGOUT  : out std_logic_vector(63 downto 0)
 );
 
 end entity;
@@ -65,6 +68,7 @@ end entity;
 architecture wrapper of xps_generic_filter is
 
 	constant BYPASS_EN : boolean := BYPASS = 1;
+	constant DEBUG_EN  : boolean := DEBUG  = 1;
 
 	signal clk0      : std_logic;
 	signal clk1      : std_logic;
@@ -87,6 +91,8 @@ architecture wrapper of xps_generic_filter is
 	signal out_pxvld : std_logic;
 	signal out_reqx  : std_logic;
 	signal out_vldx  : std_logic;
+
+	signal r_bypass  : std_logic;
 
 begin
 
@@ -193,7 +199,7 @@ end generate;
 		OUT_VLD => out_vldx,
 		OUT_REQ => out_reqx,
 
-		R_BYPASS    => open,
+		R_BYPASS    => r_bypass,
 		R_BYPASS_IN => 'X',
 		R_BYPASS_WE => '0'
 	);
@@ -216,6 +222,28 @@ end generate;
 	out_pxvld <= out_reqx and out_vldx;
 	out_reqx  <= OUT_REQ;
 	OUT_VLD   <= out_vldx;
+
+	----------------------------------
+
+gen_dbgout: if DEBUG_EN = true
+generate
+
+	DBGOUT(0) <= rst0;
+	DBGOUT(1) <= rst1;
+
+	DBGOUT( 5 downto  2) <= line_mask;
+	DBGOUT( 9 downto  6) <= line_mark;
+	DBGOUT(25 downto 10) <= conv_std_logic_vector(conv_integer(line_addr), 16);
+
+	DBGOUT(26) <= win_vld;
+	DBGOUT(27) <= win_req;
+	DBGOUT(28) <= r_bypass;
+	DBGOUT(29) <= out_vldx;
+	DBGOUT(30) <= out_reqx;
+
+	DBGOUT(63 downto 31) <= (others => '0');
+
+end generate;
 
 end architecture;
 
