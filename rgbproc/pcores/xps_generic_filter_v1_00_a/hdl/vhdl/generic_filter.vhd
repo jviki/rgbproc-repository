@@ -6,9 +6,21 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
+use work.generic_filter_pkg.all;
+
 entity generic_filter is
 generic (
-	BYPASS_EN : boolean := true		
+	M0x0      : integer := 4;
+	M1x0      : integer := 3;
+	M2x0      : integer := 4;
+	M0x1      : integer := 3;
+	M1x1      : integer := 2;
+	M2x1      : integer := 3;
+	M0x2      : integer := 4;
+	M1x2      : integer := 3;
+	M2x2      : integer := 4;
+	FILTER    : integer := FILTER_MEDIAN;
+	BYPASS_EN : boolean := true
 );
 port (
 	CLK     : in  std_logic;
@@ -48,7 +60,10 @@ architecture wrapper of generic_filter is
 
 begin
 
-	shift_3x3_i : entity work.shift_3x3_filter
+gen_median_filter: if FILTER = FILTER_MEDIAN
+generate
+
+	filter_i : entity work.median_filter
 	generic map (
 		BYPASS_EN => BYPASS_EN
 	)
@@ -72,6 +87,47 @@ begin
 		BYPASS(15 downto  8) => bypass_g,
 		BYPASS(23 downto 16) => bypass_b
 	);
+
+end generate;
+
+gen_shift_filter: if FILTER_MEDIAN = FILTER_SHIFT
+generate
+
+	filter_i : entity work.shift_3x3_filter
+	generic map (
+		M0x0      => M0x0,
+		M0x1      => M0x1,
+		M0x2      => M0x2,
+		M1x0      => M1x0,
+		M1x1      => M1x1,
+		M1x2      => M1x2,
+		M2x0      => M2x0,
+		M2x1      => M2x1,
+		M2x2      => M2x2,
+		BYPASS_EN => BYPASS_EN
+	)
+	port map (
+		CLK     => CLK,
+		RST     => RST,
+
+		WIN_R   => WIN_R,
+		WIN_G   => WIN_G,
+		WIN_B   => WIN_B,
+		WIN_VLD => WIN_VLD,
+		WIN_REQ => WIN_REQ,
+
+		OUT_R   => filter_r,
+		OUT_G   => filter_g,
+		OUT_B   => filter_b,
+		OUT_VLD => OUT_VLD,
+		OUT_REQ => OUT_REQ,
+
+		BYPASS( 7 downto  0) => bypass_r,
+		BYPASS(15 downto  8) => bypass_g,
+		BYPASS(23 downto 16) => bypass_b
+	);
+
+end generate;
 
 	-------------------------------
 
