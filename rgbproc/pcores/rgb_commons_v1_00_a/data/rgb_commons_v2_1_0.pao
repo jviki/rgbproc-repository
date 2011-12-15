@@ -5,9 +5,9 @@ lib rgb_commons_v1_00_a end_gen.vhd vhdl
 lib rgb_commons_v1_00_a end_check.vhd vhdl
 
 #lib rgb_commons_v1_00_a rgb_fifo.vhd vhdl
-lib rgb_commons_v1_00_a line_buff_pkg.vhd vhdl
+lib rgb_commons_v1_00_a line_buff.vhd vhdl
 lib rgb_commons_v1_00_a line4_buff.vhd vhdl
-lib rgb_commons_v1_00_a rgb_row3_pkg.vhd vhdl
+lib rgb_commons_v1_00_a rgb_row3.vhd vhdl
 lib rgb_commons_v1_00_a rgb_win3x3.vhd vhdl
 lib rgb_commons_v1_00_a ip_reg.vhd vhdl
 lib rgb_commons_v1_00_a rgb_asfifo.vhd vhdl
