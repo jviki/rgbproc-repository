@@ -1,5 +1,6 @@
 lib proc_common_v3_00_a all
 lib rgb_commons_v1_00_a rgb_asfifo vhdl
 lib xps_vga2rgb_v1_00_a active_detect.vhd vhdl
+lib xps_vga2rgb_v1_00_a noclk_reset.vhd vhdl
 lib xps_vga2rgb_v1_00_a vga2rgb.vhd  vhdl
 lib xps_vga2rgb_v1_00_a xps_vga2rgb.vhd  vhdl

@@ -7,19 +7,28 @@ OPTION STYLE = HDL
 OPTION IP_GROUP = MICROBLAZE:PPC:USER
 OPTION DESC = Watchs RGB bus
 
-BUS_INTERFACE BUS=in, BUS_STD=RGB, BUS_TYPE=MONITOR
+BUS_INTERFACE BUS=in, BUS_STD=RGB, BUS_TYPE=TARGET
+BUS_INTERFACE BUS=out, BUS_STD=RGB, BUS_TYPE=INITIATOR
 
 # rgb clock domain
 PORT RGB_CLK = "", DIR = I, SIGIS = CLK
 PORT RGB_RST = sys_periph_reset, DIR = I, SIGIS = RST
 
-PORT RGB_EOL = EOL, DIR = I, BUS = in
-PORT RGB_EOF = EOF, DIR = I, BUS = in
-PORT RGB_R   = R,   DIR = I, BUS = in, VEC = [7:0]
-PORT RGB_G   = G,   DIR = I, BUS = in, VEC = [7:0]
-PORT RGB_B   = B,   DIR = I, BUS = in, VEC = [7:0]
-PORT RGB_REQ = REQ, DIR = I, BUS = in
-PORT RGB_VLD = VLD, DIR = I, BUS = in
+PORT IN_EOL = EOL, DIR = I, BUS = in
+PORT IN_EOF = EOF, DIR = I, BUS = in
+PORT IN_R   = R,   DIR = I, BUS = in, VEC = [7:0]
+PORT IN_G   = G,   DIR = I, BUS = in, VEC = [7:0]
+PORT IN_B   = B,   DIR = I, BUS = in, VEC = [7:0]
+PORT IN_REQ = REQ, DIR = O, BUS = in
+PORT IN_VLD = VLD, DIR = I, BUS = in
+
+PORT OUT_EOL = EOL, DIR = O, BUS = out
+PORT OUT_EOF = EOF, DIR = O, BUS = out
+PORT OUT_R   = R,   DIR = O, BUS = out, VEC = [7:0]
+PORT OUT_G   = G,   DIR = O, BUS = out, VEC = [7:0]
+PORT OUT_B   = B,   DIR = O, BUS = out, VEC = [7:0]
+PORT OUT_REQ = REQ, DIR = I, BUS = out
+PORT OUT_VLD = VLD, DIR = O, BUS = out
 
 PORT CS_CLK  = "", DIR = O, SIGIS = CLK
 PORT CS_VEC  = "", DIR = O, VEC = [47:0]

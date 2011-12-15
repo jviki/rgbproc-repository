@@ -10,7 +10,7 @@ OPTION DESC = Outputs RGB bus data to chrontel chip
 BUS_INTERFACE BUS=in, BUS_STD=RGB, BUS_TYPE=TARGET
 
 PARAMETER DEBUG = 0, DT = integer, VALUES = (0 = disable, 1 = enable)
-PORT DBGOUT = "", VEC = [31:0], DIR = O, ISVALID = (DEBUG == 1)
+PORT DBGOUT = "", VEC = [39:0], DIR = O, ISVALID = (DEBUG == 1)
 
 IO_INTERFACE IO_IF = chrontel, IO_TYPE  = DVI_OUT_V1
 

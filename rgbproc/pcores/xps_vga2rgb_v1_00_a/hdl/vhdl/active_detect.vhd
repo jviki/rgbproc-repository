@@ -32,6 +32,7 @@ generic (
 );
 port (
 	CLK     : in  std_logic;
+	RST     : in  std_logic;
 	SYNC_N  : in  std_logic;
 	ACTIVE  : out std_logic;
 	FIRST   : out std_logic;
@@ -84,7 +85,7 @@ begin
 	end process;
 
 	cnt_pos_ce  <= SYNC_N;
-	cnt_pos_clr <= not SYNC_N;
+	cnt_pos_clr <= not SYNC_N or RST;
 
 	----------------------------------
 

@@ -1,3 +1,3 @@
 lib proc_common_v3_00_a proc_common_pkg vhdl
-lib xps_buff_strategy_v1_00_a end_gen.vhd vhdl
+lib rgb_commons_v1_00_a end_gen.vhd vhdl
 lib xps_rgb_gen_v1_00_a xps_rgb_gen.vhd  vhdl
