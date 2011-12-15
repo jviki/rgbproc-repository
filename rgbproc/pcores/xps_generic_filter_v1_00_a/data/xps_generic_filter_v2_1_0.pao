@@ -1,4 +1,5 @@
 lib proc_common_v3_00_a all
+lib rgb_commons_v1_00_a all
 
 lib xps_generic_filter_v1_00_a adder_tree.vhd vhdl
 lib xps_generic_filter_v1_00_a bypass_shreg.vhd vhdl
@@ -13,5 +14,6 @@ lib xps_generic_filter_v1_00_a median_filter.vhd vhdl
 lib xps_generic_filter_v1_00_a shift_3x3_filter.vhd vhdl
 #lib xps_generic_filter_v1_00_a vertical_filter.vhd vhdl
 
+lib xps_generic_filter_v1_00_a generic_filter_pkg.vhd vhdl
 lib xps_generic_filter_v1_00_a generic_filter.vhd vhdl
 lib xps_generic_filter_v1_00_a xps_generic_filter.vhd vhdl
