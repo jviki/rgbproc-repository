@@ -12,6 +12,7 @@ use proc_common_v3_00_a.proc_common_pkg.log2;
 library rgb_commons_v1_00_a;
 use rgb_commons_v1_00_a.line4_buff;
 use rgb_commons_v1_00_a.rgb_win3x3;
+use rgb_commons_v1_00_a.end_gen;
 
 use work.generic_filter_pkg.all;
 
@@ -53,6 +54,8 @@ port (
 	OUT_R   : out std_logic_vector(7 downto 0);
 	OUT_G   : out std_logic_vector(7 downto 0);
 	OUT_B   : out std_logic_vector(7 downto 0);
+	OUT_EOL : out std_logic;
+	OUT_EOF : out std_logic;
 	OUT_VLD : out std_logic;
 	OUT_REQ : in  std_logic
 );
@@ -80,6 +83,10 @@ architecture wrapper of xps_generic_filter is
 	signal win_b     : std_logic_vector(9 * 8 - 1 downto 0);
 	signal win_vld   : std_logic;
 	signal win_req   : std_logic;
+
+	signal out_pxvld : std_logic;
+	signal out_reqx  : std_logic;
+	signal out_vldx  : std_logic;
 
 begin
 
@@ -140,6 +147,8 @@ begin
 		WIN_REQ  => win_req
 	);
 
+	----------------------------------
+
 	generic_filter_i : entity work.generic_filter
 	generic map (
 		BYPASS_EN => BYPASS_EN,
@@ -167,13 +176,32 @@ begin
 		OUT_R   => OUT_R,
 		OUT_G   => OUT_G,
 		OUT_B   => OUT_B,
-		OUT_VLD => OUT_VLD,
-		OUT_REQ => OUT_REQ,
+		OUT_VLD => out_vldx,
+		OUT_REQ => out_reqx,
 
 		R_BYPASS    => open,
 		R_BYPASS_IN => (others => 'X'),
 		R_BYPASS_WE => '0'
 	);
+
+	end_gen_i : entity rgb_commons_v1_00_a.end_gen
+	generic map (
+		WIDTH  => FRAME_WIDTH,
+		HEIGHT => FRAME_HEIGHT
+	)
+	port map (
+		CLK     => clk1,
+		RST     => rst1,
+		PX_VLD  => out_pxvld,
+		OUT_EOL => OUT_EOL,
+		OUT_EOF	=> OUT_EOF
+	);
+
+	----------------------------------
+
+	out_pxvld <= out_reqx and out_vldx;
+	OUT_REQ   <= out_reqx;
+	OUT_VLD   <= out_vldx;
 
 end architecture;
 

@@ -45,6 +45,8 @@ PORT OUT_RST = sys_periph_reset, DIR = I, SIGIS = RST, ISVALID = (RATIO_OUT_IN >
 PORT OUT_R   = R,   DIR = O, BUS = out, VEC = [7:0]
 PORT OUT_G   = G,   DIR = O, BUS = out, VEC = [7:0]
 PORT OUT_B   = B,   DIR = O, BUS = out, VEC = [7:0]
+PORT OUT_EOL = EOL, DIR = O, BUS = out
+PORT OUT_EOF = EOF, DIR = O, BUS = out
 PORT OUT_REQ = REQ, DIR = I, BUS = out
 PORT OUT_VLD = VLD, DIR = O, BUS = out
 
