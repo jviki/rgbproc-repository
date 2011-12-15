@@ -16,7 +16,7 @@ PORT RST = sys_periph_reset, DIR = I, SIGIS = RST
 PORT RGB_R   = R,   DIR = I, BUS = in, VEC = [7:0]
 PORT RGB_G   = G,   DIR = I, BUS = in, VEC = [7:0]
 PORT RGB_B   = B,   DIR = I, BUS = in, VEC = [7:0]
-PORT RGB_DE  = DE,  DIR = O, BUS = in
+PORT RGB_DE  = DE,  DIR = I, BUS = in
 PORT RGB_HS  = HS,  DIR = I, BUS = in
 PORT RGB_VS  = VS,  DIR = I, BUS = in
 
