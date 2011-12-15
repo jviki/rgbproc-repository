@@ -1,0 +1,32 @@
+BEGIN rgb_in
+
+OPTION IPTYPE = PERIPHERAL
+OPTION IMP_NETLIST = TRUE
+OPTION HDL = VHDL
+OPTION STYLE = HDL
+OPTION IP_GROUP = MICROBLAZE:PPC:USER
+OPTION DESC = Inputs VGA signal and transforms it to RGB bus
+
+IO_INTERFACE IO_IF = vga, IO_TYPE  = VGA_IN_V1
+BUS_INTERFACE BUS=out, BUS_STD=RGB, BUS_TYPE=INITIATOR
+
+PORT VGA_CLK = vga_clk, DIR = I, SIGIS = CLK, IO_IS = VGA_CLK, IO_IF = vga
+
+PORT VGA_R  = R,  IO_IS = VGA_R, IO_IF = vga, DIR = I, VEC = [7:0]
+PORT VGA_G  = G,  IO_IS = VGA_G, IO_IF = vga, DIR = I, VEC = [7:0]
+PORT VGA_B  = B,  IO_IS = VGA_B, IO_IF = vga, DIR = I, VEC = [7:0]
+PORT VGA_HS = HS, IO_IS = VGA_HSYNC, IO_IF = vga, DIR = I
+PORT VGA_VS = VS, IO_IS = VGA_VSYNC, IO_IF = vga, DIR = I
+PORT VGA_CLAMP = CLAMP,           IO_IS = VGA_CLAMP,      DIR = O, IO_IF = vga
+PORT VGA_COAST = COAST,           IO_IS = VGA_COAST,      DIR = O, IO_IF = vga
+PORT VGA_ODD_EVEN_B = ODD_EVEN_B, IO_IS = VGA_ODD_EVEN_B, DIR = I, IO_IF = vga
+PORT VGA_SOGOUT = SOGOUT,         IO_IS = VGA_SOGOUT,     DIR = I, IO_IF = vga
+
+PORT RGB_R   = R,   DIR = O, BUS = out, VEC = [7:0]
+PORT RGB_G   = G,   DIR = O, BUS = out, VEC = [7:0]
+PORT RGB_B   = B,   DIR = O, BUS = out, VEC = [7:0]
+PORT RGB_DE  = DE,  DIR = O, BUS = out
+PORT RGB_HS  = HS,  DIR = O, BUS = out
+PORT RGB_VS  = VS,  DIR = O, BUS = out
+
+END
