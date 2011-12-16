@@ -65,7 +65,7 @@ begin
 	ctl_bypass_i : entity work.ctl_bypass
 	generic map (
 		DWIDTH => 3,
-		DEPTH  => 10
+		DEPTH  => 8
 	)
 	port map (
 		CLK    => CLK,
