@@ -30,7 +30,8 @@ port (
 );
 end entity;
 
-architecture median9_filter of median_filter
+architecture median9_filter of median_filter is
+
 begin
 
 	median_r_i : entity work.median9
