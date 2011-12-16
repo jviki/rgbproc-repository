@@ -224,7 +224,7 @@ begin
 		wait;
 	end process;
 
-	get_data : process(clk, filter_ce)
+	get_data : process(clk, filter_ce, out_r, out_g, out_b, out_de, out_hs, out_vs)
 	begin
 		if rising_edge(clk) then
 			if filter_ce = '1' then
