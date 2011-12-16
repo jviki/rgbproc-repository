@@ -119,12 +119,12 @@ end generate;
 
 	----------------------------
 
-	OUT_R  <= fields_r (DEPTH);
-	OUT_G  <= fields_g (DEPTH);
-	OUT_B  <= fields_b (DEPTH);
-	OUT_DE <= fields_de(DEPTH);
-	OUT_HS <= fields_hs(DEPTH);
-	OUT_VS <= fields_vs(DEPTH);
+	OUT_R  <= fields_r (FIELDS);
+	OUT_G  <= fields_g (FIELDS);
+	OUT_B  <= fields_b (FIELDS);
+	OUT_DE <= fields_de(FIELDS);
+	OUT_HS <= fields_hs(FIELDS);
+	OUT_VS <= fields_vs(FIELDS);
 
 end architecture;
 
