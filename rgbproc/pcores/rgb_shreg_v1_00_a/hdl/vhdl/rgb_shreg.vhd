@@ -9,7 +9,7 @@ use ieee.std_logic_unsigned.all;
 entity rgb_shreg is
 generic (
 	DEPTH   : integer := 1		
-)
+);
 port (
 	CLK     : in  std_logic;
 	RST     : in  std_logic;
