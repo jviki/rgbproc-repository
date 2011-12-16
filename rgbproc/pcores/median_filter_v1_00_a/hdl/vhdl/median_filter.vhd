@@ -12,6 +12,7 @@ generic (
 );
 port (
 	CLK    : in  std_logic;
+	CE     : in  std_logic;
 	
 	WIN_R  : in  std_logic_vector((MATRIX_SIZE ** 2) * 8 - 1 downto 0);
 	WIN_G  : in  std_logic_vector((MATRIX_SIZE ** 2) * 8 - 1 downto 0);
@@ -35,7 +36,7 @@ begin
 	median_r_i : entity work.median9
 	port map (
 		CLK => CLK,
-		CE  => '1',
+		CE  => CE,
 		DI  => WIN_R,
 		DO  => median_r
 	);
@@ -43,7 +44,7 @@ begin
 	median_g_i : entity work.median9
 	port map (
 		CLK => CLK,
-		CE  => '1',
+		CE  => CE,
 		DI  => WIN_G,
 		DO  => median_g
 	);
@@ -51,7 +52,7 @@ begin
 	median_b_i : entity work.median9
 	port map (
 		CLK => CLK,
-		CE  => '1',
+		CE  => CE,
 		DI  => WIN_B,
 		DO  => median_b
 	);
