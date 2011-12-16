@@ -49,9 +49,9 @@ architecture full of rgb_line_buff is
 	signal fields_r  : color_t;
 	signal fields_g  : color_t;
 	signal fields_b  : color_t;
-	signal fields_de : std_logic_vector(FIELDS - 1 downto 0);
-	signal fields_hs : std_logic_vector(FIELDS - 1 downto 0);
-	signal fields_vs : std_logic_vector(FIELDS - 1 downto 0);
+	signal fields_de : std_logic_vector(FIELDS downto 0);
+	signal fields_hs : std_logic_vector(FIELDS downto 0);
+	signal fields_vs : std_logic_vector(FIELDS downto 0);
 
 begin
 
