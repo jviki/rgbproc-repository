@@ -86,6 +86,7 @@ entity user_logic is
   (
     -- ADD USER GENERICS BELOW THIS LINE ---------------
     --USER generics added here
+    DEFAULT_SRC                    : integer;
     -- ADD USER GENERICS ABOVE THIS LINE ---------------
 
     -- DO NOT EDIT BELOW THIS LINE ---------------------
@@ -177,7 +178,7 @@ begin
 
     if Bus2IP_Clk'event and Bus2IP_Clk = '1' then
       if Bus2IP_Reset = '1' then
-        slv_reg0 <= (others => '0');
+        slv_reg0 <= conv_std_logic_vector(DEFAULT_SRC, slv_reg0'length);
       else
         case slv_reg_write_sel is
           when "1" =>

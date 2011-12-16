@@ -140,6 +140,7 @@ entity cfg_rgb_mux is
   (
     -- ADD USER GENERICS BELOW THIS LINE ---------------
     --USER generics added here
+    DEFAULT_SRC                    : integer;
     -- ADD USER GENERICS ABOVE THIS LINE ---------------
 
     -- DO NOT EDIT BELOW THIS LINE ---------------------
@@ -383,6 +384,7 @@ begin
     (
       -- MAP USER GENERICS BELOW THIS LINE ---------------
       --USER generics mapped here
+      DEFAULT_SRC                    => DEFAULT_SRC,
       -- MAP USER GENERICS ABOVE THIS LINE ---------------
 
       C_SLV_DWIDTH                   => USER_SLV_DWIDTH,
