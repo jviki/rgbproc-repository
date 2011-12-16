@@ -152,6 +152,10 @@ architecture testbench of median_filter_tb is
 		return compute_median9(arr);
 	end function;
 
+	--------------
+
+	signal median_test_in  : std_logic_vector(71 downto 0);
+	signal median_test_out : std_logic_vector(7 downto 0);
 begin
 
 	median_filter_i : entity work.median_filter
@@ -218,6 +222,13 @@ begin
 		end if;
 	end process;
 
+	compute_median9_test : process(clk)
+	begin
+		if rising_edge(clk) then
+			median_test_in  <= gen_win_color;
+			median_test_out <= compute_median9(median_test_in);		
+		end if;
+	end process;
 	----------------------
 
 	clkgenp : process
