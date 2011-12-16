@@ -76,7 +76,7 @@ begin
 		OUT_B  => fields_b(0),
 		OUT_DE => fields_de(0),
 		OUT_HS => fields_hs(0),
-		OUT_VS => fields_v(0)
+		OUT_VS => fields_vs(0)
 	);
 
 	----------------------------
@@ -105,7 +105,7 @@ generate
 		OUT_B  => fields_b (i),
 		OUT_DE => fields_de(i),
 		OUT_HS => fields_hs(i),
-		OUT_VS => fields_vs(i),
+		OUT_VS => fields_vs(i)
 	);
 
 	FIELD_R (i * 8 - 1 downto (i - 1) * 8) <= fields_r(i);
