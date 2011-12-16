@@ -120,6 +120,8 @@ architecture testbench of median_filter_tb is
 		writeline(file_output, l);
 	end procedure;
 
+	--------------
+
 	subtype color_t is std_logic_vector(7 downto 0);
 	type input9_t   is array(0 to 8) of color_t;
 
@@ -164,6 +166,7 @@ architecture testbench of median_filter_tb is
 
 	signal median_test_in  : std_logic_vector(71 downto 0);
 	signal median_test_out : std_logic_vector(7 downto 0);
+
 begin
 
 	median_filter_i : entity work.median_filter
