@@ -83,8 +83,8 @@ architecture testbench of median_filter_tb is
 
 	--------------
 
-	file file_input  : TEXT open WRITE_MODE  is "file_input.txt";
-	file file_output : TEXT open WRITE_MODE  is "file_output.txt";
+	file file_input  : TEXT open WRITE_MODE  is "input.txt";
+	file file_output : TEXT open WRITE_MODE  is "output.txt";
 
 	procedure write_input(r, g, b : in std_logic_vector(7 downto 0); de, hs, vs : in std_logic) is
 		variable l : line;
