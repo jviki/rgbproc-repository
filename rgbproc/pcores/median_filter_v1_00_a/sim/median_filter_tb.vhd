@@ -240,6 +240,7 @@ begin
 			median_test_out <= compute_median9(median_test_in);		
 		end if;
 	end process;
+
 	----------------------
 
 	clkgenp : process
