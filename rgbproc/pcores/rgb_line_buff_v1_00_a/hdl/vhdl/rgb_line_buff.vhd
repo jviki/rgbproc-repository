@@ -108,12 +108,12 @@ generate
 		OUT_VS => fields_vs(i)
 	);
 
-	FIELD_R (i * 8 - 1 downto (i - 1) * 8) <= fields_r(i);
-	FIELD_G (i * 8 - 1 downto (i - 1) * 8) <= fields_g(i);
-	FIELD_B (i * 8 - 1 downto (i - 1) * 8) <= fields_b(i);
-	FIELD_DE(i * 8 - 1 downto (i - 1) * 8) <= fields_de(i);
-	FIELD_HS(i * 8 - 1 downto (i - 1) * 8) <= fields_hs(i);
-	FIELD_VS(i * 8 - 1 downto (i - 1) * 8) <= fields_vs(i);
+	FIELD_R (i * 8 - 1 downto (i - 1) * 8) <= fields_r(i - 1);
+	FIELD_G (i * 8 - 1 downto (i - 1) * 8) <= fields_g(i - 1);
+	FIELD_B (i * 8 - 1 downto (i - 1) * 8) <= fields_b(i - 1);
+	FIELD_DE(i - 1) <= fields_de(i - 1);
+	FIELD_HS(i - 1) <= fields_hs(i - 1);
+	FIELD_VS(i - 1) <= fields_vs(i - 1);
 
 end generate;
 
