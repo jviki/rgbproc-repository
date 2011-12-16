@@ -39,4 +39,6 @@ begin
 		end if;
 	end process;
 
+	DO <= shreg(shreg'length - 1);
+
 end architecture;
