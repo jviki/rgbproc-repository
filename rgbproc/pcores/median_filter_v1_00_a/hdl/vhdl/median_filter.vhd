@@ -32,6 +32,10 @@ end entity;
 
 architecture median9_filter of median_filter is
 
+	signal median_r : std_logic_vector(7 downto 0);
+	signal median_g : std_logic_vector(7 downto 0);
+	signal median_b : std_logic_vector(7 downto 0);
+
 begin
 
 	median_r_i : entity work.median9
@@ -73,5 +77,9 @@ begin
 		DO(1)  => OUT_HS,
 		DO(2)  => OUT_VS
 	);
+
+	OUT_R <= median_r;
+	OUT_G <= median_g;
+	OUT_B <= median_b;
 
 end architecture;
