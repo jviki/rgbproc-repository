@@ -1,0 +1,46 @@
+BEGIN rgb_win
+
+OPTION IPTYPE = PERIPHERAL
+OPTION IMP_NETLIST = TRUE
+OPTION HDL = VHDL
+OPTION STYLE = HDL
+OPTION IP_GROUP = MICROBLAZE:PPC:USER
+OPTION DESC = Line buffer for RGB with few fields accessible
+
+BUS_INTERFACE BUS=in, BUS_STD=RGB_FIELDS, BUS_TYPE=TARGET
+BUS_INTERFACE BUS=out, BUS_STD=RGB_WIN, BUS_TYPE=INITIATOR
+
+PARAMETER WIN_SIZE = 3, DT = integer, ASSIGNMENT = CONSTANT
+
+PORT CLK = "", DIR = I, SIGIS = CLK
+PORT CE  = net_vcc, DIR = I
+
+PORT ROW0_R   = R,   DIR = I, BUS = in, VEC = [WIN_SIZE*8-1:0]
+PORT ROW0_G   = G,   DIR = I, BUS = in, VEC = [WIN_SIZE*8-1:0]
+PORT ROW0_B   = B,   DIR = I, BUS = in, VEC = [WIN_SIZE*8-1:0]
+PORT ROW0_DE  = DE,  DIR = I, BUS = in, VEC = [WIN_SIZE-1:0]
+PORT ROW0_HS  = HS,  DIR = I, BUS = in, VEC = [WIN_SIZE-1:0]
+PORT ROW0_VS  = VS,  DIR = I, BUS = in, VEC = [WIN_SIZE-1:0]
+
+PORT ROW1_R   = R,   DIR = I, BUS = in, VEC = [WIN_SIZE*8-1:0]
+PORT ROW1_G   = G,   DIR = I, BUS = in, VEC = [WIN_SIZE*8-1:0]
+PORT ROW1_B   = B,   DIR = I, BUS = in, VEC = [WIN_SIZE*8-1:0]
+PORT ROW1_DE  = DE,  DIR = I, BUS = in, VEC = [WIN_SIZE-1:0]
+PORT ROW1_HS  = HS,  DIR = I, BUS = in, VEC = [WIN_SIZE-1:0]
+PORT ROW1_VS  = VS,  DIR = I, BUS = in, VEC = [WIN_SIZE-1:0]
+
+PORT ROW2_R   = R,   DIR = I, BUS = in, VEC = [WIN_SIZE*8-1:0]
+PORT ROW2_G   = G,   DIR = I, BUS = in, VEC = [WIN_SIZE*8-1:0]
+PORT ROW2_B   = B,   DIR = I, BUS = in, VEC = [WIN_SIZE*8-1:0]
+PORT ROW2_DE  = DE,  DIR = I, BUS = in, VEC = [WIN_SIZE-1:0]
+PORT ROW2_HS  = HS,  DIR = I, BUS = in, VEC = [WIN_SIZE-1:0]
+PORT ROW2_VS  = VS,  DIR = I, BUS = in, VEC = [WIN_SIZE-1:0]
+
+PORT WIN_R  = R,   DIR = O, BUS = out, VEC = [71:0]
+PORT WIN_G  = G,   DIR = O, BUS = out, VEC = [71:0]
+PORT WIN_B  = B,   DIR = O, BUS = out, VEC = [71:0]
+PORT WIN_DE = DE,  DIR = O, BUS = out, VEC = [8:0]
+PORT WIN_HS = HS,  DIR = O, BUS = out, VEC = [8:0]
+PORT WIN_VS = VS,  DIR = O, BUS = out, VEC = [8:0]
+
+END
