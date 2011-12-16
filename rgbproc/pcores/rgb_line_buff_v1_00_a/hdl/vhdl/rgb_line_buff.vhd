@@ -19,8 +19,8 @@ port (
 	RST      : in  std_logic;
 	CE       : in  std_logic;
 
-	IN_R     : in  std_logic_vector(7 downto 0)
-	IN_G     : in  std_logic_vector(7 downto 0)
+	IN_R     : in  std_logic_vector(7 downto 0);
+	IN_G     : in  std_logic_vector(7 downto 0);
 	IN_B     : in  std_logic_vector(7 downto 0);
 	IN_DE    : in  std_logic;
 	IN_HS    : in  std_logic;
@@ -38,7 +38,7 @@ port (
 	OUT_B    : out std_logic_vector(7 downto 0);
 	OUT_DE   : out std_logic;
 	OUT_HS   : out std_logic;
-	OUT_VS   : out std_logic;
+	OUT_VS   : out std_logic
 );
 end entity;
 
