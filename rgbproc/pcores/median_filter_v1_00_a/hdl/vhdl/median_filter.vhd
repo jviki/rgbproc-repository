@@ -57,4 +57,20 @@ begin
 		DO  => median_b
 	);
 
+	ctl_bypass_i : entity work.ctl_bypass
+	generic map (
+		DWIDTH => 3,
+		DEPTH  => 10
+	)
+	port map (
+		CLK    => CLK,
+		CE     => CE,
+		DI(0)  => WIN_DE(4),
+		DI(1)  => WIN_HS(4),
+		DI(2)  => WIN_VS(4),
+		DO(0)  => OUT_DE,
+		DO(1)  => OUT_HS,
+		DO(2)  => OUT_VS
+	);
+
 end architecture;
