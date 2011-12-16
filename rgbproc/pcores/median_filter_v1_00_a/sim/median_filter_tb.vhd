@@ -126,20 +126,28 @@ architecture testbench of median_filter_tb is
 	function compute_median9(input : in input9_t) return color_t is
 		variable tmp  : color_t;
 		variable sort : input9_t;
+		variable maxi : integer;
+		variable last : integer;
 	begin
 		sort := input;
+		maxi := 0;
+		last := 8;
 		
-		for k in 0 to 4 loop
-			for i in 0 to 7 loop
-				if sort(i) > sort(i + 1) then
-					tmp         := sort(i);
-					sort(i)     := sort(i + 1);
-					sort(i + 1) := tmp;
+		for k in 1 to 5 loop
+			for i in 1 to last loop
+				if sort(i) > sort(maxi) then
+					maxi := i;
 				end if;
 			end loop;
+
+			tmp        := sort(maxi);
+			sort(maxi) := sort(last);
+			sort(last) := tmp;
+			last       := last - 1;
+			maxi       := 0;
 		end loop;
 
-		return input(4);
+		return sort(4);
 	end function;
 
 	function compute_median9(input : std_logic_vector(71 downto 0)) return color_t is
