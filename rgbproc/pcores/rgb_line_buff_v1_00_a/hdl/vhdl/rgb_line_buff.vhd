@@ -19,8 +19,8 @@ port (
 	RST      : in  std_logic;
 	CE       : in  std_logic;
 
-	IN_R     : in  std_logic_vector(7 downto 0)
-	IN_G     : in  std_logic_vector(7 downto 0)
+	IN_R     : in  std_logic_vector(7 downto 0);
+	IN_G     : in  std_logic_vector(7 downto 0);
 	IN_B     : in  std_logic_vector(7 downto 0);
 	IN_DE    : in  std_logic;
 	IN_HS    : in  std_logic;
@@ -38,7 +38,7 @@ port (
 	OUT_B    : out std_logic_vector(7 downto 0);
 	OUT_DE   : out std_logic;
 	OUT_HS   : out std_logic;
-	OUT_VS   : out std_logic;
+	OUT_VS   : out std_logic
 );
 end entity;
 
@@ -49,9 +49,9 @@ architecture full of rgb_line_buff is
 	signal fields_r  : color_t;
 	signal fields_g  : color_t;
 	signal fields_b  : color_t;
-	signal fields_de : std_logic_vector(FIELDS - 1 downto 0);
-	signal fields_hs : std_logic_vector(FIELDS - 1 downto 0);
-	signal fields_vs : std_logic_vector(FIELDS - 1 downto 0);
+	signal fields_de : std_logic_vector(FIELDS downto 0);
+	signal fields_hs : std_logic_vector(FIELDS downto 0);
+	signal fields_vs : std_logic_vector(FIELDS downto 0);
 
 begin
 
@@ -76,7 +76,7 @@ begin
 		OUT_B  => fields_b(0),
 		OUT_DE => fields_de(0),
 		OUT_HS => fields_hs(0),
-		OUT_VS => fields_v(0)
+		OUT_VS => fields_vs(0)
 	);
 
 	----------------------------
@@ -105,26 +105,26 @@ generate
 		OUT_B  => fields_b (i),
 		OUT_DE => fields_de(i),
 		OUT_HS => fields_hs(i),
-		OUT_VS => fields_vs(i),
+		OUT_VS => fields_vs(i)
 	);
 
-	FIELD_R (i * 8 - 1 downto (i - 1) * 8) <= fields_r(i);
-	FIELD_G (i * 8 - 1 downto (i - 1) * 8) <= fields_g(i);
-	FIELD_B (i * 8 - 1 downto (i - 1) * 8) <= fields_b(i);
-	FIELD_DE(i * 8 - 1 downto (i - 1) * 8) <= fields_de(i);
-	FIELD_HS(i * 8 - 1 downto (i - 1) * 8) <= fields_hs(i);
-	FIELD_VS(i * 8 - 1 downto (i - 1) * 8) <= fields_vs(i);
+	FIELD_R (i * 8 - 1 downto (i - 1) * 8) <= fields_r(i - 1);
+	FIELD_G (i * 8 - 1 downto (i - 1) * 8) <= fields_g(i - 1);
+	FIELD_B (i * 8 - 1 downto (i - 1) * 8) <= fields_b(i - 1);
+	FIELD_DE(i - 1) <= fields_de(i - 1);
+	FIELD_HS(i - 1) <= fields_hs(i - 1);
+	FIELD_VS(i - 1) <= fields_vs(i - 1);
 
 end generate;
 
 	----------------------------
 
-	OUT_R  <= fields_r (DEPTH);
-	OUT_G  <= fields_g (DEPTH);
-	OUT_B  <= fields_b (DEPTH);
-	OUT_DE <= fields_de(DEPTH);
-	OUT_HS <= fields_hs(DEPTH);
-	OUT_VS <= fields_vs(DEPTH);
+	OUT_R  <= fields_r (FIELDS);
+	OUT_G  <= fields_g (FIELDS);
+	OUT_B  <= fields_b (FIELDS);
+	OUT_DE <= fields_de(FIELDS);
+	OUT_HS <= fields_hs(FIELDS);
+	OUT_VS <= fields_vs(FIELDS);
 
 end architecture;
 

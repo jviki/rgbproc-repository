@@ -1,6 +1,6 @@
 lib median_filter_v1_00_a cmp_swap vhdl
 lib median_filter_v1_00_a bitonic_sort9 vhdl
 lib median_filter_v1_00_a sort9 vhdl
-lib median_filter_v1_00_a median9vhdl
+lib median_filter_v1_00_a median9 vhdl
 lib median_filter_v1_00_a ctl_bypass vhdl
 lib median_filter_v1_00_a median_filter vhdl
