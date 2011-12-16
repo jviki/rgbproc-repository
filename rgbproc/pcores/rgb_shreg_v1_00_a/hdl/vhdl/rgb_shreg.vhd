@@ -51,7 +51,7 @@ begin
 				reg_de <= (others => '0');
 				reg_hs <= (others => '0');
 				reg_vs <= (others => '0');
-			elsif CE = 1' then
+			elsif CE = '1' then
 				reg_r(0)  <= IN_R;
 				reg_g(0)  <= IN_G;
 				reg_b(0)  <= IN_B;
