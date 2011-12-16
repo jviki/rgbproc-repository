@@ -15,7 +15,7 @@ port (
 	CLK    : in  std_logic;
 	CE     : in  std_logic;
 	DI     : in  std_logic_vector(DWIDTH - 1 downto 0);
-	DO     : in  std_logic_vector(DWIDTH - 1 downto 0)
+	DO     : out std_logic_vector(DWIDTH - 1 downto 0)
 );
 end entity;
 

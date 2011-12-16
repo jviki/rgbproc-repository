@@ -21,12 +21,12 @@ port (
 	WIN_HS : in  std_logic_vector((MATRIX_SIZE ** 2) - 1     downto 0);
 	WIN_VS : in  std_logic_vector((MATRIX_SIZE ** 2) - 1     downto 0);
 
-	OUT_R  : in  std_logic_vector(7 downto 0);
-	OUT_G  : in  std_logic_vector(7 downto 0);
-	OUT_B  : in  std_logic_vector(7 downto 0);
-	OUT_DE : in  std_logic;
-	OUT_HS : in  std_logic;
-	OUT_VS : in  std_logic
+	OUT_R  : out std_logic_vector(7 downto 0);
+	OUT_G  : out std_logic_vector(7 downto 0);
+	OUT_B  : out std_logic_vector(7 downto 0);
+	OUT_DE : out std_logic;
+	OUT_HS : out std_logic;
+	OUT_VS : out std_logic
 );
 end entity;
 
