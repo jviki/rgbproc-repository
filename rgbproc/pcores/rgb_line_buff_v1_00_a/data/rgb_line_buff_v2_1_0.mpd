@@ -28,9 +28,9 @@ PORT IN_VS  = VS,  DIR = I, BUS = in
 PORT FIELD_R  = R,   DIR = O, BUS = fields, VEC = [FIELDS*8-1:0]
 PORT FIELD_G  = G,   DIR = O, BUS = fields, VEC = [FIELDS*8-1:0]
 PORT FIELD_B  = B,   DIR = O, BUS = fields, VEC = [FIELDS*8-1:0]
-PORT FIELD_DE = DE,  DIR = O, BUS = fields
-PORT FIELD_HS = HS,  DIR = O, BUS = fields
-PORT FIELD_VS = VS,  DIR = O, BUS = fields
+PORT FIELD_DE = DE,  DIR = O, BUS = fields, VEC = [FIELDS-1:0]
+PORT FIELD_HS = HS,  DIR = O, BUS = fields, VEC = [FIELDS-1:0]
+PORT FIELD_VS = VS,  DIR = O, BUS = fields, VEC = [FIELDS-1:0]
 
 PORT OUT_R   = R,   DIR = O, BUS = out, VEC = [7:0]
 PORT OUT_G   = G,   DIR = O, BUS = out, VEC = [7:0]
