@@ -1,0 +1,44 @@
+BEGIN rgb_mux
+
+OPTION IPTYPE = PERIPHERAL
+OPTION IMP_NETLIST = TRUE
+OPTION HDL = VHDL
+OPTION STYLE = HDL
+OPTION IP_GROUP = MICROBLAZE:PPC:USER
+OPTION DESC = Shift register for RGB bus
+
+BUS_INTERFACE BUS=cfg, BUS_STD=RGB_MUX_CFG, BUS_TYPE=TARGET
+BUS_INTERFACE BUS=in0, BUS_STD=RGB, BUS_TYPE=TARGET
+BUS_INTERFACE BUS=in1, BUS_STD=RGB, BUS_TYPE=TARGET
+BUS_INTERFACE BUS=out, BUS_STD=RGB, BUS_TYPE=INITIATOR
+
+PARAMETER DEFAULT_SRC = 0, DT = integer, RANGE = (0:1)
+
+PORT CLK = "", DIR = I, SIGIS = CLK
+PORT RST = sys_periph_reset, DIR = I, SIGIS = RST
+
+PORT SRC_SEL = SRC_SEL, DIR = I, BUS = cfg
+PORT CUR_SEL = CUR_SEL, DIR = O, BUS = cfg
+
+PORT IN0_R   = R,   DIR = I, BUS = in0, VEC = [7:0]
+PORT IN0_G   = G,   DIR = I, BUS = in0, VEC = [7:0]
+PORT IN0_B   = B,   DIR = I, BUS = in0, VEC = [7:0]
+PORT IN0_DE  = DE,  DIR = I, BUS = in0
+PORT IN0_HS  = HS,  DIR = I, BUS = in0
+PORT IN0_VS  = VS,  DIR = I, BUS = in0
+
+PORT IN1_R   = R,   DIR = I, BUS = in1, VEC = [7:0]
+PORT IN1_G   = G,   DIR = I, BUS = in1, VEC = [7:0]
+PORT IN1_B   = B,   DIR = I, BUS = in1, VEC = [7:0]
+PORT IN1_DE  = DE,  DIR = I, BUS = in1
+PORT IN1_HS  = HS,  DIR = I, BUS = in1
+PORT IN1_VS  = VS,  DIR = I, BUS = in1
+
+PORT OUT_R   = R,   DIR = O, BUS = out, VEC = [7:0]
+PORT OUT_G   = G,   DIR = O, BUS = out, VEC = [7:0]
+PORT OUT_B   = B,   DIR = O, BUS = out, VEC = [7:0]
+PORT OUT_DE  = DE,  DIR = O, BUS = out
+PORT OUT_HS  = HS,  DIR = O, BUS = out
+PORT OUT_VS  = VS,  DIR = O, BUS = out
+
+END
