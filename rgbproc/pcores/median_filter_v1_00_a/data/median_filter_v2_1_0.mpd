@@ -18,9 +18,9 @@ PORT CE  = net_vcc, DIR = I
 PORT WIN_R   = R,   DIR = I, BUS = in, VEC = [71:0]
 PORT WIN_G   = G,   DIR = I, BUS = in, VEC = [71:0]
 PORT WIN_B   = B,   DIR = I, BUS = in, VEC = [71:0]
-PORT WIN_DE  = DE,  DIR = I, BUS = in
-PORT WIN_HS  = HS,  DIR = I, BUS = in
-PORT WIN_VS  = VS,  DIR = I, BUS = in
+PORT WIN_DE  = DE,  DIR = I, BUS = in, VEC = [8:0]
+PORT WIN_HS  = HS,  DIR = I, BUS = in, VEC = [8:0]
+PORT WIN_VS  = VS,  DIR = I, BUS = in, VEC = [8:0]
 
 PORT OUT_R   = R,   DIR = O, BUS = out, VEC = [7:0]
 PORT OUT_G   = G,   DIR = O, BUS = out, VEC = [7:0]
