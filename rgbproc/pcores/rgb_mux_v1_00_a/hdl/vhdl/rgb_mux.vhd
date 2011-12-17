@@ -98,7 +98,11 @@ begin
 
 		case state is
 		when s_src0 =>
-			if SRC_SEL = '1' then
+			if SRC_SEL = '1' and IN0_HS = '0' and IN0_VS = '0' and pulse_start1 = '1' then
+				nstate <= s_src1;
+			elsif SRC_SEL = '1' and IN0_HS = '0' and IN0_VS = '0' then
+				nstate <= s_0_to_sync1;
+			elsif SRC_SEL = '1' then
 				nstate <= s_sync0_to_1;
 			end if;
 
@@ -113,7 +117,11 @@ begin
 			end if;
 
 		when s_src1 =>
-			if SRC_SEL = '0' then
+			if SRC_SEL = '0' and IN1_HS = '0' and IN1_VS = '0' and pulse_start0 = '1' then
+				nstate <= s_src0;
+			elsif SRC_SEL = '0' and IN1_HS = '0' and IN1_VS = '0' then
+				nstate <= s_1_to_sync0;
+			elsif SRC_SEL = '0' then
 				nstate <= s_sync1_to_0;;
 			end if;
 
