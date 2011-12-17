@@ -1,0 +1,3 @@
+lib rgb_out_v1_00_a idf_encoding vhdl
+lib rgb_out_v1_00_a data_out vhdl
+lib rgb_out_v1_00_a rgb_out vhdl
