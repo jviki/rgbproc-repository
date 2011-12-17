@@ -1,1 +1,2 @@
+lib rgb_mux_v1_00_a detect_start_of_pulse vhdl
 lib rgb_mux_v1_00_a rgb_mux vhdl
