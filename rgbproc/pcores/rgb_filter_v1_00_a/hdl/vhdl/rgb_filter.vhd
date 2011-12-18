@@ -28,7 +28,11 @@ port (
 	OUT_B  : out std_logic;
 	OUT_DE : out std_logic;
 	OUT_HS : out std_logic;
-	OUT_VS : out std_logic
+	OUT_VS : out std_logic;
+
+	RED    : in  std_logic_vector(7 downto 0);
+	GREEN  : in  std_logic_vector(7 downto 0);
+	BLUE   : in  std_logic_vector(7 downto 0)
 );
 end entity;
 
