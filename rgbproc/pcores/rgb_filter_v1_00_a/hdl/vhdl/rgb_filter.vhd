@@ -6,9 +6,11 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
+use work.rgb_filter_pkg.all;
+
 entity rgb_filter is
 generic (
-	OPERATION : integer := 0		
+	OPERATION : integer := OP_AND
 );
 port (
 	CLK    : in  std_logic;
