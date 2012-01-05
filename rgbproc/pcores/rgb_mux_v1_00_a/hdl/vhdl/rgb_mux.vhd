@@ -65,6 +65,10 @@ architecture full of rgb_mux is
 	signal pulse_start1 : std_logic;
 
 	signal src_sel      : std_logic;
+	signal src_sel_be   : std_logic;
+	signal src_sel_we   : std_logic;
+	signal src_sel_in   : std_logic;
+	signal src_sel      : std_logic;
 	signal cur_sel      : std_logic;
 
 begin
