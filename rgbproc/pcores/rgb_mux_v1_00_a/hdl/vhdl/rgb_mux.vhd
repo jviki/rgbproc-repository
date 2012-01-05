@@ -122,11 +122,26 @@ begin
 		Bus2IP_RNW   => Bus2IP_RNW,
 		Bus2IP_CS    => ipif_cs(1),
 
-		REG_DO       => cur_sel,
-		REG_BE       => src_sel_be,
-		REG_DI       => src_sel_in,
+		REG_DO(0)    => cur_sel,
+		REG_BE(0)    => src_sel_be,
+		REG_DI(0)    => src_sel_in,
 		REG_WE       => src_sel_we
 	);
+
+	src_selp : process(CLK, RST, src_sel_we, src_sel_be, src_sel_in)
+	begin
+		if rising_edge(CLK) then
+			if RST = '1' then
+				if DEFAULT_SRC = 0 then
+					src_sel <= '0';
+				else
+					src_sel <= '1';
+				end if;
+			elsif src_sel_we = '1' and src_sel_be = '1' then
+				src_sel <= src_sel_in;
+			end if;
+		end if;
+	end process;
 
 	---
 	-- IPIF address logic
