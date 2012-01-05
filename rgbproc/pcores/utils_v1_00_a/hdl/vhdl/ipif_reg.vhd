@@ -40,19 +40,14 @@ end entity;
 
 architecture full of ipif_reg is
 
-	constant IPIF_WRITABLE : boolean := IPIF_MODE = 1 or IPIF_MODE = 2;
-	constant IPIF_READABLE : boolean := IPIF_MODE = 0 or IPIF_MODE = 2;
-
 	signal reg_data_we : std_logic;
 	signal reg_data_in : std_logic_vector(REG_DWIDTH - 1 downto 0);
 	signal reg_data    : std_logic_vector(REG_DWIDTH - 1 downto 0);
 	signal reg_data_be : std_logic_vector(REG_DWIDTH / 8 - 1 downto 0);
 
 	signal ipif_we     : std_logic;
-	signal ipif_re     : std_logic;
-	signal ipif_sel    : std_logic;
-	signal ipif_error  : std_logic;
 	signal ipif_di     : std_logic_vector(REG_DWIDTH - 1 downto 0);
+	signal ipif_be     : std_logic_vector(REG_DWIDTH/8 - 1 downto 0);
 
 begin
 
@@ -86,60 +81,37 @@ begin
 
 	-----------------------
 
-gen_writable: if IPIF_WRITABLE
-generate
 	reg_data_we <= REG_WE or ipif_we;
 	reg_data_in <= ipif_di when ipif_we = '1' else
 	               REG_DI  when REG_WE  = '1';
 	reg_data_be <= ipif_be when ipif_we = '1' else
 	               (others => '1');
-end generate;
-
-gen_not_writable: if not IPIF_WRITABLE
-generate
-	reg_data_we <= REG_WE;
-	reg_data_in <= REG_DI;
-	reg_data_be <= (others => '1');
-end generate;
-
-	-----------------------
-	
-	ipif_selp : process(CLK, RST, Bus2IP_CS)
-	begin
-		if rising_edge(CLK) then
-			if RST = '1' then
-				ipif_sel <= '0';
-			else
-				ipif_sel <= Bus2IP_CS;
-			end if;
-		end if;
-	end process;
-	
-	-----------------------
-
-	ipif_we <= ipif_sel and not Bus2IP_RNW;
-	ipif_re <= ipif_sel and Bus2IP_RNW;
-	ipif_di <= Bus2IP_Data(REG_DWIDTH - 1 downto 0);
-	
-	-----------------------
-
-	IP2Bus_Data  <= reg_data when IPIF_READABLE else (others => '1');
-
-	ipif_error <= '1' when not IPIF_WRITABLE and ipif_we = '1' else
-	              '1' when not IPIF_READABLE and ipif_re = '1' else
-	              '0';
-
-	ackp : process(CLK, ipif_we, ipif_re, ipif_error)
-	begin
-		if rising_edge(CLK) then
-			IP2Bus_WrAck <= ipif_we;
-			IP2Bus_RdAck <= ipif_re;
-			IP2Bus_Error <= ipif_error;
-		end if;
-	end process;
 
 	-----------------------
 
-	REG_DO <= reg_data;
+	ipif_access : work.ipif_reg_logic
+	generic map (
+		REG_DWIDTH  => REG_DWIDTH,
+		IPIF_DWIDTH => IPIF_DWIDTH,
+		IPIF_MODE   => IPIF_MODE
+	)
+	port map (
+		CLK => CLK,
+		RST => RST,
+
+		IP2Bus_Data  => IP2Bus_Data,
+		IP2Bus_WrAck => IP2Bus_WrAck,
+		IP2Bus_RdAck => IP2Bus_RdAck,
+		IP2Bus_Error => IP2Bus_Error,
+		Bus2IP_Data  => Bus2IP_Data,
+		Bus2IP_BE    => Bus2IP_BE,
+		Bus2IP_RNW   => Bus2IP_RNW,
+		Bus2IP_CS    => Bus2IP_CS,
+
+		REG_DO       => reg_data,
+		REG_BE       => ipif_be,
+		REG_WE       => ipif_we,
+		REG_DI       => ipif_di
+	);
 
 end architecture;
