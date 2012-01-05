@@ -8,6 +8,7 @@ use ieee.std_logic_unsigned.all;
 
 library utils_v1_00_a;
 use utils_v1_00_a.ipif_reg;
+use utils_v1_00_a.ipif_reg_logic;
 
 entity rgb_mux is
 generic (
@@ -98,10 +99,9 @@ begin
 	---
 	-- MUX select register
 	---
-	cfg_sel : utils_v1_00_a.ipif_reg
+	cfg_sel : utils_v1_00_a.ipif_reg_logic
 	generic map (
 		REG_DWIDTH  => 1,
-		REG_DEFAULT => DEFAULT_SRC,
 		IPIF_DWIDTH => IPIF_DWIDTH,
 		IPIF_MODE   => 2
 	)
@@ -118,8 +118,10 @@ begin
 		Bus2IP_RNW   => Bus2IP_RNW,
 		Bus2IP_CS    => ipif_cs(1),
 
-		REG_DI       => (others => 'X'),
-		REG_WE       => '0'
+		REG_DO       => cur_sel,
+		REG_BE       => src_sel_be,
+		REG_DI       => src_sel_in,
+		REG_WE       => src_sel_we
 	);
 
 	---
