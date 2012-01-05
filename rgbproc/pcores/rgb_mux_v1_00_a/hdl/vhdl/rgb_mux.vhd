@@ -20,15 +20,15 @@ port (
 	CLK     : in  std_logic;
 	RST     : in  std_logic;
 
-	Bus2IP_Addr  : out std_logic_vector(IPIF_AWIDTH - 1 downto 0);
-	Bus2IP_CS    : out std_logic_vector(0 downto 0);
-	Bus2IP_RNW   : out std_logic;
-	Bus2IP_Data  : out std_logic_vector(IPIF_DWIDTH - 1 downto 0);
-	Bus2IP_BE    : out std_logic_vector(IPIF_DWIDTH/8 - 1 downto 0);
-	IP2Bus_Data  : in  std_logic_vector(IPIF_DWIDTH - 1 downto 0);
-	IP2Bus_RdAck : in  std_logic;
-	IP2Bus_WrAck : in  std_logic;
-	IP2Bus_Error : in  std_logic;
+	Bus2IP_Addr  : in  std_logic_vector(IPIF_AWIDTH - 1 downto 0);
+	Bus2IP_CS    : in  std_logic_vector(0 downto 0);
+	Bus2IP_RNW   : in  std_logic;
+	Bus2IP_Data  : in  std_logic_vector(IPIF_DWIDTH - 1 downto 0);
+	Bus2IP_BE    : in  std_logic_vector(IPIF_DWIDTH/8 - 1 downto 0);
+	IP2Bus_Data  : out std_logic_vector(IPIF_DWIDTH - 1 downto 0);
+	IP2Bus_RdAck : out std_logic;
+	IP2Bus_WrAck : out std_logic;
+	IP2Bus_Error : out std_logic;
 
 	IN0_R   : in  std_logic_vector(7 downto 0);
 	IN0_G   : in  std_logic_vector(7 downto 0);
