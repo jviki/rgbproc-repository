@@ -41,7 +41,7 @@ end entity;
 
 architecture full of async_ipif is
 
-	constant AFIFO_DEPTH : integer := 4;
+	constant AFIFO_DEPTH : integer := 16;
 
 	signal master_afifo_di    : std_logic_vector(69 downto 0);
 	signal master_afifo_we    : std_logic;
