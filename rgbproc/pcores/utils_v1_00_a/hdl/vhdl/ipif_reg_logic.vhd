@@ -61,7 +61,7 @@ gen_writable: if IPIF_WRITABLE
 generate
 	REG_WE <= ipif_we;
 	REG_DI <= ipif_di;
-	REG_BE <= ipif_be;
+	REG_BE <= Bus2IP_BE(REG_BE'range);
 end generate;
 
 gen_not_writable: if not IPIF_WRITABLE
