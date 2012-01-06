@@ -80,7 +80,7 @@ begin
 
 					-- apply byte-enable
 					if reg_data_be(i) = '1' then
-						reg_data(DBEG downto DEND) <= reg_data_in(DBEG downto DEND);
+						reg_data(DBEG - 1 downto DEND) <= reg_data_in(DBEG - 1 downto DEND);
 					end if;
 				end loop;
 			end if;
