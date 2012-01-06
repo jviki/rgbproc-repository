@@ -12,6 +12,12 @@ package utils_pkg is
 	constant IPIF_WO : integer := 1;
 	constant IPIF_RW : integer := 2;
 
+	function width_of_be(dwidth : in integer) return integer;
+
+end package;
+
+package body utils_pkg is
+
 	function width_of_be(dwidth : in integer) return integer is
 		variable bwidth : integer;
 		variable brest  : integer;
@@ -31,5 +37,5 @@ package utils_pkg is
 		return bwidth;
 	end function;
 
-end package;
+end package body;
 
