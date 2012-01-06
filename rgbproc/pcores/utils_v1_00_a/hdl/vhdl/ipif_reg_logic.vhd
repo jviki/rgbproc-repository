@@ -1,4 +1,4 @@
--- ipif_reg.vhd
+-- ipif_reg_logic.vhd
 -- Jan Viktorin <xvikto03@stud.fit.vutbr.cz>
 
 library ieee;
@@ -8,7 +8,7 @@ use ieee.std_logic_unsigned.all;
 
 use work.utils_pkg.all;
 
-entity ipif_reg is
+entity ipif_reg_logic is
 generic (
 	REG_DWIDTH  : integer := 32;
 	IPIF_DWIDTH : integer := 32;
@@ -40,7 +40,7 @@ port (
 );
 end entity;
 
-architecture full of ipif_reg is
+architecture full of ipif_reg_logic is
 
 	constant IPIF_WRITABLE : boolean := IPIF_MODE = IPIF_WO or IPIF_MODE = IPIF_RW;
 	constant IPIF_READABLE : boolean := IPIF_MODE = IPIF_RO or IPIF_MODE = IPIF_RW;
