@@ -28,7 +28,7 @@ package utils_pkg is
 			bwidth := dwidth / 8 + 1;
 		end if;
 
-		return dwidth;
+		return bwidth;
 	end function;
 
 end package;
