@@ -6,12 +6,14 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
+use work.utils_pkg.all;
+
 entity ipif_reg is
 generic (
 	REG_DWIDTH  : integer := 32;
 	REG_DEFAULT : integer := 0;
 	IPIF_DWIDTH : integer := 32;
-	IPIF_MODE   : integer := 2  -- 0: read-only, 1: write-only, 2: read-write
+	IPIF_MODE   : integer := IPIF_RW
 );
 port (
 	CLK          : in  std_logic;
