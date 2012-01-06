@@ -75,19 +75,7 @@ end generate;
 
 	-----------------------
 	
-	ipif_selp : process(CLK, RST, Bus2IP_CS)
-	begin
-		if rising_edge(CLK) then
-			if RST = '1' then
-				ipif_sel <= '0';
-			else
-				ipif_sel <= Bus2IP_CS;
-			end if;
-		end if;
-	end process;
-	
-	-----------------------
-
+	ipif_sel <= Bus2IP_CS and not RST;
 	ipif_we <= ipif_sel and not Bus2IP_RNW;
 	ipif_re <= ipif_sel and Bus2IP_RNW;
 	ipif_di <= Bus2IP_Data(REG_DWIDTH - 1 downto 0);
