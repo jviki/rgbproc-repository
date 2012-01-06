@@ -6,11 +6,13 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
+use work.utils_pkg.all;
+
 entity ipif_reg is
 generic (
 	REG_DWIDTH  : integer := 32;
 	IPIF_DWIDTH : integer := 32;
-	IPIF_MODE   : integer := 0
+	IPIF_MODE   : integer := IPIF_RO
 );
 port (
 	CLK          : in  std_logic;
@@ -40,8 +42,8 @@ end entity;
 
 architecture full of ipif_reg is
 
-	constant IPIF_WRITABLE : boolean := IPIF_MODE = 1 or IPIF_MODE = 2;
-	constant IPIF_READABLE : boolean := IPIF_MODE = 0 or IPIF_MODE = 2;
+	constant IPIF_WRITABLE : boolean := IPIF_MODE = IPIF_WO or IPIF_MODE = IPIF_RW;
+	constant IPIF_READABLE : boolean := IPIF_MODE = IPIF_RO or IPIF_MODE = IPIF_RW;
 
 	signal ipif_we     : std_logic;
 	signal ipif_re     : std_logic;
