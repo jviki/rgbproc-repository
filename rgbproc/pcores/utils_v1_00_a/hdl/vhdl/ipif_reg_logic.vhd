@@ -34,7 +34,7 @@ port (
 	-- IP access to the register
 	---
 	REG_DO       : in  std_logic_vector(REG_DWIDTH - 1 downto 0);
-	REG_BE       : out std_logic_vector(REG_DWIDTH/8 - 1 downto 0);
+	REG_BE       : out std_logic_vector(width_of_be(REG_DWIDTH) - 1 downto 0);
 	REG_WE       : out std_logic;
 	REG_DI       : out std_logic_vector(REG_DWIDTH - 1 downto 0)
 );
