@@ -45,7 +45,7 @@ architecture full of ipif_reg is
 	signal reg_data_we : std_logic;
 	signal reg_data_in : std_logic_vector(REG_DWIDTH - 1 downto 0);
 	signal reg_data    : std_logic_vector(REG_DWIDTH - 1 downto 0);
-	signal reg_data_be : std_logic_vector(REG_DWIDTH / 8 - 1 downto 0);
+	signal reg_data_be : std_logic_vector(width_of_be(REG_DWIDTH) - 1 downto 0);
 
 	signal ipif_we     : std_logic;
 	signal ipif_di     : std_logic_vector(REG_DWIDTH - 1 downto 0);
