@@ -100,13 +100,8 @@ end generate;
 	              '1' when not IPIF_READABLE and ipif_re = '1' else
 	              '0';
 
-	ackp : process(CLK, ipif_we, ipif_re, ipif_error)
-	begin
-		if rising_edge(CLK) then
-			IP2Bus_WrAck <= ipif_we;
-			IP2Bus_RdAck <= ipif_re;
-			IP2Bus_Error <= ipif_error;
-		end if;
-	end process;
+	IP2Bus_WrAck <= ipif_we;
+	IP2Bus_RdAck <= ipif_re;
+	IP2Bus_Error <= ipif_error;
 
 end architecture;
