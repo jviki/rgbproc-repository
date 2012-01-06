@@ -97,7 +97,7 @@ begin
 
 	-----------------------
 
-	ipif_access : work.ipif_reg_logic
+	ipif_access : entity work.ipif_reg_logic
 	generic map (
 		REG_DWIDTH  => REG_DWIDTH,
 		IPIF_DWIDTH => IPIF_DWIDTH,
