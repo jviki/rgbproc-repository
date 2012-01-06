@@ -60,23 +60,29 @@ begin
 	-----------------------
 
 	reg_datap : process(CLK, RST, reg_data_we, reg_data_be, reg_data_in)
+		variable DBEG : integer;
+		variable DEND : integer;
 	begin
 		if rising_edge(CLK) then
 			if RST = '1' then
 				reg_data <= conv_std_logic_vector(REG_DEFAULT, reg_data'length);
 			elsif reg_data_we = '1' then
-				for i in 0 to DWIDTH / 8 - 1 loop
+				for i in 0 to reg_data_be'length - 1 loop
+					DBEG := (i + 1) * 8;
+					DEND := i * 8;
+
+					-- handle the case when REG_DWIDTH is not
+					-- multiple of 8, so the last range must be
+					-- shorted
+					if i = reg_data_be'length - 1 then
+						DBEG := DBEG - (REG_DWIDTH mod 8);
+					end if;
+
+					-- apply byte-enable
 					if reg_data_be(i) = '1' then
-						reg_data((i + 1) * 8 downto i * 8) <= reg_data_in((i + 1) * 8 downto i * 8);
+						reg_data(DBEG downto DEND) <= reg_data_in(DBEG downto DEND);
 					end if;
 				end loop;
-
-				---
-				-- Write the rest when register is not modulo 8
-				---
-				if DWIDTH mod 8 = 1 and reg_data_be(DWIDTH / 8) = '1' then
-					reg_data(DWIDTH - 1 downto (DWIDTH / 8) * 8) <= reg_data_in(DWIDTH - 1 downto (DWIDTH / 8) * 8);
-				end if;
 			end if;
 		end if;
 	end process;
