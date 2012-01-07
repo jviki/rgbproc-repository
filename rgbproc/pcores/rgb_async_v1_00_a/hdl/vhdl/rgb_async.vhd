@@ -61,7 +61,13 @@ architecture afifo of rgb_async is
 	signal rgb_full  : std_logic;
 	signal rgb_empty : std_logic;
 
+	signal or_reset  : std_logic;
+
 begin
+
+	or_reset <= IN_RST or OUT_RST;
+
+	---------------------
 
 	rgb_in( 7 downto  0) <= IN_R;
 	rgb_in(15 downto  8) <= IN_G;
