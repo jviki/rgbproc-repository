@@ -17,6 +17,7 @@
 ##############################################################
 #
 # BEGIN Project Options
+NEWPROJECT coregen.cgp
 SET addpads = false
 SET asysymbol = true
 SET busformat = BusFormatAngleBracketNotRipped
