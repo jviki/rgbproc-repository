@@ -6,6 +6,9 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
+library utils_v1_00_a;
+use utils_v1_00_a.afifo;
+
 ---
 -- Every IN_CLK data are written unless
 -- the FULL flag is asserted.
@@ -39,20 +42,6 @@ port (
 end entity;
 
 architecture afifo of rgb_async is
-	
-	COMPONENT afifo_27b_16
-	  PORT (
-	    rst : IN STD_LOGIC;
-	    wr_clk : IN STD_LOGIC;
-	    rd_clk : IN STD_LOGIC;
-	    din : IN STD_LOGIC_VECTOR(26 DOWNTO 0);
-	    wr_en : IN STD_LOGIC;
-	    rd_en : IN STD_LOGIC;
-	    dout : OUT STD_LOGIC_VECTOR(26 DOWNTO 0);
-	    full : OUT STD_LOGIC;
-	    empty : OUT STD_LOGIC
-	  );
-	END COMPONENT;
 
 	signal rgb_in    : std_logic_vector(26 downto 0);
 	signal rgb_we    : std_logic;
@@ -91,17 +80,23 @@ begin
 
 	---------------------
 
-	afifo_i : afifo_27b_16
+	afifo_i : entity utils_v1_00_a.afifo
+	generic map (
+		DWIDTH => 27,
+		DEPTH  => 16		
+	)
 	port map (
-		rst    => or_reset,
-		wr_clk => IN_CLK,
-		rd_en  => OUT_CLK,
-		din    => rgb_in,
-		wr_en  => rgb_we,
-		rd_en  => rgb_re,
-		dout   => rgb_out,
-		full   => rgb_full,
-		empty  => rgb_empty
+		WCLK   => IN_CLK,
+		RCLK   => OUT_CLK,
+		RESET  => or_reset,
+
+		WE     => rgb_we,
+		FULL   => rgb_full,
+		DI     => rgb_in,
+
+		RE     => rgb_re,
+		EMPTY  => rgb_empty.
+		DO     => rgb_out
 	);
 
 end architecture;
