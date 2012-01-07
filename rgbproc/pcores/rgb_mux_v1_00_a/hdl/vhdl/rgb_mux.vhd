@@ -248,33 +248,14 @@ begin
 
 	fsm_output : process(CLK, state)
 	begin
-		OUT_R <= (others => 'X');
-		OUT_G <= (others => 'X');
-		OUT_B <= (others => 'X');
-		OUT_DE <= '0';
-		OUT_HS <= '0';
-		OUT_VS <= '0';
-
 		case state is
 		when s_src0 | s_sync0_to_1 =>
-			OUT_R  <= IN0_R;
-			OUT_G  <= IN0_G;
-			OUT_B  <= IN0_B;
-			OUT_DE <= IN0_DE;
-			OUT_HS <= IN0_HS;
-			OUT_VS <= IN0_VS;
 			cur_sel <= '0';
 
 		when s_0_to_sync1 =>
 			cur_sel <= '0';
 
 		when s_src1 | s_sync1_to_0 =>
-			OUT_R  <= IN1_R;
-			OUT_G  <= IN1_G;
-			OUT_B  <= IN1_B;
-			OUT_DE <= IN1_DE;
-			OUT_HS <= IN1_HS;
-			OUT_VS <= IN1_VS;
 			cur_sel <= '1';
 
 		when s_1_to_sync0 =>
@@ -282,4 +263,18 @@ begin
 			
 		end case;
 	end process;
+
+	OUT_R  <= IN0_R  when cur_sel = '0' else
+	          IN1_R;
+	OUT_G  <= IN0_G  when cur_sel = '0' else
+	          IN1_G;
+	OUT_B  <= IN0_B  when cur_sel = '0' else
+	          IN1_B;
+	OUT_DE <= IN0_DE when cur_sel = '0' else
+	          IN1_DE;
+	OUT_HS <= IN0_HS when cur_sel = '0' else
+	          IN1_HS;
+	OUT_VS <= IN0_VS when cur_sel = '0' else
+	          IN1_VS;
+
 end architecture;
