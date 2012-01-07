@@ -18,6 +18,7 @@ generic (
 );
 port (
 	CLK     : in  std_logic;
+	CE      : in  std_logic;
 	RST     : in  std_logic;
 
 	Bus2IP_Addr  : in  std_logic_vector(IPIF_AWIDTH - 1 downto 0);
@@ -70,6 +71,13 @@ architecture full of rgb_mux is
 	signal src_sel_in   : std_logic;
 	signal src_sel      : std_logic;
 	signal cur_sel      : std_logic;
+
+	signal reg_r  : std_logic_vector(7 downto 0);
+	signal reg_g  : std_logic_vector(7 downto 0);
+	signal reg_b  : std_logic_vector(7 downto 0);
+	signal reg_de : std_logic;
+	signal reg_hs : std_logic;
+	signal reg_vs : std_logic
 
 begin
 
@@ -264,17 +272,33 @@ begin
 		end case;
 	end process;
 
-	OUT_R  <= IN0_R  when cur_sel = '0' else
+	---------------------------------
+
+	reg_r  <= IN0_R  when cur_sel = '0' else
 	          IN1_R;
-	OUT_G  <= IN0_G  when cur_sel = '0' else
+	reg_g  <= IN0_G  when cur_sel = '0' else
 	          IN1_G;
-	OUT_B  <= IN0_B  when cur_sel = '0' else
+	reg_b  <= IN0_B  when cur_sel = '0' else
 	          IN1_B;
-	OUT_DE <= IN0_DE when cur_sel = '0' else
+	reg_de <= IN0_DE when cur_sel = '0' else
 	          IN1_DE;
-	OUT_HS <= IN0_HS when cur_sel = '0' else
+	reg_hs <= IN0_HS when cur_sel = '0' else
 	          IN1_HS;
-	OUT_VS <= IN0_VS when cur_sel = '0' else
+	reg_vs <= IN0_VS when cur_sel = '0' else
 	          IN1_VS;
+
+	regp : process(CLK, CE, reg_r, reg_g, reg_b, reg_de, reg_hs, reg_vs)
+	begin
+		if rising_edge(CLK) then
+			if CE = '1' then
+				OUT_R  <= reg_r;
+				OUT_G  <= reg_g;
+				OUT_B  <= reg_b;
+				OUT_DE <= reg_de;
+				OUT_HS <= reg_hs;
+				OUT_VS <= reg_vs;
+			end if;
+		end if;
+	end process;
 
 end architecture;
