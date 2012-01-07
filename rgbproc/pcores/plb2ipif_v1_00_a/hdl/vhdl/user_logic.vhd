@@ -90,6 +90,7 @@ entity user_logic is
   (
     -- ADD USER GENERICS BELOW THIS LINE ---------------
     --USER generics added here
+    DUAL_CLOCK                     : integer              := 1;
     -- ADD USER GENERICS ABOVE THIS LINE ---------------
 
     -- DO NOT EDIT BELOW THIS LINE ---------------------
@@ -147,6 +148,9 @@ end entity user_logic;
 architecture IMP of user_logic is
 begin
 
+gen_dual_clock: if DUAL_CLOCK /= 0
+generate
+
 	ipif_i : entity utils_v1_00_a.async_ipif
 	generic map (
 		AWIDTH => C_SLV_AWIDTH,
@@ -178,5 +182,24 @@ begin
 		S_Bus2IP_BE    => S_Bus2IP_BE,
 		S_Bus2IP_CS    => S_Bus2IP_CS
 	);
+
+end generate;
+
+gen_not_dual_clock: if DUAL_CLOCK = 0
+generate
+
+	S_CLK          <= Bus2IP_Clk,
+	S_RST          <= Bus2IP_Reset,
+	S_IP2Bus_Data  <= IP2Bus_Data,
+	S_IP2Bus_WrAck <= IP2Bus_WrAck,
+	S_IP2Bus_RdAck <= IP2Bus_RdAck,
+	S_IP2Bus_Error <= IP2Bus_Error,
+	S_Bus2IP_Addr  <= Bus2IP_Addr,
+	S_Bus2IP_Data  <= Bus2IP_Data,
+	S_Bus2IP_RNW   <= Bus2IP_RNW,
+	S_Bus2IP_BE    <= Bus2IP_BE,
+	S_Bus2IP_CS    <= Bus2IP_CS,
+
+end generate;
 
 end IMP;

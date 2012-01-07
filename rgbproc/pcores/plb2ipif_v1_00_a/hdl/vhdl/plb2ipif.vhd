@@ -139,6 +139,7 @@ entity plb2ipif is
   generic
   (
     -- ADD USER GENERICS BELOW THIS LINE ---------------
+    DUAL_CLOCK                     : integer              := 1;
     --USER generics added here
     -- ADD USER GENERICS ABOVE THIS LINE ---------------
 
@@ -392,6 +393,7 @@ begin
     (
       -- MAP USER GENERICS BELOW THIS LINE ---------------
       --USER generics mapped here
+      DUAL_CLOCK                    => DUAL_CLOCK,
       -- MAP USER GENERICS ABOVE THIS LINE ---------------
 
       C_SLV_AWIDTH                   => USER_SLV_AWIDTH,
