@@ -94,3 +94,11 @@ Constructs a sliding window that can be used by filters (currently supports
 only 3x3 window size). It is connected to a number of rgb_line_buff units to
 get few pixels of every line. Output from the unit is _k_-dimensional _RGB_ bus
 where _k_ is the size of window (3x3 = 9).
+
+
+### Unit design_id
+
+Unit that provides meta information to software over IPIF interface which
+can be connected to PLB bus and thus to MicroBlaze. Serves _design id_,
+_design version_, _design name_ (four characters) and _negation_ register
+to test the communication.
