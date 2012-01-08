@@ -21,6 +21,7 @@ generic (
 );
 port (
 	CLK    : in  std_logic;
+	RST    : in  std_logic;
 	CE     : in  std_logic;
 
 	IN_R   : in  std_logic;
