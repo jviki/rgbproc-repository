@@ -7,11 +7,13 @@ OPTION STYLE = HDL
 OPTION IP_GROUP = MICROBLAZE:PPC:USER
 OPTION DESC = Filter of colors in RGB bus
 
-BUS_INTERFACE BUS=cfg, BUS_STD=RGB_FILTER_CFG, BUS_TYPE=TARGET
+BUS_INTERFACE BUS=cfg, BUS_STD=IPIF, BUS_TYPE=TARGET
 BUS_INTERFACE BUS=in, BUS_STD=RGB, BUS_TYPE=TARGET
 BUS_INTERFACE BUS=out, BUS_STD=RGB, BUS_TYPE=INITIATOR
 
 PARAMETER OPERATION = 0, DT = integer, VALUES = (0 = and, 1 = or, 2 = xor)
+PARAMETER IPIF_AWIDTH = 32, DT = integer
+PARAMETER IPIF_DWIDTH = 32, DT = integer
 
 PORT CLK = "", DIR = I, SIGIS = CLK
 PORT CE  = net_vcc, DIR = I
@@ -30,8 +32,14 @@ PORT OUT_DE = DE,  DIR = O, BUS = out
 PORT OUT_HS = HS,  DIR = O, BUS = out
 PORT OUT_VS = VS,  DIR = O, BUS = out
 
-PORT RED    = RED,   DIR = I, BUS = cfg, VEC = [7:0]
-PORT GREEN  = GREEN, DIR = I, BUS = cfg, VEC = [7:0]
-PORT BLUE   = BLUE,  DIR = I, BUS = cfg, VEC = [7:0]
+PORT Bus2IP_Addr  = Bus2IP_Addr,  DIR = I, BUS = cfg, VEC = [IPIF_AWIDTH-1:0]
+PORT Bus2IP_CS    = Bus2IP_CS,    DIR = I, BUS = cfg, VEC = [0:0]
+PORT Bus2IP_RNW   = Bus2IP_RNW,   DIR = I, BUS = cfg
+PORT Bus2IP_Data  = Bus2IP_Data,  DIR = I, BUS = cfg, VEC = [IPIF_DWIDTH-1:0]
+PORT Bus2IP_BE    = Bus2IP_BE,    DIR = I, BUS = cfg, VEC = [IPIF_DWIDTH/8-1:0]
+PORT IP2Bus_Data  = IP2Bus_Data,  DIR = O, BUS = cfg, VEC = [IPIF_DWIDTH-1:0]
+PORT IP2Bus_WrAck = IP2Bus_WrAck, DIR = O, BUS = cfg
+PORT IP2Bus_RdAck = IP2Bus_RdAck, DIR = O, BUS = cfg
+PORT IP2Bus_Error = IP2Bus_Error, DIR = O, BUS = cfg
 
 END
