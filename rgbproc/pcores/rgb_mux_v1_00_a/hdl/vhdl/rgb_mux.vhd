@@ -166,7 +166,7 @@ begin
 	ipif_cs(1)  <= Bus2IP_CS(0) when Bus2IP_Addr = X"00000004" else '0';
 	
 	-- invalid address request
-	ipif_gerror <= Bus2IP_CS(0) and (ipif_cs = "00");
+	ipif_gerror <= Bus2IP_CS(0) when ipif_cs = "00" else '0';
 
 	IP2Bus_Data <= ipif_data(63 downto 32) when ipif_cs = "10" else
                     <= ipif_data(31 downto  0);
