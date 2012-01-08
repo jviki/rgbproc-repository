@@ -8,9 +8,16 @@ use ieee.std_logic_unsigned.all;
 
 use work.rgb_filter_pkg.all;
 
+library utils_v1_00_a;
+use utils_v1_00_a.ipif_reg;
+use utils_v1_00_a.utils_pkg.all;
+
 entity rgb_filter is
 generic (
-	OPERATION : integer := OP_AND
+	IPIF_AWIDTH : integer := 32;
+	IPIF_DWIDTH : integer := 32;
+	IPIF_NADDR  : integer := 1;
+	OPERATION   : integer := OP_AND
 );
 port (
 	CLK    : in  std_logic;
@@ -30,9 +37,17 @@ port (
 	OUT_HS : out std_logic;
 	OUT_VS : out std_logic;
 
-	RED    : in  std_logic_vector(7 downto 0);
-	GREEN  : in  std_logic_vector(7 downto 0);
-	BLUE   : in  std_logic_vector(7 downto 0)
+	CLK          : in  std_logic;
+	RST          : in  std_logic;
+	IP2Bus_Data  : out std_logic_vector(IPIF_DWIDTH - 1 downto 0);
+	IP2Bus_WrAck : out std_logic;
+	IP2Bus_RdAck : out std_logic;
+	IP2Bus_Error : out std_logic;
+	Bus2IP_Addr  : in  std_logic_vector(IPIF_AWIDTH - 1 downto 0);
+	Bus2IP_Data  : in  std_logic_vector(IPIF_DWIDTH - 1 downto 0);
+	Bus2IP_RNW   : in  std_logic;
+	Bus2IP_BE    : in  std_logic_vector(IPIF_DWIDTH / 8 - 1 downto 0);
+	Bus2IP_CS    : in  std_logic_vector(IPIF_NADDR - 1 downto 0)
 );
 end entity;
 
@@ -41,6 +56,17 @@ architecture full of rgb_filter is
 	signal filtered_r : std_logic_vector(7 downto 0);
 	signal filtered_g : std_logic_vector(7 downto 0);
 	signal filtered_b : std_logic_vector(7 downto 0);
+
+	signal reg_red    : std_logic_vector(7 downto 0);
+	signal reg_green  : std_logic_vector(7 downto 0);
+	signal reg_blue   : std_logic_vector(7 downto 0);
+
+	signal ipif_cs     : std_logic_vector(3 downto 0);
+	signal ipif_data   : std_logic_vector(127 downto 0);
+	signal ipif_wrack  : std_logic_vector(3 downto 0);
+	signal ipif_rdack  : std_logic_vector(3 downto 0);
+	signal ipif_error  : std_logic_vector(3 downto 0);
+	signal ipif_gerror : std_logic;
 
 begin
 
@@ -60,24 +86,142 @@ begin
 
 gen_and: if OPERATION = OP_AND
 generate
-	filtered_r <= IN_R and RED;
-	filtered_g <= IN_G and GREEN;
-	filtered_b <= IN_B and BLUE;
+	filtered_r <= IN_R and reg_red;
+	filtered_g <= IN_G and reg_green;
+	filtered_b <= IN_B and reg_blue;
 end generate;
 
 gen_or: if OPERATION = OP_OR
 generate
-	filtered_r <= IN_R or RED;
-	filtered_g <= IN_G or GREEN;
-	filtered_b <= IN_B or BLUE;
+	filtered_r <= IN_R or reg_red;
+	filtered_g <= IN_G or reg_green;
+	filtered_b <= IN_B or reg_blue;
 end generate;
 
 gen_xor: if OPERATION = OP_XOR
 generate
-	filtered_r <= IN_R xor RED;
-	filtered_g <= IN_G xor GREEN;
-	filtered_b <= IN_B xor BLUE;
+	filtered_r <= IN_R xor reg_red;
+	filtered_g <= IN_G xor reg_green;
+	filtered_b <= IN_B xor reg_blue;
 end generate;
+
+	---
+	-- Device ID register
+	---
+	reg_id : utils_v1_00_a.ipif_reg
+	generic map (
+		REG_DWIDTH  => 32,
+		REG_DEFAULT => 3,
+		IPIF_DWIDTH => IPIF_DWIDTH,
+		IPIF_MODE   => IPIF_RO
+	)
+	port map (
+		CLK          => CLK,
+		RST          => RST,
+
+		IP2Bus_Data  => ipif_data(31 downto 0),
+		IP2Bus_WrAck => ipif_wrack(0),
+		IP2Bus_RdAck => ipif_rdack(0),
+		IP2Bus_Error => ipif_error(0),
+		Bus2IP_Data  => Bus2IP_Data,
+		Bus2IP_BE    => Bus2IP_BE,
+		Bus2IP_RNW   => Bus2IP_RNW,
+		Bus2IP_CS    => ipif_cs(0),
+
+		REG_DI       => (others => 'X'),
+		REG_WE       => '0'
+	);
+
+	reg_red_i : utils_v1_00_a.ipif_reg
+	generic map (
+		REG_DWIDTH  => 8,
+		REG_DEFAULT => 0,
+		IPIF_DWIDTH => IPIF_DWIDTH,
+		IPIF_MODE   => IPIF_RW
+	)
+	port map (
+		CLK          => CLK,
+		RST          => RST,
+
+		IP2Bus_Data  => ipif_data(63 downto 32),
+		IP2Bus_WrAck => ipif_wrack(1),
+		IP2Bus_RdAck => ipif_rdack(1),
+		IP2Bus_Error => ipif_error(1),
+		Bus2IP_Data  => Bus2IP_Data,
+		Bus2IP_BE    => Bus2IP_BE,
+		Bus2IP_RNW   => Bus2IP_RNW,
+		Bus2IP_CS    => ipif_cs(1),
+
+		REG_DI       => (others => 'X'),
+		REG_WE       => '0',
+		REG_DO       => reg_red
+	);
+
+	reg_green_i : utils_v1_00_a.ipif_reg
+	generic map (
+		REG_DWIDTH  => 8,
+		REG_DEFAULT => 0,
+		IPIF_DWIDTH => IPIF_DWIDTH,
+		IPIF_MODE   => IPIF_RW
+	)
+	port map (
+		CLK          => CLK,
+		RST          => RST,
+
+		IP2Bus_Data  => ipif_data(95 downto 64),
+		IP2Bus_WrAck => ipif_wrack(2),
+		IP2Bus_RdAck => ipif_rdack(2),
+		IP2Bus_Error => ipif_error(2),
+		Bus2IP_Data  => Bus2IP_Data,
+		Bus2IP_BE    => Bus2IP_BE,
+		Bus2IP_RNW   => Bus2IP_RNW,
+		Bus2IP_CS    => ipif_cs(2),
+
+		REG_DI       => (others => 'X'),
+		REG_WE       => '0',
+		REG_DO       => reg_green
+	);
+
+	reg_blue_i : utils_v1_00_a.ipif_reg
+	generic map (
+		REG_DWIDTH  => 8,
+		REG_DEFAULT => 0,
+		IPIF_DWIDTH => IPIF_DWIDTH,
+		IPIF_MODE   => IPIF_RW
+	)
+	port map (
+		CLK          => CLK,
+		RST          => RST,
+
+		IP2Bus_Data  => ipif_data(127 downto 96),
+		IP2Bus_WrAck => ipif_wrack(3),
+		IP2Bus_RdAck => ipif_rdack(3),
+		IP2Bus_Error => ipif_error(3),
+		Bus2IP_Data  => Bus2IP_Data,
+		Bus2IP_BE    => Bus2IP_BE,
+		Bus2IP_RNW   => Bus2IP_RNW,
+		Bus2IP_CS    => ipif_cs(3),
+
+		REG_DI       => (others => 'X'),
+		REG_WE       => '0',
+		REG_DO       => reg_blue
+	);
+
+	ipif_cs(0) <= '1' when Bus2IP_Addr = X"00000000" else '0';
+	ipif_cs(1) <= '1' when Bus2IP_Addr = X"00000004" else '0';
+	ipif_cs(2) <= '1' when Bus2IP_Addr = X"00000008" else '0';
+	ipif_cs(3) <= '1' when Bus2IP_Addr = X"0000000C" else '0';
+
+	ipif_gerror <= Bus2IP_CS(0) when ipif_cs = "0000" else '0';
+
+	IP2Bus_Data <= ipif_data(127 downto 96) when ipif_cs = "1000" else
+	               ipif_data( 95 downto 64) when ipif_cs = "0100" else
+	               ipif_data( 63 downto 32) when ipif_cs = "0010" else
+	               ipif_data( 31 downto  0);
+
+	IP2Bus_WrAck <= ipif_wrack(0) or ipif_wrack(1) or ipif_wrack(2) or ipif_wrack(3);
+	IP2Bus_RdAck <= ipif_rdack(0) or ipif_rdack(1) or ipif_rdack(2) or ipif_rdack(3);
+	IP2Bus_Error <= ipif_error(0) or ipif_error(1) or ipif_error(2) or ipif_error(3) or ipif_gerror;
 
 end architecture;
 
