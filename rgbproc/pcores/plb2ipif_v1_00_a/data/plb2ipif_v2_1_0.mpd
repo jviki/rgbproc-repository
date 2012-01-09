@@ -85,12 +85,12 @@ PORT Sl_MIRQ = Sl_MIRQ, DIR = O, VEC = [0:(C_SPLB_NUM_MASTERS-1)], BUS = SPLB
 
 PORT Bus2IP_Clk   = "", DIR = I, SIGIS = CLK
 PORT Bus2IP_Reset = sys_periph_rst,  DIR = I, SIGIS = RST
-PORT Bus2IP_Addr  = Bus2IP_Addr,  DIR = O, BUS = IPIF, VEC = [C_SPLB_AWIDTH-1:0]
+PORT Bus2IP_Addr  = Bus2IP_Addr,  DIR = O, BUS = IPIF, VEC = [31:0]
 PORT Bus2IP_CS    = Bus2IP_CS,    DIR = O, BUS = IPIF
 PORT Bus2IP_RNW   = Bus2IP_RNW,   DIR = O, BUS = IPIF
-PORT Bus2IP_Data  = Bus2IP_Data,  DIR = O, BUS = IPIF, VEC = [C_SPLB_NATIVE_DWIDTH-1:0]
-PORT Bus2IP_BE    = Bus2IP_BE,    DIR = O, BUS = IPIF, VEC = [C_SPLB_NATIVE_DWIDTH/8-1:0]
-PORT IP2Bus_Data  = Bus2IP_Data,  DIR = I, BUS = IPIF, VEC = [C_SPLB_NATIVE_DWIDTH-1:0]
+PORT Bus2IP_Data  = Bus2IP_Data,  DIR = O, BUS = IPIF, VEC = [31:0]
+PORT Bus2IP_BE    = Bus2IP_BE,    DIR = O, BUS = IPIF, VEC = [3:0]
+PORT IP2Bus_Data  = Bus2IP_Data,  DIR = I, BUS = IPIF, VEC = [31:0]
 PORT IP2Bus_RdAck = Bus2IP_RdAck, DIR = I, BUS = IPIF
 PORT IP2Bus_WrAck = Bus2IP_WrAck, DIR = I, BUS = IPIF
 PORT IP2Bus_Error = Bus2IP_Error, DIR = I, BUS = IPIF
