@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/jviki/Projects/hw/khbo_edk_repo/rgbproc/pcores/utils_v1_00_a/etc/ipif_reg/ipif_reg_tb_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="ipif_reg_tb" />
+            <top_module name="math_real" />
+            <top_module name="std_logic_1164" />
+            <top_module name="std_logic_arith" />
+            <top_module name="std_logic_unsigned" />
+            <top_module name="utils_pkg" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="63" />
+   <wvobject fp_name="/ipif_reg_tb/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/rst" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/clk_slow" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk_slow</obj_property>
+      <obj_property name="ObjectShortName">clk_slow</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/rst_slow" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rst_slow</obj_property>
+      <obj_property name="ObjectShortName">rst_slow</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider59" type="divider">
+      <obj_property name="label">ipif_reg</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">128 128 255</obj_property>
+      <obj_property name="TextColor">230 230 230</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/dut_i/bus2ip_data" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">bus2ip_data[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bus2ip_data[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/dut_i/bus2ip_be" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">bus2ip_be[3:0]</obj_property>
+      <obj_property name="ObjectShortName">bus2ip_be[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/dut_i/bus2ip_rnw" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">bus2ip_rnw</obj_property>
+      <obj_property name="ObjectShortName">bus2ip_rnw</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/dut_i/bus2ip_cs" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">bus2ip_cs</obj_property>
+      <obj_property name="ObjectShortName">bus2ip_cs</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/dut_i/ip2bus_data" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ip2bus_data[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ip2bus_data[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/dut_i/ip2bus_wrack" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ip2bus_wrack</obj_property>
+      <obj_property name="ObjectShortName">ip2bus_wrack</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/dut_i/ip2bus_rdack" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ip2bus_rdack</obj_property>
+      <obj_property name="ObjectShortName">ip2bus_rdack</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/dut_i/ip2bus_error" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ip2bus_error</obj_property>
+      <obj_property name="ObjectShortName">ip2bus_error</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider44" type="divider">
+      <obj_property name="label">register</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">128 128 255</obj_property>
+      <obj_property name="TextColor">230 230 230</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/dut_i/reg_data_we" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">reg_data_we</obj_property>
+      <obj_property name="ObjectShortName">reg_data_we</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/dut_i/reg_data_in" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">reg_data_in[31:0]</obj_property>
+      <obj_property name="ObjectShortName">reg_data_in[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/dut_i/reg_data" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">reg_data[31:0]</obj_property>
+      <obj_property name="ObjectShortName">reg_data[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/dut_i/reg_data_be" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">reg_data_be[3:0]</obj_property>
+      <obj_property name="ObjectShortName">reg_data_be[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/dut_i/ipif_access/ipif_sel" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ipif_sel</obj_property>
+      <obj_property name="ObjectShortName">ipif_sel</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/dut_i/ipif_access/bus2ip_rnw" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">bus2ip_rnw</obj_property>
+      <obj_property name="ObjectShortName">bus2ip_rnw</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/dut_i/ipif_access/ipif_we" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ipif_we</obj_property>
+      <obj_property name="ObjectShortName">ipif_we</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/dut_i/ipif_access/ipif_re" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ipif_re</obj_property>
+      <obj_property name="ObjectShortName">ipif_re</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider52" type="divider">
+      <obj_property name="label">async_ipif</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">128 128 255</obj_property>
+      <obj_property name="TextColor">230 230 230</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/async_ipif_i/state" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">state</obj_property>
+      <obj_property name="ObjectShortName">state</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/async_ipif_i/nstate" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">nstate</obj_property>
+      <obj_property name="ObjectShortName">nstate</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/async_ipif_i/slave_cs" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">slave_cs</obj_property>
+      <obj_property name="ObjectShortName">slave_cs</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/async_ipif_i/slave_wrack" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">slave_wrack</obj_property>
+      <obj_property name="ObjectShortName">slave_wrack</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/async_ipif_i/slave_rdack" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">slave_rdack</obj_property>
+      <obj_property name="ObjectShortName">slave_rdack</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/async_ipif_i/or_reset" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">or_reset</obj_property>
+      <obj_property name="ObjectShortName">or_reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider42" type="divider">
+      <obj_property name="label">master afifo</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">128 128 255</obj_property>
+      <obj_property name="TextColor">230 230 230</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/clk_slow" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk_slow</obj_property>
+      <obj_property name="ObjectShortName">clk_slow</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/async_ipif_i/master_afifo_i/re" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">re</obj_property>
+      <obj_property name="ObjectShortName">re</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/async_ipif_i/master_afifo_i/do" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">do[69:0]</obj_property>
+      <obj_property name="ObjectShortName">do[69:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/async_ipif_i/master_afifo_i/empty" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">empty</obj_property>
+      <obj_property name="ObjectShortName">empty</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/async_ipif_i/was_master_afifo_empty" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">was_master_afifo_empty</obj_property>
+      <obj_property name="ObjectShortName">was_master_afifo_empty</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/async_ipif_i/master_afifo_i/we" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">we</obj_property>
+      <obj_property name="ObjectShortName">we</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/async_ipif_i/master_afifo_i/di" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">di[69:0]</obj_property>
+      <obj_property name="ObjectShortName">di[69:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/async_ipif_i/master_afifo_i/full" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">full</obj_property>
+      <obj_property name="ObjectShortName">full</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider47" type="divider">
+      <obj_property name="label">slave afifo</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">128 128 255</obj_property>
+      <obj_property name="TextColor">230 230 230</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/async_ipif_i/slave_afifo_i/full" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">full</obj_property>
+      <obj_property name="ObjectShortName">full</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/async_ipif_i/slave_afifo_i/we" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">we</obj_property>
+      <obj_property name="ObjectShortName">we</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/async_ipif_i/slave_afifo_i/empty" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">empty</obj_property>
+      <obj_property name="ObjectShortName">empty</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/async_ipif_i/was_slave_afifo_empty" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">was_slave_afifo_empty</obj_property>
+      <obj_property name="ObjectShortName">was_slave_afifo_empty</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/async_ipif_i/slave_afifo_i/re" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">re</obj_property>
+      <obj_property name="ObjectShortName">re</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider49" type="divider">
+      <obj_property name="label">ipif state</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">128 128 255</obj_property>
+      <obj_property name="TextColor">230 230 230</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/ipif_gen_i/ipif_busy" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ipif_busy</obj_property>
+      <obj_property name="ObjectShortName">ipif_busy</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/ipif_gen_i/ipif_done" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ipif_done</obj_property>
+      <obj_property name="ObjectShortName">ipif_done</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider64" type="divider">
+      <obj_property name="label">ipif sim</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">128 128 255</obj_property>
+      <obj_property name="TextColor">230 230 230</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/rst" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/ipif_gen_i/state" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">state</obj_property>
+      <obj_property name="ObjectShortName">state</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/ipif_gen_i/nstate" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">nstate</obj_property>
+      <obj_property name="ObjectShortName">nstate</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/ipif_gen_i/bus2ip_cs" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">bus2ip_cs</obj_property>
+      <obj_property name="ObjectShortName">bus2ip_cs</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/ipif_gen_i/bus2ip_addr" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">bus2ip_addr[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bus2ip_addr[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/ipif_gen_i/bus2ip_data" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">bus2ip_data[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bus2ip_data[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/ipif_gen_i/bus2ip_rnw" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">bus2ip_rnw</obj_property>
+      <obj_property name="ObjectShortName">bus2ip_rnw</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/ipif_gen_i/bus2ip_be" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">bus2ip_be[3:0]</obj_property>
+      <obj_property name="ObjectShortName">bus2ip_be[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/ipif_mon_i/ack_active" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ack_active</obj_property>
+      <obj_property name="ObjectShortName">ack_active</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/ipif_mon_i/ip2bus_data" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ip2bus_data[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ip2bus_data[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/ipif_mon_i/ip2bus_wrack" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ip2bus_wrack</obj_property>
+      <obj_property name="ObjectShortName">ip2bus_wrack</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/ipif_mon_i/ip2bus_rdack" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ip2bus_rdack</obj_property>
+      <obj_property name="ObjectShortName">ip2bus_rdack</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ipif_reg_tb/ipif_mon_i/ip2bus_error" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ip2bus_error</obj_property>
+      <obj_property name="ObjectShortName">ip2bus_error</obj_property>
+   </wvobject>
+</wave_config>
