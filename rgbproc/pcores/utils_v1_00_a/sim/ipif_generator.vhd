@@ -30,6 +30,11 @@ end entity;
 
 architecture full of ipif_generator is
 
+	-- should be greater then CLK_FACTOR * AFIFO_DEPTH (eg. 4 * 16)
+	-- when using asynchronous IPIF otherwise can be set to any value...
+	constant DELAY_MIN   : integer := 70;
+	constant DELAY_WIDTH : integer := 8;
+
 	---
 	-- Creates a random address conforming to the constraints
 	-- ADDR_MIN and ADDR_MAX and based on random number 'rnd'.
@@ -87,6 +92,22 @@ architecture full of ipif_generator is
 		return integer(getrand * real(integer'high));
 	end function;
 
+	impure function getdelay return integer is
+		variable delay : integer;
+	begin
+		delay := getint;
+
+		if delay < DELAY_MIN then
+			delay := DELAY_MIN + delay;
+		end if;
+
+		if delay mod DELAY_WIDTH < DELAY_MIN  then
+			return DELAY_MIN;
+		end if;
+
+		return delay;
+	end function;
+
 	---
 	-- Signals
 	---
@@ -95,8 +116,8 @@ architecture full of ipif_generator is
 	signal state  : state_t;
 	signal nstate : state_t;
 
-	signal cnt_timer    : std_logic_vector(7 downto 0);
-	signal cnt_timer_in : std_logic_vector(7 downto 0);
+	signal cnt_timer    : std_logic_vector(DELAY_WIDTH - 1 downto 0);
+	signal cnt_timer_in : std_logic_vector(DELAY_WIDTH - 1 downto 0);
 	signal cnt_timer_ce : std_logic;
 	signal cnt_timer_le : std_logic;
 	signal cnt_timer_of : std_logic;
@@ -179,7 +200,7 @@ begin
 		case state is
 		when s_idle =>
 			cnt_timer_le <= '1';
-			cnt_timer_in <= conv_std_logic_vector(getint, cnt_timer_in'length);
+			cnt_timer_in <= conv_std_logic_vector(getdelay, cnt_timer_in'length);
 			IPIF_BUSY   <= '0';
 
 			ipif_cs   <= '0';
