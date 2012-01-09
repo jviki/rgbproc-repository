@@ -35,6 +35,16 @@ port (
 );
 end entity;
 
+---
+-- Provides basic metadata about a design or module.
+-- Address space:
+--  <address>   <access> <description>   <width> <default>
+--  0x00000000  RO       device type id  16b     2
+--  0x00000004  RO       device id       16b     generic ID
+--  0x00000008  RO       device version  16b     generic VERSION
+--  0x0000000C  RO       device name     32b     generic NAME
+--  0x00000010  RW       negation        32b     0xDEADBEEF
+---
 architecture full of design_id is
 
 	constant REG_COUNT : integer := 5;
