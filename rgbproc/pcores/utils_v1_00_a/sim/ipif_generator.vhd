@@ -179,7 +179,11 @@ begin
 			end if;
 
 		when s_generate =>
-			nstate <= s_busy;
+			if IPIF_DONE = '1' then
+				nstate <= s_idle;
+			else
+				nstate <= s_busy;
+			end if;
 
 		when s_busy =>
 			if IPIF_DONE = '1' then
@@ -223,7 +227,7 @@ begin
 			ipif_rnw  <= 'X';
 
 		when s_generate =>
-			IPIF_BUSY   <= '0';
+			IPIF_BUSY   <= '1';
 
 			if not generated then
 				gen_addr(getint, address);
@@ -251,16 +255,11 @@ begin
 		end case;
 	end process;
 
-	bus2ip_regp : process(CLK, ipif_addr, ipif_data, ipif_rnw, ipif_cs, ipif_be)
-	begin
-		if rising_edge(CLK) then
-			Bus2IP_Addr <= ipif_addr;
-			Bus2IP_Data <= ipif_data;
-			Bus2IP_RNW  <= ipif_rnw;
-			Bus2IP_CS   <= ipif_cs;
-			Bus2IP_BE   <= ipif_be;
-		end if;
-	end process;
+	Bus2IP_Addr <= ipif_addr;
+	Bus2IP_Data <= ipif_data;
+	Bus2IP_RNW  <= ipif_rnw;
+	Bus2IP_CS   <= ipif_cs;
+	Bus2IP_BE   <= ipif_be;
 
 	IPIF_READ <= ipif_rnw;
 
