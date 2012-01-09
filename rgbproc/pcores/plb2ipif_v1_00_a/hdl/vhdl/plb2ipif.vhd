@@ -87,8 +87,8 @@ use plb2ipif_v1_00_a.user_logic;
 --   C_SPLB_CLK_PERIOD_PS         -- PLBv46 slave: bus clock in picoseconds
 --   C_INCLUDE_DPHASE_TIMER       -- PLBv46 slave: Data Phase Timer configuration; 0 = exclude timer, 1 = include timer
 --   C_FAMILY                     -- Xilinx FPGA family
---   C_MEM0_BASEADDR              -- User memory space 0 base address
---   C_MEM0_HIGHADDR              -- User memory space 0 high address
+--   C_BASEADDR              -- User memory space 0 base address
+--   C_HIGHADDR              -- User memory space 0 high address
 --
 -- Definition of Ports:
 --   SPLB_Clk                     -- PLB main bus clock
@@ -156,8 +156,8 @@ entity plb2ipif is
     C_SPLB_CLK_PERIOD_PS           : integer              := 10000;
     C_INCLUDE_DPHASE_TIMER         : integer              := 1;
     C_FAMILY                       : string               := "virtex6";
-    C_MEM0_BASEADDR                : std_logic_vector     := X"FFFFFFFF";
-    C_MEM0_HIGHADDR                : std_logic_vector     := X"00000000"
+    C_BASEADDR                : std_logic_vector     := X"FFFFFFFF";
+    C_HIGHADDR                : std_logic_vector     := X"00000000"
     -- DO NOT EDIT ABOVE THIS LINE ---------------------
   );
   port
@@ -245,8 +245,8 @@ architecture IMP of plb2ipif is
 
   constant IPIF_ARD_ADDR_RANGE_ARRAY      : SLV64_ARRAY_TYPE     := 
     (
-      ZERO_ADDR_PAD & C_MEM0_BASEADDR,    -- user logic memory space 0 base address
-      ZERO_ADDR_PAD & C_MEM0_HIGHADDR     -- user logic memory space 0 high address
+      ZERO_ADDR_PAD & C_BASEADDR,    -- user logic memory space 0 base address
+      ZERO_ADDR_PAD & C_HIGHADDR     -- user logic memory space 0 high address
     );
 
   ------------------------------------------
