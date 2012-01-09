@@ -49,6 +49,8 @@ architecture full of design_id is
 	signal ipif_gerror : std_logic;
 
 	signal name_vec    : std_logic_vector(31 downto 0);
+	signal id_vec      : std_logic_vector(15 downto 0);
+	signal version_vec : std_logic_vector(15 downto 0);
 
 begin
 
@@ -56,9 +58,9 @@ begin
 
 	------------------------
 
-	devid_i : utils_v1_00_a.ipif_reg
+	devid_i : entity utils_v1_00_a.ipif_reg
 	generic map (
-		REG_IPIF_DWIDTH  => 32,
+		REG_DWIDTH  => 32,
 		IPIF_DWIDTH => IPIF_DWIDTH,
 		REG_DEFAULT => 2,
 		IPIF_MODE   => IPIF_RO
@@ -76,14 +78,14 @@ begin
 		Bus2IP_RNW   => Bus2IP_RNW,
 		Bus2IP_CS    => ipif_cs(0),
 
-		REG_DI       => (others => 'X'),
+		REG_DI       => (31 downto 0 => 'X'),
 		REG_WE       => '0'
 	);
 
 
-	id_i : utils_v1_00_a.ipif_reg_logic
+	id_i : entity utils_v1_00_a.ipif_reg_logic
 	generic map (
-		REG_IPIF_DWIDTH  => 16,
+		REG_DWIDTH  => 16,
 		IPIF_DWIDTH => IPIF_DWIDTH,
 		IPIF_MODE   => IPIF_RO
 	)
@@ -100,12 +102,14 @@ begin
 		Bus2IP_RNW   => Bus2IP_RNW,
 		Bus2IP_CS    => ipif_cs(1),
 
-		REG_DO       => ID(15 downto 0)
+		REG_DO       => id_vec
 	);
 
-	version_i : utils_v1_00_a.ipif_reg_logic
+	id_vec <= ID;
+
+	version_i : entity utils_v1_00_a.ipif_reg_logic
 	generic map (
-		REG_IPIF_DWIDTH  => 16,
+		REG_DWIDTH  => 16,
 		IPIF_DWIDTH => IPIF_DWIDTH,
 		IPIF_MODE   => IPIF_RO
 	)
@@ -122,12 +126,14 @@ begin
 		Bus2IP_RNW   => Bus2IP_RNW,
 		Bus2IP_CS    => ipif_cs(2),
 
-		REG_DO       => VERSION(15 downto 0)
+		REG_DO       => version_vec
 	);
 
-	name_i : utils_v1_00_a.ipif_reg_logic
+	version_vec <= VERSION;
+
+	name_i : entity utils_v1_00_a.ipif_reg_logic
 	generic map (
-		REG_IPIF_DWIDTH  => 32,
+		REG_DWIDTH  => 32,
 		IPIF_DWIDTH => IPIF_DWIDTH,
 		IPIF_MODE   => IPIF_RO
 	)
@@ -147,14 +153,14 @@ begin
 		REG_DO       => name_vec
 	);
 
-	name_vec( 7 downto  0) <= character'pos(NAME(0));
-	name_vec(15 downto  8) <= character'pos(NAME(1));
-	name_vec(23 downto 16) <= character'pos(NAME(2));
-	name_vec(31 downto 24) <= character'pos(NAME(3));
+	name_vec( 7 downto  0) <= conv_std_logic_vector(character'pos(NAME(1)), 8);
+	name_vec(15 downto  8) <= conv_std_logic_vector(character'pos(NAME(2)), 8);
+	name_vec(23 downto 16) <= conv_std_logic_vector(character'pos(NAME(3)), 8);
+	name_vec(31 downto 24) <= conv_std_logic_vector(character'pos(NAME(4)), 8);
 
-	reg_negation : utils_v1_00_a.ipif_reg
+	reg_negation : entity utils_v1_00_a.ipif_reg
 	generic map (
-		REG_IPIF_DWIDTH  => 32,
+		REG_DWIDTH  => 32,
 		REG_DEFAULT => 0,
 		IPIF_DWIDTH => IPIF_DWIDTH,
 		IPIF_MODE   => IPIF_RW
@@ -172,7 +178,7 @@ begin
 		Bus2IP_RNW   => Bus2IP_RNW,
 		Bus2IP_CS    => ipif_cs(4),
 
-		REG_DI       => (others => 'X'),
+		REG_DI       => (31 downto 0 => 'X'),
 		REG_WE       => '0'
 	);
 
@@ -185,10 +191,10 @@ begin
 	ipif_gerror <= Bus2IP_CS(0) when ipif_cs = "00000" else '0';
 
 	IP2Bus_Data <= ipif_data(159 downto 128) when ipif_cs = "10000" else
-	            <= ipif_data(127 downto  96) when ipif_cs = "01000" else
-                    <= ipif_data( 95 downto  64) when ipif_cs = "00100" else;
-                    <= ipif_data( 63 downto  32) when ipif_cs = "00010" else;
-                    <= ipif_data( 31 downto   0);
+	               ipif_data(127 downto  96) when ipif_cs = "01000" else
+                       ipif_data( 95 downto  64) when ipif_cs = "00100" else
+                       ipif_data( 63 downto  32) when ipif_cs = "00010" else
+                       ipif_data( 31 downto   0);
 
 	IP2Bus_WrAck <= ipif_wrack(0) or ipif_wrack(1) or ipif_wrack(2) or ipif_wrack(3) or ipif_wrack(4);
 	IP2Bus_RdAck <= ipif_rdack(0) or ipif_rdack(1) or ipif_rdack(2) or ipif_rdack(3) or ipif_rdack(4);

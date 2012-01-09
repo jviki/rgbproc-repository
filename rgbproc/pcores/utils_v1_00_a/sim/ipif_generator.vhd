@@ -24,11 +24,17 @@ port (
 	Bus2IP_CS    : out std_logic;
 
 	IPIF_BUSY    : out std_logic;
+	IPIF_READ    : out std_logic;
 	IPIF_DONE    : in  std_logic
 );
 end entity;
 
 architecture full of ipif_generator is
+
+	-- should be greater then CLK_FACTOR * AFIFO_DEPTH (eg. 4 * 16)
+	-- when using asynchronous IPIF otherwise can be set to any value...
+	constant DELAY_MIN   : integer := 70;
+	constant DELAY_WIDTH : integer := 8;
 
 	---
 	-- Creates a random address conforming to the constraints
@@ -87,6 +93,22 @@ architecture full of ipif_generator is
 		return integer(getrand * real(integer'high));
 	end function;
 
+	impure function getdelay return integer is
+		variable delay : integer;
+	begin
+		delay := getint;
+
+		if delay < DELAY_MIN then
+			delay := DELAY_MIN + delay;
+		end if;
+
+		if delay mod DELAY_WIDTH < DELAY_MIN  then
+			return DELAY_MIN;
+		end if;
+
+		return delay;
+	end function;
+
 	---
 	-- Signals
 	---
@@ -95,8 +117,8 @@ architecture full of ipif_generator is
 	signal state  : state_t;
 	signal nstate : state_t;
 
-	signal cnt_timer    : std_logic_vector(7 downto 0);
-	signal cnt_timer_in : std_logic_vector(7 downto 0);
+	signal cnt_timer    : std_logic_vector(DELAY_WIDTH - 1 downto 0);
+	signal cnt_timer_in : std_logic_vector(DELAY_WIDTH - 1 downto 0);
 	signal cnt_timer_ce : std_logic;
 	signal cnt_timer_le : std_logic;
 	signal cnt_timer_of : std_logic;
@@ -157,7 +179,11 @@ begin
 			end if;
 
 		when s_generate =>
-			nstate <= s_busy;
+			if IPIF_DONE = '1' then
+				nstate <= s_idle;
+			else
+				nstate <= s_busy;
+			end if;
 
 		when s_busy =>
 			if IPIF_DONE = '1' then
@@ -168,6 +194,10 @@ begin
 
 	fsm_output : process(CLK, state, IPIF_DONE)
 		variable address : std_logic_vector(Bus2IP_Addr'range);
+		variable data    : integer;
+		variable be      : integer;
+		variable rnw     : std_logic;
+		variable generated : boolean;
 	begin
 		cnt_timer_ce <= '0';
 		cnt_timer_le <= '0';
@@ -175,7 +205,7 @@ begin
 		case state is
 		when s_idle =>
 			cnt_timer_le <= '1';
-			cnt_timer_in <= conv_std_logic_vector(getint, cnt_timer_in'length);
+			cnt_timer_in <= conv_std_logic_vector(getdelay, cnt_timer_in'length);
 			IPIF_BUSY   <= '0';
 
 			ipif_cs   <= '0';
@@ -183,6 +213,8 @@ begin
 			ipif_data <= (others => 'X');
 			ipif_be   <= (others => 'X');
 			ipif_rnw  <= 'X';
+
+			generated := false;
 
 		when s_delay =>
 			cnt_timer_ce <= '1';
@@ -195,30 +227,40 @@ begin
 			ipif_rnw  <= 'X';
 
 		when s_generate =>
-			IPIF_BUSY   <= '0';
+			IPIF_BUSY   <= '1';
 
-			gen_addr(getint, address);
+			if not generated then
+				gen_addr(getint, address);
+				data      := getint;
+				be        := getint;
+				rnw       := getbit;
+			end if;
+
 			ipif_addr <= address;
-			ipif_data <= conv_std_logic_vector(getint, Bus2IP_Data'length);
-			ipif_rnw  <= getbit;
+			ipif_data <= conv_std_logic_vector(data, Bus2IP_Data'length);
+			ipif_rnw  <= rnw;
+			ipif_be   <= conv_std_logic_vector(be, Bus2IP_BE'length);
 			ipif_cs   <= '1';
-			ipif_be   <= conv_std_logic_vector(getint, Bus2IP_BE'length);
+
+			generated := true;
 
 		when s_busy =>
 			IPIF_BUSY <= '1';
+
+			ipif_addr <= address;
+			ipif_data <= conv_std_logic_vector(data, Bus2IP_Data'length);
+			ipif_rnw  <= rnw;
+			ipif_be   <= conv_std_logic_vector(be, Bus2IP_BE'length);
 			ipif_cs   <= not IPIF_DONE;
 		end case;
 	end process;
 
-	bus2ip_regp : process(CLK, ipif_addr, ipif_data, ipif_rnw, ipif_cs, ipif_be)
-	begin
-		if rising_edge(CLK) then
-			Bus2IP_Addr <= ipif_addr;
-			Bus2IP_Data <= ipif_data;
-			Bus2IP_RNW  <= ipif_rnw;
-			Bus2IP_CS   <= ipif_cs;
-			Bus2IP_BE   <= ipif_be;
-		end if;
-	end process;
+	Bus2IP_Addr <= ipif_addr;
+	Bus2IP_Data <= ipif_data;
+	Bus2IP_RNW  <= ipif_rnw;
+	Bus2IP_CS   <= ipif_cs;
+	Bus2IP_BE   <= ipif_be;
+
+	IPIF_READ <= ipif_rnw;
 
 end architecture;
