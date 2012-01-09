@@ -58,7 +58,7 @@ begin
 
 	devid_i : entity utils_v1_00_a.ipif_reg
 	generic map (
-		REG_IPIF_DWIDTH  => 32,
+		REG_DWIDTH  => 32,
 		IPIF_DWIDTH => IPIF_DWIDTH,
 		REG_DEFAULT => 2,
 		IPIF_MODE   => IPIF_RO
@@ -83,7 +83,7 @@ begin
 
 	id_i : entity utils_v1_00_a.ipif_reg_logic
 	generic map (
-		REG_IPIF_DWIDTH  => 16,
+		REG_DWIDTH  => 16,
 		IPIF_DWIDTH => IPIF_DWIDTH,
 		IPIF_MODE   => IPIF_RO
 	)
@@ -105,7 +105,7 @@ begin
 
 	version_i : entity utils_v1_00_a.ipif_reg_logic
 	generic map (
-		REG_IPIF_DWIDTH  => 16,
+		REG_DWIDTH  => 16,
 		IPIF_DWIDTH => IPIF_DWIDTH,
 		IPIF_MODE   => IPIF_RO
 	)
@@ -127,7 +127,7 @@ begin
 
 	name_i : entity utils_v1_00_a.ipif_reg_logic
 	generic map (
-		REG_IPIF_DWIDTH  => 32,
+		REG_DWIDTH  => 32,
 		IPIF_DWIDTH => IPIF_DWIDTH,
 		IPIF_MODE   => IPIF_RO
 	)
@@ -154,7 +154,7 @@ begin
 
 	reg_negation : entity utils_v1_00_a.ipif_reg
 	generic map (
-		REG_IPIF_DWIDTH  => 32,
+		REG_DWIDTH  => 32,
 		REG_DEFAULT => 0,
 		IPIF_DWIDTH => IPIF_DWIDTH,
 		IPIF_MODE   => IPIF_RW
