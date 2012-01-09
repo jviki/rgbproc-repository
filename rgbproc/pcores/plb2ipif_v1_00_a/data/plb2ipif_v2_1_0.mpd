@@ -38,6 +38,7 @@ PARAMETER C_BASEADDR = 0xffffffff, DT = std_logic_vector, PAIR = C_HIGHADDR, ADD
 PARAMETER C_HIGHADDR = 0x00000000, DT = std_logic_vector, PAIR = C_BASEADDR, ADDRESS = HIGH, BUS = SPLB
 
 PARAMETER DUAL_CLOCK = 1, DT = integer, VALUES = (0 = disabled, 1 = enabled)
+PARAMETER CS_ENABLE = 0, DT = integer, VALUES = (0 = disable, 1 = enabled)
 
 ## Ports
 PORT SPLB_Clk = "", DIR = I, SIGIS = CLK, BUS = SPLB
@@ -94,5 +95,10 @@ PORT IP2Bus_Data  = Bus2IP_Data,  DIR = I, BUS = IPIF, VEC = [31:0]
 PORT IP2Bus_RdAck = Bus2IP_RdAck, DIR = I, BUS = IPIF
 PORT IP2Bus_WrAck = Bus2IP_WrAck, DIR = I, BUS = IPIF
 PORT IP2Bus_Error = Bus2IP_Error, DIR = I, BUS = IPIF
+
+PORT CS_M_CLK = "", DIR = O, SIGIS = CLK,   ISVALID = (CS_ENABLE == 1)
+PORT CS_M_VEC = "", DIR = O, VEC = [105:0], ISVALID = (CS_ENABLE == 1)
+PORT CS_S_CLK = "", DIR = O, SIGIS = CLK,   ISVALID = (CS_ENABLE == 1)
+PORT CS_S_VEC = "", DIR = O, VEC = [105:0], ISVALID = (CS_ENABLE == 1)
 
 END
