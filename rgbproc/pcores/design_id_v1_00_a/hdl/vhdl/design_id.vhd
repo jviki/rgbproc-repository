@@ -56,7 +56,7 @@ begin
 
 	------------------------
 
-	devid_i : utils_v1_00_a.ipif_reg
+	devid_i : entity utils_v1_00_a.ipif_reg
 	generic map (
 		REG_IPIF_DWIDTH  => 32,
 		IPIF_DWIDTH => IPIF_DWIDTH,
@@ -81,7 +81,7 @@ begin
 	);
 
 
-	id_i : utils_v1_00_a.ipif_reg_logic
+	id_i : entity utils_v1_00_a.ipif_reg_logic
 	generic map (
 		REG_IPIF_DWIDTH  => 16,
 		IPIF_DWIDTH => IPIF_DWIDTH,
@@ -103,7 +103,7 @@ begin
 		REG_DO       => ID(15 downto 0)
 	);
 
-	version_i : utils_v1_00_a.ipif_reg_logic
+	version_i : entity utils_v1_00_a.ipif_reg_logic
 	generic map (
 		REG_IPIF_DWIDTH  => 16,
 		IPIF_DWIDTH => IPIF_DWIDTH,
@@ -125,7 +125,7 @@ begin
 		REG_DO       => VERSION(15 downto 0)
 	);
 
-	name_i : utils_v1_00_a.ipif_reg_logic
+	name_i : entity utils_v1_00_a.ipif_reg_logic
 	generic map (
 		REG_IPIF_DWIDTH  => 32,
 		IPIF_DWIDTH => IPIF_DWIDTH,
@@ -152,7 +152,7 @@ begin
 	name_vec(23 downto 16) <= character'pos(NAME(2));
 	name_vec(31 downto 24) <= character'pos(NAME(3));
 
-	reg_negation : utils_v1_00_a.ipif_reg
+	reg_negation : entity utils_v1_00_a.ipif_reg
 	generic map (
 		REG_IPIF_DWIDTH  => 32,
 		REG_DEFAULT => 0,
