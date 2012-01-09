@@ -60,14 +60,13 @@ begin
 
 	fsm_output : process(CLK, state, SYNC)
 	begin
-		SOP <= '0';
-
 		case state is
-		when s_pulse =>
-			SOP <= '0';
-
 		when s_not_pulse =>
 			SOP <= not SYNC;
+
+		when others =>
+			SOP <= '0';
+
 		end case;
 	end process;
 
