@@ -174,7 +174,7 @@ entity plb2ipif is
 	IP2Bus_Data                    : in  std_logic_vector(C_SPLB_NATIVE_DWIDTH-1 downto 0);
 	IP2Bus_RdAck                   : in  std_logic;
 	IP2Bus_WrAck                   : in  std_logic;
-	IP2Bus_Error                   : in  std_logic
+	IP2Bus_Error                   : in  std_logic;
     -- ADD USER PORTS ABOVE THIS LINE ------------------
 
     -- DO NOT EDIT BELOW THIS LINE ---------------------
