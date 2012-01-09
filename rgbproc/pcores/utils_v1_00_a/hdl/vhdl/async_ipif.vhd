@@ -6,6 +6,9 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
+library utils_v1_00_a;
+use utils_v1_00_a.afifo;
+
 entity async_ipif is
 generic (
 	AWIDTH : integer := 32; -- address width
@@ -65,7 +68,7 @@ begin
 
 	---------------------------------
 
-	master_afifo_i : entity work.afifo
+	master_afifo_i : entity utils_v1_00_a.afifo
 	generic map (
 		DWIDTH => master_afifo_di'length,
 		DEPTH  => AFIFO_DEPTH
