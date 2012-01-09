@@ -168,7 +168,7 @@ begin
 	ipif_gerror <= Bus2IP_CS(0) when ipif_cs = "00" else '0';
 
 	IP2Bus_Data <= ipif_data(63 downto 32) when ipif_cs = "10" else
-                    <= ipif_data(31 downto  0);
+                  ipif_data(31 downto  0);
 
 	IP2Bus_WrAck <= ipif_wrack(0) or ipif_wrack(1);
 	IP2Bus_RdAck <= ipif_rdack(0) or ipif_rdack(1);
