@@ -34,7 +34,7 @@ begin
 		end if;
 	end process;
 
-	fsm_next : process(CLK, state, SYNC_N)
+	fsm_next : process(CLK, state, SYNC)
 	begin
 		nstate <= state;
 

@@ -34,7 +34,7 @@ port (
 	S_Bus2IP_Addr  : out std_logic_vector(AWIDTH - 1 downto 0);
 	S_Bus2IP_Data  : out std_logic_vector(DWIDTH - 1 downto 0);
 	S_Bus2IP_RNW   : out std_logic;
-	S_Bus2IP_BE    : out std_logic_vector(DWIDTH - 1 downto 0);
+	S_Bus2IP_BE    : out std_logic_vector(DWIDTH / 8 - 1 downto 0);
 	S_Bus2IP_CS    : out std_logic_vector(NADDR - 1 downto 0)
 );
 end entity;
