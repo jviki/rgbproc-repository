@@ -60,9 +60,9 @@ begin
 
 	devid_i : entity utils_v1_00_a.ipif_reg
 	generic map (
-		REG_DWIDTH  => 32,
+		REG_DWIDTH  => 16,
 		IPIF_DWIDTH => IPIF_DWIDTH,
-		REG_DEFAULT => 2,
+		REG_DEFAULT => X"0002",
 		IPIF_MODE   => IPIF_RO
 	)
 	port map (
@@ -78,7 +78,7 @@ begin
 		Bus2IP_RNW   => Bus2IP_RNW,
 		Bus2IP_CS    => ipif_cs(0),
 
-		REG_DI       => (31 downto 0 => 'X'),
+		REG_DI       => (15 downto 0 => 'X'),
 		REG_WE       => '0'
 	);
 
@@ -161,7 +161,7 @@ begin
 	reg_negation : entity utils_v1_00_a.ipif_reg
 	generic map (
 		REG_DWIDTH  => 32,
-		REG_DEFAULT => 0,
+		REG_DEFAULT => X"DEADBEEF",
 		IPIF_DWIDTH => IPIF_DWIDTH,
 		IPIF_MODE   => IPIF_RW
 	)

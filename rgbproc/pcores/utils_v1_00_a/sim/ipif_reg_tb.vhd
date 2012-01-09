@@ -136,7 +136,7 @@ begin
 	dut_i : entity work.ipif_reg
 	generic map (
 		REG_DWIDTH  => 32,
-		REG_DEFAULT => 0,
+		REG_DEFAULT => X"00000000",
 		IPIF_DWIDTH => 32,
 		IPIF_MODE   => IPIF_RW
 	)

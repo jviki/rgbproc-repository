@@ -11,7 +11,7 @@ use work.utils_pkg.all;
 entity ipif_reg is
 generic (
 	REG_DWIDTH  : integer := 32;
-	REG_DEFAULT : integer := 0;
+	REG_DEFAULT : std_logic_vector;
 	IPIF_DWIDTH : integer := 32;
 	IPIF_MODE   : integer := IPIF_RW
 );
@@ -65,7 +65,7 @@ begin
 	begin
 		if rising_edge(CLK) then
 			if RST = '1' then
-				reg_data <= conv_std_logic_vector(REG_DEFAULT, reg_data'length);
+				reg_data <= REG_DEFAULT;
 			elsif reg_data_we = '1' then
 				for i in 0 to reg_data_be'length - 1 loop
 					DBEG := (i + 1) * 8;
