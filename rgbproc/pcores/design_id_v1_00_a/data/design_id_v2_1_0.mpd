@@ -9,8 +9,8 @@ OPTION DESC = Unit that provides metadata about the design to software
 
 BUS_INTERFACE BUS=cfg, BUS_STD=IPIF, BUS_TYPE=TARGET
 
-PARAMETER VERSION = 0, DT = std_logic_vector
-PARAMETER ID = 0, DT = std_logic_vector
+PARAMETER VERSION = 0x0000, DT = std_logic_vector
+PARAMETER ID = 0x0000, DT = std_logic_vector
 PARAMETER NAME = "TEST", DT = string
 PARAMETER IPIF_AWIDTH = 32, DT = integer
 PARAMETER IPIF_DWIDTH = 32, DT = integer
