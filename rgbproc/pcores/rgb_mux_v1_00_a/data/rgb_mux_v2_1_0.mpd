@@ -1,0 +1,54 @@
+BEGIN rgb_mux
+
+OPTION IPTYPE = PERIPHERAL
+OPTION IMP_NETLIST = TRUE
+OPTION HDL = VHDL
+OPTION STYLE = HDL
+OPTION IP_GROUP = MICROBLAZE:PPC:USER
+OPTION DESC = Multiplexor of 2 RGB buses
+
+BUS_INTERFACE BUS=cfg, BUS_STD=IPIF, BUS_TYPE=TARGET
+BUS_INTERFACE BUS=in0, BUS_STD=RGB, BUS_TYPE=TARGET
+BUS_INTERFACE BUS=in1, BUS_STD=RGB, BUS_TYPE=TARGET
+BUS_INTERFACE BUS=out, BUS_STD=RGB, BUS_TYPE=INITIATOR
+
+PARAMETER DEFAULT_SRC = 0, DT = integer, RANGE = (0:1)
+PARAMETER IPIF_AWIDTH = 32, DT = integer
+PARAMETER IPIF_DWIDTH = 32, DT = integer
+
+PORT CLK = "", DIR = I, SIGIS = CLK
+PORT CE  = net_vcc DIR = I
+PORT RST = sys_periph_reset, DIR = I, SIGIS = RST
+
+PORT Bus2IP_Addr  = Bus2IP_Addr,  DIR = I, BUS = cfg, VEC = [IPIF_AWIDTH-1:0]
+PORT Bus2IP_CS    = Bus2IP_CS,    DIR = I, BUS = cfg, VEC = [0:0]
+PORT Bus2IP_RNW   = Bus2IP_RNW,   DIR = I, BUS = cfg
+PORT Bus2IP_Data  = Bus2IP_Data,  DIR = I, BUS = cfg, VEC = [IPIF_DWIDTH-1:0]
+PORT Bus2IP_BE    = Bus2IP_BE,    DIR = I, BUS = cfg, VEC = [IPIF_DWIDTH/8-1:0]
+PORT IP2Bus_Data  = IP2Bus_Data,  DIR = O, BUS = cfg, VEC = [IPIF_DWIDTH-1:0]
+PORT IP2Bus_WrAck = IP2Bus_WrAck, DIR = O, BUS = cfg
+PORT IP2Bus_RdAck = IP2Bus_RdAck, DIR = O, BUS = cfg
+PORT IP2Bus_Error = IP2Bus_Error, DIR = O, BUS = cfg
+
+PORT IN0_R   = R,   DIR = I, BUS = in0, VEC = [7:0]
+PORT IN0_G   = G,   DIR = I, BUS = in0, VEC = [7:0]
+PORT IN0_B   = B,   DIR = I, BUS = in0, VEC = [7:0]
+PORT IN0_DE  = DE,  DIR = I, BUS = in0
+PORT IN0_HS  = HS,  DIR = I, BUS = in0
+PORT IN0_VS  = VS,  DIR = I, BUS = in0
+
+PORT IN1_R   = R,   DIR = I, BUS = in1, VEC = [7:0]
+PORT IN1_G   = G,   DIR = I, BUS = in1, VEC = [7:0]
+PORT IN1_B   = B,   DIR = I, BUS = in1, VEC = [7:0]
+PORT IN1_DE  = DE,  DIR = I, BUS = in1
+PORT IN1_HS  = HS,  DIR = I, BUS = in1
+PORT IN1_VS  = VS,  DIR = I, BUS = in1
+
+PORT OUT_R   = R,   DIR = O, BUS = out, VEC = [7:0]
+PORT OUT_G   = G,   DIR = O, BUS = out, VEC = [7:0]
+PORT OUT_B   = B,   DIR = O, BUS = out, VEC = [7:0]
+PORT OUT_DE  = DE,  DIR = O, BUS = out
+PORT OUT_HS  = HS,  DIR = O, BUS = out
+PORT OUT_VS  = VS,  DIR = O, BUS = out
+
+END

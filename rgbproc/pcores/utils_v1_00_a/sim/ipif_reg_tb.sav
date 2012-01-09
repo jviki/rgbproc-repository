@@ -1,0 +1,22 @@
+[timestart] 0
+[size] 1366 684
+[pos] -1 -1
+*0.000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+@28
+clk
+rst
+ipif_busy
+ipif_done
+bus2ip_cs
+ip2bus_rdack
+ip2bus_wrack
+ip2bus_error
+bus2ip_rnw
+@22
+bus2ip_data[31:0]
+@23
+bus2ip_be[3:0]
+@22
+ip2bus_data[31:0]
+[pattern_trace] 1
+[pattern_trace] 0

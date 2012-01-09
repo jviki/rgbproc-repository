@@ -1,0 +1,38 @@
+BEGIN rgb_split
+
+OPTION IPTYPE = PERIPHERAL
+OPTION IMP_NETLIST = TRUE
+OPTION HDL = VHDL
+OPTION STYLE = HDL
+OPTION IP_GROUP = MICROBLAZE:PPC:USER
+OPTION DESC = Splits the RGB bus to two identical flows
+
+BUS_INTERFACE BUS=in, BUS_STD=RGB, BUS_TYPE=TARGET
+BUS_INTERFACE BUS=out0, BUS_STD=RGB, BUS_TYPE=INITIATOR
+BUS_INTERFACE BUS=out1, BUS_STD=RGB, BUS_TYPE=INITIATOR
+
+PORT CLK = "", DIR = I, SIGIS = CLK
+PORT CE  = net_vcc, DIR = I
+
+PORT IN_R   = R,   DIR = I, BUS = in, VEC = [7:0]
+PORT IN_G   = G,   DIR = I, BUS = in, VEC = [7:0]
+PORT IN_B   = B,   DIR = I, BUS = in, VEC = [7:0]
+PORT IN_DE  = DE,  DIR = I, BUS = in
+PORT IN_HS  = HS,  DIR = I, BUS = in
+PORT IN_VS  = VS,  DIR = I, BUS = in
+
+PORT OUT0_R  = R,   DIR = O, BUS = out0, VEC = [7:0]
+PORT OUT0_G  = G,   DIR = O, BUS = out0, VEC = [7:0]
+PORT OUT0_B  = B,   DIR = O, BUS = out0, VEC = [7:0]
+PORT OUT0_DE = DE,  DIR = O, BUS = out0
+PORT OUT0_HS = HS,  DIR = O, BUS = out0
+PORT OUT0_VS = VS,  DIR = O, BUS = out0
+
+PORT OUT1_R  = R,   DIR = O, BUS = out1, VEC = [7:0]
+PORT OUT1_G  = G,   DIR = O, BUS = out1, VEC = [7:0]
+PORT OUT1_B  = B,   DIR = O, BUS = out1, VEC = [7:0]
+PORT OUT1_DE = DE,  DIR = O, BUS = out1
+PORT OUT1_HS = HS,  DIR = O, BUS = out1
+PORT OUT1_VS = VS,  DIR = O, BUS = out1
+
+END
