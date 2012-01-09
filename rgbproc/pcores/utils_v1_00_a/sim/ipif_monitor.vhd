@@ -19,6 +19,7 @@ port (
 	IP2Bus_Error : in  std_logic;
 
 	IPIF_BUSY    : in  std_logic;
+	IPIF_READ    : in  std_logic;
 	IPIF_DONE    : out std_logic
 );
 end entity;
@@ -44,11 +45,19 @@ begin
 					assert IPIF_BUSY = '1'
 						report "WrAck asserted when no transaction is active"
 						severity failure;
+
+					assert IPIF_READ = '0'
+						report "Invalid acknowladge, expected RdAck"
+						severity failure;
 				end if;
 
 				if IP2Bus_RdAck = '1' then
 					assert IPIF_BUSY = '1'
 						report "RdAck asserted when no transaction is active"
+						severity failure;
+
+					assert IPIF_READ = '1'
+						report "Invalid acknowladge, expected WrAck"
 						severity failure;
 				end if;
 
