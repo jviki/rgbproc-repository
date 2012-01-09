@@ -24,6 +24,7 @@ port (
 	Bus2IP_CS    : out std_logic;
 
 	IPIF_BUSY    : out std_logic;
+	IPIF_READ    : out std_logic;
 	IPIF_DONE    : in  std_logic
 );
 end entity;
@@ -260,5 +261,7 @@ begin
 			Bus2IP_BE   <= ipif_be;
 		end if;
 	end process;
+
+	IPIF_READ <= ipif_rnw;
 
 end architecture;
