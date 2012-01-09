@@ -168,6 +168,10 @@ begin
 
 	fsm_output : process(CLK, state, IPIF_DONE)
 		variable address : std_logic_vector(Bus2IP_Addr'range);
+		variable data    : integer;
+		variable be      : integer;
+		variable rnw     : std_logic;
+		variable generated : boolean;
 	begin
 		cnt_timer_ce <= '0';
 		cnt_timer_le <= '0';
@@ -184,6 +188,8 @@ begin
 			ipif_be   <= (others => 'X');
 			ipif_rnw  <= 'X';
 
+			generated := false;
+
 		when s_delay =>
 			cnt_timer_ce <= '1';
 			IPIF_BUSY   <= '0';
@@ -197,15 +203,28 @@ begin
 		when s_generate =>
 			IPIF_BUSY   <= '0';
 
-			gen_addr(getint, address);
+			if not generated then
+				gen_addr(getint, address);
+				data      := getint;
+				be        := getint;
+				rnw       := getbit;
+			end if;
+
 			ipif_addr <= address;
-			ipif_data <= conv_std_logic_vector(getint, Bus2IP_Data'length);
-			ipif_rnw  <= getbit;
+			ipif_data <= conv_std_logic_vector(data, Bus2IP_Data'length);
+			ipif_rnw  <= rnw;
+			ipif_be   <= conv_std_logic_vector(be, Bus2IP_BE'length);
 			ipif_cs   <= '1';
-			ipif_be   <= conv_std_logic_vector(getint, Bus2IP_BE'length);
+
+			generated := true;
 
 		when s_busy =>
 			IPIF_BUSY <= '1';
+
+			ipif_addr <= address;
+			ipif_data <= conv_std_logic_vector(data, Bus2IP_Data'length);
+			ipif_rnw  <= rnw;
+			ipif_be   <= conv_std_logic_vector(be, Bus2IP_BE'length);
 			ipif_cs   <= not IPIF_DONE;
 		end case;
 	end process;
