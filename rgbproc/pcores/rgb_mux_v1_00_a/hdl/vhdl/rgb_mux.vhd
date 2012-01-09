@@ -92,8 +92,8 @@ begin
 	---
 	reg_id : entity utils_v1_00_a.ipif_reg
 	generic map (
-		REG_DWIDTH  => 32,
-		REG_DEFAULT => 1,
+		REG_DWIDTH  => 16,
+		REG_DEFAULT => X"0001",
 		IPIF_DWIDTH => IPIF_DWIDTH,
 		IPIF_MODE   => 0
 	)

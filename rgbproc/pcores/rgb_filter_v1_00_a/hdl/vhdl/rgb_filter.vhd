@@ -111,8 +111,8 @@ end generate;
 	---
 	reg_id : utils_v1_00_a.ipif_reg
 	generic map (
-		REG_DWIDTH  => 32,
-		REG_DEFAULT => 3,
+		REG_DWIDTH  => 16,
+		REG_DEFAULT => X"0003",
 		IPIF_DWIDTH => IPIF_DWIDTH,
 		IPIF_MODE   => IPIF_RO
 	)
@@ -136,7 +136,7 @@ end generate;
 	reg_red_i : utils_v1_00_a.ipif_reg
 	generic map (
 		REG_DWIDTH  => 8,
-		REG_DEFAULT => 0,
+		REG_DEFAULT => X"00",
 		IPIF_DWIDTH => IPIF_DWIDTH,
 		IPIF_MODE   => IPIF_RW
 	)
@@ -161,7 +161,7 @@ end generate;
 	reg_green_i : utils_v1_00_a.ipif_reg
 	generic map (
 		REG_DWIDTH  => 8,
-		REG_DEFAULT => 0,
+		REG_DEFAULT => X"00",
 		IPIF_DWIDTH => IPIF_DWIDTH,
 		IPIF_MODE   => IPIF_RW
 	)
@@ -186,7 +186,7 @@ end generate;
 	reg_blue_i : utils_v1_00_a.ipif_reg
 	generic map (
 		REG_DWIDTH  => 8,
-		REG_DEFAULT => 0,
+		REG_DEFAULT => X"00",
 		IPIF_DWIDTH => IPIF_DWIDTH,
 		IPIF_MODE   => IPIF_RW
 	)
