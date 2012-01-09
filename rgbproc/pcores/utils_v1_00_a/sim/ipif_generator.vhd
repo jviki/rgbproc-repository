@@ -53,10 +53,14 @@ architecture full of ipif_generator is
 			rnd_addr := rnd mod (ADDR_MAX - ADDR_MIN + 1) + ADDR_MIN;
 		end if;
 
+		-- be multiple of 4 as PLB used to be...
+		rnd_addr := rnd_addr - (rnd_addr mod 4);
+
 		assert rnd_addr >= ADDR_MIN and rnd_addr <= ADDR_MAX
 			report "BUG: invalid address generated: " & integer'image(rnd_addr)
 			severity failure;
 
+--		report "Generated address: " & integer'image(rnd_addr);
 		addr := conv_std_logic_vector(rnd_addr, addr'length);
 	end procedure;
 
