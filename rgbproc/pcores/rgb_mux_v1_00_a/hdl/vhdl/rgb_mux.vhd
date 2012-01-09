@@ -18,6 +18,7 @@ generic (
 );
 port (
 	CLK     : in  std_logic;
+	CE      : in  std_logic;
 	RST     : in  std_logic;
 
 	Bus2IP_Addr  : in  std_logic_vector(IPIF_AWIDTH - 1 downto 0);
@@ -69,6 +70,20 @@ architecture full of rgb_mux is
 	signal src_sel_in   : std_logic;
 	signal src_sel      : std_logic;
 	signal cur_sel      : std_logic;
+
+	signal reg_r  : std_logic_vector(7 downto 0);
+	signal reg_g  : std_logic_vector(7 downto 0);
+	signal reg_b  : std_logic_vector(7 downto 0);
+	signal reg_de : std_logic;
+	signal reg_hs : std_logic;
+	signal reg_vs : std_logic
+
+	signal ipif_cs     : std_logic_vector(1 downto 0);
+	signal ipif_data   : std_logic_vector(63 downto 0);
+	signal ipif_wrack  : std_logic_vector(1 downto 0);
+	signal ipif_rdack  : std_logic_vector(1 downto 0);
+	signal ipif_error  : std_logic_vector(1 downto 0);
+	signal ipif_gerror : std_logic;
 
 begin
 
@@ -150,7 +165,7 @@ begin
 	ipif_cs(1)  <= Bus2IP_CS(0) when Bus2IP_Addr = X"00000004" else '0';
 	
 	-- invalid address request
-	ipif_gerror <= Bus2IP_CS(0) and (ipif_cs = "00");
+	ipif_gerror <= Bus2IP_CS(0) when ipif_cs = "00" else '0';
 
 	IP2Bus_Data <= ipif_data(63 downto 32) when ipif_cs = "10" else
                     <= ipif_data(31 downto  0);
@@ -247,33 +262,14 @@ begin
 
 	fsm_output : process(CLK, state)
 	begin
-		OUT_R <= (others => 'X');
-		OUT_G <= (others => 'X');
-		OUT_B <= (others => 'X');
-		OUT_DE <= '0';
-		OUT_HS <= '0';
-		OUT_VS <= '0';
-
 		case state is
 		when s_src0 | s_sync0_to_1 =>
-			OUT_R  <= IN0_R;
-			OUT_G  <= IN0_G;
-			OUT_B  <= IN0_B;
-			OUT_DE <= IN0_DE;
-			OUT_HS <= IN0_HS;
-			OUT_VS <= IN0_VS;
 			cur_sel <= '0';
 
 		when s_0_to_sync1 =>
 			cur_sel <= '0';
 
 		when s_src1 | s_sync1_to_0 =>
-			OUT_R  <= IN1_R;
-			OUT_G  <= IN1_G;
-			OUT_B  <= IN1_B;
-			OUT_DE <= IN1_DE;
-			OUT_HS <= IN1_HS;
-			OUT_VS <= IN1_VS;
 			cur_sel <= '1';
 
 		when s_1_to_sync0 =>
@@ -281,4 +277,34 @@ begin
 			
 		end case;
 	end process;
+
+	---------------------------------
+
+	reg_r  <= IN0_R  when cur_sel = '0' else
+	          IN1_R;
+	reg_g  <= IN0_G  when cur_sel = '0' else
+	          IN1_G;
+	reg_b  <= IN0_B  when cur_sel = '0' else
+	          IN1_B;
+	reg_de <= IN0_DE when cur_sel = '0' else
+	          IN1_DE;
+	reg_hs <= IN0_HS when cur_sel = '0' else
+	          IN1_HS;
+	reg_vs <= IN0_VS when cur_sel = '0' else
+	          IN1_VS;
+
+	regp : process(CLK, CE, reg_r, reg_g, reg_b, reg_de, reg_hs, reg_vs)
+	begin
+		if rising_edge(CLK) then
+			if CE = '1' then
+				OUT_R  <= reg_r;
+				OUT_G  <= reg_g;
+				OUT_B  <= reg_b;
+				OUT_DE <= reg_de;
+				OUT_HS <= reg_hs;
+				OUT_VS <= reg_vs;
+			end if;
+		end if;
+	end process;
+
 end architecture;
