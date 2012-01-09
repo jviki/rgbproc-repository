@@ -90,7 +90,7 @@ begin
 	---
 	-- Device ID register
 	---
-	reg_id : utils_v1_00_a.ipif_reg
+	reg_id : entity utils_v1_00_a.ipif_reg
 	generic map (
 		REG_DWIDTH  => 32,
 		REG_DEFAULT => 1,
@@ -117,7 +117,7 @@ begin
 	---
 	-- MUX select register
 	---
-	cfg_sel : utils_v1_00_a.ipif_reg_logic
+	cfg_sel : entity utils_v1_00_a.ipif_reg_logic
 	generic map (
 		REG_DWIDTH  => 1,
 		IPIF_DWIDTH => IPIF_DWIDTH,
