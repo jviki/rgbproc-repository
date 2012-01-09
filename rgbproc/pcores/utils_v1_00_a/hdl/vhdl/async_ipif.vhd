@@ -57,11 +57,21 @@ architecture full of async_ipif is
 	signal slave_afifo_re     : std_logic;
 	signal slave_afifo_empty  : std_logic;
 
+	signal slave_cs           : std_logic;
+	signal slave_wrack        : std_logic;
+	signal slave_rdack        : std_logic;
+
 	signal or_reset           : std_logic;
+
+	type state_t is (s_idle, s_wait_ack, s_wait_not_cs);
+	signal state  : state_t;
+	signal nstate : state_t;
 
 begin
 
 	or_reset <= S_RST or M_RST;
+
+	slave_cs  <= master_afifo_do(69) and not master_afifo_empty;
 
 	---------------------------------
 
@@ -101,7 +111,6 @@ begin
 	S_Bus2IP_Data  <= master_afifo_do(63 downto 32);
 	S_Bus2IP_BE    <= master_afifo_do(67 downto 64);
 	S_Bus2IP_RNW   <= master_afifo_do(68);
-	S_Bus2IP_CS(0) <= master_afifo_do(69) and not master_afifo_empty;
 
 	master_afifo_re  <= not master_afifo_empty;
 
@@ -130,8 +139,8 @@ begin
 	------------
 
 	slave_afifo_di(31 downto 0) <= S_IP2Bus_Data;
-	slave_afifo_di(32)          <= S_IP2Bus_WrAck;
-	slave_afifo_di(33)          <= S_IP2Bus_RdAck;
+	slave_afifo_di(32)          <= slave_wrack;
+	slave_afifo_di(33)          <= slave_rdack;
 	slave_afifo_di(34)          <= S_IP2Bus_Error;
 
 	slave_afifo_we <= (S_IP2Bus_WrAck or S_IP2Bus_RdAck) and not slave_afifo_full;
@@ -144,6 +153,69 @@ begin
 	M_IP2Bus_Error <= slave_afifo_do(34);
 
 	slave_afifo_re <= not slave_afifo_empty;
+
+	---------------------------------
+
+	fsm_state : process(S_CLK, S_RST, nstate)
+	begin
+		if rising_edge(S_CLK) then
+			if S_RST = '1' then
+				state <= s_idle;
+			else
+				state <= nstate;
+			end if;
+		end if;
+	end process;
+
+	fsm_next : process(S_CLK, state, slave_cs, S_IP2Bus_WrAck, S_IP2Bus_RdAck)
+	begin
+		nstate <= state;
+
+		case state is
+		when s_idle =>
+			if slave_cs = '1' and S_IP2Bus_WrAck = '0' and S_IP2Bus_RdAck = '0' then
+				nstate <= s_wait_ack;
+			elsif slave_cs = '1' and (S_IP2Bus_WrAck = '1' or S_IP2Bus_RdAck = '1') then
+				nstate <= s_wait_not_cs;
+			end if;
+
+		when s_wait_ack =>
+			if S_IP2Bus_WrAck = '1' or S_IP2Bus_RdAck = '1' then
+				nstate <= s_wait_not_cs;
+			end if;
+
+		when s_wait_not_cs =>
+			if slave_cs = '0' then
+				nstate <= s_idle;
+			end if;
+
+		end case;
+	end process;
+
+	fsm_output : process(S_CLK, state, slave_cs, S_IP2Bus_WrAck, S_IP2Bus_RdAck)
+	begin
+		S_Bus2IP_CS(0) <= '0';
+		slave_wrack    <= '0';
+		slave_rdack    <= '0';
+
+		case state is
+		when s_idle =>
+			S_Bus2IP_CS(0) <= slave_cs;
+			slave_wrack    <= S_IP2Bus_WrAck;
+			slave_rdack    <= S_IP2Bus_RdAck;
+
+		when s_wait_ack =>
+			S_Bus2IP_CS(0) <= slave_cs;
+			slave_wrack    <= S_IP2Bus_WrAck;
+			slave_rdack    <= S_IP2Bus_RdAck;
+
+		when s_wait_not_cs =>
+			S_Bus2IP_CS(0) <= '0';
+			slave_wrack    <= '0';
+			slave_rdack    <= '0';
+
+		end case;
+	end process;
 
 end architecture;
 
