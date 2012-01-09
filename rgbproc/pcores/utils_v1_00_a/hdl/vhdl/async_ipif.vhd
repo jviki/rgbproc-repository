@@ -60,6 +60,7 @@ architecture full of async_ipif is
 	signal slave_cs           : std_logic;
 	signal slave_wrack        : std_logic;
 	signal slave_rdack        : std_logic;
+	signal was_slave_afifo_empty : std_logic;
 
 	signal or_reset           : std_logic;
 
@@ -148,11 +149,20 @@ begin
 	------------
 
 	M_IP2Bus_Data  <= slave_afifo_do(31 downto 0);
-	M_IP2Bus_WrAck <= slave_afifo_do(32) and not slave_afifo_empty;
-	M_IP2Bus_RdAck <= slave_afifo_do(33) and not slave_afifo_empty;
+	M_IP2Bus_WrAck <= slave_afifo_do(32) and not was_slave_afifo_empty;
+	M_IP2Bus_RdAck <= slave_afifo_do(33) and not was_slave_afifo_empty;
 	M_IP2Bus_Error <= slave_afifo_do(34);
 
 	slave_afifo_re <= not slave_afifo_empty;
+
+	------------
+
+	was_slave_afifo_emptyp : process(M_CLK, slave_afifo_empty)
+	begin
+		if rising_edge(M_CLK) then
+			was_slave_afifo_empty <= slave_afifo_empty;
+		end if;
+	end process;
 
 	---------------------------------
 
