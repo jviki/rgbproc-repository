@@ -147,10 +147,10 @@ begin
 		REG_DO       => name_vec
 	);
 
-	name_vec( 7 downto  0) <= character'pos(NAME(0));
-	name_vec(15 downto  8) <= character'pos(NAME(1));
-	name_vec(23 downto 16) <= character'pos(NAME(2));
-	name_vec(31 downto 24) <= character'pos(NAME(3));
+	name_vec( 7 downto  0) <= conv_std_logic_vector(character'pos(NAME(1)), 8);
+	name_vec(15 downto  8) <= conv_std_logic_vector(character'pos(NAME(2)), 8);
+	name_vec(23 downto 16) <= conv_std_logic_vector(character'pos(NAME(3)), 8);
+	name_vec(31 downto 24) <= conv_std_logic_vector(character'pos(NAME(4)), 8);
 
 	reg_negation : entity utils_v1_00_a.ipif_reg
 	generic map (
