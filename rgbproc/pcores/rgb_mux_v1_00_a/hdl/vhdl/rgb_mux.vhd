@@ -76,7 +76,7 @@ architecture full of rgb_mux is
 	signal reg_b  : std_logic_vector(7 downto 0);
 	signal reg_de : std_logic;
 	signal reg_hs : std_logic;
-	signal reg_vs : std_logic
+	signal reg_vs : std_logic;
 
 	signal ipif_cs     : std_logic_vector(1 downto 0);
 	signal ipif_data   : std_logic_vector(63 downto 0);
