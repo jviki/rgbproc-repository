@@ -186,9 +186,9 @@ begin
 
 	IP2Bus_Data <= ipif_data(159 downto 128) when ipif_cs = "10000" else
 	               ipif_data(127 downto  96) when ipif_cs = "01000" else
-                  ipif_data( 95 downto  64) when ipif_cs = "00100" else
-                  ipif_data( 63 downto  32) when ipif_cs = "00010" else
-                  ipif_data( 31 downto   0);
+                       ipif_data( 95 downto  64) when ipif_cs = "00100" else
+                       ipif_data( 63 downto  32) when ipif_cs = "00010" else
+                       ipif_data( 31 downto   0);
 
 	IP2Bus_WrAck <= ipif_wrack(0) or ipif_wrack(1) or ipif_wrack(2) or ipif_wrack(3) or ipif_wrack(4);
 	IP2Bus_RdAck <= ipif_rdack(0) or ipif_rdack(1) or ipif_rdack(2) or ipif_rdack(3) or ipif_rdack(4);
