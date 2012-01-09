@@ -49,6 +49,8 @@ architecture full of design_id is
 	signal ipif_gerror : std_logic;
 
 	signal name_vec    : std_logic_vector(31 downto 0);
+	signal id_vec      : std_logic_vector(15 downto 0);
+	signal version_vec : std_logic_vector(15 downto 0);
 
 begin
 
@@ -100,8 +102,10 @@ begin
 		Bus2IP_RNW   => Bus2IP_RNW,
 		Bus2IP_CS    => ipif_cs(1),
 
-		REG_DO       => ID(15 downto 0)
+		REG_DO       => id_vec
 	);
+
+	id_vec <= ID;
 
 	version_i : entity utils_v1_00_a.ipif_reg_logic
 	generic map (
@@ -122,8 +126,10 @@ begin
 		Bus2IP_RNW   => Bus2IP_RNW,
 		Bus2IP_CS    => ipif_cs(2),
 
-		REG_DO       => VERSION(15 downto 0)
+		REG_DO       => version_vec
 	);
+
+	version_vec <= VERSION;
 
 	name_i : entity utils_v1_00_a.ipif_reg_logic
 	generic map (
