@@ -50,6 +50,7 @@ architecture full of ipif_reg_logic is
 	signal ipif_sel    : std_logic;
 	signal ipif_error  : std_logic;
 	signal ipif_di     : std_logic_vector(REG_DWIDTH - 1 downto 0);
+	signal ipif_do     : std_logic_vector(IPIF_DWIDTH - 1 downto 0);
 
 begin
 
@@ -82,7 +83,18 @@ end generate;
 	
 	-----------------------
 
-	IP2Bus_Data  <= REG_DO when IPIF_READABLE else (others => '1');
+gen_assign_direct: if REG_DO'length = ipif_do'length
+generate
+	ipif_do      <= REG_DO;
+end generate;
+
+gen_assign_padding: if REG_DO'length < ipif_do'length
+generate
+	ipif_do(ipif_do'length - 1 downto REG_DO'length) <= (others => '0');
+	ipif_do(REG_DO'range) <= REG_DO;
+end generate;
+
+	IP2Bus_Data  <= ipif_do when IPIF_READABLE else (others => '1');
 
 	ipif_error <= '1' when not IPIF_WRITABLE and ipif_we = '1' else
 	              '1' when not IPIF_READABLE and ipif_re = '1' else
