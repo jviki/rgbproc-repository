@@ -244,7 +244,7 @@ begin
 			elsif src_sel = '0' and IN1_HS = '0' and IN1_VS = '0' then
 				nstate <= s_1_to_sync0;
 			elsif src_sel = '0' then
-				nstate <= s_sync1_to_0;;
+				nstate <= s_sync1_to_0;
 			end if;
 
 		when s_sync1_to_0 =>
