@@ -48,6 +48,9 @@ architecture full of design_id is
 	signal ipif_error  : std_logic_vector(REG_COUNT - 1 downto 0);
 	signal ipif_gerror : std_logic;
 
+	signal error_wrack : std_logic;
+	signal error_rdack : std_logic;
+
 	signal name_vec    : std_logic_vector(31 downto 0);
 	signal id_vec      : std_logic_vector(15 downto 0);
 	signal version_vec : std_logic_vector(15 downto 0);
@@ -190,14 +193,19 @@ begin
 
 	ipif_gerror <= Bus2IP_CS(0) when ipif_cs = "00000" else '0';
 
+	error_rdack <= ipif_gerror when Bus2IP_CS(0) = '1' and Bus2IP_RNW = '1' else '0';
+	error_wrack <= ipif_gerror when Bus2IP_CS(0) = '1' and Bus2IP_RNW = '0' else '0';
+
 	IP2Bus_Data <= ipif_data(159 downto 128) when ipif_cs = "10000" else
 	               ipif_data(127 downto  96) when ipif_cs = "01000" else
                        ipif_data( 95 downto  64) when ipif_cs = "00100" else
                        ipif_data( 63 downto  32) when ipif_cs = "00010" else
                        ipif_data( 31 downto   0);
 
-	IP2Bus_WrAck <= ipif_wrack(0) or ipif_wrack(1) or ipif_wrack(2) or ipif_wrack(3) or ipif_wrack(4);
-	IP2Bus_RdAck <= ipif_rdack(0) or ipif_rdack(1) or ipif_rdack(2) or ipif_rdack(3) or ipif_rdack(4);
+	IP2Bus_WrAck <= ipif_wrack(0) or ipif_wrack(1) or ipif_wrack(2) or ipif_wrack(3) or ipif_wrack(4)
+	             or error_wrack;
+	IP2Bus_RdAck <= ipif_rdack(0) or ipif_rdack(1) or ipif_rdack(2) or ipif_rdack(3) or ipif_rdack(4)
+	             or error_rdack;
 	IP2Bus_Error <= ipif_error(0) or ipif_error(1) or ipif_error(2) or ipif_error(3) or ipif_error(4)
 	             or ipif_gerror;
 
