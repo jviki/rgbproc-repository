@@ -40,10 +40,10 @@ begin
 
 	gen_i : entity work.ipif_generator
 	generic map (
-		DWIDTH => 32,
-		AWIDTH => 32,
-		ADDR_MIN => 0,
-		ADDR_MAX => 128
+		DWIDTH => DWIDTH,
+		AWIDTH => AWIDTH,
+		ADDR_MIN => ADDR_MIN,
+		ADDR_MAX => ADDR_MAX
 	)
 	port map (
 		CLK    => CLK,
