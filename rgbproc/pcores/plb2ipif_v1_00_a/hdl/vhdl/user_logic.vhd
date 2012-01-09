@@ -91,6 +91,7 @@ entity user_logic is
     -- ADD USER GENERICS BELOW THIS LINE ---------------
     --USER generics added here
     DUAL_CLOCK                     : integer              := 1;
+    CS_ENABLE                      : integer              := 0;
     -- ADD USER GENERICS ABOVE THIS LINE ---------------
 
     -- DO NOT EDIT BELOW THIS LINE ---------------------
@@ -115,6 +116,11 @@ entity user_logic is
 	S_IP2Bus_RdAck                   : in  std_logic;
 	S_IP2Bus_WrAck                   : in  std_logic;
 	S_IP2Bus_Error                   : in  std_logic;
+
+	CS_M_CLK                         : out std_logic;
+	CS_M_VEC                         : out std_logic_vector(105 downto 0);
+	CS_S_CLK                         : out std_logic;
+	CS_S_VEC                         : out std_logic_vector(105 downto 0);
     -- ADD USER PORTS ABOVE THIS LINE ------------------
 
     -- DO NOT EDIT BELOW THIS LINE ---------------------
@@ -146,7 +152,58 @@ end entity user_logic;
 ------------------------------------------------------------------------------
 
 architecture IMP of user_logic is
+
+	signal plb_Bus2IP_Clk   : std_logic;
+	signal plb_Bus2IP_Reset : std_logic;
+	signal plb_Bus2IP_Addr  : std_logic_vector(C_SLV_AWIDTH - 1 downto 0);
+	signal plb_Bus2IP_Data  : std_logic_vector(C_SLV_DWIDTH - 1 downto 0);
+	signal plb_Bus2IP_RNW   : std_logic;
+	signal plb_Bus2IP_BE    : std_logic_vector(C_SLV_DWIDTH / 8 - 1 downto 0);
+	signal plb_Bus2IP_CS    : std_logic_vector(C_NUM_MEM - 1 downto 0);
+	signal plb_IP2Bus_Data  : std_logic_vector(C_SLV_DWIDTH - 1 downto 0);
+	signal plb_IP2Bus_WrAck : std_logic;
+	signal plb_IP2Bus_RdAck : std_logic;
+	signal plb_IP2Bus_Error : std_logic;
+
+	signal cfg_Bus2IP_Clk   : std_logic;
+	signal cfg_Bus2IP_Reset : std_logic;
+	signal cfg_Bus2IP_Addr  : std_logic_vector(C_SLV_AWIDTH - 1 downto 0);
+	signal cfg_Bus2IP_Data  : std_logic_vector(C_SLV_DWIDTH - 1 downto 0);
+	signal cfg_Bus2IP_RNW   : std_logic;
+	signal cfg_Bus2IP_BE    : std_logic_vector(C_SLV_DWIDTH / 8 - 1 downto 0);
+	signal cfg_Bus2IP_CS    : std_logic_vector(C_NUM_MEM - 1 downto 0);
+	signal cfg_IP2Bus_Data  : std_logic_vector(C_SLV_DWIDTH - 1 downto 0);
+	signal cfg_IP2Bus_WrAck : std_logic;
+	signal cfg_IP2Bus_RdAck : std_logic;
+	signal cfg_IP2Bus_Error : std_logic;
+
 begin
+
+	plb_Bus2IP_Clk   <= plb_Bus2IP_Clk;
+	plb_Bus2IP_Reset <= Bus2IP_Reset;
+	plb_Bus2IP_Addr  <= Bus2IP_Addr;
+	plb_Bus2IP_Data  <= Bus2IP_Data;
+	plb_Bus2IP_RNW   <= Bus2IP_RNW;
+	plb_Bus2IP_BE    <= Bus2IP_BE;
+	plb_Bus2IP_CS    <= Bus2IP_CS;
+	IP2Bus_Data      <= plb_IP2Bus_Data;
+	IP2Bus_WrAck     <= plb_IP2Bus_WrAck;
+	IP2Bus_RdAck     <= plb_IP2Bus_RdAck;
+	IP2Bus_Error     <= plb_IP2Bus_Error;
+
+	cfg_Bus2IP_Clk   <= S_Bus2IP_Clk;
+	cfg_Bus2IP_Reset <= S_Bus2IP_Reset;
+	S_Bus2IP_Addr    <= cfg_Bus2IP_Addr;
+	S_Bus2IP_Data    <= cfg_Bus2IP_Data;
+	S_Bus2IP_RNW     <= cfg_Bus2IP_RNW;
+	S_Bus2IP_BE      <= cfg_Bus2IP_BE;
+	S_Bus2IP_CS      <= cfg_Bus2IP_CS;
+	cfg_IP2Bus_Data  <= S_IP2Bus_Data;
+	cfg_IP2Bus_WrAck <= S_IP2Bus_WrAck;
+	cfg_IP2Bus_RdAck <= S_IP2Bus_RdAck;
+	cfg_IP2Bus_Error <= S_IP2Bus_Error;
+
+	-------------------------------------
 
 gen_dual_clock: if DUAL_CLOCK /= 0
 generate
@@ -158,29 +215,29 @@ generate
 		NADDR  => C_NUM_MEM
 	)
 	port map (
-		M_CLK          => Bus2IP_Clk,
-		M_RST          => Bus2IP_Reset,
-		M_IP2Bus_Data  => IP2Bus_Data,
-		M_IP2Bus_WrAck => IP2Bus_WrAck,
-		M_IP2Bus_RdAck => IP2Bus_RdAck,
-		M_IP2Bus_Error => IP2Bus_Error,
-		M_Bus2IP_Addr  => Bus2IP_Addr,
-		M_Bus2IP_Data  => Bus2IP_Data,
-		M_Bus2IP_RNW   => Bus2IP_RNW,
-		M_Bus2IP_BE    => Bus2IP_BE,
-		M_Bus2IP_CS    => Bus2IP_CS,
+		M_CLK          => plb_Bus2IP_Clk,
+		M_RST          => plb_Bus2IP_Reset,
+		M_IP2Bus_Data  => plb_IP2Bus_Data,
+		M_IP2Bus_WrAck => plb_IP2Bus_WrAck,
+		M_IP2Bus_RdAck => plb_IP2Bus_RdAck,
+		M_IP2Bus_Error => plb_IP2Bus_Error,
+		M_Bus2IP_Addr  => plb_Bus2IP_Addr,
+		M_Bus2IP_Data  => plb_Bus2IP_Data,
+		M_Bus2IP_RNW   => plb_Bus2IP_RNW,
+		M_Bus2IP_BE    => plb_Bus2IP_BE,
+		M_Bus2IP_CS    => plb_Bus2IP_CS,
 
-		S_CLK          => S_Bus2IP_Clk,
-		S_RST          => S_Bus2IP_Reset,
-		S_IP2Bus_Data  => S_IP2Bus_Data,
-		S_IP2Bus_WrAck => S_IP2Bus_WrAck,
-		S_IP2Bus_RdAck => S_IP2Bus_RdAck,
-		S_IP2Bus_Error => S_IP2Bus_Error,
-		S_Bus2IP_Addr  => S_Bus2IP_Addr,
-		S_Bus2IP_Data  => S_Bus2IP_Data,
-		S_Bus2IP_RNW   => S_Bus2IP_RNW,
-		S_Bus2IP_BE    => S_Bus2IP_BE,
-		S_Bus2IP_CS    => S_Bus2IP_CS
+		S_CLK          => cfg_Bus2IP_Clk,
+		S_RST          => cfg_Bus2IP_Reset,
+		S_IP2Bus_Data  => cfg_IP2Bus_Data,
+		S_IP2Bus_WrAck => cfg_IP2Bus_WrAck,
+		S_IP2Bus_RdAck => cfg_IP2Bus_RdAck,
+		S_IP2Bus_Error => cfg_IP2Bus_Error,
+		S_Bus2IP_Addr  => cfg_Bus2IP_Addr,
+		S_Bus2IP_Data  => cfg_Bus2IP_Data,
+		S_Bus2IP_RNW   => cfg_Bus2IP_RNW,
+		S_Bus2IP_BE    => cfg_Bus2IP_BE,
+		S_Bus2IP_CS    => cfg_Bus2IP_CS
 	);
 
 end generate;
@@ -188,15 +245,45 @@ end generate;
 gen_not_dual_clock: if DUAL_CLOCK = 0
 generate
 
-	IP2Bus_Data   <= S_IP2Bus_Data;
-	IP2Bus_WrAck  <= S_IP2Bus_WrAck;
-	IP2Bus_RdAck  <= S_IP2Bus_RdAck;
-	IP2Bus_Error  <= S_IP2Bus_Error;
-	S_Bus2IP_Addr <= Bus2IP_Addr;
-	S_Bus2IP_Data <= Bus2IP_Data;
-	S_Bus2IP_RNW  <= Bus2IP_RNW;
-	S_Bus2IP_BE   <= Bus2IP_BE;
-	S_Bus2IP_CS   <= Bus2IP_CS;
+	plb_IP2Bus_Data  <= cfg_IP2Bus_Data;
+	plb_IP2Bus_WrAck <= cfg_IP2Bus_WrAck;
+	plb_IP2Bus_RdAck <= cfg_IP2Bus_RdAck;
+	plb_IP2Bus_Error <= cfg_IP2Bus_Error;
+	cfg_Bus2IP_Addr  <= plb_Bus2IP_Addr;
+	cfg_Bus2IP_Data  <= plb_Bus2IP_Data;
+	cfg_Bus2IP_RNW   <= plb_Bus2IP_RNW;
+	cfg_Bus2IP_BE    <= plb_Bus2IP_BE;
+	cfg_Bus2IP_CS    <= plb_Bus2IP_CS;
+
+end generate;
+
+if gen_chipscope: if CS_ENABLE /= 0
+generate
+
+	CS_M_CLK      <= plb_Bus2IP_Clk;
+	CS_S_CLK      <= cfg_Bus2IP_Clk when DUAL_CLOCK = 1 else plb_Bus2IP_Clk;
+
+	CS_M_VEC(31 downto  0) <= plb_IP2Bus_Addr;
+	CS_M_VEC(63 downto 32) <= plb_IP2Bus_Data;
+	CS_M_VEC(95 downto 64) <= plb_Bus2IP_Data;
+	CS_M_VEC(99 downto 96) <= plb_Bus2IP_BE;
+	CS_M_VEC(100) <= plb_Bus2IP_Reset;
+	CS_M_VEC(101) <= plb_Bus2IP_CS;
+	CS_M_VEC(102) <= plb_Bus2IP_RNW;
+	CS_M_VEC(103) <= plb_IP2Bus_WrAck;
+	CS_M_VEC(104) <= plb_IP2Bus_RdAck;
+	CS_M_VEC(105) <= plb_IP2Bus_Error;
+
+	CS_S_VEC(31 downto  0) <= cfg_IP2Bus_Addr;
+	CS_S_VEC(63 downto 32) <= cfg_IP2Bus_Data;
+	CS_S_VEC(95 downto 64) <= cfg_Bus2IP_Data;
+	CS_S_VEC(99 downto 96) <= cfg_Bus2IP_BE;
+	CS_S_VEC(100) <= cfg_Bus2IP_Reset;
+	CS_S_VEC(101) <= cfg_Bus2IP_CS;
+	CS_S_VEC(102) <= cfg_Bus2IP_RNW;
+	CS_S_VEC(103) <= cfg_IP2Bus_WrAck;
+	CS_S_VEC(104) <= cfg_IP2Bus_RdAck;
+	CS_S_VEC(105) <= cfg_IP2Bus_Error;
 
 end generate;
 

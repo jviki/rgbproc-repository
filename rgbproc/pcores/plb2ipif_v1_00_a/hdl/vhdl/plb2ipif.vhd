@@ -140,6 +140,7 @@ entity plb2ipif is
   (
     -- ADD USER GENERICS BELOW THIS LINE ---------------
     DUAL_CLOCK                     : integer              := 1;
+    CS_ENABLE                      : integer              := 0;
     --USER generics added here
     -- ADD USER GENERICS ABOVE THIS LINE ---------------
 
@@ -175,6 +176,11 @@ entity plb2ipif is
 	IP2Bus_RdAck                   : in  std_logic;
 	IP2Bus_WrAck                   : in  std_logic;
 	IP2Bus_Error                   : in  std_logic;
+
+	CS_M_CLK                       : out std_logic;
+	CS_M_VEC                       : out std_logic_vector(105 downto 0);
+	CS_S_CLK                       : out std_logic;
+	CS_S_VEC                       : out std_logic_vector(105 downto 0);
     -- ADD USER PORTS ABOVE THIS LINE ------------------
 
     -- DO NOT EDIT BELOW THIS LINE ---------------------
@@ -394,6 +400,7 @@ begin
       -- MAP USER GENERICS BELOW THIS LINE ---------------
       --USER generics mapped here
       DUAL_CLOCK                    => DUAL_CLOCK,
+      CS_ENABLE                     => CS_ENABLE,
       -- MAP USER GENERICS ABOVE THIS LINE ---------------
 
       C_SLV_AWIDTH                   => USER_SLV_AWIDTH,
@@ -415,6 +422,11 @@ begin
 	S_IP2Bus_RdAck              => IP2Bus_RdAck,
 	S_IP2Bus_WrAck              => IP2Bus_WrAck,
 	S_IP2Bus_Error              => IP2Bus_Error,
+
+	CS_M_CLK                    => CS_M_CLK,
+	CS_M_VEC                    => CS_M_VEC,
+	CS_S_CLK                    => CS_S_CLK,
+	CS_S_VEC                    => CS_S_VEC,
       -- MAP USER PORTS ABOVE THIS LINE ------------------
 
       Bus2IP_Clk                     => ipif_Bus2IP_Clk,
