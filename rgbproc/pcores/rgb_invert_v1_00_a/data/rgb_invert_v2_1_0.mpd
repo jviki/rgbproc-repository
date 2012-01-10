@@ -1,0 +1,30 @@
+BEGIN rgb_invert
+
+OPTION IPTYPE = PERIPHERAL
+OPTION IMP_NETLIST = TRUE
+OPTION HDL = VHDL
+OPTION STYLE = HDL
+OPTION IP_GROUP = MICROBLAZE:PPC:USER
+OPTION DESC = Inverts each color channel
+
+BUS_INTERFACE BUS=in, BUS_STD=RGB, BUS_TYPE=TARGET
+BUS_INTERFACE BUS=out, BUS_STD=RGB, BUS_TYPE=INITIATOR
+
+PORT CLK = "", DIR = I, SIGIS = CLK
+PORT CE  = net_vcc, DIR = I
+
+PORT IN_R   = R,   DIR = I, BUS = in, VEC = [7:0]
+PORT IN_G   = G,   DIR = I, BUS = in, VEC = [7:0]
+PORT IN_B   = B,   DIR = I, BUS = in, VEC = [7:0]
+PORT IN_DE  = DE,  DIR = I, BUS = in
+PORT IN_HS  = HS,  DIR = I, BUS = in
+PORT IN_VS  = VS,  DIR = I, BUS = in
+
+PORT OUT_R   = R,   DIR = O, BUS = out, VEC = [7:0]
+PORT OUT_G   = G,   DIR = O, BUS = out, VEC = [7:0]
+PORT OUT_B   = B,   DIR = O, BUS = out, VEC = [7:0]
+PORT OUT_DE  = DE,  DIR = O, BUS = out
+PORT OUT_HS  = HS,  DIR = O, BUS = out
+PORT OUT_VS  = VS,  DIR = O, BUS = out
+
+END

@@ -8,7 +8,7 @@ use ieee.std_logic_unsigned.all;
 
 entity rgb_split is
 port (
-	CLK     : in  std_logic	
+	CLK     : in  std_logic;
 	CE      : in  std_logic;
 
 	IN_R    : in  std_logic_vector(7 downto 0);

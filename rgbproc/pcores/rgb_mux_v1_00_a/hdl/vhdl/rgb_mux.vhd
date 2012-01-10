@@ -65,7 +65,6 @@ architecture full of rgb_mux is
 	signal pulse_start0 : std_logic;
 	signal pulse_start1 : std_logic;
 
-	signal src_sel      : std_logic;
 	signal src_sel_be   : std_logic;
 	signal src_sel_we   : std_logic;
 	signal src_sel_in   : std_logic;
@@ -77,7 +76,7 @@ architecture full of rgb_mux is
 	signal reg_b  : std_logic_vector(7 downto 0);
 	signal reg_de : std_logic;
 	signal reg_hs : std_logic;
-	signal reg_vs : std_logic
+	signal reg_vs : std_logic;
 
 	signal ipif_cs     : std_logic_vector(1 downto 0);
 	signal ipif_data   : std_logic_vector(63 downto 0);
@@ -86,15 +85,18 @@ architecture full of rgb_mux is
 	signal ipif_error  : std_logic_vector(1 downto 0);
 	signal ipif_gerror : std_logic;
 
+	signal ipif_werror : std_logic;
+	signal ipif_rerror : std_logic;
+
 begin
 
 	---
 	-- Device ID register
 	---
-	reg_id : utils_v1_00_a.ipif_reg
+	reg_id : entity utils_v1_00_a.ipif_reg
 	generic map (
-		REG_DWIDTH  => 32,
-		REG_DEFAULT => 1,
+		REG_DWIDTH  => 16,
+		REG_DEFAULT => X"0001",
 		IPIF_DWIDTH => IPIF_DWIDTH,
 		IPIF_MODE   => 0
 	)
@@ -118,7 +120,7 @@ begin
 	---
 	-- MUX select register
 	---
-	cfg_sel : utils_v1_00_a.ipif_reg_logic
+	cfg_sel : entity utils_v1_00_a.ipif_reg_logic
 	generic map (
 		REG_DWIDTH  => 1,
 		IPIF_DWIDTH => IPIF_DWIDTH,
@@ -169,10 +171,13 @@ begin
 	ipif_gerror <= Bus2IP_CS(0) when ipif_cs = "00" else '0';
 
 	IP2Bus_Data <= ipif_data(63 downto 32) when ipif_cs = "10" else
-                    <= ipif_data(31 downto  0);
+                  ipif_data(31 downto  0);
 
-	IP2Bus_WrAck <= ipif_wrack(0) or ipif_wrack(1);
-	IP2Bus_RdAck <= ipif_rdack(0) or ipif_rdack(1);
+	ipif_werror <= ipif_gerror when Bus2IP_CS(0) = '1' and Bus2IP_RNW = '0' else '0';
+	ipif_rerror <= ipif_gerror when Bus2IP_CS(0) = '1' and Bus2IP_RNW = '1' else '0';
+
+	IP2Bus_WrAck <= ipif_wrack(0) or ipif_wrack(1) or ipif_werror;
+	IP2Bus_RdAck <= ipif_rdack(0) or ipif_rdack(1) or ipif_rerror;
 	IP2Bus_Error <= ipif_error(0) or ipif_error(1) or ipif_gerror;
 
 	----------------------------------
@@ -245,7 +250,7 @@ begin
 			elsif src_sel = '0' and IN1_HS = '0' and IN1_VS = '0' then
 				nstate <= s_1_to_sync0;
 			elsif src_sel = '0' then
-				nstate <= s_sync1_to_0;;
+				nstate <= s_sync1_to_0;
 			end if;
 
 		when s_sync1_to_0 =>

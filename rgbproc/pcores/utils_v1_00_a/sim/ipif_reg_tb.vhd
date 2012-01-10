@@ -28,6 +28,7 @@ architecture testbench of ipif_reg_tb is
 
 	signal ipif_busy    : std_logic;
 	signal ipif_done    : std_logic;
+	signal ipif_read    : std_logic;
 
 	signal M_CLK          : std_logic;
 	signal M_RST          : std_logic;
@@ -78,6 +79,7 @@ begin
 		Bus2IP_CS   => M_Bus2IP_CS(0),
 
 		IPIF_BUSY   => ipif_busy,
+		IPIF_READ   => ipif_read,
 		IPIF_DONE   => ipif_done
 	);
 
@@ -95,6 +97,7 @@ begin
 		IP2Bus_Error => M_IP2Bus_Error,
 
 		IPIF_BUSY => ipif_busy,
+		IPIF_READ => ipif_read,
 		IPIF_DONE => ipif_done		
 	);
 
@@ -133,7 +136,7 @@ begin
 	dut_i : entity work.ipif_reg
 	generic map (
 		REG_DWIDTH  => 32,
-		REG_DEFAULT => 0,
+		REG_DEFAULT => X"00000000",
 		IPIF_DWIDTH => 32,
 		IPIF_MODE   => IPIF_RW
 	)
