@@ -257,11 +257,19 @@ generate
 
 end generate;
 
-if gen_chipscope: if CS_ENABLE /= 0
+gen_chipscope: if CS_ENABLE /= 0
 generate
 
 	CS_M_CLK      <= plb_Bus2IP_Clk;
-	CS_S_CLK      <= cfg_Bus2IP_Clk when DUAL_CLOCK = 1 else plb_Bus2IP_Clk;
+
+	gen_slave_clock: if DUAL_CLOCK = 1
+	generate
+		CS_S_CLK      <= cfg_Bus2IP_Clk;
+	end generate;
+	gen_master_clock: if DUAL_CLOCK = 0
+	generate
+		CS_S_CLK      <= plb_Bus2IP_Clk;
+	end generate;
 
 	CS_M_VEC(31 downto  0) <= plb_Bus2IP_Addr;
 	CS_M_VEC(63 downto 32) <= plb_IP2Bus_Data;
