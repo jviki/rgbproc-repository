@@ -263,7 +263,7 @@ generate
 	CS_M_CLK      <= plb_Bus2IP_Clk;
 	CS_S_CLK      <= cfg_Bus2IP_Clk when DUAL_CLOCK = 1 else plb_Bus2IP_Clk;
 
-	CS_M_VEC(31 downto  0) <= plb_IP2Bus_Addr;
+	CS_M_VEC(31 downto  0) <= plb_Bus2IP_Addr;
 	CS_M_VEC(63 downto 32) <= plb_IP2Bus_Data;
 	CS_M_VEC(95 downto 64) <= plb_Bus2IP_Data;
 	CS_M_VEC(99 downto 96) <= plb_Bus2IP_BE;
@@ -274,7 +274,7 @@ generate
 	CS_M_VEC(104) <= plb_IP2Bus_RdAck;
 	CS_M_VEC(105) <= plb_IP2Bus_Error;
 
-	CS_S_VEC(31 downto  0) <= cfg_IP2Bus_Addr;
+	CS_S_VEC(31 downto  0) <= cfg_Bus2IP_Addr;
 	CS_S_VEC(63 downto 32) <= cfg_IP2Bus_Data;
 	CS_S_VEC(95 downto 64) <= cfg_Bus2IP_Data;
 	CS_S_VEC(99 downto 96) <= cfg_Bus2IP_BE;
