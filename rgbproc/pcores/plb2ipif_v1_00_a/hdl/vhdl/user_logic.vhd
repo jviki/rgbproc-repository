@@ -276,7 +276,7 @@ generate
 	CS_M_VEC(95 downto 64) <= plb_Bus2IP_Data;
 	CS_M_VEC(99 downto 96) <= plb_Bus2IP_BE;
 	CS_M_VEC(100) <= plb_Bus2IP_Reset;
-	CS_M_VEC(101) <= plb_Bus2IP_CS;
+	CS_M_VEC(101) <= plb_Bus2IP_CS(0);
 	CS_M_VEC(102) <= plb_Bus2IP_RNW;
 	CS_M_VEC(103) <= plb_IP2Bus_WrAck;
 	CS_M_VEC(104) <= plb_IP2Bus_RdAck;
@@ -287,7 +287,7 @@ generate
 	CS_S_VEC(95 downto 64) <= cfg_Bus2IP_Data;
 	CS_S_VEC(99 downto 96) <= cfg_Bus2IP_BE;
 	CS_S_VEC(100) <= cfg_Bus2IP_Reset;
-	CS_S_VEC(101) <= cfg_Bus2IP_CS;
+	CS_S_VEC(101) <= cfg_Bus2IP_CS(0);
 	CS_S_VEC(102) <= cfg_Bus2IP_RNW;
 	CS_S_VEC(103) <= cfg_IP2Bus_WrAck;
 	CS_S_VEC(104) <= cfg_IP2Bus_RdAck;
