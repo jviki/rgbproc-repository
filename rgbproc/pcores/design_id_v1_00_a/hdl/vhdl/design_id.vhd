@@ -18,7 +18,8 @@ generic (
 	NAME    : string;
 	IPIF_AWIDTH  : integer := 32;
 	IPIF_DWIDTH  : integer := 32;
-	IPIF_NADDR   : integer := 1
+	IPIF_NADDR   : integer := 1;
+	CS_ENABLE    : integer := 0
 );
 port (
 	CLK          : in  std_logic;
@@ -31,7 +32,10 @@ port (
 	Bus2IP_Data  : in  std_logic_vector(IPIF_DWIDTH - 1 downto 0);
 	Bus2IP_RNW   : in  std_logic;
 	Bus2IP_BE    : in  std_logic_vector(IPIF_DWIDTH / 8 - 1 downto 0);
-	Bus2IP_CS    : in  std_logic_vector(IPIF_NADDR - 1 downto 0)
+	Bus2IP_CS    : in  std_logic_vector(IPIF_NADDR - 1 downto 0);
+
+	CS_CLK       : out std_logic;
+	CS_VEC       : out std_logic_vector(20 downto 0)
 );
 end entity;
 
@@ -218,5 +222,14 @@ begin
 	             or error_rdack;
 	IP2Bus_Error <= ipif_error(0) or ipif_error(1) or ipif_error(2) or ipif_error(3) or ipif_error(4)
 	             or ipif_gerror;
+
+	------------------------
+
+	CS_CLK <= CLK;
+	CS_VEC( 4 downto  0) <= ipif_cs;
+	CS_VEC( 9 downto  5) <= ipif_wrack;
+	CS_VEC(14 downto 10) <= ipif_rdack;
+	CS_VEC(19 downto 15) <= ipif_error;
+	CS_VEC(20) <= ipif_gerror;
 
 end architecture;
