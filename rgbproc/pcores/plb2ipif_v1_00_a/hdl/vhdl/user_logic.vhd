@@ -179,7 +179,7 @@ architecture IMP of user_logic is
 
 begin
 
-	plb_Bus2IP_Clk   <= plb_Bus2IP_Clk;
+	plb_Bus2IP_Clk   <= Bus2IP_Clk;
 	plb_Bus2IP_Reset <= Bus2IP_Reset;
 	plb_Bus2IP_Addr  <= Bus2IP_Addr;
 	plb_Bus2IP_Data  <= Bus2IP_Data;
