@@ -92,6 +92,7 @@ entity user_logic is
     --USER generics added here
     DUAL_CLOCK                     : integer              := 1;
     CS_ENABLE                      : integer              := 0;
+    BASEADDR                       : std_logic_vector     := X"00000000";
     -- ADD USER GENERICS ABOVE THIS LINE ---------------
 
     -- DO NOT EDIT BELOW THIS LINE ---------------------
@@ -181,7 +182,7 @@ begin
 
 	plb_Bus2IP_Clk   <= Bus2IP_Clk;
 	plb_Bus2IP_Reset <= Bus2IP_Reset;
-	plb_Bus2IP_Addr  <= Bus2IP_Addr;
+	plb_Bus2IP_Addr  <= Bus2IP_Addr - BASEADDR;
 	plb_Bus2IP_Data  <= Bus2IP_Data;
 	plb_Bus2IP_RNW   <= Bus2IP_RNW;
 	plb_Bus2IP_BE    <= Bus2IP_BE;

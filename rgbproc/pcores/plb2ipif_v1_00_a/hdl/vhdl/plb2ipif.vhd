@@ -401,6 +401,7 @@ begin
       --USER generics mapped here
       DUAL_CLOCK                    => DUAL_CLOCK,
       CS_ENABLE                     => CS_ENABLE,
+      BASEADDR                      => C_BASEADDR,
       -- MAP USER GENERICS ABOVE THIS LINE ---------------
 
       C_SLV_AWIDTH                   => USER_SLV_AWIDTH,
