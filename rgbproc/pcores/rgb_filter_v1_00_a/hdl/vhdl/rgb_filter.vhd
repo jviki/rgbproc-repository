@@ -68,6 +68,8 @@ architecture full of rgb_filter is
 	signal ipif_rdack  : std_logic_vector(3 downto 0);
 	signal ipif_error  : std_logic_vector(3 downto 0);
 	signal ipif_gerror : std_logic;
+	signal ipif_werror : std_logic;
+	signal ipif_rerror : std_logic;
 
 begin
 
@@ -215,13 +217,16 @@ end generate;
 
 	ipif_gerror <= Bus2IP_CS(0) when ipif_cs = "0000" else '0';
 
+	ipif_rerror <= ipif_gerror when Bus2IP_CS(0) = '1' and Bus2IP_RNW = '1' else '0';
+	ipif_werror <= ipif_gerror when Bus2IP_CS(0) = '1' and Bus2IP_RNW = '0' else '0';
+
 	IP2Bus_Data <= ipif_data(127 downto 96) when ipif_cs = "1000" else
 	               ipif_data( 95 downto 64) when ipif_cs = "0100" else
 	               ipif_data( 63 downto 32) when ipif_cs = "0010" else
 	               ipif_data( 31 downto  0);
 
-	IP2Bus_WrAck <= ipif_wrack(0) or ipif_wrack(1) or ipif_wrack(2) or ipif_wrack(3);
-	IP2Bus_RdAck <= ipif_rdack(0) or ipif_rdack(1) or ipif_rdack(2) or ipif_rdack(3);
+	IP2Bus_WrAck <= ipif_wrack(0) or ipif_wrack(1) or ipif_wrack(2) or ipif_wrack(3) or ipif_werror;
+	IP2Bus_RdAck <= ipif_rdack(0) or ipif_rdack(1) or ipif_rdack(2) or ipif_rdack(3) or ipif_rerror;
 	IP2Bus_Error <= ipif_error(0) or ipif_error(1) or ipif_error(2) or ipif_error(3) or ipif_gerror;
 
 end architecture;
