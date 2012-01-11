@@ -113,7 +113,7 @@ begin
 		Bus2IP_RNW   => Bus2IP_RNW,
 		Bus2IP_CS    => ipif_cs(0),
 
-		REG_DI       => (others => 'X'),
+		REG_DI       => (15 downto 0 => 'X'),
 		REG_WE       => '0'
 	);
 
