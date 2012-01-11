@@ -12,6 +12,7 @@ BUS_INTERFACE BUS=cfg, BUS_STD=IPIF, BUS_TYPE=TARGET
 PARAMETER VERSION = 0x0000, DT = std_logic_vector
 PARAMETER ID = 0x0000, DT = std_logic_vector
 PARAMETER NAME = "TEST", DT = string
+PARAMETER CS_ENABLE = 0, DT = integer, VALUES = (0 = disable, 1 = enable)
 
 PORT CLK = "", DIR = I, SIGIS = CLK
 PORT RST = sys_periph_reset, DIR = I, SIGIS = RST
@@ -25,5 +26,8 @@ PORT IP2Bus_Data  = IP2Bus_Data,  DIR = O, BUS = cfg, VEC = [31:0]
 PORT IP2Bus_WrAck = IP2Bus_WrAck, DIR = O, BUS = cfg
 PORT IP2Bus_RdAck = IP2Bus_RdAck, DIR = O, BUS = cfg
 PORT IP2Bus_Error = IP2Bus_Error, DIR = O, BUS = cfg
+
+PORT CS_CLK = "", DIR = O, SIGIS = CLK,  ISVALID = (CS_ENABLE == 1)
+PORT CS_VEC = "", DIR = O, VEC = [20:0], ISVALID = (CS_ENABLE == 1)
 
 END

@@ -161,7 +161,7 @@ begin
 	M_IP2Bus_Data  <= slave_afifo_do(31 downto 0);
 	M_IP2Bus_WrAck <= slave_afifo_do(32) and not was_slave_afifo_empty;
 	M_IP2Bus_RdAck <= slave_afifo_do(33) and not was_slave_afifo_empty;
-	M_IP2Bus_Error <= slave_afifo_do(34);
+	M_IP2Bus_Error <= slave_afifo_do(34) and not was_slave_afifo_empty;
 
 	slave_afifo_re <= not slave_afifo_empty;
 
