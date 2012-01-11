@@ -17,7 +17,7 @@ PARAMETER IPIF_AWIDTH = 32, DT = integer
 PARAMETER IPIF_DWIDTH = 32, DT = integer
 
 PORT CLK = "", DIR = I, SIGIS = CLK
-PORT CE  = net_vcc DIR = I
+PORT CE  = net_vcc, DIR = I
 PORT RST = sys_periph_reset, DIR = I, SIGIS = RST
 
 PORT Bus2IP_Addr  = Bus2IP_Addr,  DIR = I, BUS = cfg, VEC = [IPIF_AWIDTH-1:0]
