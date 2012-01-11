@@ -199,11 +199,11 @@ begin
 		REG_WE       => '0'
 	);
 
-	ipif_cs(0) <= '1' when Bus2IP_Addr = X"00000000" else '0';
-	ipif_cs(1) <= '1' when Bus2IP_Addr = X"00000004" else '0';
-	ipif_cs(2) <= '1' when Bus2IP_Addr = X"00000008" else '0';
-	ipif_cs(3) <= '1' when Bus2IP_Addr = X"0000000C" else '0';
-	ipif_cs(4) <= '1' when Bus2IP_Addr = X"00000010" else '0';
+	ipif_cs(0) <= Bus2IP_CS(0) when Bus2IP_Addr = X"00000000" else '0';
+	ipif_cs(1) <= Bus2IP_CS(0) when Bus2IP_Addr = X"00000004" else '0';
+	ipif_cs(2) <= Bus2IP_CS(0) when Bus2IP_Addr = X"00000008" else '0';
+	ipif_cs(3) <= Bus2IP_CS(0) when Bus2IP_Addr = X"0000000C" else '0';
+	ipif_cs(4) <= Bus2IP_CS(0) when Bus2IP_Addr = X"00000010" else '0';
 
 	ipif_gerror <= Bus2IP_CS(0) when ipif_cs = "00000" else '0';
 
