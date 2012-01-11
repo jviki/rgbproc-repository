@@ -131,7 +131,7 @@ end generate;
 		Bus2IP_RNW   => Bus2IP_RNW,
 		Bus2IP_CS    => ipif_cs(0),
 
-		REG_DI       => (others => 'X'),
+		REG_DI       => (15 downto 0 => 'X'),
 		REG_WE       => '0'
 	);
 
@@ -155,7 +155,7 @@ end generate;
 		Bus2IP_RNW   => Bus2IP_RNW,
 		Bus2IP_CS    => ipif_cs(1),
 
-		REG_DI       => (others => 'X'),
+		REG_DI       => (7 downto 0 => 'X'),
 		REG_WE       => '0',
 		REG_DO       => reg_red
 	);
@@ -180,7 +180,7 @@ end generate;
 		Bus2IP_RNW   => Bus2IP_RNW,
 		Bus2IP_CS    => ipif_cs(2),
 
-		REG_DI       => (others => 'X'),
+		REG_DI       => (7 downto 0 => 'X'),
 		REG_WE       => '0',
 		REG_DO       => reg_green
 	);
@@ -205,7 +205,7 @@ end generate;
 		Bus2IP_RNW   => Bus2IP_RNW,
 		Bus2IP_CS    => ipif_cs(3),
 
-		REG_DI       => (others => 'X'),
+		REG_DI       => (7 downto 0 => 'X'),
 		REG_WE       => '0',
 		REG_DO       => reg_blue
 	);
