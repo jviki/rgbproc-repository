@@ -6,6 +6,9 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
+library utils_v1_00_a;
+use utils_v1_00_a.ctl_bypass;
+
 entity median_filter is
 generic (
 	MATRIX_SIZE : integer := 3		
@@ -62,7 +65,7 @@ begin
 		DO  => median_b
 	);
 
-	ctl_bypass_i : entity work.ctl_bypass
+	ctl_bypass_i : entity utils_v1_00_a.ctl_bypass
 	generic map (
 		DWIDTH => 3,
 		DEPTH  => 8

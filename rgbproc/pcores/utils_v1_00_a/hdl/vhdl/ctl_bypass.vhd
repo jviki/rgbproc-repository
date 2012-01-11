@@ -6,6 +6,11 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
+---
+-- Shift register delay. It is usually used to delay
+-- control signals when processing data path in
+-- a separate pipeline.
+---
 entity ctl_bypass is
 generic (
 	DWIDTH : integer := 3;
