@@ -80,8 +80,8 @@ begin
 	---------------------------------
 	
 	R  <= cnt_color;
-	G  <= cnt_color;
-	B  <= cnt_color;
+	G  <= cnt_color(3 downto 0) & cnt_color(7 downto 4);
+	B  <= cnt_color(1 downto 0) & cnt_color(7 downto 2);
 	DE <= out_de;
 	HS <= out_hs;
 	VS <= out_vs;
