@@ -1,5 +1,6 @@
 lib utils_v1_00_a multiply18 vhdl
 lib utils_v1_00_a utils_pkg vhdl
+lib utils_v1_00_a adder_tree vhdl
 lib utils_v1_00_a ctl_bypass vhdl
 lib utils_v1_00_a ipif_reg_logic vhdl
 lib utils_v1_00_a ipif_reg vhdl
