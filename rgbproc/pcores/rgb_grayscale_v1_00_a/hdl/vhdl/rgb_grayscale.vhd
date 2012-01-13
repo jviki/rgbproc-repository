@@ -69,9 +69,9 @@ begin
 		CE   => CE,
 		A    => IN_R,
 		B    => RED_FACTOR,
-		P    => prod_r
-		CTLI => IN_DE,
-		CTLO => prod_de
+		P    => prod_r,
+		CTLI(0) => IN_DE,
+		CTLO(0) => prod_de
 	);
 
 	mult_g : entity utils_v1_00_a.multiply8
@@ -83,9 +83,9 @@ begin
 		CE   => CE,
 		A    => IN_G,
 		B    => GREEN_FACTOR,
-		P    => prod_g
-		CTLI => IN_HS,
-		CTLO => prod_hs
+		P    => prod_g,
+		CTLI(0) => IN_HS,
+		CTLO(0) => prod_hs
 	);
 
 	mult_b : entity utils_v1_00_a.multiply8
@@ -97,9 +97,9 @@ begin
 		CE   => CE,
 		A    => IN_B,
 		B    => BLUE_FACTOR,
-		P    => prod_b
-		CTLI => IN_VS,
-		CTLO => prod_VS
+		P    => prod_b,
+		CTLI(0) => IN_VS,
+		CTLO(0) => prod_VS
 	);
 
 	----------------------------------
