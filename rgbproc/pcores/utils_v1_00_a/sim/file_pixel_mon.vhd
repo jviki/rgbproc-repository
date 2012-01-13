@@ -35,6 +35,7 @@ begin
 		variable vg  : integer;
 		variable vb  : integer;
 		variable id  : integer := 0;
+		variable rdy : boolean := false;
 
 		procedure write_pixel is
 		begin
@@ -54,13 +55,18 @@ begin
 	begin
 		if rising_edge(CLK) then
 			if RST = '1' or VS = '0' then
-				file_close(outfile);
-				file_open(outfile, "output_file-" & integer'image(id) &  ".txt", WRITE_MODE);
+				if not rdy then
+					file_close(outfile);
+					file_open(outfile, "output_file-" & integer'image(id) &  ".txt", WRITE_MODE);
+					id := id + 1;
+					rdy := true;
+				end if;
 			elsif DE = '1' then
 				vr := conv_integer(R);
 				vg := conv_integer(G);
 				vb := conv_integer(B);
 				write_pixel;
+				rdy := false;
 			end if;
 		end if;
 	end process;
