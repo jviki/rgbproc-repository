@@ -5,7 +5,7 @@ OPTION IMP_NETLIST = TRUE
 OPTION HDL = VHDL
 OPTION STYLE = HDL
 OPTION IP_GROUP = MICROBLAZE:PPC:USER
-OPTION DESC = Shift filter on RGB bus. On be used to implement eg. low-pass filters.
+OPTION DESC = Shift filter on RGB bus. Can be used to implement eg. low-pass filters.
 
 BUS_INTERFACE BUS=in, BUS_STD=RGB_WIN, BUS_TYPE=TARGET
 BUS_INTERFACE BUS=out, BUS_STD=RGB, BUS_TYPE=INITIATOR
