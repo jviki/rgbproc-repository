@@ -32,9 +32,9 @@ port (
 	WIN_R   : in  std_logic_vector(9 * 8 - 1 downto 0);
 	WIN_G   : in  std_logic_vector(9 * 8 - 1 downto 0);
 	WIN_B   : in  std_logic_vector(9 * 8 - 1 downto 0);
-	WIN_DE  : in  std_logic;
-	WIN_HS  : in  std_logic;
-	WIN_VS  : in  std_logic;
+	WIN_DE  : in  std_logic_vector(8 downto 0);
+	WIN_HS  : in  std_logic_vector(8 downto 0);
+	WIN_VS  : in  std_logic_vector(8 downto 0);
 
 	OUT_R   : out std_logic_vector(7 downto 0);
 	OUT_G   : out std_logic_vector(7 downto 0);
