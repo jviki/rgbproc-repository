@@ -1,0 +1,3 @@
+lib proc_common_v3_00_a proc_common_pkg vhdl
+lib rgb_gen_v1_00_a rgbctl_gen vhdl
+lib rgb_gen_v1_00_a rgb_gen vhdl
