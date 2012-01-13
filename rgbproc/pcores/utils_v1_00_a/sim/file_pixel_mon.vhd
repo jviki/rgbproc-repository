@@ -29,7 +29,8 @@ begin
 
 	write_file : process(CLK, RST, DE, R, G, B)
 		file outfile : text;
-		variable l   : line;
+		variable l0  : line;
+		variable l1  : line;
 		variable vr  : integer;
 		variable vg  : integer;
 		variable vb  : integer;
@@ -37,13 +38,18 @@ begin
 
 		procedure write_pixel is
 		begin
-			write(l, vr);
-			write(l, string'(" "));
-			write(l, vg);
-			write(l, string'(" "));
-			write(l, vb);
-			writeline(outfile, l);
-			writeline(allfile, l);
+			write(l0, vr);
+			write(l1, vr);
+			write(l0, string'(" "));
+			write(l1, string'(" "));
+			write(l0, vg);
+			write(l1, vg);
+			write(l0, string'(" "));
+			write(l1, string'(" "));
+			write(l0, vb);
+			write(l1, vb);
+			writeline(outfile, l0);
+			writeline(allfile, l1);
 		end procedure;
 	begin
 		if rising_edge(CLK) then
