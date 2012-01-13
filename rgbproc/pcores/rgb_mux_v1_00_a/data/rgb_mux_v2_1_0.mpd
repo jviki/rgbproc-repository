@@ -12,20 +12,18 @@ BUS_INTERFACE BUS=in0, BUS_STD=RGB, BUS_TYPE=TARGET
 BUS_INTERFACE BUS=in1, BUS_STD=RGB, BUS_TYPE=TARGET
 BUS_INTERFACE BUS=out, BUS_STD=RGB, BUS_TYPE=INITIATOR
 
-PARAMETER DEFAULT_SRC = 0, DT = integer, RANGE = (0:1)
-PARAMETER IPIF_AWIDTH = 32, DT = integer
-PARAMETER IPIF_DWIDTH = 32, DT = integer
+PARAMETER DEFAULT_SRC = 0, DT = integer, VALUES = (0 = 0, 1 = 1)
 
 PORT CLK = "", DIR = I, SIGIS = CLK
-PORT CE  = net_vcc DIR = I
+PORT CE  = net_vcc, DIR = I
 PORT RST = sys_periph_reset, DIR = I, SIGIS = RST
 
-PORT Bus2IP_Addr  = Bus2IP_Addr,  DIR = I, BUS = cfg, VEC = [IPIF_AWIDTH-1:0]
+PORT Bus2IP_Addr  = Bus2IP_Addr,  DIR = I, BUS = cfg, VEC = [31:0]
 PORT Bus2IP_CS    = Bus2IP_CS,    DIR = I, BUS = cfg, VEC = [0:0]
 PORT Bus2IP_RNW   = Bus2IP_RNW,   DIR = I, BUS = cfg
-PORT Bus2IP_Data  = Bus2IP_Data,  DIR = I, BUS = cfg, VEC = [IPIF_DWIDTH-1:0]
-PORT Bus2IP_BE    = Bus2IP_BE,    DIR = I, BUS = cfg, VEC = [IPIF_DWIDTH/8-1:0]
-PORT IP2Bus_Data  = IP2Bus_Data,  DIR = O, BUS = cfg, VEC = [IPIF_DWIDTH-1:0]
+PORT Bus2IP_Data  = Bus2IP_Data,  DIR = I, BUS = cfg, VEC = [31:0]
+PORT Bus2IP_BE    = Bus2IP_BE,    DIR = I, BUS = cfg, VEC = [3:0]
+PORT IP2Bus_Data  = IP2Bus_Data,  DIR = O, BUS = cfg, VEC = [31:0]
 PORT IP2Bus_WrAck = IP2Bus_WrAck, DIR = O, BUS = cfg
 PORT IP2Bus_RdAck = IP2Bus_RdAck, DIR = O, BUS = cfg
 PORT IP2Bus_Error = IP2Bus_Error, DIR = O, BUS = cfg
