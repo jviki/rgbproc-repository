@@ -12,9 +12,9 @@ entity file_pixel_mon is
 port (
 	CLK : in  std_logic;
 	RST : in  std_logic;
-	R   : in  std_logic;
-	G   : in  std_logic;
-	B   : in  std_logic;
+	R   : in  std_logic_vector(7 downto 0);
+	G   : in  std_logic_vector(7 downto 0);
+	B   : in  std_logic_vector(7 downto 0);
 	DE  : in  std_logic;
 	HS  : in  std_logic;
 	VS  : in  std_logic
@@ -29,32 +29,44 @@ begin
 
 	write_file : process(CLK, RST, DE, R, G, B)
 		file outfile : text;
-		variable l   : line;
+		variable l0  : line;
+		variable l1  : line;
 		variable vr  : integer;
 		variable vg  : integer;
 		variable vb  : integer;
 		variable id  : integer := 0;
+		variable rdy : boolean := false;
 
 		procedure write_pixel is
 		begin
-			write(l, vr);
-			write(l, string'(" "));
-			write(l, vg);
-			write(l, string'(" "));
-			write(l, vb);
-			writeline(outfile, l);
-			writeline(allfile, l);
+			write(l0, vr);
+			write(l1, vr);
+			write(l0, string'(" "));
+			write(l1, string'(" "));
+			write(l0, vg);
+			write(l1, vg);
+			write(l0, string'(" "));
+			write(l1, string'(" "));
+			write(l0, vb);
+			write(l1, vb);
+			writeline(outfile, l0);
+			writeline(allfile, l1);
 		end procedure;
 	begin
 		if rising_edge(CLK) then
 			if RST = '1' or VS = '0' then
-				file_close(outfile);
-				file_open(outfile, "output_file-" & integer'image(id) &  ".txt", WRITE_MODE);
+				if not rdy then
+					file_close(outfile);
+					file_open(outfile, "output_file-" & integer'image(id) &  ".txt", WRITE_MODE);
+					id := id + 1;
+					rdy := true;
+				end if;
 			elsif DE = '1' then
 				vr := conv_integer(R);
 				vg := conv_integer(G);
 				vb := conv_integer(B);
 				write_pixel;
+				rdy := false;
 			end if;
 		end if;
 	end process;
