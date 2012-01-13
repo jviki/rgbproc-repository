@@ -167,6 +167,23 @@ class MedianFilter:
 		b = self.medianColor(matrix, 2)
 		return (r, g, b)
 
+class GrayScaleFilter:
+	def __init__(self, win):
+		self.win = win
+
+	def convert(self, r, g, b):
+		cr = (r * 30) / 100
+		cg = (g * 59) / 100
+		cb = (b * 11) / 100
+
+		return int(cr + cg + cb)
+
+	def nextPixel(self):
+		pixel = self.win.nextPixel()
+		c = self.convert(pixel[0], pixel[1], pixel[2])
+		return (c, c, c)
+
+
 def testFilter(impl):
 	impl.win.reset()
 	print("== %s ==" % str(impl.__class__.__name__))
@@ -188,9 +205,11 @@ def main(source = sys.stdin):
 	win      = ImageWin(loader)
 	identity = IdentityFilter(win)
 	median   = MedianFilter(win)
+	gray     = GrayScaleFilter(win)
 
 	testFilter(identity)
 	testFilter(median)
+	testFilter(gray)
 
 class TestInData:
 	"""
