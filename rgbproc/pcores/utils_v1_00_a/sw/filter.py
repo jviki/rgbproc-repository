@@ -94,6 +94,10 @@ class ImageWin:
 			self.lines[1] = self.lines[2]
 			self.lines[2] = self.nextLineOrException()
 
+	def nextPixel(self):
+		win = self.nextWin()
+		return win[1][1]
+
 	def nextWin(self):
 		if self.lines is None:
 			self.preloadLines()
@@ -143,8 +147,7 @@ class IdentityFilter:
 		self.win = win
 
 	def nextPixel(self):
-		matrix = self.win.nextWin()
-		return matrix[1][1]
+		return self.win.nextPixel()
 
 class MedianFilter:
 	def __init__(self, win):
