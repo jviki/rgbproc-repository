@@ -12,6 +12,9 @@ BUS_INTERFACE BUS=in, BUS_STD=RGB, BUS_TYPE=TARGET
 BUS_INTERFACE BUS=out, BUS_STD=RGB, BUS_TYPE=INITIATOR
 
 PARAMETER OPERATION = 0, DT = integer, VALUES = (0 = and, 1 = or, 2 = xor)
+PARAMETER DEFAULT_R = 0x00, DT = std_logic_vector
+PARAMETER DEFAULT_G = 0x00, DT = std_logic_vector
+PARAMETER DEFAULT_B = 0x00, DT = std_logic_vector
 
 PORT CLK = "", DIR = I, SIGIS = CLK
 PORT CE  = net_vcc, DIR = I
