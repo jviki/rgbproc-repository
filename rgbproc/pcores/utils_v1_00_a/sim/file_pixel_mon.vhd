@@ -9,7 +9,6 @@ use ieee.std_logic_unsigned.all;
 use std.textio.all;
 
 entity file_pixel_mon is
-begin
 port (
 	CLK : in  std_logic;
 	RST : in  std_logic;
