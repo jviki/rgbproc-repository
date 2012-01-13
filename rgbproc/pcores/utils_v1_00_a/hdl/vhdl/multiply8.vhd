@@ -19,7 +19,7 @@ port (
 	CE   : in  std_logic;
 	A    : in  std_logic_vector(7 downto 0);
 	B    : in  std_logic_vector(7 downto 0);
-	P    : out std_logic_vector(7 downto 0);
+	P    : out std_logic_vector(15 downto 0);
 	CTLI : in  std_logic_vector(CTL_WIDTH - 1 downto 0);
 	CTLO : out std_logic_vector(CTL_WIDTH - 1 downto 0)
 );
