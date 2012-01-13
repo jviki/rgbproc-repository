@@ -167,6 +167,20 @@ class MedianFilter:
 		b = self.medianColor(matrix, 2)
 		return (r, g, b)
 
+class LowPassFilter:
+	def __init__(self, win):
+		self.win = win
+
+	def lowPass(self, matrix, i):
+		return matrix[1][1][i]
+
+	def nextPixel(self):
+		matrix = self.win.nextWin()
+		r = self.lowPass(matrix, 0)
+		g = self.lowPass(matrix, 1)
+		b = self.lowPass(matrix, 2)
+		return (r, g, b)
+
 class GrayScaleFilter:
 	def __init__(self, win):
 		self.win = win
@@ -205,10 +219,12 @@ def main(source = sys.stdin):
 	win      = ImageWin(loader)
 	identity = IdentityFilter(win)
 	median   = MedianFilter(win)
+	lowPass  = LowPassFilter(win)
 	gray     = GrayScaleFilter(win)
 
 	testFilter(identity)
 	testFilter(median)
+	testFilter(lowPass)
 	testFilter(gray)
 
 class TestInData:
