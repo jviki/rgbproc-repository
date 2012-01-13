@@ -12,9 +12,9 @@ entity file_pixel_mon is
 port (
 	CLK : in  std_logic;
 	RST : in  std_logic;
-	R   : in  std_logic;
-	G   : in  std_logic;
-	B   : in  std_logic;
+	R   : in  std_logic_vector(7 downto 0);
+	G   : in  std_logic_vector(7 downto 0);
+	B   : in  std_logic_vector(7 downto 0);
 	DE  : in  std_logic;
 	HS  : in  std_logic;
 	VS  : in  std_logic
