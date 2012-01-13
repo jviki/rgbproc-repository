@@ -21,6 +21,13 @@ architecture testbench of rgb_gen_tb is
 	signal gen_hs : std_logic;
 	signal gen_ve : std_logic;
 
+	signal horiz  : integer;
+	signal vert   : integer;
+
+	signal x_hs   : std_logic;
+	signal x_vs   : std_logic;
+	signal x_de   : std_logic;
+
 begin
 
 	gen_i : entity work.rgb_gen
@@ -41,5 +48,52 @@ begin
 		CLK => clk,
 		RST => rst
 	);
+
+	horizp : process(CLK, RST)
+	begin
+		if rising_edge(CLK) then
+			if RST = '1' or (gen_hs = '0' and gen_vs = '0') then
+				horiz := 0;
+			else
+				horiz := horiz + 1;
+				horiz := horiz mod 800;
+			end if;
+		end if;
+	end process;
+
+	vertp : process(CLK, RST)
+	begin
+		if rising_edge(CLK) then
+			if RST = '1' or (gen_hs = '0' and gen_vs = '0') then
+				vert := 0;
+			elsif horiz = 799 then
+				vert := vert + 1;
+				vert := vert mod 525;
+			end if;
+		end if;
+	end process;
+
+	x_hs <= '0' when horiz >= 48 + 640 + 16 else '1';
+	x_vs <= '0' when vert  >= 33 + 480 + 10 else '1';
+	x_de <= x_vs when horiz >= 48 and horiz < 48 + 640 else '0';
+
+	checkp : process(CLK, RST, gen_hs, x_hs, gen_vs, x_vs, gen_de, x_de)
+	begin
+		if rising_edge(CLK) then
+			if RST = '0' then
+				assert gen_hs = x_hs
+					report "Invalid horizontal synchronization"
+					severity failure;
+
+				assert gen_vs = x_vs
+					report "Invalid vertical synchronization"
+					severity failure;
+
+				assert gen_de = x_de
+					report "Invalid data enable"
+					severity failure;
+			end if;
+		end if;
+	end process;
 
 end architecture;
