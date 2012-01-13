@@ -74,18 +74,19 @@ begin
 		if rising_edge(CLK) then
 			if RST = '1' then
 				cnt_horiz   <= (others => '0');
-				cnt_horiz_o <= '0';
 			elsif cnt_horiz_ce = '1' then
 				if cnt_horiz = HPIXELS - 1 then
 					cnt_horiz   <= (others => '0');
-					cnt_horiz_o <= '1';
 				else
 					cnt_horiz <= cnt_horiz + 1;
-					cnt_horiz_o <= '0';
 				end if;
 			end if;
 		end if;
 	end process;
+
+	cnt_horiz_o <= '1' when cnt_horiz = HPIXELS - 1 else '0';
+
+	--------------------
 
 	cnt_vertp : process(CLK, RST, cnt_vert_ce)
 	begin
