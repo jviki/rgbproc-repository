@@ -35,11 +35,15 @@ architecture simple of rgb_gen is
 	signal cnt_color_clr : std_logic;
 	signal cnt_color     : std_logic_vector(7 downto 0);
 
+	signal out_de        : std_logic;
+	signal out_hs        : std_logic;
+	signal out_vs        : std_logic;
+
 begin
 
-	cnt_colorp : process(RGB_CLK, cnt_color_ce, cnt_color_clr)
+	cnt_colorp : process(CLK, cnt_color_ce, cnt_color_clr)
 	begin
-		if rising_edge(RGB_CLK) then
+		if rising_edge(CLK) then
 			if cnt_color_clr = '1' then
 				cnt_color <= (others => '1');
 			elsif cnt_color_ce = '1' then

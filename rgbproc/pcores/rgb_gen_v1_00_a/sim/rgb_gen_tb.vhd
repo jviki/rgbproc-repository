@@ -19,7 +19,7 @@ architecture testbench of rgb_gen_tb is
 	signal gen_b  : std_logic_vector(7 downto 0);
 	signal gen_de : std_logic;
 	signal gen_hs : std_logic;
-	signal gen_ve : std_logic;
+	signal gen_vs : std_logic;
 
 	signal horiz  : integer;
 	signal vert   : integer;
@@ -53,10 +53,10 @@ begin
 	begin
 		if rising_edge(CLK) then
 			if RST = '1' or (gen_hs = '0' and gen_vs = '0') then
-				horiz := 0;
+				horiz <= 0;
 			else
-				horiz := horiz + 1;
-				horiz := horiz mod 800;
+				horiz <= horiz + 1;
+				horiz <= horiz mod 800;
 			end if;
 		end if;
 	end process;
@@ -65,10 +65,10 @@ begin
 	begin
 		if rising_edge(CLK) then
 			if RST = '1' or (gen_hs = '0' and gen_vs = '0') then
-				vert := 0;
+				vert <= 0;
 			elsif horiz = 799 then
-				vert := vert + 1;
-				vert := vert mod 525;
+				vert <= vert + 1;
+				vert <= vert mod 525;
 			end if;
 		end if;
 	end process;
