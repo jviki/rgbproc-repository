@@ -17,7 +17,10 @@ generic (
 	IPIF_AWIDTH : integer := 32;
 	IPIF_DWIDTH : integer := 32;
 	IPIF_NADDR  : integer := 1;
-	OPERATION   : integer := OP_AND
+	OPERATION   : integer := OP_AND;
+	DEFAULT_R   : std_logic_vector := X"00";
+	DEFAULT_G   : std_logic_vector := X"00";
+	DEFAULT_B   : std_logic_vector := X"00"
 );
 port (
 	CLK    : in  std_logic;
@@ -136,7 +139,7 @@ end generate;
 	reg_red_i : entity utils_v1_00_a.ipif_reg
 	generic map (
 		REG_DWIDTH  => 8,
-		REG_DEFAULT => X"00",
+		REG_DEFAULT => DEFAULT_R,
 		IPIF_DWIDTH => IPIF_DWIDTH,
 		IPIF_MODE   => IPIF_RW
 	)
@@ -161,7 +164,7 @@ end generate;
 	reg_green_i : entity utils_v1_00_a.ipif_reg
 	generic map (
 		REG_DWIDTH  => 8,
-		REG_DEFAULT => X"00",
+		REG_DEFAULT => DEFAULT_G,
 		IPIF_DWIDTH => IPIF_DWIDTH,
 		IPIF_MODE   => IPIF_RW
 	)
@@ -186,7 +189,7 @@ end generate;
 	reg_blue_i : entity utils_v1_00_a.ipif_reg
 	generic map (
 		REG_DWIDTH  => 8,
-		REG_DEFAULT => X"00",
+		REG_DEFAULT => DEFAULT_B,
 		IPIF_DWIDTH => IPIF_DWIDTH,
 		IPIF_MODE   => IPIF_RW
 	)
