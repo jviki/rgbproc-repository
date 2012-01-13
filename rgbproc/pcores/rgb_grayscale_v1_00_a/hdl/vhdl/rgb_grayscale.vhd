@@ -7,7 +7,7 @@ use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
 library utils_v1_00_a;
-use utils_v1_00_a.multiply8;
+use utils_v1_00_a.multiply18;
 
 entity rgb_grayscale is
 port (
@@ -40,19 +40,23 @@ architecture dsp of rgb_grayscale is
 	constant INT_GREEN_FACTOR : integer := integer(RAW_GREEN_FACTOR * 1024.0);
 	constant INT_BLUE_FACTOR  : integer := integer(RAW_BLUE_FACTOR  * 1024.0);
 
-	constant RED_FACTOR       : std_logic_vector(7 downto 0) := conv_std_logic_vector(INT_RED_FACTOR, 8);
-	constant GREEN_FACTOR     : std_logic_vector(7 downto 0) := conv_std_logic_vector(INT_GREEN_FACTOR, 8);
-	constant BLUE_FACTOR      : std_logic_vector(7 downto 0) := conv_std_logic_vector(INT_BLUE_FACTOR, 8);
+	constant RED_FACTOR       : std_logic_vector(17 downto 0) := conv_std_logic_vector(INT_RED_FACTOR, 18);
+	constant GREEN_FACTOR     : std_logic_vector(17 downto 0) := conv_std_logic_vector(INT_GREEN_FACTOR, 18);
+	constant BLUE_FACTOR      : std_logic_vector(17 downto 0) := conv_std_logic_vector(INT_BLUE_FACTOR, 18);
 
-	signal prod_r : std_logic_vector(15 downto 0);
-	signal prod_g : std_logic_vector(15 downto 0);
-	signal prod_b : std_logic_vector(15 downto 0);
+	signal arg_r  : std_logic_vector(17 downto 0);
+	signal arg_g  : std_logic_vector(17 downto 0);
+	signal arg_b  : std_logic_vector(17 downto 0);
+
+	signal prod_r : std_logic_vector(35 downto 0);
+	signal prod_g : std_logic_vector(35 downto 0);
+	signal prod_b : std_logic_vector(35 downto 0);
 
 	signal prod_de : std_logic;
 	signal prod_hs : std_logic;
 	signal prod_vs : std_logic;
 
-	signal gray_c : std_logic_vector(15 downto 0);
+	signal gray_c : std_logic_vector(35 downto 0);
 
 	signal gray_de : std_logic;
 	signal gray_hs : std_logic;
@@ -60,42 +64,46 @@ architecture dsp of rgb_grayscale is
 
 begin
 
-	mult_r : entity utils_v1_00_a.multiply8
+	arg_r <= "0000000000" & IN_R;
+	arg_g <= "0000000000" & IN_G;
+	arg_b <= "0000000000" & IN_B;
+
+	mult_r : entity utils_v1_00_a.multiply18
 	generic map (
 		CTL_WIDTH => 1
 	)
 	port map (
 		CLK  => CLK,
 		CE   => CE,
-		A    => IN_R,
+		A    => arg_r,
 		B    => RED_FACTOR,
 		P    => prod_r,
 		CTLI(0) => IN_DE,
 		CTLO(0) => prod_de
 	);
 
-	mult_g : entity utils_v1_00_a.multiply8
+	mult_g : entity utils_v1_00_a.multiply18
 	generic map (
 		CTL_WIDTH => 1
 	)
 	port map (
 		CLK  => CLK,
 		CE   => CE,
-		A    => IN_G,
+		A    => arg_g,
 		B    => GREEN_FACTOR,
 		P    => prod_g,
 		CTLI(0) => IN_HS,
 		CTLO(0) => prod_hs
 	);
 
-	mult_b : entity utils_v1_00_a.multiply8
+	mult_b : entity utils_v1_00_a.multiply18
 	generic map (
 		CTL_WIDTH => 1
 	)
 	port map (
 		CLK  => CLK,
 		CE   => CE,
-		A    => IN_B,
+		A    => arg_b,
 		B    => BLUE_FACTOR,
 		P    => prod_b,
 		CTLI(0) => IN_VS,
@@ -116,9 +124,9 @@ begin
 		end if;
 	end process;
 
-	OUT_R  <= gray_c(15 downto 8);
-	OUT_G  <= gray_c(15 downto 8);
-	OUT_B  <= gray_c(15 downto 8);
+	OUT_R  <= gray_c(17 downto 10);
+	OUT_G  <= gray_c(17 downto 10);
+	OUT_B  <= gray_c(17 downto 10);
 	OUT_DE <= gray_de;
 	OUT_HS <= gray_hs;
 	OUT_VS <= gray_vs;
