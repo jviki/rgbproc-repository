@@ -25,9 +25,9 @@ port (
 );
 end entity;
 
-architecture full of multiply8 is
+architecture full of multiply18 is
 
-	component mult_impl8
+	component mult_impl18
 		port (
 		clk: in std_logic;
 		ce: in std_logic;
@@ -38,13 +38,13 @@ architecture full of multiply8 is
 
 	-- Synplicity black box declaration
 	attribute syn_black_box : boolean;
-	attribute syn_black_box of mult_impl8: component is true;
+	attribute syn_black_box of mult_impl18: component is true;
 
 	constant MULT_DELAY : integer := 3;
 
 begin
 
-	impl_i : mult_impl8
+	impl_i : mult_impl18
 	port map (
 		CLK => CLK,
 		CE  => CE,
