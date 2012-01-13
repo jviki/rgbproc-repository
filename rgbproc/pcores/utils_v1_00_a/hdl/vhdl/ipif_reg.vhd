@@ -95,6 +95,8 @@ begin
 	reg_data_be <= ipif_be when ipif_we = '1' else
 	               (others => '1');
 
+	REG_DO      <= reg_data;
+
 	-----------------------
 
 	ipif_access : entity work.ipif_reg_logic
