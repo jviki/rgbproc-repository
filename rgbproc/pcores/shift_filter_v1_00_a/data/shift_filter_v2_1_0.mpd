@@ -1,4 +1,4 @@
-BEGIN median_filter
+BEGIN shift_filter
 
 OPTION IPTYPE = PERIPHERAL
 OPTION IMP_NETLIST = TRUE
