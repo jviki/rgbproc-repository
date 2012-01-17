@@ -195,6 +195,14 @@ class LowPassFilter:
 		b = self.lowPass(matrix, 2)
 		return (r, g, b)
 
+class HighPassFilter:
+	def __init__(self, win):
+		self.win = win
+
+	def nextPixel(self):
+		matrix = self.win.nextWin()
+		return (0, 0, 0)
+
 class GrayScaleFilter:
 	def __init__(self, win):
 		self.win = win
