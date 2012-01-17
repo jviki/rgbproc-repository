@@ -212,22 +212,29 @@ class GrayScaleFilter:
 		return (c, c, c)
 
 
+import sys
+
 def testFilter(impl):
 	impl.win.reset()
-	print("== %s ==" % str(impl.__class__.__name__))
+	print("== %s ==" % str(impl.__class__.__name__), file = sys.stderr)
 	def px2str(px):
 		return "%s %s %s" % px
 
 	try:
+		i = 0
 		for x in range(640):
 			for y in range(480):
 				pixel = impl.nextPixel()
 				print(px2str(pixel))
+
+			i += 1
+			sys.stderr.write("\rline...%d" % i)
+
 	except EOFException as e:
 		pass
 
+	sys.stderr.write("\n")
 
-import sys
 def main(source = sys.stdin):
 	loader   = ImageLoader((10, 5), source)
 	win      = ImageWin(loader)
