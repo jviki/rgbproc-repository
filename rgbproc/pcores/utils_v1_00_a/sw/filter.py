@@ -235,18 +235,23 @@ def testFilter(impl):
 
 	sys.stderr.write("\n")
 
-def main(source = sys.stdin):
-	loader   = ImageLoader((10, 5), source)
+def main(test, source = sys.stdin):
+	#loader   = ImageLoader((10, 5), source)
+	loader   = ImageLoader((640, 480), source)
 	win      = ImageWin(loader)
 	identity = IdentityFilter(win)
 	median   = MedianFilter(win)
 	lowPass  = LowPassFilter(win)
 	gray     = GrayScaleFilter(win)
 
-	testFilter(identity)
-	testFilter(median)
-	testFilter(lowPass)
-	testFilter(gray)
+	if test == "identity" or test is None:
+		testFilter(identity)
+	elif test == "median":
+		testFilter(median)
+	elif test == "low-pass":
+		testFilter(lowPass)
+	elif test == "gray":
+		testFilter(gray)
 
 class TestInData:
 	"""
@@ -272,5 +277,6 @@ class TestInData:
 		self.i   += 1
 		return "%s %s %s" % (r, g ,b)
 
-main(TestInData(10 * 5))
+#main(TestInData(10 * 5))
+main(sys.argv[1])
 
