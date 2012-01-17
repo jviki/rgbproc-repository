@@ -148,15 +148,18 @@ begin
 
 	ctl_bypass_i : entity utils_v1_00_a.ctl_bypass
 	generic map (
-		DWIDTH => 3 * 9,
+		DWIDTH => 3,
 		DEPTH  => ADDER_LEVELS_COUNT
 	)
 	port map (
 		CLK => CLK,
 		CE  => CE,
-		DI( 8 downto  0) => WIN_DE,
-		DI(17 downto  9) => WIN_HS,
-		DI(26 downto 18) => WIN_VS
+		DI(0) => WIN_DE(4),
+		DI(1) => WIN_HS(4),
+		DI(2) => WIN_VS(4),
+		DO(0) => OUT_DE,
+		DO(1) => OUT_HS,
+		DO(2) => OUT_VS
 	);
 
 end architecture;
