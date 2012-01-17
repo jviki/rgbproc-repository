@@ -199,9 +199,23 @@ class HighPassFilter:
 	def __init__(self, win):
 		self.win = win
 
+	def highPass(self, matrix, i):
+		a = -matrix[0][1][i]
+		b = matrix[1][1][i] * 2
+		c = -matrix[2][1][i]
+		r = a + b + c
+
+		if r >= 0:
+			return int(r)
+		elif r < 0:
+			return int(abs(r))
+
 	def nextPixel(self):
 		matrix = self.win.nextWin()
-		return (0, 0, 0)
+		r = self.highPass(matrix, 0)
+		g = self.highPass(matrix, 1)
+		b = self.highPass(matrix, 2)
+		return (r, g, b)
 
 class GrayScaleFilter:
 	def __init__(self, win):
@@ -251,6 +265,7 @@ def main(test, source = sys.stdin):
 	median   = MedianFilter(win)
 	lowPass  = LowPassFilter(win)
 	gray     = GrayScaleFilter(win)
+	highPass = HighPassFilter(win)
 
 	if test == "identity" or test is None:
 		testFilter(identity)
@@ -260,6 +275,8 @@ def main(test, source = sys.stdin):
 		testFilter(lowPass)
 	elif test == "gray":
 		testFilter(gray)
+	elif test == "high-pass":
+		testFilter(highPass)
 
 class TestInData:
 	"""
