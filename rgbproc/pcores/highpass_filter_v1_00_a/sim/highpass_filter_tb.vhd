@@ -94,4 +94,17 @@ begin
 		OUT_VS => out_vs
 	);
 
+	rgb_mon_i : entity work.file_pixel_mon
+	port map (
+		CLK => clk,
+		RST => rst,
+
+		R   => out_r,
+		G   => out_g,
+		B   => out_b,
+		DE  => out_de,
+		HS  => out_hs,
+		VS  => out_vs
+	);
+
 end architecture;
