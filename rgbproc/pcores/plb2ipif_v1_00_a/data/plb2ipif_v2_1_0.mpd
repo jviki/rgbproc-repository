@@ -14,7 +14,7 @@ OPTION IMP_NETLIST = TRUE
 OPTION HDL = VHDL
 OPTION STYLE = MIX
 OPTION IP_GROUP = MICROBLAZE:PPC:USER
-OPTION DESC = PLB2IPIF
+OPTION DESC = Bridge that converts PLB bus (uses slave single) to IPIF configuration bus
 OPTION ARCH_SUPPORT_MAP = (others=DEVELOPMENT)
 
 
@@ -91,10 +91,10 @@ PORT Bus2IP_CS    = Bus2IP_CS,    DIR = O, BUS = IPIF
 PORT Bus2IP_RNW   = Bus2IP_RNW,   DIR = O, BUS = IPIF
 PORT Bus2IP_Data  = Bus2IP_Data,  DIR = O, BUS = IPIF, VEC = [31:0]
 PORT Bus2IP_BE    = Bus2IP_BE,    DIR = O, BUS = IPIF, VEC = [3:0]
-PORT IP2Bus_Data  = Bus2IP_Data,  DIR = I, BUS = IPIF, VEC = [31:0]
-PORT IP2Bus_RdAck = Bus2IP_RdAck, DIR = I, BUS = IPIF
-PORT IP2Bus_WrAck = Bus2IP_WrAck, DIR = I, BUS = IPIF
-PORT IP2Bus_Error = Bus2IP_Error, DIR = I, BUS = IPIF
+PORT IP2Bus_Data  = IP2Bus_Data,  DIR = I, BUS = IPIF, VEC = [31:0]
+PORT IP2Bus_RdAck = IP2Bus_RdAck, DIR = I, BUS = IPIF
+PORT IP2Bus_WrAck = IP2Bus_WrAck, DIR = I, BUS = IPIF
+PORT IP2Bus_Error = IP2Bus_Error, DIR = I, BUS = IPIF
 
 PORT CS_M_CLK = "", DIR = O, SIGIS = CLK,   ISVALID = (CS_ENABLE == 1)
 PORT CS_M_VEC = "", DIR = O, VEC = [105:0], ISVALID = (CS_ENABLE == 1)

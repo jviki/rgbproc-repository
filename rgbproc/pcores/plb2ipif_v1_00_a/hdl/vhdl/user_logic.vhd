@@ -92,6 +92,7 @@ entity user_logic is
     --USER generics added here
     DUAL_CLOCK                     : integer              := 1;
     CS_ENABLE                      : integer              := 0;
+    BASEADDR                       : std_logic_vector     := X"00000000";
     -- ADD USER GENERICS ABOVE THIS LINE ---------------
 
     -- DO NOT EDIT BELOW THIS LINE ---------------------
@@ -179,9 +180,9 @@ architecture IMP of user_logic is
 
 begin
 
-	plb_Bus2IP_Clk   <= plb_Bus2IP_Clk;
+	plb_Bus2IP_Clk   <= Bus2IP_Clk;
 	plb_Bus2IP_Reset <= Bus2IP_Reset;
-	plb_Bus2IP_Addr  <= Bus2IP_Addr;
+	plb_Bus2IP_Addr  <= Bus2IP_Addr - BASEADDR;
 	plb_Bus2IP_Data  <= Bus2IP_Data;
 	plb_Bus2IP_RNW   <= Bus2IP_RNW;
 	plb_Bus2IP_BE    <= Bus2IP_BE;
@@ -257,29 +258,37 @@ generate
 
 end generate;
 
-if gen_chipscope: if CS_ENABLE /= 0
+gen_chipscope: if CS_ENABLE /= 0
 generate
 
 	CS_M_CLK      <= plb_Bus2IP_Clk;
-	CS_S_CLK      <= cfg_Bus2IP_Clk when DUAL_CLOCK = 1 else plb_Bus2IP_Clk;
 
-	CS_M_VEC(31 downto  0) <= plb_IP2Bus_Addr;
+	gen_slave_clock: if DUAL_CLOCK = 1
+	generate
+		CS_S_CLK      <= cfg_Bus2IP_Clk;
+	end generate;
+	gen_master_clock: if DUAL_CLOCK = 0
+	generate
+		CS_S_CLK      <= plb_Bus2IP_Clk;
+	end generate;
+
+	CS_M_VEC(31 downto  0) <= plb_Bus2IP_Addr;
 	CS_M_VEC(63 downto 32) <= plb_IP2Bus_Data;
 	CS_M_VEC(95 downto 64) <= plb_Bus2IP_Data;
 	CS_M_VEC(99 downto 96) <= plb_Bus2IP_BE;
 	CS_M_VEC(100) <= plb_Bus2IP_Reset;
-	CS_M_VEC(101) <= plb_Bus2IP_CS;
+	CS_M_VEC(101) <= plb_Bus2IP_CS(0);
 	CS_M_VEC(102) <= plb_Bus2IP_RNW;
 	CS_M_VEC(103) <= plb_IP2Bus_WrAck;
 	CS_M_VEC(104) <= plb_IP2Bus_RdAck;
 	CS_M_VEC(105) <= plb_IP2Bus_Error;
 
-	CS_S_VEC(31 downto  0) <= cfg_IP2Bus_Addr;
+	CS_S_VEC(31 downto  0) <= cfg_Bus2IP_Addr;
 	CS_S_VEC(63 downto 32) <= cfg_IP2Bus_Data;
 	CS_S_VEC(95 downto 64) <= cfg_Bus2IP_Data;
 	CS_S_VEC(99 downto 96) <= cfg_Bus2IP_BE;
 	CS_S_VEC(100) <= cfg_Bus2IP_Reset;
-	CS_S_VEC(101) <= cfg_Bus2IP_CS;
+	CS_S_VEC(101) <= cfg_Bus2IP_CS(0);
 	CS_S_VEC(102) <= cfg_Bus2IP_RNW;
 	CS_S_VEC(103) <= cfg_IP2Bus_WrAck;
 	CS_S_VEC(104) <= cfg_IP2Bus_RdAck;
