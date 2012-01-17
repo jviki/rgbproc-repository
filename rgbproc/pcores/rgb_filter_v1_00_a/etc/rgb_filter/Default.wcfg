@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/jviki/Projects/hw/test-c-repo/rgbproc/pcores/rgb_filter_v1_00_a/etc/rgb_filter/rgb_filter_rb_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="proc_common_pkg" />
+            <top_module name="rgb_filter_pkg" />
+            <top_module name="rgb_filter_rb" />
+            <top_module name="std_logic_1164" />
+            <top_module name="std_logic_arith" />
+            <top_module name="std_logic_unsigned" />
+            <top_module name="utils_pkg" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="29" />
+   <wvobject fp_name="/rgb_filter_rb/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_filter_rb/rst" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_filter_rb/vga_r" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">vga_r[7:0]</obj_property>
+      <obj_property name="ObjectShortName">vga_r[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_filter_rb/vga_g" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">vga_g[7:0]</obj_property>
+      <obj_property name="ObjectShortName">vga_g[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_filter_rb/vga_b" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">vga_b[7:0]</obj_property>
+      <obj_property name="ObjectShortName">vga_b[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_filter_rb/vga_hs" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">vga_hs</obj_property>
+      <obj_property name="ObjectShortName">vga_hs</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_filter_rb/vga_vs" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">vga_vs</obj_property>
+      <obj_property name="ObjectShortName">vga_vs</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_filter_rb/gen_r" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">gen_r[7:0]</obj_property>
+      <obj_property name="ObjectShortName">gen_r[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_filter_rb/gen_g" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">gen_g[7:0]</obj_property>
+      <obj_property name="ObjectShortName">gen_g[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_filter_rb/gen_b" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">gen_b[7:0]</obj_property>
+      <obj_property name="ObjectShortName">gen_b[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_filter_rb/gen_de" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">gen_de</obj_property>
+      <obj_property name="ObjectShortName">gen_de</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_filter_rb/gen_hs" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">gen_hs</obj_property>
+      <obj_property name="ObjectShortName">gen_hs</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_filter_rb/gen_vs" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">gen_vs</obj_property>
+      <obj_property name="ObjectShortName">gen_vs</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_filter_rb/out_r" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">out_r[7:0]</obj_property>
+      <obj_property name="ObjectShortName">out_r[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_filter_rb/out_g" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">out_g[7:0]</obj_property>
+      <obj_property name="ObjectShortName">out_g[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_filter_rb/out_b" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">out_b[7:0]</obj_property>
+      <obj_property name="ObjectShortName">out_b[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_filter_rb/out_de" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">out_de</obj_property>
+      <obj_property name="ObjectShortName">out_de</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_filter_rb/out_hs" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">out_hs</obj_property>
+      <obj_property name="ObjectShortName">out_hs</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_filter_rb/out_vs" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">out_vs</obj_property>
+      <obj_property name="ObjectShortName">out_vs</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider23" type="divider">
+      <obj_property name="label">Internals</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">128 128 255</obj_property>
+      <obj_property name="TextColor">230 230 230</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_filter_rb/dut_i/in_r" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">in_r[7:0]</obj_property>
+      <obj_property name="ObjectShortName">in_r[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_filter_rb/dut_i/in_g" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">in_g[7:0]</obj_property>
+      <obj_property name="ObjectShortName">in_g[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_filter_rb/dut_i/in_b" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">in_b[7:0]</obj_property>
+      <obj_property name="ObjectShortName">in_b[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_filter_rb/dut_i/reg_red" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">reg_red[7:0]</obj_property>
+      <obj_property name="ObjectShortName">reg_red[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_filter_rb/dut_i/reg_green" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">reg_green[7:0]</obj_property>
+      <obj_property name="ObjectShortName">reg_green[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_filter_rb/dut_i/reg_blue" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">reg_blue[7:0]</obj_property>
+      <obj_property name="ObjectShortName">reg_blue[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_filter_rb/dut_i/filtered_r" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">filtered_r[7:0]</obj_property>
+      <obj_property name="ObjectShortName">filtered_r[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_filter_rb/dut_i/filtered_g" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">filtered_g[7:0]</obj_property>
+      <obj_property name="ObjectShortName">filtered_g[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_filter_rb/dut_i/filtered_b" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">filtered_b[7:0]</obj_property>
+      <obj_property name="ObjectShortName">filtered_b[7:0]</obj_property>
+   </wvobject>
+</wave_config>
