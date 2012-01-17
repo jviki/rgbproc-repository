@@ -172,7 +172,17 @@ class LowPassFilter:
 		self.win = win
 
 	def lowPass(self, matrix, i):
-		return matrix[1][1][i]
+		r  = 0
+		r += matrix[0][0][i]
+		r += matrix[0][1][i] * 2
+		r += matrix[0][2][i]
+		r += matrix[1][0][i] * 2
+		r += matrix[1][1][i] * 4
+		r += matrix[1][2][i] * 2
+		r += matrix[2][0][i]
+		r += matrix[2][1][i] * 2
+		r += matrix[2][2][i]
+		return int(r / 16)
 
 	def nextPixel(self):
 		matrix = self.win.nextWin()
