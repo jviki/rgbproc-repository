@@ -19,7 +19,11 @@ class ImageLoader:
 		self.height = resolution[1]
 
 	def reset(self):
-		self.indata.rewind()
+		try:
+			self.indata.rewind()
+			return True
+		except AttributeError:
+			return False
 
 	def nextPixel(self):
 		import re
