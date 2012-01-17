@@ -17,29 +17,30 @@ generic (
 	IPIF_AWIDTH : integer := 32;
 	IPIF_DWIDTH : integer := 32;
 	IPIF_NADDR  : integer := 1;
-	OPERATION   : integer := OP_AND
+	OPERATION   : integer := OP_AND;
+	DEFAULT_R   : std_logic_vector := X"00";
+	DEFAULT_G   : std_logic_vector := X"00";
+	DEFAULT_B   : std_logic_vector := X"00"
 );
 port (
 	CLK    : in  std_logic;
 	RST    : in  std_logic;
 	CE     : in  std_logic;
 
-	IN_R   : in  std_logic;
-	IN_G   : in  std_logic;
-	IN_B   : in  std_logic;
+	IN_R   : in  std_logic_vector(7 downto 0);
+	IN_G   : in  std_logic_vector(7 downto 0);
+	IN_B   : in  std_logic_vector(7 downto 0);
 	IN_DE  : in  std_logic;
 	IN_HS  : in  std_logic;
 	IN_VS  : in  std_logic;
 
-	OUT_R  : out std_logic;
-	OUT_G  : out std_logic;
-	OUT_B  : out std_logic;
+	OUT_R  : out std_logic_vector(7 downto 0);
+	OUT_G  : out std_logic_vector(7 downto 0);
+	OUT_B  : out std_logic_vector(7 downto 0);
 	OUT_DE : out std_logic;
 	OUT_HS : out std_logic;
 	OUT_VS : out std_logic;
 
-	CLK          : in  std_logic;
-	RST          : in  std_logic;
 	IP2Bus_Data  : out std_logic_vector(IPIF_DWIDTH - 1 downto 0);
 	IP2Bus_WrAck : out std_logic;
 	IP2Bus_RdAck : out std_logic;
@@ -111,7 +112,7 @@ end generate;
 	---
 	-- Device ID register
 	---
-	reg_id : utils_v1_00_a.ipif_reg
+	reg_id : entity utils_v1_00_a.ipif_reg
 	generic map (
 		REG_DWIDTH  => 16,
 		REG_DEFAULT => X"0003",
@@ -131,14 +132,14 @@ end generate;
 		Bus2IP_RNW   => Bus2IP_RNW,
 		Bus2IP_CS    => ipif_cs(0),
 
-		REG_DI       => (others => 'X'),
+		REG_DI       => (15 downto 0 => 'X'),
 		REG_WE       => '0'
 	);
 
-	reg_red_i : utils_v1_00_a.ipif_reg
+	reg_red_i : entity utils_v1_00_a.ipif_reg
 	generic map (
 		REG_DWIDTH  => 8,
-		REG_DEFAULT => X"00",
+		REG_DEFAULT => DEFAULT_R,
 		IPIF_DWIDTH => IPIF_DWIDTH,
 		IPIF_MODE   => IPIF_RW
 	)
@@ -155,15 +156,15 @@ end generate;
 		Bus2IP_RNW   => Bus2IP_RNW,
 		Bus2IP_CS    => ipif_cs(1),
 
-		REG_DI       => (others => 'X'),
+		REG_DI       => (7 downto 0 => 'X'),
 		REG_WE       => '0',
 		REG_DO       => reg_red
 	);
 
-	reg_green_i : utils_v1_00_a.ipif_reg
+	reg_green_i : entity utils_v1_00_a.ipif_reg
 	generic map (
 		REG_DWIDTH  => 8,
-		REG_DEFAULT => X"00",
+		REG_DEFAULT => DEFAULT_G,
 		IPIF_DWIDTH => IPIF_DWIDTH,
 		IPIF_MODE   => IPIF_RW
 	)
@@ -180,15 +181,15 @@ end generate;
 		Bus2IP_RNW   => Bus2IP_RNW,
 		Bus2IP_CS    => ipif_cs(2),
 
-		REG_DI       => (others => 'X'),
+		REG_DI       => (7 downto 0 => 'X'),
 		REG_WE       => '0',
 		REG_DO       => reg_green
 	);
 
-	reg_blue_i : utils_v1_00_a.ipif_reg
+	reg_blue_i : entity utils_v1_00_a.ipif_reg
 	generic map (
 		REG_DWIDTH  => 8,
-		REG_DEFAULT => X"00",
+		REG_DEFAULT => DEFAULT_B,
 		IPIF_DWIDTH => IPIF_DWIDTH,
 		IPIF_MODE   => IPIF_RW
 	)
@@ -205,7 +206,7 @@ end generate;
 		Bus2IP_RNW   => Bus2IP_RNW,
 		Bus2IP_CS    => ipif_cs(3),
 
-		REG_DI       => (others => 'X'),
+		REG_DI       => (7 downto 0 => 'X'),
 		REG_WE       => '0',
 		REG_DO       => reg_blue
 	);
