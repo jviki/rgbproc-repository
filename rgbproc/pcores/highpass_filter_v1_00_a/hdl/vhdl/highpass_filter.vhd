@@ -21,9 +21,9 @@ port (
 	WIN_R   : in  std_logic_vector(9 * 8 - 1 downto 0);
 	WIN_G   : in  std_logic_vector(9 * 8 - 1 downto 0);
 	WIN_B   : in  std_logic_vector(9 * 8 - 1 downto 0);
-	WIN_DE  : in  std_logic;
-	WIN_HS  : in  std_logic;
-	WIN_VS  : in  std_logic;
+	WIN_DE  : in  std_logic_vector(8 downto 0);
+	WIN_HS  : in  std_logic_vector(8 downto 0);
+	WIN_VS  : in  std_logic_vector(8 downto 0);
 
 	OUT_R   : out std_logic_vector(7 downto 0);
 	OUT_G   : out std_logic_vector(7 downto 0);
@@ -148,18 +148,15 @@ begin
 
 	ctl_bypass_i : entity utils_v1_00_a.ctl_bypass
 	generic map (
-		DWIDTH : integer := 3;
-		DEPTH  : integer := ADDER_LEVELS_COUNT
+		DWIDTH => 3 * 9,
+		DEPTH  => ADDER_LEVELS_COUNT
 	)
 	port map (
 		CLK => CLK,
 		CE  => CE,
-		DI(0) => WIN_DE,
-		DI(1) => WIN_HS,
-		DI(2) => WIN_VS,
-		DO(0) => OUT_DE,
-		DO(1) => OUT_HS,
-		DO(2) => OUT_VS
+		DI( 8 downto  0) => WIN_DE,
+		DI(17 downto  9) => WIN_HS,
+		DI(26 downto 18) => WIN_VS
 	);
 
 end architecture;
