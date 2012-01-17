@@ -11,6 +11,7 @@ use proc_common_v3_00_a.proc_common_pkg.log2;
 
 library utils_v1_00_a;
 use utils_v1_00_a.ctl_bypass;
+use utils_v1_00_a.adder_tree;
 
 entity highpass_filter is
 port (
@@ -101,7 +102,7 @@ begin
 	---
 	-- Sum of the results
 	---
-	adder_tree_r_i : entity work.adder_tree
+	adder_tree_r_i : entity utils_v1_00_a.adder_tree
 	generic map (
 		INPUT_COUNT => VECTOR_LENGTH,
 		DATA_WIDTH  => 10
@@ -113,7 +114,7 @@ begin
 		DOUT => sum_r
 	);
 
-	adder_tree_g_i : entity work.adder_tree
+	adder_tree_g_i : entity utils_v1_00_a.adder_tree
 	generic map (
 		INPUT_COUNT => VECTOR_LENGTH,
 		DATA_WIDTH  => 10
@@ -125,7 +126,7 @@ begin
 		DOUT => sum_g		
 	);
 
-	adder_tree_b_i : entity work.adder_tree
+	adder_tree_b_i : entity utils_v1_00_a.adder_tree
 	generic map (
 		INPUT_COUNT => VECTOR_LENGTH,
 		DATA_WIDTH  => 10
