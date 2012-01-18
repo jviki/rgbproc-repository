@@ -1,0 +1,40 @@
+BEGIN shift_filter
+
+OPTION IPTYPE = PERIPHERAL
+OPTION IMP_NETLIST = TRUE
+OPTION HDL = VHDL
+OPTION STYLE = HDL
+OPTION IP_GROUP = MICROBLAZE:PPC:USER
+OPTION DESC = Shift filter on RGB bus. Can be used to implement eg. low-pass filters.
+
+BUS_INTERFACE BUS=in, BUS_STD=RGB_WIN, BUS_TYPE=TARGET
+BUS_INTERFACE BUS=out, BUS_STD=RGB, BUS_TYPE=INITIATOR
+
+PARAMETER M0x0 = 4, DT = integer, RANGE = (0:255)
+PARAMETER M1x0 = 3, DT = integer, RANGE = (0:255)
+PARAMETER M2x0 = 4, DT = integer, RANGE = (0:255)
+PARAMETER M0x1 = 3, DT = integer, RANGE = (0:255)
+PARAMETER M1x1 = 2, DT = integer, RANGE = (0:255)
+PARAMETER M2x1 = 3, DT = integer, RANGE = (0:255)
+PARAMETER M0x2 = 4, DT = integer, RANGE = (0:255)
+PARAMETER M1x2 = 3, DT = integer, RANGE = (0:255)
+PARAMETER M2x2 = 4, DT = integer, RANGE = (0:255)
+
+PORT CLK = "", DIR = I, SIGIS = CLK
+PORT CE  = net_vcc, DIR = I
+
+PORT WIN_R   = R,   DIR = I, BUS = in, VEC = [71:0]
+PORT WIN_G   = G,   DIR = I, BUS = in, VEC = [71:0]
+PORT WIN_B   = B,   DIR = I, BUS = in, VEC = [71:0]
+PORT WIN_DE  = DE,  DIR = I, BUS = in, VEC = [8:0]
+PORT WIN_HS  = HS,  DIR = I, BUS = in, VEC = [8:0]
+PORT WIN_VS  = VS,  DIR = I, BUS = in, VEC = [8:0]
+
+PORT OUT_R   = R,   DIR = O, BUS = out, VEC = [7:0]
+PORT OUT_G   = G,   DIR = O, BUS = out, VEC = [7:0]
+PORT OUT_B   = B,   DIR = O, BUS = out, VEC = [7:0]
+PORT OUT_DE  = DE,  DIR = O, BUS = out
+PORT OUT_HS  = HS,  DIR = O, BUS = out
+PORT OUT_VS  = VS,  DIR = O, BUS = out
+
+END

@@ -61,6 +61,7 @@ architecture full of rgb_in is
 	signal buff_b        : std_logic_vector(7 downto 0);
 	signal buff_hs       : std_logic;
 	signal buff_vs       : std_logic;
+	signal buff_de       : std_logic;
 
 begin
 
@@ -72,6 +73,7 @@ begin
 			buff_b  <= VGA_B;
 			buff_hs <= VGA_HS;
 			buff_vs <= VGA_VS;
+			buff_de <= st_hd and st_vd;
 		end if;
 	end process;
 
@@ -118,7 +120,7 @@ begin
 	RGB_G <= buff_g;
 	RGB_B <= buff_b;
 
-	RGB_DE <= st_hd and st_vd;
+	RGB_DE <= buff_de;
 	RGB_HS <= buff_hs;
 	RGB_VS <= buff_vs;
 
