@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/jviki/Projects/hw/khbo_edk_repo/rgbproc/pcores/rgb_grayscale_v1_00_a/etc/rgb_grayscale/rgb_grayscale_tb_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="bip_dsp48_macro_pkg_v2_0" />
+            <top_module name="bip_usecase_utils_pkg_v2_0" />
+            <top_module name="bip_utils_pkg_v2_0" />
+            <top_module name="numeric_std" />
+            <top_module name="proc_common_pkg" />
+            <top_module name="rgb_grayscale_tb" />
+            <top_module name="std_logic_1164" />
+            <top_module name="std_logic_arith" />
+            <top_module name="std_logic_signed" />
+            <top_module name="std_logic_unsigned" />
+            <top_module name="textio" />
+            <top_module name="xbip_pipe_v2_0_comp" />
+            <top_module name="xbip_pipe_v2_0_xst_comp" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="35" />
+   <wvobject fp_name="/rgb_grayscale_tb/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_grayscale_tb/rst" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_grayscale_tb/vga_r" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">vga_r[7:0]</obj_property>
+      <obj_property name="ObjectShortName">vga_r[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_grayscale_tb/vga_g" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">vga_g[7:0]</obj_property>
+      <obj_property name="ObjectShortName">vga_g[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_grayscale_tb/vga_b" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">vga_b[7:0]</obj_property>
+      <obj_property name="ObjectShortName">vga_b[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_grayscale_tb/vga_hs" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">vga_hs</obj_property>
+      <obj_property name="ObjectShortName">vga_hs</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_grayscale_tb/vga_vs" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">vga_vs</obj_property>
+      <obj_property name="ObjectShortName">vga_vs</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_grayscale_tb/gen_r" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">gen_r[7:0]</obj_property>
+      <obj_property name="ObjectShortName">gen_r[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_grayscale_tb/gen_g" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">gen_g[7:0]</obj_property>
+      <obj_property name="ObjectShortName">gen_g[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_grayscale_tb/gen_b" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">gen_b[7:0]</obj_property>
+      <obj_property name="ObjectShortName">gen_b[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_grayscale_tb/gen_de" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">gen_de</obj_property>
+      <obj_property name="ObjectShortName">gen_de</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_grayscale_tb/out_r" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">out_r[7:0]</obj_property>
+      <obj_property name="ObjectShortName">out_r[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_grayscale_tb/out_g" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">out_g[7:0]</obj_property>
+      <obj_property name="ObjectShortName">out_g[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_grayscale_tb/out_b" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">out_b[7:0]</obj_property>
+      <obj_property name="ObjectShortName">out_b[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_grayscale_tb/out_de" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">out_de</obj_property>
+      <obj_property name="ObjectShortName">out_de</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_r" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">prod_r[15:0]</obj_property>
+      <obj_property name="ObjectShortName">prod_r[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="vbus45" type="vbus" db_ref_id="1">
+      <obj_property name="label">prod_high_r</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_r[15]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[15]</obj_property>
+         <obj_property name="ObjectShortName">prod_r[15]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_r[14]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[14]</obj_property>
+         <obj_property name="ObjectShortName">prod_r[14]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_r[13]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[13]</obj_property>
+         <obj_property name="ObjectShortName">prod_r[13]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_r[12]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[12]</obj_property>
+         <obj_property name="ObjectShortName">prod_r[12]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_r[11]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[11]</obj_property>
+         <obj_property name="ObjectShortName">prod_r[11]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_r[10]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[10]</obj_property>
+         <obj_property name="ObjectShortName">prod_r[10]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_r[9]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[9]</obj_property>
+         <obj_property name="ObjectShortName">prod_r[9]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_r[8]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[8]</obj_property>
+         <obj_property name="ObjectShortName">prod_r[8]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_g" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">prod_g[15:0]</obj_property>
+      <obj_property name="ObjectShortName">prod_g[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="vbus70" type="vbus" db_ref_id="1">
+      <obj_property name="label">prod_high_g</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_g[15]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[15]</obj_property>
+         <obj_property name="ObjectShortName">prod_g[15]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_g[14]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[14]</obj_property>
+         <obj_property name="ObjectShortName">prod_g[14]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_g[13]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[13]</obj_property>
+         <obj_property name="ObjectShortName">prod_g[13]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_g[12]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[12]</obj_property>
+         <obj_property name="ObjectShortName">prod_g[12]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_g[11]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[11]</obj_property>
+         <obj_property name="ObjectShortName">prod_g[11]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_g[10]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[10]</obj_property>
+         <obj_property name="ObjectShortName">prod_g[10]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_g[9]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[9]</obj_property>
+         <obj_property name="ObjectShortName">prod_g[9]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_g[8]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[8]</obj_property>
+         <obj_property name="ObjectShortName">prod_g[8]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_b" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">prod_b[15:0]</obj_property>
+      <obj_property name="ObjectShortName">prod_b[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_grayscale_tb/dut_i/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_grayscale_tb/dut_i/in_r" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">in_r[7:0]</obj_property>
+      <obj_property name="ObjectShortName">in_r[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="CustomSignalColor">#0000ff</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_grayscale_tb/dut_i/in_g" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">in_g[7:0]</obj_property>
+      <obj_property name="ObjectShortName">in_g[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="CustomSignalColor">#0000ff</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_grayscale_tb/dut_i/in_b" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">in_b[7:0]</obj_property>
+      <obj_property name="ObjectShortName">in_b[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="CustomSignalColor">#0000ff</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_grayscale_tb/dut_i/in_de" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">in_de</obj_property>
+      <obj_property name="ObjectShortName">in_de</obj_property>
+   </wvobject>
+   <wvobject fp_name="vbus45" type="vbus" db_ref_id="1">
+      <obj_property name="label">prod_high_r</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="CustomSignalColor">#ff00ff</obj_property>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_r[15]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[15]</obj_property>
+         <obj_property name="ObjectShortName">prod_r[15]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_r[14]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[14]</obj_property>
+         <obj_property name="ObjectShortName">prod_r[14]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_r[13]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[13]</obj_property>
+         <obj_property name="ObjectShortName">prod_r[13]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_r[12]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[12]</obj_property>
+         <obj_property name="ObjectShortName">prod_r[12]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_r[11]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[11]</obj_property>
+         <obj_property name="ObjectShortName">prod_r[11]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_r[10]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[10]</obj_property>
+         <obj_property name="ObjectShortName">prod_r[10]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_r[9]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[9]</obj_property>
+         <obj_property name="ObjectShortName">prod_r[9]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_r[8]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[8]</obj_property>
+         <obj_property name="ObjectShortName">prod_r[8]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="vbus70" type="vbus" db_ref_id="1">
+      <obj_property name="label">prod_high_g</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="CustomSignalColor">#ff00ff</obj_property>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_g[15]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[15]</obj_property>
+         <obj_property name="ObjectShortName">prod_g[15]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_g[14]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[14]</obj_property>
+         <obj_property name="ObjectShortName">prod_g[14]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_g[13]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[13]</obj_property>
+         <obj_property name="ObjectShortName">prod_g[13]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_g[12]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[12]</obj_property>
+         <obj_property name="ObjectShortName">prod_g[12]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_g[11]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[11]</obj_property>
+         <obj_property name="ObjectShortName">prod_g[11]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_g[10]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[10]</obj_property>
+         <obj_property name="ObjectShortName">prod_g[10]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_g[9]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[9]</obj_property>
+         <obj_property name="ObjectShortName">prod_g[9]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_g[8]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[8]</obj_property>
+         <obj_property name="ObjectShortName">prod_g[8]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="vbus96" type="vbus" db_ref_id="1">
+      <obj_property name="label">prod_high_b</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="CustomSignalColor">#ff00ff</obj_property>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_b[15]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[15]</obj_property>
+         <obj_property name="ObjectShortName">prod_b[15]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_b[14]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[14]</obj_property>
+         <obj_property name="ObjectShortName">prod_b[14]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_b[13]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[13]</obj_property>
+         <obj_property name="ObjectShortName">prod_b[13]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_b[12]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[12]</obj_property>
+         <obj_property name="ObjectShortName">prod_b[12]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_b[11]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[11]</obj_property>
+         <obj_property name="ObjectShortName">prod_b[11]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_b[10]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[10]</obj_property>
+         <obj_property name="ObjectShortName">prod_b[10]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_b[9]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[9]</obj_property>
+         <obj_property name="ObjectShortName">prod_b[9]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_b[8]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[8]</obj_property>
+         <obj_property name="ObjectShortName">prod_b[8]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="/rgb_grayscale_tb/dut_i/prod_de" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">prod_de</obj_property>
+      <obj_property name="ObjectShortName">prod_de</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_grayscale_tb/dut_i/gray_c" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">gray_c[7:0]</obj_property>
+      <obj_property name="ObjectShortName">gray_c[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="vbus121" type="vbus">
+      <obj_property name="label">gray_high_c</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_grayscale_tb/dut_i/gray_de" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">gray_de</obj_property>
+      <obj_property name="ObjectShortName">gray_de</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_grayscale_tb/dut_i/int_red_factor" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">int_red_factor</obj_property>
+      <obj_property name="ObjectShortName">int_red_factor</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_grayscale_tb/dut_i/int_green_factor" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">int_green_factor</obj_property>
+      <obj_property name="ObjectShortName">int_green_factor</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/rgb_grayscale_tb/dut_i/int_blue_factor" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">int_blue_factor</obj_property>
+      <obj_property name="ObjectShortName">int_blue_factor</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+</wave_config>
