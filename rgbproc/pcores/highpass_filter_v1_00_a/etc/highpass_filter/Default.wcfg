@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/jviki/Projects/hw/khbo_edk_repo/rgbproc/pcores/highpass_filter_v1_00_a/etc/highpass_filter/highpass_filter_tb_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="highpass_filter_tb" />
+            <top_module name="proc_common_pkg" />
+            <top_module name="std_logic_1164" />
+            <top_module name="std_logic_arith" />
+            <top_module name="std_logic_unsigned" />
+            <top_module name="textio" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="25" />
+   <wvobject fp_name="/highpass_filter_tb/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/highpass_filter_tb/rst" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/highpass_filter_tb/win_r" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">win_r[71:0]</obj_property>
+      <obj_property name="ObjectShortName">win_r[71:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/highpass_filter_tb/win_g" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">win_g[71:0]</obj_property>
+      <obj_property name="ObjectShortName">win_g[71:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/highpass_filter_tb/win_b" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">win_b[71:0]</obj_property>
+      <obj_property name="ObjectShortName">win_b[71:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/highpass_filter_tb/win_de" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">win_de[8:0]</obj_property>
+      <obj_property name="ObjectShortName">win_de[8:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/highpass_filter_tb/win_hs" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">win_hs[8:0]</obj_property>
+      <obj_property name="ObjectShortName">win_hs[8:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/highpass_filter_tb/win_vs" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">win_vs[8:0]</obj_property>
+      <obj_property name="ObjectShortName">win_vs[8:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="vbus188" type="vbus" db_ref_id="1">
+      <obj_property name="label">center_de</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/highpass_filter_tb/win_de[4]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[4]</obj_property>
+         <obj_property name="ObjectShortName">win_de[4]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="/highpass_filter_tb/gen_i/matrix_gen_i/px_req" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">px_req</obj_property>
+      <obj_property name="ObjectShortName">px_req</obj_property>
+   </wvobject>
+   <wvobject fp_name="/highpass_filter_tb/out_r" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">out_r[7:0]</obj_property>
+      <obj_property name="ObjectShortName">out_r[7:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/highpass_filter_tb/out_g" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">out_g[7:0]</obj_property>
+      <obj_property name="ObjectShortName">out_g[7:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/highpass_filter_tb/out_b" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">out_b[7:0]</obj_property>
+      <obj_property name="ObjectShortName">out_b[7:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/highpass_filter_tb/out_de" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">out_de</obj_property>
+      <obj_property name="ObjectShortName">out_de</obj_property>
+   </wvobject>
+   <wvobject fp_name="/highpass_filter_tb/out_hs" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">out_hs</obj_property>
+      <obj_property name="ObjectShortName">out_hs</obj_property>
+   </wvobject>
+   <wvobject fp_name="/highpass_filter_tb/out_vs" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">out_vs</obj_property>
+      <obj_property name="ObjectShortName">out_vs</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider56" type="divider">
+      <obj_property name="label">highpass filter</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">128 128 255</obj_property>
+      <obj_property name="TextColor">230 230 230</obj_property>
+   </wvobject>
+   <wvobject fp_name="vbus160" type="vbus" db_ref_id="1">
+      <obj_property name="label">win_r7</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <wvobject fp_name="/highpass_filter_tb/win_r[63]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[63]</obj_property>
+         <obj_property name="ObjectShortName">win_r[63]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/win_r[62]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[62]</obj_property>
+         <obj_property name="ObjectShortName">win_r[62]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/win_r[61]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[61]</obj_property>
+         <obj_property name="ObjectShortName">win_r[61]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/win_r[60]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[60]</obj_property>
+         <obj_property name="ObjectShortName">win_r[60]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/win_r[59]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[59]</obj_property>
+         <obj_property name="ObjectShortName">win_r[59]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/win_r[58]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[58]</obj_property>
+         <obj_property name="ObjectShortName">win_r[58]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/win_r[57]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[57]</obj_property>
+         <obj_property name="ObjectShortName">win_r[57]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/win_r[56]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[56]</obj_property>
+         <obj_property name="ObjectShortName">win_r[56]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="vbus142" type="vbus" db_ref_id="1">
+      <obj_property name="label">win_r5</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <wvobject fp_name="/highpass_filter_tb/win_r[39]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[39]</obj_property>
+         <obj_property name="ObjectShortName">win_r[39]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/win_r[38]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[38]</obj_property>
+         <obj_property name="ObjectShortName">win_r[38]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/win_r[37]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[37]</obj_property>
+         <obj_property name="ObjectShortName">win_r[37]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/win_r[36]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[36]</obj_property>
+         <obj_property name="ObjectShortName">win_r[36]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/win_r[35]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[35]</obj_property>
+         <obj_property name="ObjectShortName">win_r[35]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/win_r[34]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[34]</obj_property>
+         <obj_property name="ObjectShortName">win_r[34]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/win_r[33]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[33]</obj_property>
+         <obj_property name="ObjectShortName">win_r[33]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/win_r[32]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[32]</obj_property>
+         <obj_property name="ObjectShortName">win_r[32]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="vbus115" type="vbus" db_ref_id="1">
+      <obj_property name="label">win_r1</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <wvobject fp_name="/highpass_filter_tb/win_r[15]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[15]</obj_property>
+         <obj_property name="ObjectShortName">win_r[15]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/win_r[14]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[14]</obj_property>
+         <obj_property name="ObjectShortName">win_r[14]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/win_r[13]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[13]</obj_property>
+         <obj_property name="ObjectShortName">win_r[13]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/win_r[12]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[12]</obj_property>
+         <obj_property name="ObjectShortName">win_r[12]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/win_r[11]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[11]</obj_property>
+         <obj_property name="ObjectShortName">win_r[11]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/win_r[10]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[10]</obj_property>
+         <obj_property name="ObjectShortName">win_r[10]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/win_r[9]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[9]</obj_property>
+         <obj_property name="ObjectShortName">win_r[9]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/win_r[8]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[8]</obj_property>
+         <obj_property name="ObjectShortName">win_r[8]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="vbus243" type="vbus" db_ref_id="1">
+      <obj_property name="label">mul_r2</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[29]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[29]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[29]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[28]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[28]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[28]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[27]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[27]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[27]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[26]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[26]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[26]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[25]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[25]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[25]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[24]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[24]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[24]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[23]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[23]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[23]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[22]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[22]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[22]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[21]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[21]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[21]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[20]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[20]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[20]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="vbus232" type="vbus" db_ref_id="1">
+      <obj_property name="label">mul_r1</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[19]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[19]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[19]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[18]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[18]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[18]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[17]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[17]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[17]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[16]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[16]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[16]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[15]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[15]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[15]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[14]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[14]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[14]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[13]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[13]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[13]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[12]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[12]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[12]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[11]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[11]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[11]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[10]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[10]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[10]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="vbus220" type="vbus" db_ref_id="1">
+      <obj_property name="label">mul_r0</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[9]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[9]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[9]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[8]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[8]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[8]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[7]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[7]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[7]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[6]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[6]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[6]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[5]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[5]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[5]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[4]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[4]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[4]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[3]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[3]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[3]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[2]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[2]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[2]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[1]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[1]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[1]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/highpass_filter_tb/dut_i/mul_r[0]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[0]</obj_property>
+         <obj_property name="ObjectShortName">mul_r[0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="/highpass_filter_tb/dut_i/sum_r" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">sum_r[9:0]</obj_property>
+      <obj_property name="ObjectShortName">sum_r[9:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/highpass_filter_tb/dut_i/out_r" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">out_r[7:0]</obj_property>
+      <obj_property name="ObjectShortName">out_r[7:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+</wave_config>
