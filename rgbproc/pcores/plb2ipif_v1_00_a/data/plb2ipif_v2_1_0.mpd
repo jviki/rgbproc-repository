@@ -15,7 +15,6 @@ OPTION HDL = VHDL
 OPTION STYLE = MIX
 OPTION IP_GROUP = MICROBLAZE:PPC:USER
 OPTION DESC = Bridge that converts PLB bus (uses slave single) to IPIF configuration bus
-OPTION ARCH_SUPPORT_MAP = (others=DEVELOPMENT)
 
 
 ## Bus Interfaces
