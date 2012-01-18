@@ -1,0 +1,21 @@
+BEGIN rgb_gen
+
+OPTION IPTYPE = PERIPHERAL
+OPTION IMP_NETLIST = TRUE
+OPTION HDL = VHDL
+OPTION STYLE = HDL
+OPTION IP_GROUP = MICROBLAZE:PPC:USER
+OPTION DESC = Generates simple pattern to RGB bus
+
+BUS_INTERFACE BUS=out, BUS_STD=RGB, BUS_TYPE=INITIATOR
+
+PORT CLK = "", DIR = I, SIGIS = CLK
+PORT RST = sys_periph_rst, DIR = I, SIGIS = RST
+PORT R   = R,   DIR = O, BUS = out, VEC = [7:0]
+PORT G   = G,   DIR = O, BUS = out, VEC = [7:0]
+PORT B   = B,   DIR = O, BUS = out, VEC = [7:0]
+PORT DE  = DE,  DIR = O, BUS = out
+PORT HS  = HS,  DIR = O, BUS = out
+PORT VS  = VS,  DIR = O, BUS = out
+
+END
