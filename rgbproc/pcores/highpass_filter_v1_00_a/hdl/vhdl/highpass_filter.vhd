@@ -58,14 +58,7 @@ architecture impl_n1_2_n1 of highpass_filter is
 		variable y   : std_logic_vector(7 downto 0);
 	begin
 		val := conv_integer(signed(a));
-
-		if val > 0 then
-			res := conv_std_logic_vector(val, 10);
-		elsif val < 0 then
-			res := conv_std_logic_vector(-val, 10);
-		else
-			return conv_std_logic_vector(127, 8);
-		end if;
+		res := conv_std_logic_vector(val - (-510), 10);
 
 		y := res(9 downto 2);
 		return y;

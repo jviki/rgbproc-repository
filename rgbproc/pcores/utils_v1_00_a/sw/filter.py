@@ -205,10 +205,7 @@ class HighPassFilter:
 		c = -matrix[2][1][i]
 		r = a + b + c
 
-		if r >= 0:
-			return int(r)
-		elif r < 0:
-			return int(abs(r))
+		return (r - (-510)) / 4
 
 	def nextPixel(self):
 		matrix = self.win.nextWin()
