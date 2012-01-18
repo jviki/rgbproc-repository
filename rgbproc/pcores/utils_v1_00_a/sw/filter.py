@@ -238,9 +238,14 @@ import sys
 
 def testFilter(impl):
 	impl.win.reset()
-	print("== %s ==" % str(impl.__class__.__name__), file = sys.stderr)
+
+	def testName(name):
+		sys.stderr.write("== %s ==\n" % str(name))
+
 	def px2str(px):
 		return "%s %s %s" % px
+
+	testName(impl.__class__.__name__)
 
 	try:
 		i = 0
