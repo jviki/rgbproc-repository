@@ -233,8 +233,34 @@ class GrayScaleFilter:
 		c = self.convert(pixel[0], pixel[1], pixel[2])
 		return (c, c, c)
 
+class MatrixFileGen:
+	def __init__(self, win):
+		self.win = win
+
+	def nextMatrix(self):
+		matrix = self.win.nextWin()
+
+		l = []
+		for row in matrix:
+			for col in row:
+				l.append(col)
+
+		return l
 
 import sys
+
+def genMatrix(win):
+	gen = MatrixFileGen(win)
+
+	try:
+		for x in range(640):
+			for y in range(480):
+				matrix = gen.nextMatrix()
+				for i in range(9):
+					sys.stdout.write("%d %d %d " % matrix[i])
+				print("")
+	except EOFException as e:
+		pass
 
 def testFilter(impl):
 	impl.win.reset()
@@ -282,6 +308,8 @@ def main(test, source = sys.stdin):
 		testFilter(gray)
 	elif test == "high-pass":
 		testFilter(highPass)
+	elif test == "gen-matrix":
+		genMatrix(win)
 
 class TestInData:
 	"""
