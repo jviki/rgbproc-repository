@@ -1,4 +1,5 @@
 #! /usr/bin/awk -f
+# Copyright (C) 2011, 2012 Jan Viktorin
 
 BEGIN {
 	width  = -1
