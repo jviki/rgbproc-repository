@@ -7,6 +7,11 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
+---
+-- Provides RGB window bus. Converts WIN_SIZE rows to
+-- a window of size WIN_SIZE x WIN_SIZE.
+-- Current interface uses WIN_SIZE = 3 only.
+---
 entity rgb_win is
 generic (
 	WIN_SIZE : integer := 3		
@@ -45,6 +50,9 @@ port (
 );
 end entity;
 
+---
+-- Introduces 1 CLK delay.
+---
 architecture rgb_win3 of rgb_win is
 begin
 
