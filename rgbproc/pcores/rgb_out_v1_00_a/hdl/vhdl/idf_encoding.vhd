@@ -19,11 +19,11 @@ end entity;
 architecture idf0 of idf_encoding is
 begin
 
-	D0(11 downto 8) <= GREEN(3 downto 0);
-	D0(7 downto 0)  <= BLUE(7 downto 0);
+	D0(11 downto 4) <= RED(7 downto 0);
+	D0(3 downto 0)  <= GREEN(7 downto 4);
 
-	D1(11 downto 4) <= RED(7 downto 0);
-	D1(3 downto 0)  <= GREEN(7 downto 4);
+	D1(11 downto 8) <= GREEN(3 downto 0);
+	D1(7 downto 0)  <= BLUE(7 downto 0);
 
 end architecture;
 
