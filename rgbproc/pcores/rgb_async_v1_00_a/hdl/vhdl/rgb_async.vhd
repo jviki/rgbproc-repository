@@ -15,6 +15,8 @@ use utils_v1_00_a.afifo;
 -- the FULL flag is asserted.
 -- Every OUT_CLK data are read unless
 -- the EMPTY flag is asserted.
+--
+-- Not tested, never used...
 ---
 entity rgb_async is
 port (
