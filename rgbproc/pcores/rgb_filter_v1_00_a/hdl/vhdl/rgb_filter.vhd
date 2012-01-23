@@ -13,6 +13,11 @@ library utils_v1_00_a;
 use utils_v1_00_a.ipif_reg;
 use utils_v1_00_a.utils_pkg.all;
 
+---
+-- Performs an operation on each color channel independently.
+-- Supported operations are AND, OR and XOR. The operands
+-- are set over IPIF interface (usually from a processor).
+---
 entity rgb_filter is
 generic (
 	IPIF_AWIDTH : integer := 32;
@@ -56,12 +61,13 @@ end entity;
 
 ---
 -- Address space:
--- NAME    OFFSET      WIDTH
---  id     0x00000000  16b
---  red    0x00000004  8b
---  green  0x00000008  8b
---  blue   0x0000000C  8b
---  op     0x00000010  2b
+-- NAME    OFFSET      WIDTH  MODE  DESCRIPTION
+--  id     0x00000000  16b    RO    device type id
+--  red    0x00000004  8b     RW    operand on red channel
+--  green  0x00000008  8b     RW    operand on green channel
+--  blue   0x0000000C  8b     RW    operand on blue channel
+--  op     0x00000010  2b     RO    selected operation
+--    * Values: 00 - AND, 01 - OR, 10 - XOR, 11 - undefined
 ---
 architecture full of rgb_filter is
 
