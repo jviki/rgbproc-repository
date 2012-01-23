@@ -19,7 +19,7 @@ use rgb_shreg_v1_00_a.rgb_shreg;
 ---
 entity rgb_line_buff is
 generic (
-	WIDTH  : integer := 640;
+	WIDTH  : integer := 800;
 	FIELDS : integer := 3
 );
 port (
