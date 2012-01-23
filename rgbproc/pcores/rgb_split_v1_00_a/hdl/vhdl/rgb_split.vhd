@@ -7,6 +7,13 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
+---
+-- Utility to split the RGB bus to 2 identical
+-- lines. Allows creating branches in Xilinx XPS.
+-- It is not very useful for hand coding.
+--
+-- Introduces 1 CLK delay.
+---
 entity rgb_split is
 port (
 	CLK     : in  std_logic;
