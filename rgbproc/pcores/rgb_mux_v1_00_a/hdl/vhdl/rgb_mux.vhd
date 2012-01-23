@@ -11,6 +11,11 @@ library utils_v1_00_a;
 use utils_v1_00_a.ipif_reg;
 use utils_v1_00_a.ipif_reg_logic;
 
+---
+-- Multiplexor on RGB bus. Allows to switch between 2 input
+-- RGB branches. The switch command is performed over IPIF
+-- interface (usually from a processor core).
+---
 entity rgb_mux is
 generic (
 	IPIF_AWIDTH : integer := 32;
@@ -55,6 +60,23 @@ port (
 );
 end entity;
 
+---
+-- Branch switch is performed only during vertical pulse.
+-- It first waits for the pulse of current line and then
+-- waits (generating pulse) for a pulse of the target line.
+-- Thus the change can drive the output screen black for a while.
+--
+-- Address space:
+--  <address>   <access>  <description>   <width>  <default>
+--  0x00000000  RO        device type id  16b      1
+--  0x00000004  RW        select of line   1b      generic DEFAULT_SRC
+--    * Reading from the register obtains current state.
+--      Thus after a write the new value can not usually be
+--      read immediately. The delay can be about one frame.
+--    * Changing of line can not be cancelled. When another value
+--      is written durning the lines change and it is different
+--      from the new one another transition will occur.
+---
 architecture full of rgb_mux is
 
 	type state_t is (s_src0, s_src1, s_sync0_to_1, s_0_to_sync1, s_sync1_to_0, s_1_to_sync0);
