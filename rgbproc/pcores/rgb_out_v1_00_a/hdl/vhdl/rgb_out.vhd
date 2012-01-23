@@ -29,6 +29,13 @@ port (
 );
 end entity;
 
+---
+-- Design to work with CH7301C codec. Outputs data using 12b bus
+-- with IDF0 encoding (see www.chrontel.com/pdf/7301ds.pdf) on
+-- double-data rate (DDR).
+--
+-- Anyway it simply bypasses RGB bus data to the codec.
+---
 architecture full of rgb_out is
 
 	signal out_data0 : std_logic_vector(11 downto 0);

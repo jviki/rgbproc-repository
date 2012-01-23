@@ -14,6 +14,16 @@ library utils_v1_00_a;
 use utils_v1_00_a.ctl_bypass;
 use utils_v1_00_a.adder_tree;
 
+---
+-- Performs (dividing) shift-and-sum operation on RGB window.
+-- The shifts can be specified by generics. Can be used to
+-- implement eg. simple low-pass filters.
+--
+-- Default configuration:
+--  4 3 4         1/16 1/8 1/16
+--  3 2 3  thus:   1/8 1/2  1/8
+--  4 3 4         1/16 1/8 1/16
+---
 entity shift_filter is
 generic (
 	M0x0      : integer := 4;

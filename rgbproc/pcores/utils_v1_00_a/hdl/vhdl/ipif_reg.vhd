@@ -76,7 +76,7 @@ begin
 					-- multiple of 8, so the last range must be
 					-- shorted
 					if i = reg_data_be'length - 1 then
-						DBEG := DBEG - (REG_DWIDTH mod 8);
+					   DBEG := DBEG - 8 +(REG_DWIDTH mod 8);
 					end if;
 
 					-- apply byte-enable

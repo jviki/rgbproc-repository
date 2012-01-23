@@ -10,6 +10,11 @@ use ieee.std_logic_unsigned.all;
 library utils_v1_00_a;
 use utils_v1_00_a.multiply18;
 
+---
+-- Performs RGB to grayscale conversion.
+-- The result is that all color channels
+-- have the same value.
+---
 entity rgb_grayscale is
 port (
 	CLK     : in  std_logic;
@@ -31,6 +36,15 @@ port (
 );
 end entity;
 
+---
+-- Uses theorem
+--  G := r * 0.30 + g * 0.59 + b * 0.11
+--
+-- Multiplication is performed in fixed point arithmetic
+-- using Xilinx DSP blocks. Extends each 8b channel to
+-- 18 bits for enough precision and sign.
+-- After mutliplication and sum it is divided by 1024.
+---
 architecture dsp of rgb_grayscale is
 
 	constant RAW_RED_FACTOR   : real := 0.30;

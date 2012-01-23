@@ -7,6 +7,12 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
+---
+-- Introduces delay of DEPTH clk to the RGB line.
+-- Can be used to delay some signals to stay in sync.
+-- It is an example unit and starting point for
+-- more advanced ones.
+---
 entity rgb_shreg is
 generic (
 	DEPTH   : integer := 1		

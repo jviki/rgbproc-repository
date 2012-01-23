@@ -13,6 +13,11 @@ library utils_v1_00_a;
 use utils_v1_00_a.ipif_reg;
 use utils_v1_00_a.utils_pkg.all;
 
+---
+-- Performs an operation on each color channel independently.
+-- Supported operations are AND, OR and XOR. The operands
+-- are set over IPIF interface (usually from a processor).
+---
 entity rgb_filter is
 generic (
 	IPIF_AWIDTH : integer := 32;
@@ -54,7 +59,19 @@ port (
 );
 end entity;
 
+---
+-- Address space:
+-- NAME    OFFSET      WIDTH  MODE  DESCRIPTION
+--  id     0x00000000  16b    RO    device type id
+--  red    0x00000004  8b     RW    operand on red channel
+--  green  0x00000008  8b     RW    operand on green channel
+--  blue   0x0000000C  8b     RW    operand on blue channel
+--  op     0x00000010  2b     RO    selected operation
+--    * Values: 00 - AND, 01 - OR, 10 - XOR, 11 - undefined
+---
 architecture full of rgb_filter is
+
+	constant REG_OPERATION : std_logic_vector(1 downto 0) := conv_std_logic_vector(OPERATION, 2);
 
 	signal filtered_r : std_logic_vector(7 downto 0);
 	signal filtered_g : std_logic_vector(7 downto 0);
@@ -64,11 +81,11 @@ architecture full of rgb_filter is
 	signal reg_green  : std_logic_vector(7 downto 0);
 	signal reg_blue   : std_logic_vector(7 downto 0);
 
-	signal ipif_cs     : std_logic_vector(3 downto 0);
-	signal ipif_data   : std_logic_vector(127 downto 0);
-	signal ipif_wrack  : std_logic_vector(3 downto 0);
-	signal ipif_rdack  : std_logic_vector(3 downto 0);
-	signal ipif_error  : std_logic_vector(3 downto 0);
+	signal ipif_cs     : std_logic_vector(4 downto 0);
+	signal ipif_data   : std_logic_vector(159 downto 0);
+	signal ipif_wrack  : std_logic_vector(4 downto 0);
+	signal ipif_rdack  : std_logic_vector(4 downto 0);
+	signal ipif_error  : std_logic_vector(4 downto 0);
 	signal ipif_gerror : std_logic;
 	signal ipif_werror : std_logic;
 	signal ipif_rerror : std_logic;
@@ -212,24 +229,50 @@ end generate;
 		REG_DO       => reg_blue
 	);
 
+	reg_op_i : entity utils_v1_00_a.ipif_reg
+	generic map (
+		REG_DWIDTH  => 2,
+		REG_DEFAULT => REG_OPERATION,
+		IPIF_DWIDTH => IPIF_DWIDTH,
+		IPIF_MODE   => IPIF_RO
+	)
+	port map (
+		CLK          => CLK,
+		RST          => RST,
+
+		IP2Bus_Data  => ipif_data(159 downto 128),
+		IP2Bus_WrAck => ipif_wrack(4),
+		IP2Bus_RdAck => ipif_rdack(4),
+		IP2Bus_Error => ipif_error(4),
+		Bus2IP_Data  => Bus2IP_Data,
+		Bus2IP_BE    => Bus2IP_BE,
+		Bus2IP_RNW   => Bus2IP_RNW,
+		Bus2IP_CS    => ipif_cs(4),
+
+		REG_DI       => (1 downto 0 => 'X'),
+		REG_WE       => '0'
+	);
+
 	ipif_cs(0) <= Bus2IP_CS(0) when Bus2IP_Addr = X"00000000" else '0';
 	ipif_cs(1) <= Bus2IP_CS(0) when Bus2IP_Addr = X"00000004" else '0';
 	ipif_cs(2) <= Bus2IP_CS(0) when Bus2IP_Addr = X"00000008" else '0';
 	ipif_cs(3) <= Bus2IP_CS(0) when Bus2IP_Addr = X"0000000C" else '0';
+	ipif_cs(4) <= Bus2IP_CS(0) when Bus2IP_Addr = X"00000010" else '0';
 
 	ipif_gerror <= Bus2IP_CS(0) when ipif_cs = "0000" else '0';
 
 	ipif_rerror <= ipif_gerror when Bus2IP_CS(0) = '1' and Bus2IP_RNW = '1' else '0';
 	ipif_werror <= ipif_gerror when Bus2IP_CS(0) = '1' and Bus2IP_RNW = '0' else '0';
 
-	IP2Bus_Data <= ipif_data(127 downto 96) when ipif_cs = "1000" else
-	               ipif_data( 95 downto 64) when ipif_cs = "0100" else
-	               ipif_data( 63 downto 32) when ipif_cs = "0010" else
-	               ipif_data( 31 downto  0);
+	IP2Bus_Data <= ipif_data(159 downto 128) when ipif_cs = "10000" else
+	               ipif_data(127 downto  96) when ipif_cs = "01000" else
+	               ipif_data( 95 downto  64) when ipif_cs = "00100" else
+	               ipif_data( 63 downto  32) when ipif_cs = "00010" else
+	               ipif_data( 31 downto   0);
 
-	IP2Bus_WrAck <= ipif_wrack(0) or ipif_wrack(1) or ipif_wrack(2) or ipif_wrack(3) or ipif_werror;
-	IP2Bus_RdAck <= ipif_rdack(0) or ipif_rdack(1) or ipif_rdack(2) or ipif_rdack(3) or ipif_rerror;
-	IP2Bus_Error <= ipif_error(0) or ipif_error(1) or ipif_error(2) or ipif_error(3) or ipif_gerror;
+	IP2Bus_WrAck <= ipif_wrack(0) or ipif_wrack(1) or ipif_wrack(2) or ipif_wrack(3) or ipif_wrack(4) or ipif_werror;
+	IP2Bus_RdAck <= ipif_rdack(0) or ipif_rdack(1) or ipif_rdack(2) or ipif_rdack(3) or ipif_wrack(4) or ipif_rerror;
+	IP2Bus_Error <= ipif_error(0) or ipif_error(1) or ipif_error(2) or ipif_error(3) or ipif_wrack(4) or ipif_gerror;
 
 end architecture;
 
