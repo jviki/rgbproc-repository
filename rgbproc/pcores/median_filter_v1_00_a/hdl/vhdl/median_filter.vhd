@@ -10,6 +10,11 @@ use ieee.std_logic_unsigned.all;
 library utils_v1_00_a;
 use utils_v1_00_a.ctl_bypass;
 
+---
+-- Performs median filtering on RGB window bus. The window
+-- must be create by another unit. Median filter sorts the
+-- values in the window and outputs its median.
+---
 entity median_filter is
 generic (
 	MATRIX_SIZE : integer := 3		
@@ -34,6 +39,14 @@ port (
 );
 end entity;
 
+---
+-- Implementation uses unit median9 with bitonic sorter.
+-- It does not care about the borders it just uses the
+-- incoming values. Thus the unit can be improved by
+-- using eg. zero values on window fields with DE = '0'.
+--
+-- This implementation is for 3x3 windows only.
+---
 architecture median9_filter of median_filter is
 
 	signal median_r : std_logic_vector(7 downto 0);
