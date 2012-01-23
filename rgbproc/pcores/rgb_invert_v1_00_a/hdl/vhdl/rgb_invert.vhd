@@ -7,6 +7,9 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
+---
+-- Performs bitwise invert of each channel.
+---
 entity rgb_invert is
 port (
 	CLK      : in  std_logic;
@@ -28,6 +31,9 @@ port (
 );
 end entity;
 
+---
+-- Introduces 1 CLK delay.
+---
 architecture full of rgb_invert is
 begin
 
