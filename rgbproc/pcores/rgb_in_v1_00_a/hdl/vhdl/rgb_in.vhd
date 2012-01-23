@@ -32,6 +32,24 @@ port (
 );
 end entity;
 
+---
+-- Designed to work with AD9980 codec (but should work with any
+-- digital VGA input). For details see codec at URL:
+--  http://www.xilinx.com/products/boards/ml505/datasheets/464471350AD9980_0.pdf
+-- 
+-- Current configuration assumes VGA mode:
+--  * 640x480, 60 Hz; HS and VS at LOW when pulse occures
+--
+-- Generates RGB_DE signal. All other bits are only bypassed
+-- from input.
+--
+-- Signals VGA_CLAMP, VGA_COAST, VGA_ODD_EVEN_B, VGA_SOGOUT
+-- are not used.
+--
+-- The constants HBP, HDP, HFP, VBP, VDP, VFP, HPULSE, VPULSE
+-- can be changed to support other modes. In that case it would
+-- be better to change them to generic parameters.
+---
 architecture full of rgb_in is
 
 	constant HBP     : integer := 48;
