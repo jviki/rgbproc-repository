@@ -10,6 +10,13 @@ use ieee.std_logic_unsigned.all;
 library rgb_shreg_v1_00_a;
 use rgb_shreg_v1_00_a.rgb_shreg;
 
+---
+-- Line buffer. Works as a shift register but provides
+-- access to more then only one value. It is intended
+-- for construction of sliding window mechanism.
+--
+-- Holds line of WIDTH pixels.
+---
 entity rgb_line_buff is
 generic (
 	WIDTH  : integer := 640;
@@ -43,6 +50,10 @@ port (
 );
 end entity;
 
+---
+-- Implementation uses rgb_shreg unit to store first WIDTH - FIELDS
+-- pixels. The rest is used to provide the readable fields.
+---
 architecture full of rgb_line_buff is
 
 	type color_t is array(0 to FIELDS) of std_logic_vector(7 downto 0);
