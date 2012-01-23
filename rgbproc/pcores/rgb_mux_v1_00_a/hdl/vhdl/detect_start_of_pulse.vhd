@@ -1,5 +1,6 @@
 -- detect_start_of_pulse.vhd
 -- Jan Viktorin <xvikto03@stud.fit.vutbr.cz>
+-- Copyright (C) 2011, 2012 Jan Viktorin
 
 library ieee;
 use ieee.std_logic_1164.all;

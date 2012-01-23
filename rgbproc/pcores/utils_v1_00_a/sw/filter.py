@@ -1,4 +1,5 @@
 #! /usr/bin/python
+# Copyright (C) 2011, 2012 Jan Viktorin
 
 class EOFException(Exception):
 	pass
