@@ -1,5 +1,5 @@
 NET fpga_0_VGA_IN_VGA_CLK_pin TNM_NET = TS_vga_clk_pin;
-TIMESPEC TS_vga_clk_pin = PERIOD TS_vga_clk_pin 30000 kHz;
+TIMESPEC TS_vga_clk_pin = PERIOD TS_vga_clk_pin 26 MHz;
 
 # clock IOB clock component is not placed at an optimal clock IOB site
 #you may use the CLOCK_DEDICATED_ROUTE constraint in the .ucf file to demote this message to a WARNING
