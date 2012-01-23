@@ -1,6 +1,0 @@
-NET fpga_0_DVI_OUT_OUT_XCLK_P_pin TNM_NET = TS_dvi_xclk_p_pin;
-TIMESPEC TS_dvi_xclk_p_pin = PERIOD TS_dvi_xclk_p_pin 30000 kHz;
-
-NET fpga_0_DVI_OUT_OUT_XCLK_N_pin TNM_NET = TS_dvi_xclk_n_pin;
-TIMESPEC TS_dvi_xclk_n_pin = PERIOD TS_dvi_xclk_n_pin 30000 kHz;
-
