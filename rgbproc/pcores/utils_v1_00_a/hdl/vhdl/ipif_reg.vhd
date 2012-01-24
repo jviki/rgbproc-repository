@@ -68,20 +68,9 @@ begin
 			if RST = '1' then
 				reg_data <= REG_DEFAULT;
 			elsif reg_data_we = '1' then
-				for i in 0 to reg_data_be'length - 1 loop
-					DBEG := (i + 1) * 8;
-					DEND := i * 8;
-
-					-- handle the case when REG_DWIDTH is not
-					-- multiple of 8, so the last range must be
-					-- shorted
-					if i = reg_data_be'length - 1 then
-					   DBEG := DBEG - 8 +(REG_DWIDTH mod 8);
-					end if;
-
-					-- apply byte-enable
-					if reg_data_be(i) = '1' then
-						reg_data(DBEG - 1 downto DEND) <= reg_data_in(DBEG - 1 downto DEND);
+				for i in reg_data'range loop
+					if reg_data_be(i / 8) = '1' then
+						reg_data(i) <= reg_data_in(i);
 					end if;
 				end loop;
 			end if;
