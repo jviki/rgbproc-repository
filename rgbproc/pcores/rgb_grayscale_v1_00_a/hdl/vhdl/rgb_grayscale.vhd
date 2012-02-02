@@ -42,7 +42,7 @@ end entity;
 --
 -- Multiplication is performed in fixed point arithmetic
 -- using Xilinx DSP blocks. Extends each 8b channel to
--- 18 bits for enough precision and sign.
+-- 18 bits for enough precision.
 -- After mutliplication and sum it is divided by 1024.
 ---
 architecture dsp of rgb_grayscale is
