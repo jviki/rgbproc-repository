@@ -39,6 +39,48 @@ port (
 end entity;
 
 architecture custom of rgb_shreg is
+begin
+
+gen_use_core797: if DEPTH = 797 generate
+gen_block: block
+	component shift_ram
+		port (
+		d: in std_logic_vector(26 downto 0);
+		clk: in std_logic;
+		ce: in std_logic;
+		q: out std_logic_vector(26 downto 0));
+	end component;
+begin
+
+	impl_i : shift_ram
+	port map (
+		clk => CLK,
+		ce  => CE,
+
+		d( 7 downto  0) => IN_R,
+		d(15 downto  8) => IN_G,
+		d(23 downto 16) => IN_B,
+		d(24) => IN_DE,
+		d(25) => IN_HS,
+		d(26) => IN_VS,
+
+		q( 7 downto  0) => OUT_R,
+		q(15 downto  8) => OUT_G,
+		q(23 downto 16) => OUT_B,
+		q(24) => OUT_DE,
+		q(25) => OUT_HS,
+		q(26) => OUT_VS
+	);
+
+end block;
+end generate;
+
+----------------------------------------------------
+----------------------------------------------------
+----------------------------------------------------
+
+gen_custom_vhdl: if DEPTH /= 797 generate
+gen_block: block
 
 	type color_t is array(0 to DEPTH - 1) of std_logic_vector(7 downto 0);
 
@@ -88,70 +130,7 @@ begin
 	OUT_HS <= reg_hs(DEPTH - 1);
 	OUT_VS <= reg_vs(DEPTH - 1);
 
-end architecture;
-
-architecture wrapper of rgb_shreg is
-	component shift_ram
-		port (
-		d: in std_logic_vector(26 downto 0);
-		clk: in std_logic;
-		ce: in std_logic;
-		q: out std_logic_vector(26 downto 0));
-	end component;
-begin
-
-gen_use_core797: if DEPTH = 797
-generate
-
-	impl_i : shift_ram
-	port map (
-		clk => CLK,
-		ce  => CE,
-
-		d( 7 downto  0) => IN_R,
-		d(15 downto  8) => IN_G,
-		d(23 downto 16) => IN_B,
-		d(24) => IN_DE,
-		d(25) => IN_HS,
-		d(26) => IN_VS,
-
-		q( 7 downto  0) => OUT_R,
-		q(15 downto  8) => OUT_G,
-		q(23 downto 16) => OUT_B,
-		q(24) => OUT_DE,
-		q(25) => OUT_HS,
-		q(26) => OUT_VS
-	);
-
-end generate;
-
-gen_custom_vhdl: if DEPTH /= 797
-generate
-
-	impl_i : entity work.rgb_shreg(custom)
-	generic map (
-		DEPTH => DEPTH
-	)
-	port map (
-		CLK    => CLK,
-		CE     => CE,
-		RST    => RST,
-		
-		IN_R   => IN_R,
-		IN_G   => IN_G,
-		IN_B   => IN_B,
-		IN_DE  => IN_DE,
-		IN_HS  => IN_HS,
-		IN_VS  => IN_VS,
-
-		OUT_R  => OUT_R,
-		OUT_G  => OUT_G,
-		OUT_B  => OUT_B,
-		OUT_DE => OUT_DE,
-		OUT_HS => OUT_HS,
-		OUT_VS => OUT_VS
-	);
-
+end block;
 end generate;
 
 end architecture;
