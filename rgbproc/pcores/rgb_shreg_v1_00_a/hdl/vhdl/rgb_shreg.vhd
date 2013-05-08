@@ -19,7 +19,6 @@ generic (
 );
 port (
 	CLK     : in  std_logic;
-	RST     : in  std_logic;
 	CE      : in  std_logic;
 
 	IN_R    : in  std_logic_vector(7 downto 0);
@@ -87,20 +86,16 @@ gen_block: block
 	signal reg_r  : color_t;
 	signal reg_g  : color_t;
 	signal reg_b  : color_t;
-	signal reg_de : std_logic_vector(DEPTH - 1 downto 0);
-	signal reg_hs : std_logic_vector(DEPTH - 1 downto 0);
-	signal reg_vs : std_logic_vector(DEPTH - 1 downto 0);
+	signal reg_de : std_logic_vector(DEPTH - 1 downto 0) := (others => '0');
+	signal reg_hs : std_logic_vector(DEPTH - 1 downto 0) := (others => '0');
+	signal reg_vs : std_logic_vector(DEPTH - 1 downto 0) := (others => '0');
 
 begin
 
-	rgb_shregp : process(CLK, RST, CE)
+	rgb_shregp : process(CLK)
 	begin
 		if rising_edge(CLK) then
-			if RST = '1' then
-				reg_de <= (others => '0');
-				reg_hs <= (others => '0');
-				reg_vs <= (others => '0');
-			elsif CE = '1' then
+			if CE = '1' then
 				reg_r(0)  <= IN_R;
 				reg_g(0)  <= IN_G;
 				reg_b(0)  <= IN_B;

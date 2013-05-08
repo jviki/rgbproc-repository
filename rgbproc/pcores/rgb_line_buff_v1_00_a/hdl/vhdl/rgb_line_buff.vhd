@@ -24,7 +24,6 @@ generic (
 );
 port (
 	CLK      : in  std_logic;
-	RST      : in  std_logic;
 	CE       : in  std_logic;
 
 	IN_R     : in  std_logic_vector(7 downto 0);
@@ -73,7 +72,6 @@ begin
 	)
 	port map (
 		CLK    => CLK,
-		RST    => RST,
 		CE     => CE,		
 
 		IN_R   => IN_R,
@@ -102,7 +100,6 @@ generate
 	)
 	port map (
 		CLK    => CLK,
-		RST    => RST,
 		CE     => CE,
 
 		IN_R   => fields_r (i - 1),

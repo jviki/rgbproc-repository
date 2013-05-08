@@ -15,7 +15,6 @@ PARAMETER WIDTH  = 800, DT = integer
 PARAMETER FIELDS = 3, DT = integer
 
 PORT CLK = "", DIR = I, SIGIS = CLK
-PORT RST = sys_periph_reset, DIR = I, SIGIS = RST
 PORT CE  = net_vcc, DIR = I
 
 PORT IN_R   = R,   DIR = I, BUS = in, VEC = [7:0]
